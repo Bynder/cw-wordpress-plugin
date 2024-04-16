@@ -79,7 +79,7 @@ abstract class Enqueue extends Plugin_Base {
 	 * @return void
 	 */
 	public function script_localize() {
-		wp_localize_script( 'gathercontent', 'GatherContent', apply_filters( 'gathercontent_localized_data', array(
+		wp_localize_script( 'gathercontent', 'Content Workflow', apply_filters( 'gathercontent_localized_data', array(
 			'debug'       => Utils::script_debug(),
 			// @codingStandardsIgnoreStart
 			'queryargs'   => $_GET,

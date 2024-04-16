@@ -53,7 +53,7 @@ abstract class Base extends Enqueue {
 	 */
 	public function __construct() {
 		$this->url  = admin_url( 'admin.php?page=' . static::SLUG );
-		$this->logo = '<img width="220px" height="39px" src="' . GATHERCONTENT_URL . 'images/logo.svg" alt="GatherContent" />';
+		$this->logo = '<img width="220px" height="39px" src="' . GATHERCONTENT_URL . 'images/logo.svg" alt="Content Workflow" />';
 	}
 
 	/**

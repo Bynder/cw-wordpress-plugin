@@ -440,7 +440,7 @@ class Handlers extends Plugin_Base {
 				wp_send_json_success($success_data);
 			}
 		}
-		
+
 		// If error
 		wp_send_json_error("two");
 	}

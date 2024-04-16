@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name:  GatherContent Plugin
+ * Plugin Name:  Content Workflow Plugin
  * Plugin URI:   http://www.gathercontent.com
- * Description:  Imports items from GatherContent to your wordpress site
+ * Description:  Imports items from Content Workflow to your Wordpress site
  * Version:      3.2.19
- * Author:       GatherContent
+ * Author:       Content Workflow
  * Requires PHP: 7.0
- * Author URI:   http://www.gathercontent.com
+ * Author URI:   https://www.bynder.com/en/products/content-workflow/
  * Text Domain:  gathercontent-import
  * Domain Path:  /languages
  * License:      GPL-2.0+
@@ -66,7 +66,7 @@ if ( version_compare( phpversion(), '7.0', '<' ) ) {
 function gathercontent_importer_php_version_too_low_notice() {
 	printf(
 		'<div id="message" class="error"><p>%s</p></div>',
-		__( 'Sorry, the GatherContent plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: <a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>', 'gathercontent-import' )
+		__( 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: <a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>', 'gathercontent-import' )
 	);
 }
 
@@ -80,7 +80,7 @@ function gathercontent_importer_php_version_too_low_notice() {
 function gathercontent_importer_wp_version_too_low_notice() {
 	printf(
 		'<div id="message" class="error"><p>%s</p></div>',
-		__( 'Sorry, for security and performance reasons, the GatherContent plugin requires a minimum WordPress version of 4.4. Please update WordPress to the most recent version.', 'gathercontent-import' )
+		__( 'Sorry, for security and performance reasons, the Content Workflow plugin requires a minimum WordPress version of 4.4. Please update WordPress to the most recent version.', 'gathercontent-import' )
 	);
 }
 

@@ -254,7 +254,7 @@ abstract class Base extends Plugin_Base {
 
 		if ( ! isset( $this->item->id ) ) {
 			// @todo maybe check if error was temporary.
-			throw new Exception( sprintf( __( 'GatherContent could not get an item for that item id: %d', 'gathercontent-import' ), $item_id ), __LINE__, $this->item );
+			throw new Exception( sprintf( __( 'Content Workflow could not get an item for that item id: %d', 'gathercontent-import' ), $item_id ), __LINE__, $this->item );
 		}
 
 		return $this->item;

@@ -8,7 +8,7 @@
 		<div class="gc-major-publishing-actions gc-no-mapping">
 			<div class="gc-publishing-action">
 				<span class="spinner"></span>
-				<button id="gc-map" type="button" class="button gc-button-primary aligncenter"><?php esc_html_e( 'Map to GatherContent Template', 'gathercontent-importer' ); ?></button>
+				<button id="gc-map" type="button" class="button gc-button-primary aligncenter"><?php esc_html_e( 'Map to Content Workflow Template', 'gathercontent-importer' ); ?></button>
 			</div>
 			<div class="clear"></div>
 		</div>

@@ -1,25 +1,25 @@
-# GatherContent Plugin -- Version 3.2.19 #
+# Content Workflow Plugin -- Version 3.2.19 #
 
-This plugin allows you to transfer content from your GatherContent projects into your WordPress site and vice-versa.
+This plugin allows you to transfer content from your Content Workflow projects into your WordPress site and vice-versa.
 
 ## Description ##
 
-Installing our WordPress plugin on your site allows you to quickly perform updates of your content from your GatherContent account to WordPress as well as push your WordPress content updates back to GatherContent. Content can be imported as new pages/posts or custom post types, and you can also import your WordPress content back to new GatherContent items.
+Installing our WordPress plugin on your site allows you to quickly perform updates of your content from your Content Workflow account to WordPress as well as push your WordPress content updates back to Content Workflow. Content can be imported as new pages/posts or custom post types, and you can also import your WordPress content back to new Content Workflow items.
 
-The plugin allows you to map each field in your GatherContent Templates with WordPress fields. This is accomplished by creating a Template Mapping, which allows you to map each field in GatherContent to various fields in WordPress; title, body content, custom fields, tags, categories, Yoast fields, advanced custom fields, featured images … and many more.
+The plugin allows you to map each field in your Content Workflow Templates with WordPress fields. This is accomplished by creating a Template Mapping, which allows you to map each field in Content Workflow to various fields in WordPress; title, body content, custom fields, tags, categories, Yoast fields, advanced custom fields, featured images … and many more.
 
 The module currently supports the following features:
 
-* Import content from GatherContent
-* Export content to GatherContent
-* Update content in Wordpress from GatherContent
-* Update content from Wordpress to GatherContent
+* Import content from Content Workflow
+* Export content to Content Workflow
+* Update content in Wordpress from Content Workflow
+* Update content from Wordpress to Content Workflow
 
 For additional developer documentation, please [review the wiki](https://github.com/gathercontent/wordpress-plugin/wiki).
 
-### What is GatherContent?
+### What is Content Workflow?
 
-GatherContent is an online platform for pulling together, editing, and reviewing website content with your clients and colleagues. It's a reliable alternative to emailing around Word documents and pasting content into your CMS. This plugin replaces that process of copying and pasting content and allows you to bulk import structured content, and then continue to update it in WordPress with a few clicks.
+Content Workflow is an online platform for pulling together, editing, and reviewing website content with your clients and colleagues. It's a reliable alternative to emailing around Word documents and pasting content into your CMS. This plugin replaces that process of copying and pasting content and allows you to bulk import structured content, and then continue to update it in WordPress with a few clicks.
 
 Connecting a powerful content production platform, to a powerful content publishing platform.
 
@@ -28,9 +28,9 @@ Connecting a powerful content production platform, to a powerful content publish
 This section describes how to install the plugin and get it working.
 
 1. Upload `gathercontent-import` to the `/wp-content/plugins/` directory
-1. Activate the GatherContent plugin through the 'Plugins' menu in WordPress
-1. Click on the menu item "GatherContent"
-2. Link your accounts. You will need to enter your GatherContent account URL (e.g. http://mywebsite.gathercontent.com) and your personal GatherContent API key. You can find your API key in your [Settings area within GatherContent](https://gathercontent.com/developers/authentication/).
+1. Activate the Content Workflow plugin through the 'Plugins' menu in WordPress
+1. Click on the menu item "Content Workflow"
+2. Link your accounts. You will need to enter your Content Workflow account URL (e.g. http://mywebsite.gathercontent.com) and your personal Content Workflow API key. You can find your API key in your [Settings area within Content Workflow](https://gathercontent.com/developers/authentication/).
 
 For more detailed installation instructions please visit our [Help Centre](http://help.gathercontent.com/importing-and-exporting-content#wordpress-integration).
 
@@ -38,7 +38,7 @@ For more detailed installation instructions please visit our [Help Centre](http:
 
 If you need help, Please [visit our support documentation](http://help.gathercontent.com/importing-and-exporting-content#wordpress-integration).
 
-Also note, in your WordPress dashboard, under the GatherContent menu item, you will see a Support page. On this page, you'll find a large textarea filled with technical information about your server, browser, plugin, etc. This information is very useful when debugging, and the GatherContent support team may ask you for it at some point.
+Also note, in your WordPress dashboard, under the Content Workflow menu item, you will see a Support page. On this page, you'll find a large textarea filled with technical information about your server, browser, plugin, etc. This information is very useful when debugging, and the Content Workflow support team may ask you for it at some point.
 
 Below the text box is a button that will allow you to simply save all of that information to a .txt file. This allows you to easily deliver it to anyone who needs it.
 
@@ -69,7 +69,7 @@ Below the text box is a button that will allow you to simply save all of that in
 * Update to support multiple workflows
 
 ### 3.2.13 ###
-* Fixed issue where content and status updates were not pushing to GatherContent from the plugin
+* Fixed issue where content and status updates were not pushing to Content Workflow from the plugin
 
 ### 3.2.12 ###
 * Reformat readme.txt
@@ -82,13 +82,13 @@ Below the text box is a button that will allow you to simply save all of that in
 
 ### 3.2.9 ###
 * Added support for Bynder images, which do not include an extension in their filenames by default.
-* Importing files from attachment fields in GatherContent, will now be done using the result of the content endpoint for the item, and will no longer call the files endpoint.
+* Importing files from attachment fields in Content Workflow, will now be done using the result of the content endpoint for the item, and will no longer call the files endpoint.
 
 ### 3.2.8 ###
 * Pulling will no longer happen using wp_remote_post as it was causing issues with local environments and firewalls, where leaving the server and re-calling it via the host wasn't possible.
 
 ### 3.2.7 ###
-* Fixed issue where GatherContent to WordPress mapping was not taking effect
+* Fixed issue where Content Workflow to WordPress mapping was not taking effect
 
 ### 3.2.6 ###
 * Bump version
@@ -124,27 +124,27 @@ Below the text box is a button that will allow you to simply save all of that in
 
 ### 3.1.11 ###
 * Fix for post date not updating
-* Allow user to disconnect post from GatherContent Item
+* Allow user to disconnect post from Content Workflow Item
 * Update to use authenticated file downloads
 
 ### 3.1.10 ###
-* Fix push to GatherContent for new and old editor
+* Fix push to Content Workflow for new and old editor
 
 ### 3.1.9 ###
 * Fix the 3rd param passed to `Pull::sanitize_post_field()`, which needs to be the entire post data array.
 * Updated the help centre links.
-* Fixed quoted attributes (like alt text) for the pseudo-shortcodes used for media in the GatherContent content, e.g. `[media-1 align=right linkto=file alt="This will go to the image alt tag"]`
-* Allow using new shortcode syntax (like `[media_2-1]`) to include media from multiple media fields in GatherContent mapped to the content or excerpt. The original syntax will continue to work (e.g. `[media-1]`), but will be assumed to be the first media field, and will be the same as using the new syntax, `[media_1-1]`.
+* Fixed quoted attributes (like alt text) for the pseudo-shortcodes used for media in the Content Workflow content, e.g. `[media-1 align=right linkto=file alt="This will go to the image alt tag"]`
+* Allow using new shortcode syntax (like `[media_2-1]`) to include media from multiple media fields in Content Workflow mapped to the content or excerpt. The original syntax will continue to work (e.g. `[media-1]`), but will be assumed to be the first media field, and will be the same as using the new syntax, `[media_1-1]`.
 
 ### 3.1.8 ###
 * If mapping does not map a field to the `post_title`, be sure to update title from the GC item name.
 * Fix bug with item updated dates not being properly formatted in some languages.
 
 ### 3.1.7 ###
-* Add WPML compatibility shim for properly mapping GatherContent taxonomy terms to translated language taxonomy terms where applicable, and vice-versa. **Note:** If the GC item uses the foreign language term name, then this will need to be unhooked. This can be done via:
+* Add WPML compatibility shim for properly mapping Content Workflow taxonomy terms to translated language taxonomy terms where applicable, and vice-versa. **Note:** If the GC item uses the foreign language term name, then this will need to be unhooked. This can be done via:
 ```php
-if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
-	$general     = GatherContent\Importer\General::get_instance();
+if ( class_exists( 'Content Workflow\\Importer\\General' ) ) {
+	$general     = Content Workflow\Importer\General::get_instance();
 	$wpml_compat = isset( $general->compatibility_wml ) ? $general->compatibility_wml : null;
 
 	remove_filter( 'gc_new_wp_post_data', array( $wpml_compat, 'maybe_transform_meta_for_wpml' ), 10, 2 );
@@ -154,13 +154,13 @@ if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
 ```
 
 ### 3.1.6 ###
-* Update `\GatherContent\Importer\get_post_by_item_id()` to remove any WPML `WP_Query` filters so the mapped post is properly located.
+* Update `\Content Workflow\Importer\get_post_by_item_id()` to remove any WPML `WP_Query` filters so the mapped post is properly located.
 * Remove `.misc-pub-post-status` class from GC metabod, as it was adding a redundant pin icon.
-* Set user-agent when making GatherContent API calls.
+* Set user-agent when making Content Workflow API calls.
 
 ### 3.1.5 ###
 * Update to enable the Yoast SEO focus keyword again (a Yoast SEO plugin update changed the field type).
-* Add ACF compatibility shim for transforming ACF checkbox values to/from GatherContent checkbox values.
+* Add ACF compatibility shim for transforming ACF checkbox values to/from Content Workflow checkbox values.
 * Two new filters, `gc_config_pre_meta_field_value_updated` and `gc_config_meta_field_value_updated`.
 
 ### 3.1.4 ###
@@ -171,7 +171,7 @@ if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
 * Fix bug where some taxonomy terms were not being set (caused by changes made for [#27](https://github.com/gathercontent/wordpress-plugin/issues/27)).
 
 ### 3.1.2 ###
-* Allow side-loading non-image files/media from GatherContent.
+* Allow side-loading non-image files/media from Content Workflow.
 
 ### 3.1.1 ###
 * Added ability log the async requests in debug mode.
@@ -184,13 +184,13 @@ if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
 * Fix improperly cast object property for php 7 compatibility.
 
 ### 3.0.8 ###
-* Update the error message to indicate user may not have proper permission in GatherContent to view GatherContent Templates/Projects.
-* Add "class" and "alt" to whitelisted shortcode attributes for the GatherContent `[media]` shortcode.
+* Update the error message to indicate user may not have proper permission in Content Workflow to view Content Workflow Templates/Projects.
+* Add "class" and "alt" to whitelisted shortcode attributes for the Content Workflow `[media]` shortcode.
 * Add the `wp_get_attachment_image()` attributes array to the `gc_content_image` filter.
 * Add `gc_admin_enqueue_style` and `gc_admin_enqueue_script` actions.
 * Fix issue when BadgeOS is installed. BadgeOS is enqueueing its (old) version of select2 in the entire admin. It is incompatible with the new version, so we need to remove it on our pages.
 * Check multiple server variable keys to detect if HTTP authentication is enabled on the site. ([https://wordpress.org/support/topic/import-hangs-at-1/](https://wordpress.org/support/topic/import-hangs-at-1/))
-* Fix occasional bug when "Do not import" being selected could cause issues when pushing content back to GatherContent.
+* Fix occasional bug when "Do not import" being selected could cause issues when pushing content back to Content Workflow.
 
 ### 3.0.7 ###
 * Improved percentage accuracy, and loader animations with the import/sync process.
@@ -204,23 +204,23 @@ if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
 
 ### 3.0.4 ###
 * Update to complement the 3.0.0.8 release to make sure that the minimum 1.8.3 version of underscore is loaded early so that it works when SCRIPT_DEBUG is disabled.
-* Fix bug where GatherContent admin column and metabox would not display for a mapped post-type occasionally (if the mapping was imported, or when it is first created).
+* Fix bug where Content Workflow admin column and metabox would not display for a mapped post-type occasionally (if the mapping was imported, or when it is first created).
 
 ### 3.0.3 ###
 * Fix bug where post-types with`'exclude_from_search' => true` would not be properly connected.
 * Add filter, `gathercontent_mapping_post_types`, for ability to filter allowed post-types for mapping.
-* Add GatherContent plugin settings link to inline action links on plugin page.
+* Add Content Workflow plugin settings link to inline action links on plugin page.
 
 ### 3.0.2 ###
-* Now supports mapping GatherContent hierarchy to WordPress hierarchy for hierarchical post-types (like pages). Default behavior can be overridden with the `gc_map_hierarchy` filter.
+* Now supports mapping Content Workflow hierarchy to WordPress hierarchy for hierarchical post-types (like pages). Default behavior can be overridden with the `gc_map_hierarchy` filter.
 * Adds a constant to enable developer debug mode (`GATHERCONTENT_DEBUG_MODE`).
-* Give GatherContent selectors IDs and classes which do not conflict with WordPress core UI.
+* Give Content Workflow selectors IDs and classes which do not conflict with WordPress core UI.
 * Add a `gc_pull_complete` and `gc_push_complete` hook which is triggered after all items are asynchronously synced.
 * Update support instructions on the Support page.
-* Fix a few php notices when failing to fetch a project or template from the GatherContent API.
+* Fix a few php notices when failing to fetch a project or template from the Content Workflow API.
 
 ### 3.0.1 ###
-* Adds a support page to the GatherContent menu for gathering system information for support requests.
+* Adds a support page to the Content Workflow menu for gathering system information for support requests.
 * Adds a developer debug mode for advanced developer debugging.
 * Fix typos in a few i18n functions, from `_()` to `__()`.
 * Fix possible debug notices when options array is empty.
@@ -242,13 +242,13 @@ if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
 * Fix conflict with other plugins (notably WooCommerce) using the same script handle for select2, causing conflicts/errors.
 
 ### 3.0.0.4 ###
-* Allow file fields to be mapped to custom fields. Will store an array of WordPress attachment ids, or a single attachment id if the file field from GatherContent only contains a single file.
+* Allow file fields to be mapped to custom fields. Will store an array of WordPress attachment ids, or a single attachment id if the file field from Content Workflow only contains a single file.
 
 ### 3.0.0.3 ###
 * Fix issue on PHP 5.4 with using shortand array syntax.
 
 ### 3.0.0.2 ###
-* Fix bug when creating a new mapping and trying to map GatherContent statuses before saving the mapping.
+* Fix bug when creating a new mapping and trying to map Content Workflow statuses before saving the mapping.
 
 ### 3.0.0.1 ###
 * Fix bug where WordPress pointer script/css was not properly enqueued in some instances.
@@ -269,10 +269,10 @@ if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
 * Fix bug for multi site installs
 
 ### 2.6.0 ###
-* Add support for custom tabs feature within GatherContent
+* Add support for custom tabs feature within Content Workflow
 
 ### 2.5.0 ###
-* Import hierarchy from GatherContent. Added publish state dropdown to
+* Import hierarchy from Content Workflow. Added publish state dropdown to
 
 ### 2.4.1 ###
 * Integrated a few updates from github and fixed coding standard to match WordPress coding standards
@@ -281,7 +281,7 @@ if ( class_exists( 'GatherContent\\Importer\\General' ) ) {
 * Changed how the plugin stores page data to allow a larger amount of pages with larger content
 
 ### 2.3.0 ###
-* Updated GatherContent API requests to match current API version and minor UI updates for WP 3.8
+* Updated Content Workflow API requests to match current API version and minor UI updates for WP 3.8
 
 ### 2.2.1 ###
 * Added check to makesure cURL is enabled
