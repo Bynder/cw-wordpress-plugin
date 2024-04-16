@@ -18,7 +18,7 @@
 		<# if ( ( data.is_repeatable ) ) { #>
 			<span class="dashicons dashicons-controls-repeat" title="Repeatable Field"></span>
 		<# } #>
-		<a title="<?php _ex( 'Click to show additional details', 'About the GatherContent object', 'gathercontent-import' ); ?>" href="#" class="gc-reveal-items <# if(data.component){ #>gc-reveal-items-component<# } #> dashicons-before dashicons-arrow-<# if ( data.expanded ) { #>down<# } else { #>right<# } #>"><strong>{{ data.label }} <small>{{ data.subtitle }}</small></strong></a>
+		<a title="<?php _ex( 'Click to show additional details', 'About the Content Workflow object', 'gathercontent-import' ); ?>" href="#" class="gc-reveal-items <# if(data.component){ #>gc-reveal-items-component<# } #> dashicons-before dashicons-arrow-<# if ( data.expanded ) { #>down<# } else { #>right<# } #>"><strong>{{ data.label }} <small>{{ data.subtitle }}</small></strong></a>
 		<ul class="gc-reveal-items-list <# if ( !data.expanded ) { #>hidden<# } #>">
 			<# if ( data.typeName ) { #>
 			<li><strong><?php _e( 'Type:', 'gathercontent-import' ); ?></strong> {{ data.typeName }}</li>
@@ -50,8 +50,8 @@
 <?php /*******************************************
 	Component: Sub-Fields Row & Close Wrapper
 ***********************************************/ ?>
-<# 
-	var subfield_type_translate = { 
+<#
+	var subfield_type_translate = {
 		'text'            : 'Rich Text',
 		'text_rich'       : 'Rich Text',
 		'text_plain'      : 'Plain Text',
@@ -78,7 +78,7 @@
 							<# if ( field.metadata && field.metadata.repeatable && field.metadata.repeatable.isRepeatable ) { #>
 								<span class="dashicons dashicons-controls-repeat" title="Repeatable Field"></span>
 							<# } #>
-							<a title="<?php _ex( 'Click to show additional details', 'About the GatherContent object', 'gathercontent-import' ); ?>" href="#" class="gc-reveal-items dashicons-before dashicons-arrow-right">
+							<a title="<?php _ex( 'Click to show additional details', 'About the Content Workflow object', 'gathercontent-import' ); ?>" href="#" class="gc-reveal-items dashicons-before dashicons-arrow-right">
 								<strong>{{ field.label }} <small>{{ field.subtitle }}</small></strong>
 							</a>
 							<ul class="gc-reveal-items-list gc-reveal-items-hidden hidden">

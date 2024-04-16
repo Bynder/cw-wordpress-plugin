@@ -1,7 +1,7 @@
 {
   "name": "gathercontent-importer",
-  "title": "GatherContent Plugin",
-  "description": "Imports items from GatherContent to your wordpress site",
+  "title": "Content Workflow Plugin",
+  "description": "Imports items from Content Workflow to your wordpress site",
   "version": "3.2.19",
   "license": "GPLv2",
   "homepage": "http://www.gathercontent.com",
@@ -10,9 +10,9 @@
     "url": "https://github.com/gathercontent/wordpress-plugin"
   },
   "author": {
-    "name": "GatherContent",
+    "name": "Content Workflow",
     "email": "support@gathercontent.com",
-    "url": "http://www.gathercontent.com"
+    "url": "https://www.bynder.com/en/products/content-workflow/"
   },
   "engines": {
     "node": ">=14.0.0 <15.0.0"

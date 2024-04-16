@@ -29,7 +29,7 @@
 
 		<div class="media-frame-title gc-bb-modal-title">
 			<h1>
-				<img width="220px" height="39px" src="<?php echo GATHERCONTENT_URL; ?>images/logo.svg" alt="GatherContent" />
+				<img width="220px" height="39px" src="<?php echo GATHERCONTENT_URL; ?>images/logo.svg" alt="Content Workflow" />
 			</h1>
 			<div id="gc-tablenav" class="tablenav top"></div>
 		</div>

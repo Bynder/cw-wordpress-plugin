@@ -90,7 +90,7 @@ class Single extends Post_Base {
 
 		$this->enqueue->admin_enqueue_style();
 		$this->enqueue->admin_enqueue_script();
-		add_meta_box( 'gc-manage', 'GatherContent <span class="dashicons dashicons-randomize"></span>', array( $this, 'meta_box' ), $screen, 'side', 'high' );
+		add_meta_box( 'gc-manage', 'Content Workflow <span class="dashicons dashicons-randomize"></span>', array( $this, 'meta_box' ), $screen, 'side', 'high' );
 	}
 
 	/**
@@ -134,7 +134,7 @@ class Single extends Post_Base {
 			),
 			'tmpl-gc-metabox-statuses' => array(),
 			'tmpl-gc-mapping-metabox'  => array(
-				'message' => sprintf( esc_html__( 'This %s does not have an associated item or Template Mapping. (Please make sure that you have added a mapping in GatherContent > New Mapping)', 'gathercontent-importer' ), $this->post_type_label ),
+				'message' => sprintf( esc_html__( 'This %s does not have an associated item or Template Mapping. (Please make sure that you have added a mapping in Content Workflow > New Mapping)', 'gathercontent-importer' ), $this->post_type_label ),
 			),
 			'tmpl-gc-status-select2'   => array(),
 			'tmpl-gc-select2-item'     => array(),
@@ -153,10 +153,10 @@ class Single extends Post_Base {
 
 		$data['_post'] = $this->post;
 		$data['_sure'] = array(
-			'push_no_item' => sprintf( __( 'Push this %s to GatherContent?', 'gathercontent-importer' ), $this->post_type_label ),
-			'push'         => sprintf( __( 'Are you sure you want to push this %s to GatherContent? Any unsaved changes in GatherContent will be overwritten.', 'gathercontent-importer' ), $this->post_type_label ),
-			'pull'         => sprintf( __( 'Are you sure you want to pull this %s from GatherContent? Any local changes will be overwritten.', 'gathercontent-importer' ), $this->post_type_label ),
-			'disconnect'   => sprintf( __( 'Are you sure you want to disconnect this %s from GatherContent?', 'gathercontent-importer' ), $this->post_type_label ),
+			'push_no_item' => sprintf( __( 'Push this %s to Content Workflow?', 'gathercontent-importer' ), $this->post_type_label ),
+			'push'         => sprintf( __( 'Are you sure you want to push this %s to GatherContent? Any unsaved changes in Content Workflow will be overwritten.', 'gathercontent-importer' ), $this->post_type_label ),
+			'pull'         => sprintf( __( 'Are you sure you want to pull this %s from Content Workflow? Any local changes will be overwritten.', 'gathercontent-importer' ), $this->post_type_label ),
+			'disconnect'   => sprintf( __( 'Are you sure you want to disconnect this %s from Content Workflow?', 'gathercontent-importer' ), $this->post_type_label ),
 		);
 
 		return $data;

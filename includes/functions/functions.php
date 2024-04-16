@@ -7,6 +7,7 @@
 
 namespace GatherContent\Importer;
 
+use WP_Dependency_Installer;
 use WP_Query;
 
 /**
