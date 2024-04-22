@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name:  Content Workflow Plugin
+ * Plugin Name:  Content Workflow (by Bynder) Plugin
  * Plugin URI:   http://www.gathercontent.com
  * Description:  Imports items from Content Workflow to your Wordpress site
  * Version:      3.2.19
- * Author:       Content Workflow
+ * Author:       Content Workflow (by Bynder)
  * Requires PHP: 7.0
  * Author URI:   https://www.bynder.com/en/products/content-workflow/
  * Text Domain:  gathercontent-import
