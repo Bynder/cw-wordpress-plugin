@@ -1,7 +1,7 @@
-=== Content Workflow Plugin ===
+=== Content Workflow (by Bynder) Plugin ===
 Contributors: gathercontent, mathew-chapman, namshee, justinsainton
 Donate link: http://www.gathercontent.com
-Tags: structured content, gather content, gathercontent, import, migrate, export, mapping, production, writing, collaboration, platform, connect, link, gather, client, word, production
+Tags: structured content, gather content, gathercontent, import, migrate, export, mapping, production, writing, collaboration, platform, connect, link, gather, client, word, production, bynder, content, workflow
 Requires at least: 5.6.0
 Tested up to: 6.3
 Stable tag: 3.2.19

@@ -1,4 +1,4 @@
-# Content Workflow Plugin -- Version 3.2.19 #
+# Content Workflow (by Bynder) Plugin -- Version 3.2.19 #
 
 This plugin allows you to transfer content from your Content Workflow projects into your WordPress site and vice-versa.
 
