@@ -115,7 +115,7 @@ class Mapping_Wizard extends Base {
 	}
 
 	protected function get_step_label() {
-		$label = 'GatherContent';
+		$label = 'Content Workflow';
 		switch ( $this->step ) {
 			case self::ACCOUNT:
 				$label = Utils::get_step_label( 'projects' );
@@ -145,10 +145,10 @@ class Mapping_Wizard extends Base {
 		$screen->add_help_tab(
 			array(
 				'id'      => 'gc-help-me',
-				'title'   => __( 'GatherContent', 'gathercontent-import' ),
+				'title'   => __( 'Content Workflow', 'gathercontent-import' ),
 				'content' => __(
-					'<p>Thank you for using the GatherContent WordPress plugin!</p>' .
-					'<p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from GatherContent, just hit the "Refresh" button.</p>',
+					'<p>Thank you for using the Content Workflow WordPress plugin!</p>' .
+					'<p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.</p>',
 					'gathercontent-import'
 				) . '<p>' . $this->refresh_connection_link() . '</p>',
 			)
@@ -156,7 +156,7 @@ class Mapping_Wizard extends Base {
 
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'gathercontent-import' ) . '</strong></p>' .
-			'<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank">' . __( 'GatherContent WordPress Integration' ) . '</a></p>' .
+			'<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank">' . __( 'Content Workflow WordPress Integration' ) . '</a></p>' .
 			'<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank">' . __( 'Support Forums' ) . '</a></p>'
 		);
 
@@ -166,7 +166,7 @@ class Mapping_Wizard extends Base {
 				array(
 					'id'      => 'gc-field-details',
 					'title'   => __( 'Mapping Fields', 'gathercontent-import' ),
-					'content' => __( '<p><b>Note:</b> If mapping more than one GatherContent field to one WordPress field, you will not be able to "push" that content back to GatherContent, as there is not currently a way to split the fields back to individual fields.</p>', 'gathercontent-import' ),
+					'content' => __( '<p><b>Note:</b> If mapping more than one GatherContent field to one WordPress field, you will not be able to "push" that content back to Content Workflow, as there is not currently a way to split the fields back to individual fields.</p>', 'gathercontent-import' ),
 				)
 			);
 		}
@@ -217,7 +217,7 @@ class Mapping_Wizard extends Base {
 		if ( get_option( 'gc-api-updated' ) ) {
 			$notices[] = array(
 				'id'      => 'gc-api-connection-reset',
-				'message' => __( 'We refreshed the data from the GatherContent API.', 'gathercontent-import' ),
+				'message' => __( 'We refreshed the data from the Content Workflow API.', 'gathercontent-import' ),
 				'type'    => 'updated',
 			);
 			delete_option( 'gc-api-updated' );
@@ -336,7 +336,7 @@ class Mapping_Wizard extends Base {
 		$accounts = $this->api()->get_accounts();
 
 		if ( ! $accounts ) {
-			return $this->add_settings_error( $this->option_name, 'gc-missing-accounts', sprintf( __( 'We couldn\'t find any accounts associated with your GatherContent API credentials. Please <a href="%s">check your settings</a>.', 'gathercontent-import' ), $this->parent_url ) );
+			return $this->add_settings_error( $this->option_name, 'gc-missing-accounts', sprintf( __( 'We couldn\'t find any accounts associated with your Content Workflow API credentials. Please <a href="%s">check your settings</a>.', 'gathercontent-import' ), $this->parent_url ) );
 		}
 
 		$tabs       = array();
@@ -566,7 +566,7 @@ class Mapping_Wizard extends Base {
 		if ( ! $project_id || ! $template_id ) {
 			$notes = $this->view( 'no-mapping-or-template-available', array(), false ) . $notes;
 		}
-		
+
 		$title = isset( $template->data->name )
 			? $template->data->name
 			: __( 'Unknown Template', 'gathercontent-import' );
@@ -764,7 +764,7 @@ class Mapping_Wizard extends Base {
 
 		if ( isset( $project->name ) ) {
 			$url          = $this->platform_url( 'templates/' . $project->id );
-			$project_name = '<p class="gc-project-name description">' . sprintf( _x( 'Project: %s', 'GatherContent project name', 'gathercontent-import' ), $project->name ) . ' | <a href="' . esc_url( $url ) . '" target="_blank">' . __( 'edit project templates', 'gathercontent-import' ) . '</a></p>';
+			$project_name = '<p class="gc-project-name description">' . sprintf( _x( 'Project: %s', 'Content Workflow project name', 'gathercontent-import' ), $project->name ) . ' | <a href="' . esc_url( $url ) . '" target="_blank">' . __( 'edit project templates', 'gathercontent-import' ) . '</a></p>';
 		}
 
 		return $project_name;

@@ -58,7 +58,7 @@ class Admin extends Base {
 
 					$response = $this->api()->get_last_response();
 
-					$message = __( 'We had trouble connecting to the GatherContent API. Please check your settings.', 'gathercontent-import' );
+					$message = __( 'We had trouble connecting to the Content Workflow API. Please check your settings.', 'gathercontent-import' );
 
 					if ( is_wp_error( $response ) ) {
 						$message .= '</p><p>' . sprintf( esc_html__( 'The error received: %s', 'gathercontent-import' ), $response->get_error_message() );
@@ -161,8 +161,8 @@ class Admin extends Base {
 	 */
 	public function admin_menu() {
 		$page = add_menu_page(
-			'GatherContent',
-			'GatherContent',
+			'Content Workflow',
+			'Content Workflow',
 			\GatherContent\Importer\view_capability(),
 			self::SLUG,
 			array( $this, 'admin_page' ),
@@ -237,7 +237,7 @@ class Admin extends Base {
 
 		$section->add_field(
 			'account_email',
-			esc_html__( 'GatherContent Email Address', 'gathercontent-import' ),
+			esc_html__( 'Content Workflow Email Address', 'gathercontent-import' ),
 			array( $this, 'account_email_field_cb' )
 		);
 
@@ -283,7 +283,7 @@ class Admin extends Base {
 				$this->settings()->options['platform_url_slug'] = $slug;
 			}
 		} else {
-			echo '<p>' . sprintf( __( 'Enter you GatherContent API credentials. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'gathercontent-import' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
+			echo '<p>' . sprintf( __( 'Enter your Content Workflow API credentials. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'gathercontent-import' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
 		}
 	}
 
@@ -401,7 +401,7 @@ class Admin extends Base {
 
 				$data = (array) $user;
 
-				$data['message'] = esc_html__( "You've successfully connected to the GatherContent API", 'gathercontent-import' );
+				$data['message'] = esc_html__( "You've successfully connected to the Content Workflow API", 'gathercontent-import' );
 
 				$data['avatar'] = ! empty( $data['avatar'] )
 					? 'https://gathercontent-production-avatars.s3-us-west-2.amazonaws.com/' . $data['avatar']

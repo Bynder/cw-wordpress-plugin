@@ -1,6 +1,6 @@
 <?php
 /**
- * GatherContent Plugin
+ * Content Workflow Plugin
  *
  * @package GatherContent Plugin
  */

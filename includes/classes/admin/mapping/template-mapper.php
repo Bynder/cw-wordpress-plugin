@@ -54,7 +54,7 @@ class Template_Mapper extends Base {
 		if ( $this->mapping_id ) {
 
 			echo '<div class="gc-sync-items-descriptions">
-			<p class="description"><a href="' . esc_url( add_query_arg( 'sync-items', 1 ) ) . '"><span class="dashicons dashicons-randomize"> </span>' . __( 'Import Items for this template from GatherContent', 'domain' ) . '</a></p>
+			<p class="description"><a href="' . esc_url( add_query_arg( 'sync-items', 1 ) ) . '"><span class="dashicons dashicons-randomize"> </span>' . __( 'Import Items for this template from Content Workflow', 'domain' ) . '</a></p>
 			</div>';
 
 			$this->view(
@@ -163,7 +163,7 @@ class Template_Mapper extends Base {
 				'default' => array(
 					'gc' => array(
 						'id'    => 'gc-field-th',
-						'label' => __( 'GatherContent Field', 'gathercontent-import' ),
+						'label' => __( 'Content Workflow Field', 'gathercontent-import' ),
 					),
 					'wp' => array(
 						'id'    => 'wp-field-th',
@@ -173,7 +173,7 @@ class Template_Mapper extends Base {
 				'status'  => array(
 					'gc'      => array(
 						'id'    => 'gc-status-th',
-						'label' => __( 'GatherContent Status', 'gathercontent-import' ),
+						'label' => __( 'Content Workflow Status', 'gathercontent-import' ),
 					),
 					'wp'      => array(
 						'id'    => 'wp-status-th',
@@ -181,7 +181,7 @@ class Template_Mapper extends Base {
 					),
 					'gcafter' => array(
 						'id'    => 'gcafter-status-th',
-						'label' => __( 'On Import, Change GatherContent Status', 'gathercontent-import' ),
+						'label' => __( 'On Import, Change Status', 'gathercontent-import' ),
 					),
 				),
 			),
@@ -281,15 +281,15 @@ class Template_Mapper extends Base {
 
 			if ( ! in_array( 'gc_select_tab_how_to', $dismissed, 1 ) ) {
 				$content  = '<h3>' . __( 'Template Tabs and Fields', 'gathercontent-import' ) . '</h3>';
-				$content .= '<p>' . __( 'You\'ll find the tabs from the GatherContent Template here. Select a tab to start mapping the Template fields.', 'gathercontent-import' ) . '</p>';
+				$content .= '<p>' . __( 'You\'ll find the tabs from the Content Workflow Template here. Select a tab to start mapping the Template fields.', 'gathercontent-import' ) . '</p>';
 
 				$pointers['select_tab_how_to'] = $content;
 				$enqueue                       = true;
 			}
 
 			if ( ! in_array( 'gc_map_status_how_to', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'GatherContent Status &Rarr; WordPress Status', 'gathercontent-import' ) . '</h3>';
-				$content .= '<p>' . __( 'Here you\'ll be able to map each individual GatherContent status to a WordPress status, and optionally, change the GatherContent status when your items are imported to WordPress.', 'gathercontent-import' ) . '</p>';
+				$content  = '<h3>' . __( 'Content Workflow Status &Rarr; WordPress Status', 'gathercontent-import' ) . '</h3>';
+				$content .= '<p>' . __( 'Here you\'ll be able to map each individual Content Workflow status to a WordPress status, and optionally, change the Content Workflow status when your items are imported to WordPress.', 'gathercontent-import' ) . '</p>';
 
 				$pointers['map_status_how_to'] = $content;
 				$enqueue                       = true;
@@ -297,8 +297,8 @@ class Template_Mapper extends Base {
 		} else {
 
 			if ( ! in_array( 'gc_refresh_connection', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Refresh data from GatherContent', 'gathercontent-import' ) . '</h3>';
-				$content .= '<p>' . __( 'To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from GatherContent, just hit the "Refresh" button.', 'gathercontent-import' ) . '</p>';
+				$content  = '<h3>' . __( 'Refresh data from Content Workflow', 'gathercontent-import' ) . '</h3>';
+				$content .= '<p>' . __( 'To make the plugin more speedy, we cache the requests to Content Workflow for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.', 'gathercontent-import' ) . '</p>';
 				$content .= '<p>' . __( 'For more help, click the "Help" tab in the upper-right-hand corner.', 'gathercontent-import' ) . '</p>';
 
 				$pointers['refresh_connection'] = $content;
@@ -321,7 +321,7 @@ class Template_Mapper extends Base {
 	 *
 	 * @return array  Array of tabs.
 	 */
-	
+
 	 /**
 	 * Retrieves and structures tabs with associated fields or components.
 	 * Handles tab groups, checks for ACF Pro presence, and constructs tab arrays.
@@ -335,21 +335,22 @@ class Template_Mapper extends Base {
 		$post_type = $this->get_value('post_type', 'esc_attr');
 		$tab_groups = $this->template->related->structure->groups ?? [];
 		$is_acf_pro_installed = class_exists('acf_pro');
-	
+
 		foreach ($tab_groups as $tab) {
 			$rows = [];
 			$fields = $tab->fields ?? [];
-	
+
 			foreach ($fields as $field) {
 				$metadata = $field->metadata;
 				$is_repeatable = (is_object($metadata) && isset($metadata->repeatable)) ? $metadata->repeatable->isRepeatable : false;
-				
+
 				//We use components  as rows and fields in the components as subrows if ACF PRo is installed
 				if ($is_acf_pro_installed) {
+
 					if (self::COMPONENT_FIELD !== $field->field_type) {
 						$this->formatAndAddField($field, $post_type, '', $is_repeatable, $rows);
 					}
-	
+
 					if (self::COMPONENT_FIELD === $field->field_type) {
 						$component_id = $field->uuid;
 						$component_name = $field->label;
@@ -359,7 +360,7 @@ class Template_Mapper extends Base {
 					// When ACF Pro is not installed, use the original logic:
 					// each row is just as it comes in. (each component field is an individual row)
 					$fields_data = ($field->component->fields ?? [$field]);
-					
+
 					foreach ($fields_data as $field_data) {
 						$formatted_field = $this->format_fields(
 							$field_data,
@@ -368,14 +369,14 @@ class Template_Mapper extends Base {
 							$is_repeatable,
 							self::COMPONENT_FIELD === $field->field_type ? $field->uuid : ''
 						);
-	
+
 						if ($formatted_field) {
 							$rows[] = $formatted_field;
 						}
 					}
 				}
 			}
-	
+
 			$tabs[] = [
 				'id' => $tab->uuid,
 				'label' => $tab->name,
@@ -383,7 +384,7 @@ class Template_Mapper extends Base {
 				'rows' => $rows,
 			];
 		}
-	
+
 		$default_tab = [
 			'id' => 'mapping-defaults',
 			'label' => __('Mapping Defaults', 'gathercontent-import'),
@@ -395,15 +396,15 @@ class Template_Mapper extends Base {
 			'post_type' => $post_type,
 			'gc_status' => $this->get_gc_statuses(),
 		];
-	
+
 		$default_tab['select2:post_author:' . $default_tab['post_author']] = $this->get_default_field_options('post_author');
-	
+
 		$tabs[] = $default_tab;
-	
+
 		return $tabs;
 	}
-	
-	
+
+
 
 	private function formatAndAddField($field, $post_type, $component_name, $is_repeatable, &$rows, $component_id = '') {
 		$formatted_field = $this->format_fields($field, $post_type, $component_name, $is_repeatable, $component_id);

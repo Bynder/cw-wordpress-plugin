@@ -769,7 +769,7 @@ class API extends Base {
 				$this->set_user( $settings['account_email'] );
 				$this->set_api_key( $settings['api_key'] );
 			} else {
-				throw new \Exception( __( 'The GatherContent API connection is not set up.', 'gathercontent-import' ) );
+				throw new \Exception( __( 'The Content Workflow API connection is not set up.', 'gathercontent-import' ) );
 			}
 		}
 

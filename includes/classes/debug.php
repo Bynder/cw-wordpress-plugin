@@ -126,7 +126,7 @@ class Debug extends Base {
 	 * @return void
 	 */
 	public function debug_disabled_notice() {
-		$msg = esc_html__( 'GatherContent Debug Mode: Disabled', 'gathercontent-import' );
+		$msg = esc_html__( 'Content Workflow Debug Mode: Disabled', 'gathercontent-import' );
 		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
 	}
 
@@ -138,7 +138,7 @@ class Debug extends Base {
 	 * @return void
 	 */
 	public function debug_enabled_notice() {
-		$msg = esc_html__( 'GatherContent Debug Mode: Enabled', 'gathercontent-import' );
+		$msg = esc_html__( 'Content Workflow Debug Mode: Enabled', 'gathercontent-import' );
 		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
 	}
 
@@ -175,13 +175,13 @@ class Debug extends Base {
 
 		$section->add_field(
 			'view_gc_log_file',
-			__( 'View contents of the GatherContent debug log file?', 'gathercontent-import' ),
+			__( 'View contents of the Content Workflow debug log file?', 'gathercontent-import' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
 		$section->add_field(
 			'delete_gc_log_file',
-			__( 'Delete GatherContent debug log file?', 'gathercontent-import' ),
+			__( 'Delete Content Workflow debug log file?', 'gathercontent-import' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
@@ -329,10 +329,10 @@ class Debug extends Base {
 	 */
 	public function delete_gc_log_file( $back_button ) {
 		if ( unlink( self::$log_path ) ) {
-			wp_die( __( 'GatherContent log file deleted.', 'gathercontent-import' ) . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
+			wp_die( __( 'Content Workflow log file deleted.', 'gathercontent-import' ) . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
 		}
 
-		wp_die( __( 'Failed to delete GatherContent log file.' . $back_button, 'gathercontent-import' ), __( 'Debug Mode', 'gathercontent-import' ) );
+		wp_die( __( 'Failed to delete Content Workflow log file.' . $back_button, 'gathercontent-import' ), __( 'Debug Mode', 'gathercontent-import' ) );
 	}
 
 	/**
@@ -348,7 +348,7 @@ class Debug extends Base {
 		$log_contents = file_exists( self::$log_path ) ? file_get_contents( self::$log_path ) : '';
 
 		if ( ! $log_contents ) {
-			wp_die( __( 'GatherContent log file is empty.', 'gathercontent-import' ) . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
+			wp_die( __( 'Content Workflow log file is empty.', 'gathercontent-import' ) . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
 		}
 
 		die( '<html><body>' . $back_button . '<pre><textarea style="width:100%;height:100%;min-height:1000px;font-size:14px;font-family:monospace;padding:.5em;">' . print_r( $log_contents, true ) . '</textarea></pre></body></html>' );
@@ -404,7 +404,7 @@ class Debug extends Base {
 				? esc_html__( 'Enabled', 'gathercontent-import' )
 				: esc_html__( 'Disabled', 'gathercontent-import' );
 
-			self::_debug_log( sprintf( esc_html__( 'GatherContent Debug Mode: %s', 'gathercontent-import' ), $status ) );
+			self::_debug_log( sprintf( esc_html__( 'Content Workflow Debug Mode: %s', 'gathercontent-import' ), $status ) );
 		}
 
 		return self::$debug_mode;

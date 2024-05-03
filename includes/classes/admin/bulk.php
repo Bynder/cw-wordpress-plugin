@@ -128,7 +128,7 @@ class Bulk extends Post_Base {
 	 * @return array
 	 */
 	public function register_column_headers( $columns ) {
-		$columns['gathercontent'] = '<div title="' . __( 'GatherContent Item Status', 'gathercontent-importer' ) . '" class="gc-column-header"><span class="gc-logo-column"><img src="' . GATHERCONTENT_URL . 'images/logo.svg" alt="GatherContent" /></span>' . _x( 'Status', 'GatherContent Item Status', 'gathercontent-importer' ) . '</div>';
+		$columns['gathercontent'] = '<div title="' . __( 'GatherContent Item Status', 'gathercontent-importer' ) . '" class="gc-column-header"><span class="gc-logo-column"><img src="' . GATHERCONTENT_URL . 'images/logo.svg" alt="GatherContent" /></span>' . _x( 'Status', 'Content Workflow Item Status', 'gathercontent-importer' ) . '</div>';
 
 		return $columns;
 	}
@@ -308,7 +308,7 @@ class Bulk extends Post_Base {
 				'url' => General::get_instance()->admin->platform_url(),
 			),
 			'tmpl-gc-mapping-metabox' => array(
-				'message' => esc_html__( 'Fetching GatherContent Accounts', 'gathercontent-importer' ),
+				'message' => esc_html__( 'Fetching Content Workflow Accounts', 'gathercontent-importer' ),
 			),
 		);
 	}
@@ -349,8 +349,8 @@ class Bulk extends Post_Base {
 		);
 
 		$data['_sure'] = array(
-			'push' => sprintf( __( 'Are you sure you want to push these %s to GatherContent? Any unsaved changes in GatherContent will be overwritten.', 'gathercontent-importer' ), $plural_label ),
-			'pull' => sprintf( __( 'Are you sure you want to pull these %s from GatherContent? Any local changes will be overwritten.', 'gathercontent-importer' ), $plural_label ),
+			'push' => sprintf( __( 'Are you sure you want to push these %s to GatherContent? Any unsaved changes in Content Workflow will be overwritten.', 'gathercontent-importer' ), $plural_label ),
+			'pull' => sprintf( __( 'Are you sure you want to pull these %s from Content Workflow? Any local changes will be overwritten.', 'gathercontent-importer' ), $plural_label ),
 		);
 
 		$data['_text'] = array(

@@ -18,7 +18,7 @@
 		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'gathercontent-import' ); ?>">
 ### Begin System Info ###
 
-## Please include this information when getting in touch with the GatherContent support team ##
+## Please include this information when getting in touch with the Content Workflow (by Bynder) support team ##
 <?php do_action( 'gc_system_info_before' ); ?>
 
 Multisite:                <?php echo $this->get( 'multisite' ), "\n"; ?>
@@ -90,7 +90,7 @@ Plugin Options:           <?php echo $this->get( 'gc_options' ), "\n"; ?>
 
 ### End System Info ###</textarea>
 		<p><strong><?php _e( 'For more information:', 'gathercontent-import' ); ?></strong></p>
-		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for GatherContent WordPress Integration' ); ?></a></p>
+		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration' ); ?></a></p>
 		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums' ); ?></a></p>
 
 		<p><?php _e( '<strong>This information contains potentially senstive data.</strong><br>Please be careful with where you post it. Do not post it in the WordPress support forums.', 'gathercontent-import' ); ?></p>
