@@ -1,4 +1,4 @@
-# Content Workflow (by Bynder) Plugin -- Version 1.0.0 #
+# Content Workflow (by Bynder) Plugin - Version 1.0.0 #
 
 This plugin allows you to transfer content from your Content Workflow projects into your WordPress site and vice-versa.
 
@@ -25,10 +25,18 @@ Connecting a powerful content production platform, to a powerful content publish
 
 This section describes how to install the plugin and get it working.
 
-1. Upload `gathercontent-import` to the `/wp-content/plugins/` directory
-1. Activate the Content Workflow plugin through the 'Plugins' menu in WordPress
-1. Click on the menu item "Content Workflow"
-2. Link your accounts. You will need to enter your Content Workflow account URL (e.g. http://mywebsite.gathercontent.com) and your personal Content Workflow API key. You can find your API key in your [Settings area within Content Workflow](https://gathercontent.com/developers/authentication/).
+### Downloading the plugin ###
+1. To download the plugin, click the green "Code" button on the top right of this page.
+2. Then click "Download ZIP".
+
+For more information on how to download from GitHub please visit their [help page](https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives).
+
+### Installing the plugin ###
+
+1. Upload `content-workflow` to the `/wp-content/plugins/` directory
+2. Activate the Content Workflow plugin through the 'Plugins' menu in WordPress
+3. Click on the menu item "Content Workflow"
+4. Link your accounts. You will need to enter your Content Workflow account URL (e.g. http://mywebsite.gathercontent.com) and your personal Content Workflow API key. You can find your API key in your [Settings area within Content Workflow](https://gathercontent.com/developers/authentication/).
 
 For more detailed installation instructions, please visit our [Help Centre](http://help.gathercontent.com/importing-and-exporting-content#wordpress-integration).
 
@@ -45,6 +53,6 @@ Below the text box is a button that will allow you to simply save all of that in
 ## Changelog
 
 ### 1.0.0 ###
-* Officially supporting component by using the Advanced Custom Fields plugins
+* Officially supporting components by using the Advanced Custom Fields plugins
 * Full rebrand to Content Workflow by Bynder
 * Migration from the [GatherContent Wordpress plugin](https://wordpress.org/plugins/gathercontent-import/)
