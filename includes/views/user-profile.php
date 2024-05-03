@@ -7,4 +7,4 @@
 	</div>
 </div>
 <hr>
-<p><?php printf( __( 'For more information: <a href="%s" target="_blank">https://gathercontent.com/how-it-works</a>.', 'gathercontent-import' ), 'https://gathercontent.com/how-it-works' ); ?></p>
+<p><?php printf( __( 'For more information: <a href="%s" target="_blank">https://www.bynder.com/en/products/content-workflow/</a>.', 'gathercontent-import' ), 'https://www.bynder.com/en/products/content-workflow/' ); ?></p>
