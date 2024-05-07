@@ -4,10 +4,10 @@
   "description": "Imports items from Content Workflow to your wordpress site",
   "version": "1.0.0",
   "license": "GPLv2",
-  "homepage": "http://www.gathercontent.com",
+  "homepage": "https://www.bynder.com/products/content-workflow/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gathercontent/wordpress-plugin"
+    "url": "https://github.com/Bynder/cw-wordpress-plugin"
   },
   "author": {
     "name": "Content Workflow (by Bynder)",
