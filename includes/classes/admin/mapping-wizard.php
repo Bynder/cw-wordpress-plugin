@@ -102,7 +102,7 @@ class Mapping_Wizard extends Base {
 		$page = add_submenu_page(
 			$this->parent_page_slug,
 			$this->get_step_label(),
-			__( 'New Mapping', 'gathercontent-import' ),
+			__( 'New Mapping', 'content-workflow' ),
 			\GatherContent\Importer\view_capability(),
 			self::SLUG,
 			array( $this, 'admin_page' )
@@ -145,17 +145,17 @@ class Mapping_Wizard extends Base {
 		$screen->add_help_tab(
 			array(
 				'id'      => 'gc-help-me',
-				'title'   => __( 'Content Workflow', 'gathercontent-import' ),
+				'title'   => __( 'Content Workflow', 'content-workflow' ),
 				'content' => __(
 					'<p>Thank you for using the Content Workflow WordPress plugin!</p>' .
 					'<p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.</p>',
-					'gathercontent-import'
+					'content-workflow'
 				) . '<p>' . $this->refresh_connection_link() . '</p>',
 			)
 		);
 
 		$screen->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:', 'gathercontent-import' ) . '</strong></p>' .
+			'<p><strong>' . __( 'For more information:', 'content-workflow' ) . '</strong></p>' .
 			'<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank">' . __( 'Content Workflow WordPress Integration' ) . '</a></p>' .
 			'<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank">' . __( 'Support Forums' ) . '</a></p>'
 		);
@@ -165,8 +165,8 @@ class Mapping_Wizard extends Base {
 			$screen->add_help_tab(
 				array(
 					'id'      => 'gc-field-details',
-					'title'   => __( 'Mapping Fields', 'gathercontent-import' ),
-					'content' => __( '<p><b>Note:</b> If mapping more than one GatherContent field to one WordPress field, you will not be able to "push" that content back to Content Workflow, as there is not currently a way to split the fields back to individual fields.</p>', 'gathercontent-import' ),
+					'title'   => __( 'Mapping Fields', 'content-workflow' ),
+					'content' => __( '<p><b>Note:</b> If mapping more than one GatherContent field to one WordPress field, you will not be able to "push" that content back to Content Workflow, as there is not currently a way to split the fields back to individual fields.</p>', 'content-workflow' ),
 				)
 			);
 		}
@@ -181,14 +181,14 @@ class Mapping_Wizard extends Base {
 			'logo'                => $this->logo,
 			'option_group'        => $this->option_group,
 			'settings_sections'   => Form_Section::get_sections( self::SLUG ),
-			'go_back_button_text' => __( 'Previous Step', 'gathercontent-import' ),
+			'go_back_button_text' => __( 'Previous Step', 'content-workflow' ),
 			'refresh_button'      => $this->refresh_connection_link(),
-			'submit_button_text'  => __( 'Next Step', 'gathercontent-import' ),
+			'submit_button_text'  => __( 'Next Step', 'content-workflow' ),
 		);
 
 		switch ( $this->step ) {
 			case self::ACCOUNT:
-				$args['go_back_button_text'] = __( 'Back to API setup', 'gathercontent-import' );
+				$args['go_back_button_text'] = __( 'Back to API setup', 'content-workflow' );
 				$args['go_back_url']         = $this->parent_url;
 				break;
 
@@ -198,11 +198,11 @@ class Mapping_Wizard extends Base {
 
 			case self::TEMPLATE:
 				$args['go_back_url']        = remove_query_arg( 'template', remove_query_arg( 'mapping' ) );
-				$args['submit_button_text'] = __( 'Save Mapping', 'gathercontent-import' );
+				$args['submit_button_text'] = __( 'Save Mapping', 'content-workflow' );
 				break;
 
 			case self::SYNC:
-				$args['submit_button_text'] = __( 'Import Selected Items', 'gathercontent-import' );
+				$args['submit_button_text'] = __( 'Import Selected Items', 'content-workflow' );
 				break;
 		}
 
@@ -217,7 +217,7 @@ class Mapping_Wizard extends Base {
 		if ( get_option( 'gc-api-updated' ) ) {
 			$notices[] = array(
 				'id'      => 'gc-api-connection-reset',
-				'message' => __( 'We refreshed the data from the Content Workflow API.', 'gathercontent-import' ),
+				'message' => __( 'We refreshed the data from the Content Workflow API.', 'content-workflow' ),
 				'type'    => 'updated',
 			);
 			delete_option( 'gc-api-updated' );
@@ -228,7 +228,7 @@ class Mapping_Wizard extends Base {
 			if ( $this->_get_val( 'sync-items' ) ) {
 				$notices[] = array(
 					'id'      => 'gc-mapping-updated',
-					'message' => __( 'Items Import complete!', 'gathercontent-import' ),
+					'message' => __( 'Items Import complete!', 'content-workflow' ),
 					'type'    => 'updated',
 				);
 
@@ -317,7 +317,7 @@ class Mapping_Wizard extends Base {
 	public function select_project() {
 		$section = new Form_Section(
 			'select_project',
-			__( 'First, choose a project from an account.', 'gathercontent-import' ),
+			__( 'First, choose a project from an account.', 'content-workflow' ),
 			'',
 			self::SLUG
 		);
@@ -336,7 +336,7 @@ class Mapping_Wizard extends Base {
 		$accounts = $this->api()->get_accounts();
 
 		if ( ! $accounts ) {
-			return $this->add_settings_error( $this->option_name, 'gc-missing-accounts', sprintf( __( 'We couldn\'t find any accounts associated with your Content Workflow API credentials. Please <a href="%s">check your settings</a>.', 'gathercontent-import' ), $this->parent_url ) );
+			return $this->add_settings_error( $this->option_name, 'gc-missing-accounts', sprintf( __( 'We couldn\'t find any accounts associated with your Content Workflow API credentials. Please <a href="%s">check your settings</a>.', 'content-workflow' ), $this->parent_url ) );
 		}
 
 		$tabs       = array();
@@ -374,7 +374,7 @@ class Mapping_Wizard extends Base {
 
 			$tabs[] = array(
 				'id'        => $account->id,
-				'label'     => sprintf( __( '%s', 'gathercontent-import' ), isset( $account->name ) ? $account->name : '' ),
+				'label'     => sprintf( __( '%s', 'content-workflow' ), isset( $account->name ) ? $account->name : '' ),
 				'nav_class' => $first ? 'nav-tab-active' : '',
 				'tab_class' => $first ? '' : 'hidden',
 				'content'   => $this->view(
@@ -413,7 +413,7 @@ class Mapping_Wizard extends Base {
 
 		$section = new Form_Section(
 			'select_template',
-			__( 'Next, select a template to map.', 'gathercontent-import' ),
+			__( 'Next, select a template to map.', 'content-workflow' ),
 			$this->project_name_and_edit_link( $project ),
 			self::SLUG
 		);
@@ -569,14 +569,14 @@ class Mapping_Wizard extends Base {
 
 		$title = isset( $template->data->name )
 			? $template->data->name
-			: __( 'Unknown Template', 'gathercontent-import' );
+			: __( 'Unknown Template', 'content-workflow' );
 
 		if ( $sync_items ) {
-			$title_prefix = __( 'Import Items for: %s', 'gathercontent-import' );
+			$title_prefix = __( 'Import Items for: %s', 'content-workflow' );
 		} elseif ( $mapping_id ) {
-			$title_prefix = __( 'Edit Mapping for: %s', 'gathercontent-import' );
+			$title_prefix = __( 'Edit Mapping for: %s', 'content-workflow' );
 		} else {
-			$title_prefix = __( 'Create Mapping for: %s', 'gathercontent-import' );
+			$title_prefix = __( 'Create Mapping for: %s', 'content-workflow' );
 		}
 		$title = sprintf( $title_prefix, $title );
 
@@ -737,7 +737,7 @@ class Mapping_Wizard extends Base {
 		$post_id = $this->create_or_update_mapping_post( $options );
 
 		if ( is_wp_error( $post_id ) ) {
-			wp_die( $post_id->get_error_message(), __( 'Failed creating mapping!', 'gathercontent-import' ) );
+			wp_die( $post_id->get_error_message(), __( 'Failed creating mapping!', 'content-workflow' ) );
 		}
 
 		$edit_url = get_edit_post_link( $post_id, 'raw' );
@@ -764,7 +764,7 @@ class Mapping_Wizard extends Base {
 
 		if ( isset( $project->name ) ) {
 			$url          = $this->platform_url( 'templates/' . $project->id );
-			$project_name = '<p class="gc-project-name description">' . sprintf( _x( 'Project: %s', 'Content Workflow project name', 'gathercontent-import' ), $project->name ) . ' | <a href="' . esc_url( $url ) . '" target="_blank">' . __( 'edit project templates', 'gathercontent-import' ) . '</a></p>';
+			$project_name = '<p class="gc-project-name description">' . sprintf( _x( 'Project: %s', 'Content Workflow project name', 'content-workflow' ), $project->name ) . ' | <a href="' . esc_url( $url ) . '" target="_blank">' . __( 'edit project templates', 'content-workflow' ) . '</a></p>';
 		}
 
 		return $project_name;

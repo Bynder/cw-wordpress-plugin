@@ -7,7 +7,7 @@
 	</select>
 <# } else { #>
 	<span data-id="{{ data.id }}" data-item="{{ data.item }}" data-mapping="{{ data.mapping }}">
-		<?php _e( 'N\A', 'gathercontent-import' ); ?>
+		<?php _e( 'N\A', 'content-workflow' ); ?>
 	</span>
 <# } #>
 <?php

@@ -34,25 +34,25 @@ class Template_Mappings extends Base {
 
 		parent::__construct(
 			array(
-				'name'                  => _x( 'Template Mappings', 'post type general name', 'gathercontent-import' ),
-				'singular_name'         => _x( 'Template Mapping', 'post type singular name', 'gathercontent-import' ),
-				'add_new'               => _x( 'Add New', 'post', 'gathercontent-import' ),
-				'add_new_item'          => __( 'Add New Template Mapping', 'gathercontent-import' ),
-				'edit_item'             => __( 'Edit Template Mapping', 'gathercontent-import' ),
-				'new_item'              => __( 'New Template Mapping', 'gathercontent-import' ),
-				'view_item'             => __( 'View Template Mapping', 'gathercontent-import' ),
-				'item_updated'          => __( 'Template Mapping updated', 'gathercontent-import' ),
-				'item_saved'            => __( 'Template Mapping saved', 'gathercontent-import' ),
-				'search_items'          => __( 'Search Template Mappings', 'gathercontent-import' ),
-				'not_found'             => __( 'No template mappings found.', 'gathercontent-import' ),
-				'not_found_in_trash'    => __( 'No template mappings found in Trash.', 'gathercontent-import' ),
-				'all_items'             => __( 'Template Mappings', 'gathercontent-import' ),
-				'archives'              => __( 'Template Mapping Archives', 'gathercontent-import' ),
-				'insert_into_item'      => __( 'Insert into template mapping', 'gathercontent-import' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this template mapping', 'gathercontent-import' ),
-				'filter_items_list'     => __( 'Filter template mappings list', 'gathercontent-import' ),
-				'items_list_navigation' => __( 'Template Mappings list navigation', 'gathercontent-import' ),
-				'items_list'            => __( 'Template Mappings list', 'gathercontent-import' ),
+				'name'                  => _x( 'Template Mappings', 'post type general name', 'content-workflow' ),
+				'singular_name'         => _x( 'Template Mapping', 'post type singular name', 'content-workflow' ),
+				'add_new'               => _x( 'Add New', 'post', 'content-workflow' ),
+				'add_new_item'          => __( 'Add New Template Mapping', 'content-workflow' ),
+				'edit_item'             => __( 'Edit Template Mapping', 'content-workflow' ),
+				'new_item'              => __( 'New Template Mapping', 'content-workflow' ),
+				'view_item'             => __( 'View Template Mapping', 'content-workflow' ),
+				'item_updated'          => __( 'Template Mapping updated', 'content-workflow' ),
+				'item_saved'            => __( 'Template Mapping saved', 'content-workflow' ),
+				'search_items'          => __( 'Search Template Mappings', 'content-workflow' ),
+				'not_found'             => __( 'No template mappings found.', 'content-workflow' ),
+				'not_found_in_trash'    => __( 'No template mappings found in Trash.', 'content-workflow' ),
+				'all_items'             => __( 'Template Mappings', 'content-workflow' ),
+				'archives'              => __( 'Template Mapping Archives', 'content-workflow' ),
+				'insert_into_item'      => __( 'Insert into template mapping', 'content-workflow' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this template mapping', 'content-workflow' ),
+				'filter_items_list'     => __( 'Filter template mappings list', 'content-workflow' ),
+				'items_list_navigation' => __( 'Template Mappings list navigation', 'content-workflow' ),
+				'items_list'            => __( 'Template Mappings list', 'content-workflow' ),
 			),
 			array(
 				'show_ui'      => true,
@@ -142,9 +142,9 @@ class Template_Mappings extends Base {
 	 * @param array $columns Array of registered columns for the mapping post-type.
 	 */
 	public function register_column_headers( $columns ) {
-		$columns['account']  = __( 'Account slug', 'gathercontent-import' );
-		$columns['project']  = __( 'Project id', 'gathercontent-import' );
-		$columns['template'] = __( 'Template id', 'gathercontent-import' );
+		$columns['account']  = __( 'Account slug', 'content-workflow' );
+		$columns['project']  = __( 'Project id', 'content-workflow' );
+		$columns['template'] = __( 'Template id', 'content-workflow' );
 
 		return $columns;
 	}
@@ -268,14 +268,14 @@ class Template_Mappings extends Base {
 	public function output_mapping_data( $post ) {
 		if ( self::SLUG === $post->post_type ) {
 			echo '<p class="postbox" style="padding: 1em;background: #f5f5f5;margin: -4px 0 0">';
-			echo '<strong>' . __( 'Project ID:', 'gathercontent-import' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_project', 1 );
+			echo '<strong>' . __( 'Project ID:', 'content-workflow' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_project', 1 );
 			echo ',&nbsp;';
-			echo '<strong>' . __( 'Template ID:', 'gathercontent-import' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_template', 1 );
+			echo '<strong>' . __( 'Template ID:', 'content-workflow' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_template', 1 );
 
 			if ( $account = get_post_meta( get_the_id(), '_gc_account', 1 ) ) {
 				$account = 'https://' . $account . '.gathercontent.com/';
 				echo ',&nbsp;';
-				echo '<strong>' . __( 'Account:', 'gathercontent-import' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
+				echo '<strong>' . __( 'Account:', 'content-workflow' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
 			}
 
 			echo '</p>';
@@ -342,8 +342,8 @@ class Template_Mappings extends Base {
 			$actions['sync-items'] = sprintf(
 				'<a href="%s" aria-label="%s">%s</a>',
 				add_query_arg( 'sync-items', 1, get_edit_post_link( $post->ID, 'raw' ) ),
-				esc_attr( __( 'Review Items for Import', 'gathercontent-import' ) ),
-				__( 'Review Items for Import', 'gathercontent-import' )
+				esc_attr( __( 'Review Items for Import', 'content-workflow' ) ),
+				__( 'Review Items for Import', 'content-workflow' )
 			);
 		}
 

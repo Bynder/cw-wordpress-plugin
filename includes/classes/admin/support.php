@@ -69,8 +69,8 @@ class Support extends Base {
 	public function admin_menu() {
 		add_submenu_page(
 			self::SLUG,
-			__( 'Support', 'gathercontent-import' ),
-			__( 'Support', 'gathercontent-import' ),
+			__( 'Support', 'content-workflow' ),
+			__( 'Support', 'content-workflow' ),
 			\GatherContent\Importer\view_capability(),
 			self::SLUG . '-support',
 			array( $this, 'admin_page' )

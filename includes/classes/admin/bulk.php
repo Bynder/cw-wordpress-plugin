@@ -292,16 +292,16 @@ class Bulk extends Post_Base {
 			'tmpl-gc-select2-item'    => array(),
 			'tmpl-gc-modal-window'    => array(
 				'nav'     => array(
-					$this->wizard->parent_url            => __( 'Settings', 'gathercontent-import' ),
+					$this->wizard->parent_url            => __( 'Settings', 'content-workflow' ),
 					$this->wizard->mappings->listing_url => $this->wizard->mappings->args->label,
 					$this->wizard->url                   => $this->wizard->mappings->args->labels->new_item,
 				),
 				'headers' => array(
-					'status'      => __( 'Status', 'gathercontent-import' ),
-					'itemName'    => __( 'Item', 'gathercontent-import' ),
-					'updated_at'  => __( 'Updated', 'gathercontent-import' ),
-					'mappingName' => __( 'Template Mapping', 'gathercontent-import' ),
-					'post_title'  => __( 'WordPress Title', 'gathercontent-import' ),
+					'status'      => __( 'Status', 'content-workflow' ),
+					'itemName'    => __( 'Item', 'content-workflow' ),
+					'updated_at'  => __( 'Updated', 'content-workflow' ),
+					'mappingName' => __( 'Template Mapping', 'content-workflow' ),
+					'post_title'  => __( 'WordPress Title', 'content-workflow' ),
 				),
 			),
 			'tmpl-gc-item'            => array(
@@ -354,7 +354,7 @@ class Bulk extends Post_Base {
 		);
 
 		$data['_text'] = array(
-			'no_items' => esc_html__( 'No items found.', 'gathercontent-import' ),
+			'no_items' => esc_html__( 'No items found.', 'content-workflow' ),
 		);
 
 		return $data;

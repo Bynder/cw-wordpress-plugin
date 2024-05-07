@@ -126,7 +126,7 @@ class Debug extends Base {
 	 * @return void
 	 */
 	public function debug_disabled_notice() {
-		$msg = esc_html__( 'Content Workflow Debug Mode: Disabled', 'gathercontent-import' );
+		$msg = esc_html__( 'Content Workflow Debug Mode: Disabled', 'content-workflow' );
 		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
 	}
 
@@ -138,7 +138,7 @@ class Debug extends Base {
 	 * @return void
 	 */
 	public function debug_enabled_notice() {
-		$msg = esc_html__( 'Content Workflow Debug Mode: Enabled', 'gathercontent-import' );
+		$msg = esc_html__( 'Content Workflow Debug Mode: Enabled', 'content-workflow' );
 		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
 	}
 
@@ -150,44 +150,44 @@ class Debug extends Base {
 	public function add_debug_fields() {
 		$section = new Form_Section(
 			'debug',
-			__( 'Debug Mode', 'gathercontent-import' ),
-			sprintf( __( 'Debug file location: %s', 'gathercontent-import' ), '<code>wp-content/' . self::$log_file . '</code>' ),
+			__( 'Debug Mode', 'content-workflow' ),
+			sprintf( __( 'Debug file location: %s', 'content-workflow' ), '<code>wp-content/' . self::$log_file . '</code>' ),
 			Admin::SLUG
 		);
 
 		$section->add_field(
 			'log_importer_requests',
-			__( 'Log Importer Requests?', 'gathercontent-import' ),
+			__( 'Log Importer Requests?', 'content-workflow' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
 		$section->add_field(
 			'review_stuck_status',
-			__( 'Review stuck sync statuses?', 'gathercontent-import' ),
+			__( 'Review stuck sync statuses?', 'content-workflow' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
 		$section->add_field(
 			'delete_stuck_status',
-			__( 'Delete stuck sync statuses?', 'gathercontent-import' ),
+			__( 'Delete stuck sync statuses?', 'content-workflow' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
 		$section->add_field(
 			'view_gc_log_file',
-			__( 'View contents of the Content Workflow debug log file?', 'gathercontent-import' ),
+			__( 'View contents of the Content Workflow debug log file?', 'content-workflow' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
 		$section->add_field(
 			'delete_gc_log_file',
-			__( 'Delete Content Workflow debug log file?', 'gathercontent-import' ),
+			__( 'Delete Content Workflow debug log file?', 'content-workflow' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
 		$section->add_field(
 			'disable_debug_mode',
-			__( 'Disable Debug Mode?', 'gathercontent-import' ),
+			__( 'Disable Debug Mode?', 'content-workflow' ),
 			array( $this, 'debug_checkbox_field_cb' )
 		);
 
@@ -254,7 +254,7 @@ class Debug extends Base {
 		);
 
 		$back_url    = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : '';
-		$back_button = $back_url ? '<p><a href="' . $back_url . '">' . __( 'Go Back', 'gathercontent-import' ) . '</a></p>' : '';
+		$back_button = $back_url ? '<p><a href="' . $back_url . '">' . __( 'Go Back', 'content-workflow' ) . '</a></p>' : '';
 
 		if ( $settings['review_stuck_status'] || $settings['delete_stuck_status'] ) {
 
@@ -279,7 +279,7 @@ class Debug extends Base {
 			return $orig_settings;
 		}
 
-		wp_die( '<xmp>' . __LINE__ . ') $settings: ' . print_r( $settings, true ) . '</xmp>' . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
+		wp_die( '<xmp>' . __LINE__ . ') $settings: ' . print_r( $settings, true ) . '</xmp>' . $back_button, __( 'Debug Mode', 'content-workflow' ) );
 	}
 
 	/**
@@ -306,7 +306,7 @@ class Debug extends Base {
 				);
 			}
 		} else {
-			wp_die( __( 'There are no stuck statuses.', 'gathercontent-import' ) . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
+			wp_die( __( 'There are no stuck statuses.', 'content-workflow' ) . $back_button, __( 'Debug Mode', 'content-workflow' ) );
 		}
 
 		if ( $settings['delete_stuck_status'] ) {
@@ -315,7 +315,7 @@ class Debug extends Base {
 			}
 		}
 
-		wp_die( '<xmp>' . __LINE__ . ') $options: ' . print_r( $options, true ) . '</xmp>' . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
+		wp_die( '<xmp>' . __LINE__ . ') $options: ' . print_r( $options, true ) . '</xmp>' . $back_button, __( 'Debug Mode', 'content-workflow' ) );
 	}
 
 	/**
@@ -329,10 +329,10 @@ class Debug extends Base {
 	 */
 	public function delete_gc_log_file( $back_button ) {
 		if ( unlink( self::$log_path ) ) {
-			wp_die( __( 'Content Workflow log file deleted.', 'gathercontent-import' ) . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
+			wp_die( __( 'Content Workflow log file deleted.', 'content-workflow' ) . $back_button, __( 'Debug Mode', 'content-workflow' ) );
 		}
 
-		wp_die( __( 'Failed to delete Content Workflow log file.' . $back_button, 'gathercontent-import' ), __( 'Debug Mode', 'gathercontent-import' ) );
+		wp_die( __( 'Failed to delete Content Workflow log file.' . $back_button, 'content-workflow' ), __( 'Debug Mode', 'content-workflow' ) );
 	}
 
 	/**
@@ -348,7 +348,7 @@ class Debug extends Base {
 		$log_contents = file_exists( self::$log_path ) ? file_get_contents( self::$log_path ) : '';
 
 		if ( ! $log_contents ) {
-			wp_die( __( 'Content Workflow log file is empty.', 'gathercontent-import' ) . $back_button, __( 'Debug Mode', 'gathercontent-import' ) );
+			wp_die( __( 'Content Workflow log file is empty.', 'content-workflow' ) . $back_button, __( 'Debug Mode', 'content-workflow' ) );
 		}
 
 		die( '<html><body>' . $back_button . '<pre><textarea style="width:100%;height:100%;min-height:1000px;font-size:14px;font-family:monospace;padding:.5em;">' . print_r( $log_contents, true ) . '</textarea></pre></body></html>' );
@@ -401,10 +401,10 @@ class Debug extends Base {
 
 		if ( $changed ) {
 			$status = self::$debug_mode
-				? esc_html__( 'Enabled', 'gathercontent-import' )
-				: esc_html__( 'Disabled', 'gathercontent-import' );
+				? esc_html__( 'Enabled', 'content-workflow' )
+				: esc_html__( 'Disabled', 'content-workflow' );
 
-			self::_debug_log( sprintf( esc_html__( 'Content Workflow Debug Mode: %s', 'gathercontent-import' ), $status ) );
+			self::_debug_log( sprintf( esc_html__( 'Content Workflow Debug Mode: %s', 'content-workflow' ), $status ) );
 		}
 
 		return self::$debug_mode;

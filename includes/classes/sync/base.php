@@ -180,7 +180,7 @@ abstract class Base extends Plugin_Base {
 		$in_progress         = get_option( $progress_option_key );
 
 		if ( $in_progress ) {
-			return new WP_Error( "gc_{$this->direction}_item_in_progress", sprintf( __( 'Currently in progress: %d', 'gathercontent-import' ), $id ) );
+			return new WP_Error( "gc_{$this->direction}_item_in_progress", sprintf( __( 'Currently in progress: %d', 'content-workflow' ), $id ) );
 		}
 
 		try {
@@ -231,7 +231,7 @@ abstract class Base extends Plugin_Base {
 	protected function get_post( $post_id ) {
 		$post = $post_id instanceof WP_Post ? $post_id : get_post( $post_id );
 		if ( ! $post ) {
-			throw new Exception( sprintf( __( 'No post object by that id: %d', 'gathercontent-import' ), $post_id ), __LINE__ );
+			throw new Exception( sprintf( __( 'No post object by that id: %d', 'content-workflow' ), $post_id ), __LINE__ );
 		}
 
 		return $post;
@@ -254,7 +254,7 @@ abstract class Base extends Plugin_Base {
 
 		if ( ! isset( $this->item->id ) ) {
 			// @todo maybe check if error was temporary.
-			throw new Exception( sprintf( __( 'Content Workflow could not get an item for that item id: %d', 'gathercontent-import' ), $item_id ), __LINE__, $this->item );
+			throw new Exception( sprintf( __( 'Content Workflow could not get an item for that item id: %d', 'content-workflow' ), $item_id ), __LINE__, $this->item );
 		}
 
 		return $this->item;
@@ -273,7 +273,7 @@ abstract class Base extends Plugin_Base {
 		$items = $this->mapping->get_items_to_sync( $this->direction );
 
 		if ( empty( $items['pending'] ) ) {
-			throw new Exception( sprintf( __( 'No items to %1$s for: %2$s', 'gathercontent-import' ), $this->direction, $this->mapping->ID ), __LINE__ );
+			throw new Exception( sprintf( __( 'No items to %1$s for: %2$s', 'content-workflow' ), $this->direction, $this->mapping->ID ), __LINE__ );
 		}
 
 		return $items;
@@ -292,7 +292,7 @@ abstract class Base extends Plugin_Base {
 		$mapping_data = $this->mapping->data();
 		if ( empty( $mapping_data ) ) {
 			// @todo maybe check if error was temporary.
-			throw new Exception( sprintf( __( 'No mapping data found for: %s', 'gathercontent-import' ), $this->mapping->ID ), __LINE__ );
+			throw new Exception( sprintf( __( 'No mapping data found for: %s', 'content-workflow' ), $this->mapping->ID ), __LINE__ );
 		}
 	}
 
