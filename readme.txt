@@ -1,4 +1,4 @@
-=== Content Workflow (by Bynder) Plugin ===
+=== Content Workflow (by Bynder) ===
 Contributors: bynder
 Donate link: https://www.bynder.com/products/content-workflow/
 Tags: structured content, gather content, gathercontent, import, migrate, export, mapping, production, writing, collaboration, platform, connect, link, gather, client, word, production, bynder, content, workflow

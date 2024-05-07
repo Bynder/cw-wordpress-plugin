@@ -1,7 +1,6 @@
 <?php
 /**
- * Plugin Name:  Content Workflow (by Bynder) Plugin
- * Plugin URI:   https://www.bynder.com/products/content-workflow/
+ * Plugin Name:  Content Workflow (by Bynder)
  * Description:  Imports items from Content Workflow to your Wordpress site
  * Version:      1.0.0
  * Author:       Content Workflow (by Bynder)
