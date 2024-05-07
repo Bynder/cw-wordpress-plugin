@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:  Content Workflow (by Bynder) Plugin
- * Plugin URI:   http://www.gathercontent.com
+ * Plugin URI:   https://www.bynder.com/products/content-workflow/
  * Description:  Imports items from Content Workflow to your Wordpress site
- * Version:      3.2.19
+ * Version:      1.0.0
  * Author:       Content Workflow (by Bynder)
  * Requires PHP: 7.0
- * Author URI:   https://www.bynder.com/en/products/content-workflow/
- * Text Domain:  gathercontent-import
+ * Author URI:   https://www.bynder.com/products/content-workflow/
+ * Text Domain:  content-workflow
  * Domain Path:  /languages
  * License:      GPL-2.0+
  */
@@ -31,8 +31,8 @@
  */
 
 // Useful global constants
-define( 'GATHERCONTENT_VERSION', '3.2.19' );
-define( 'GATHERCONTENT_ENQUEUE_VERSION', '3.2.19' );
+define( 'GATHERCONTENT_VERSION', '1.0.0' );
+define( 'GATHERCONTENT_ENQUEUE_VERSION', '1.0.0' );
 define( 'GATHERCONTENT_SLUG', 'gathercontent-import' );
 define( 'GATHERCONTENT_PLUGIN', __FILE__ );
 define( 'GATHERCONTENT_URL', plugin_dir_url( __FILE__ ) );

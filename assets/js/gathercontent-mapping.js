@@ -1,5 +1,5 @@
 /**
- * GatherContent Plugin - v3.2.19 - 2024-04-20
+ * Content Workflow Plugin - v1.0.0 - 2024-05-03
  * http://www.gathercontent.com
  *
  * Copyright (c) 2024 GatherContent
