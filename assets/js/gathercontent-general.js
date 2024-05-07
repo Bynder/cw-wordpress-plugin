@@ -1,8 +1,8 @@
 /**
- * GatherContent Plugin - v3.2.19 - 2024-03-18
+ * Content Workflow Plugin - v1.0.0 - 2024-05-03
  * http://www.gathercontent.com
  *
- * Copyright (c) 2024 GatherContent
+ * Copyright (c) 2024 Bynder
  * Licensed under the GPLv2 license.
  */
 

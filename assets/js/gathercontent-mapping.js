@@ -1,5 +1,5 @@
 /**
- * GatherContent Plugin - v3.2.19 - 2024-03-18
+ * Content Workflow Plugin - v1.0.0 - 2024-05-03
  * http://www.gathercontent.com
  *
  * Copyright (c) 2024 GatherContent
@@ -509,7 +509,7 @@ module.exports = function (app, _meta_keys) {
 
 		/**
    * AJAX Update: "Field" - ACF Field group's field
-   * 
+   *
    * @param {string} component - ID without the "#" of the component parent row
    * @param {string} field_name - Parent field name/key of the sub fields, should be a repeater
    * @param {object} saved_fields - OPTIONAL: Pass saved subfields if you want to set pre-existing values
@@ -558,7 +558,7 @@ module.exports = function (app, _meta_keys) {
 
 		/**
    * AJAX Update: "Field" - ACF Field group's repeater subfields
-   * 
+   *
    * @param {string} component - ID without the "#" of the component parent row
    * @param {string} field_name - Parent field name/key of the sub fields, should be a repeater
    * @param {object} saved_fields - OPTIONAL: Pass saved subfields if you want to set pre-existing values
