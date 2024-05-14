@@ -444,8 +444,8 @@ class Admin extends Base {
 	 */
 	public function prev_option_key() {
 		$prefixes = array(
-			'content-workflow', // from wordpress.org/plugins/gathercontent-import
-			'wordpress-plugin', // from github.com/gathercontent/wordpress-plugin
+			'content-workflow', // from wordpress.org/plugins/content-workflow-by-bynder
+			'wordpress-plugin', // from github.com/Bynder/cw-wordpress-plugin
 
 			'gathercontent-import-old', // local copy
 		);
