@@ -33,7 +33,7 @@ class Sync_Items extends Plugin_Base {
 		if ( ! isset( $_REQUEST['data'], $_REQUEST['id'], $_REQUEST['nonce'] ) ) {
 			wp_send_json_error(
 				sprintf(
-					__( 'Error %d: Missing required data.', 'gathercontent-import' ),
+					__( 'Error %d: Missing required data.', 'content-workflow' ),
 					__LINE__
 				)
 			);
@@ -48,7 +48,7 @@ class Sync_Items extends Plugin_Base {
 		) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Syncing is disabled until authentication credentials are provided. Redirecting to the settings page.', 'gathercontent-import' ),
+					'message' => __( 'Syncing is disabled until authentication credentials are provided. Redirecting to the settings page.', 'content-workflow' ),
 					'url'     => add_query_arg( 'auth-required', 1, $admin->url ),
 				)
 			);
@@ -63,7 +63,7 @@ class Sync_Items extends Plugin_Base {
 		if ( ! wp_verify_nonce( $this->_post_val( 'nonce' ), $opt_group . '-options' ) ) {
 			wp_send_json_error(
 				sprintf(
-					__( 'Error %d: Missing security nonce.', 'gathercontent-import' ),
+					__( 'Error %d: Missing security nonce.', 'content-workflow' ),
 					__LINE__
 				)
 			);
@@ -79,7 +79,7 @@ class Sync_Items extends Plugin_Base {
 
 			wp_send_json_error(
 				sprintf(
-					__( 'Error %1$d: Cannot find a mapping by that id: %2$d', 'gathercontent-import' ),
+					__( 'Error %1$d: Cannot find a mapping by that id: %2$d', 'content-workflow' ),
 					__LINE__,
 					absint( $this->_post_val( 'id' ) )
 				)
@@ -141,7 +141,7 @@ class Sync_Items extends Plugin_Base {
 		if ( empty( $data ) || ! is_string( $data ) ) {
 			wp_send_json_error(
 				sprintf(
-					__( 'Error %d: Missing form data.', 'gathercontent-import' ),
+					__( 'Error %d: Missing form data.', 'content-workflow' ),
 					__LINE__
 				)
 			);
@@ -158,7 +158,7 @@ class Sync_Items extends Plugin_Base {
 		) {
 			wp_send_json_error(
 				sprintf(
-					__( 'Error %d: Missing required form data.', 'gathercontent-import' ),
+					__( 'Error %d: Missing required form data.', 'content-workflow' ),
 					__LINE__
 				)
 			);

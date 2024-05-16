@@ -1,13 +1,12 @@
 {
   "name": "gathercontent-importer",
-  "title": "Content Workflow (by Bynder) Plugin",
+  "title": "Content Workflow (by Bynder)",
   "description": "Imports items from Content Workflow to your wordpress site",
   "version": "1.0.0",
   "license": "GPLv2",
-  "homepage": "http://www.gathercontent.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gathercontent/wordpress-plugin"
+    "url": "https://github.com/Bynder/cw-wordpress-plugin"
   },
   "author": {
     "name": "Content Workflow (by Bynder)",

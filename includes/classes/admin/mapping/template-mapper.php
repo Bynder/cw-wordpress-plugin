@@ -87,7 +87,7 @@ class Template_Mapper extends Base {
 				'type'  => 'hidden',
 				'id'    => 'gc-template-title',
 				'name'  => $this->option_name . '[title]',
-				'value' => esc_attr( isset( $this->template->data->name ) ? $this->template->data->name : __( 'Mapped Template', 'gathercontent-import' ) ),
+				'value' => esc_attr( isset( $this->template->data->name ) ? $this->template->data->name : __( 'Mapped Template', 'content-workflow' ) ),
 			)
 		);
 
@@ -163,25 +163,25 @@ class Template_Mapper extends Base {
 				'default' => array(
 					'gc' => array(
 						'id'    => 'gc-field-th',
-						'label' => __( 'Content Workflow Field', 'gathercontent-import' ),
+						'label' => __( 'Content Workflow Field', 'content-workflow' ),
 					),
 					'wp' => array(
 						'id'    => 'wp-field-th',
-						'label' => __( 'Mapped WordPress Field', 'gathercontent-import' ),
+						'label' => __( 'Mapped WordPress Field', 'content-workflow' ),
 					),
 				),
 				'status'  => array(
 					'gc'      => array(
 						'id'    => 'gc-status-th',
-						'label' => __( 'Content Workflow Status', 'gathercontent-import' ),
+						'label' => __( 'Content Workflow Status', 'content-workflow' ),
 					),
 					'wp'      => array(
 						'id'    => 'wp-status-th',
-						'label' => __( 'Mapped WordPress Status', 'gathercontent-import' ),
+						'label' => __( 'Mapped WordPress Status', 'content-workflow' ),
 					),
 					'gcafter' => array(
 						'id'    => 'gcafter-status-th',
-						'label' => __( 'On Import, Change Status', 'gathercontent-import' ),
+						'label' => __( 'On Import, Change Status', 'content-workflow' ),
 					),
 				),
 			),
@@ -208,7 +208,7 @@ class Template_Mapper extends Base {
 			 'tmpl-gc-mapping-defaults-tab' => array(
 				 'post_author_label'   => $this->post_column_label( 'post_author' ),
 				 'post_status_options' => $post_status_options,
-				 'post_status_label'   => __( 'Default Status', 'gathercontent-import' ),
+				 'post_status_label'   => __( 'Default Status', 'content-workflow' ),
 				 'post_type_label'     => $this->post_column_label( 'post_type' ),
 				 'post_type_options'   => $this->get_default_field_options( 'post_type' ),
 				 'gc_status_options'   => $this->statuses,
@@ -271,7 +271,7 @@ class Template_Mapper extends Base {
 		$dismissed = explode( ',', (string) $dismissed );
 
 		$pointers = array(
-			'select_type'        => '<h3>' . __( 'Select your Post Type', 'gathercontent-import' ) . '</h3><p>' . __( 'To get started, select your default Post Type for this mapping.', 'gathercontent-import' ) . '</p>',
+			'select_type'        => '<h3>' . __( 'Select your Post Type', 'content-workflow' ) . '</h3><p>' . __( 'To get started, select your default Post Type for this mapping.', 'content-workflow' ) . '</p>',
 			'select_tab_how_to'  => '',
 			'map_status_how_to'  => '',
 			'refresh_connection' => '',
@@ -280,16 +280,16 @@ class Template_Mapper extends Base {
 		if ( $initial ) {
 
 			if ( ! in_array( 'gc_select_tab_how_to', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Template Tabs and Fields', 'gathercontent-import' ) . '</h3>';
-				$content .= '<p>' . __( 'You\'ll find the tabs from the Content Workflow Template here. Select a tab to start mapping the Template fields.', 'gathercontent-import' ) . '</p>';
+				$content  = '<h3>' . __( 'Template Tabs and Fields', 'content-workflow' ) . '</h3>';
+				$content .= '<p>' . __( 'You\'ll find the tabs from the Content Workflow Template here. Select a tab to start mapping the Template fields.', 'content-workflow' ) . '</p>';
 
 				$pointers['select_tab_how_to'] = $content;
 				$enqueue                       = true;
 			}
 
 			if ( ! in_array( 'gc_map_status_how_to', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Content Workflow Status &Rarr; WordPress Status', 'gathercontent-import' ) . '</h3>';
-				$content .= '<p>' . __( 'Here you\'ll be able to map each individual Content Workflow status to a WordPress status, and optionally, change the Content Workflow status when your items are imported to WordPress.', 'gathercontent-import' ) . '</p>';
+				$content  = '<h3>' . __( 'Content Workflow Status &Rarr; WordPress Status', 'content-workflow' ) . '</h3>';
+				$content .= '<p>' . __( 'Here you\'ll be able to map each individual Content Workflow status to a WordPress status, and optionally, change the Content Workflow status when your items are imported to WordPress.', 'content-workflow' ) . '</p>';
 
 				$pointers['map_status_how_to'] = $content;
 				$enqueue                       = true;
@@ -297,9 +297,9 @@ class Template_Mapper extends Base {
 		} else {
 
 			if ( ! in_array( 'gc_refresh_connection', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Refresh data from Content Workflow', 'gathercontent-import' ) . '</h3>';
-				$content .= '<p>' . __( 'To make the plugin more speedy, we cache the requests to Content Workflow for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.', 'gathercontent-import' ) . '</p>';
-				$content .= '<p>' . __( 'For more help, click the "Help" tab in the upper-right-hand corner.', 'gathercontent-import' ) . '</p>';
+				$content  = '<h3>' . __( 'Refresh data from Content Workflow', 'content-workflow' ) . '</h3>';
+				$content .= '<p>' . __( 'To make the plugin more speedy, we cache the requests to Content Workflow for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.', 'content-workflow' ) . '</p>';
+				$content .= '<p>' . __( 'For more help, click the "Help" tab in the upper-right-hand corner.', 'content-workflow' ) . '</p>';
 
 				$pointers['refresh_connection'] = $content;
 				$enqueue                        = true;
@@ -387,7 +387,7 @@ class Template_Mapper extends Base {
 
 		$default_tab = [
 			'id' => 'mapping-defaults',
-			'label' => __('Mapping Defaults', 'gathercontent-import'),
+			'label' => __('Mapping Defaults', 'content-workflow'),
 			'hidden' => true,
 			'navClasses' => 'alignright',
 			'rows' => $this->post_options(),

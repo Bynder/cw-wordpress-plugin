@@ -10,7 +10,7 @@
 	<button type="button" class="button-link media-modal-close gc-bb-modal-close">
 		<span class="media-modal-icon">
 			<span class="screen-reader-text">
-				<?php echo __( 'Close', 'gathercontent-import' ); ?>
+				<?php echo __( 'Close', 'content-workflow' ); ?>
 			</span>
 		</span>
 	</button>
@@ -48,7 +48,7 @@
 			<table id="gc-modal-{{ data.currID }}" class="gc-modal-tabs widefat striped gc-table">
 				<thead>
 					<tr>
-						<td id="cb" class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-1"><?php _e( 'Select All', 'gathercontent-import' ); ?></label>
+						<td id="cb" class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-1"><?php _e( 'Select All', 'content-workflow' ); ?></label>
 							<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-1" type="checkbox">
 						</td>
 						<?php echo new self( 'table-headers', $this->args ); ?>
@@ -61,14 +61,14 @@
 							<span class="spinner is-active" style="margin: 0 4px 0 0;"></span>
 						</td>
 						<td>
-							<span><?php _e( 'Checking for items...', 'gathercontent-import' ); ?></span>
+							<span><?php _e( 'Checking for items...', 'content-workflow' ); ?></span>
 						</td>
 					</tr>
 				</tbody>
 
 				<tfoot>
 					<tr>
-						<td class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-2"><?php _e( 'Select All', 'gathercontent-import' ); ?></label>
+						<td class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-2"><?php _e( 'Select All', 'content-workflow' ); ?></label>
 							<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-2" type="checkbox">
 						</td>
 						<?php echo new self( 'table-headers', $this->args ); ?>

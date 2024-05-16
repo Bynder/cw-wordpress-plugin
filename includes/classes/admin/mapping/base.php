@@ -183,11 +183,11 @@ abstract class Base extends Plugin_Base {
 				break;
 			case 'post_status':
 				$select_options = array(
-					'publish'  => __( 'Published', 'gathercontent-import' ),
-					'draft'    => __( 'Draft', 'gathercontent-import' ),
-					'pending'  => __( 'Pending', 'gathercontent-import' ),
-					'private'  => __( 'Private', 'gathercontent-import' ),
-					'nochange' => __( 'Do not change', 'gathercontent-import' ),
+					'publish'  => __( 'Published', 'content-workflow' ),
+					'draft'    => __( 'Draft', 'content-workflow' ),
+					'pending'  => __( 'Pending', 'content-workflow' ),
+					'private'  => __( 'Private', 'content-workflow' ),
+					'nochange' => __( 'Do not change', 'content-workflow' ),
 				);
 				break;
 			case 'post_type':
@@ -343,40 +343,40 @@ abstract class Base extends Plugin_Base {
 	protected function post_column_label( $col ) {
 		switch ( $col ) {
 			case 'ID':
-				return __( 'Author', 'gathercontent-import' );
+				return __( 'Author', 'content-workflow' );
 			case 'post_author':
-				return __( 'Author', 'gathercontent-import' );
+				return __( 'Author', 'content-workflow' );
 			case 'post_date':
-				return __( 'Post Date', 'gathercontent-import' );
+				return __( 'Post Date', 'content-workflow' );
 				return 'post_date';
 			case 'post_date_gmt':
-				return __( 'Post Date (GMT)', 'gathercontent-import' );
+				return __( 'Post Date (GMT)', 'content-workflow' );
 			case 'post_content':
-				return __( 'Post Content', 'gathercontent-import' );
+				return __( 'Post Content', 'content-workflow' );
 			case 'post_title':
-				return __( 'Post Title', 'gathercontent-import' );
+				return __( 'Post Title', 'content-workflow' );
 			case 'post_excerpt':
-				return __( 'Post Excerpt', 'gathercontent-import' );
+				return __( 'Post Excerpt', 'content-workflow' );
 			case 'post_status':
-				return __( 'Post Status', 'gathercontent-import' );
+				return __( 'Post Status', 'content-workflow' );
 			case 'comment_status':
-				return __( 'Comment Status', 'gathercontent-import' );
+				return __( 'Comment Status', 'content-workflow' );
 			case 'ping_status':
-				return __( 'Ping Status', 'gathercontent-import' );
+				return __( 'Ping Status', 'content-workflow' );
 			case 'post_password':
-				return __( 'Post Password', 'gathercontent-import' );
+				return __( 'Post Password', 'content-workflow' );
 			case 'post_name':
-				return __( 'Post Name (Slug)', 'gathercontent-import' );
+				return __( 'Post Name (Slug)', 'content-workflow' );
 			case 'post_modified':
-				return __( 'Post Modified Date', 'gathercontent-import' );
+				return __( 'Post Modified Date', 'content-workflow' );
 			case 'post_modified_gmt':
-				return __( 'Post Modified Date (GMT)', 'gathercontent-import' );
+				return __( 'Post Modified Date (GMT)', 'content-workflow' );
 			case 'post_parent':
-				return __( 'Post Parent', 'gathercontent-import' );
+				return __( 'Post Parent', 'content-workflow' );
 			case 'menu_order':
-				return __( 'Menu Order', 'gathercontent-import' );
+				return __( 'Menu Order', 'content-workflow' );
 			case 'post_type':
-				return __( 'Post Type', 'gathercontent-import' );
+				return __( 'Post Type', 'content-workflow' );
 			default:
 				return $col;
 		}
@@ -402,7 +402,7 @@ abstract class Base extends Plugin_Base {
 			$type->taxonomies = array();
 			foreach ( get_object_taxonomies( $type->name, 'objects' ) as $tax ) {
 				if ( 'post_format' === $tax->name ) {
-					$tax->label = __( 'Post Formats', 'gathercontent-import' );
+					$tax->label = __( 'Post Formats', 'content-workflow' );
 				}
 
 				$type->taxonomies[] = $tax;
