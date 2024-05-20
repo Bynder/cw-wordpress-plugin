@@ -27,8 +27,8 @@ class Database extends Base implements Type {
 	 *
 	 * @since 3.0.0
 	 */
-	public function __construct( array $post_options ) {
-		$this->tableColumnData = $post_options;
+	public function __construct() {
+		$this->tableColumnData = $this->database_types();
 
 		$tableNames = array_keys($this->tableColumnData);
 		$this->post_options = array_combine($tableNames, $tableNames);
@@ -92,6 +92,31 @@ class Database extends Base implements Type {
 		";
 
 		echo '<option '.$fieldValueJs.' value="' . $value . '">' . $label . '</option>';
+	}
+
+	/**
+	 * @return Array<string, string[]> - array of table names prefixed with wp_
+	 */
+	private function database_types(){
+		global $wpdb;
+
+		$wpTables = $wpdb->get_col("SHOW TABLES LIKE '{$wpdb->prefix}%'");
+
+		$allColumns = [];
+		foreach($wpTables as $tableName){
+			if(!isset($allColumns[$tableName])){
+				$allColumns[$tableName] = [];
+			}
+
+			$tableCols = $wpdb->get_results("SHOW COLUMNS FROM $tableName");
+
+			foreach($tableCols as $tableCol){
+				$str = "$tableCol->Field";
+				$allColumns[$tableName][] = $str;
+			}
+		}
+
+		return $allColumns;
 	}
 
 	private function tableSelectChangedJavascript(): string
