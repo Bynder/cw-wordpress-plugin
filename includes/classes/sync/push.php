@@ -253,6 +253,10 @@ class Push extends Base {
 			);
 		}
 
+		if ($result === false) {
+			wp_send_json_error( 'Failed to push content to Content Workflow' );
+		}
+
 		return $result;
 	}
 
@@ -556,7 +560,12 @@ class Push extends Base {
 			case 'post_excerpt':
 				$el_value = wp_kses_post( $this->get_element_value() );
 				if ( 'post_content' === $post_column ) {
-					$value = apply_filters( 'the_content', $value );
+					$value = $this->ensureShortcodesAreNotConvertedToHtml(
+						function ($value) {
+							return apply_filters( 'the_content', $value );
+						},
+						$value
+					);
 				}
 
 				// There are super minor encoding issues we want to ignore.
@@ -575,6 +584,41 @@ class Push extends Base {
 		}
 
 		return $updated;
+	}
+
+	private function ensureShortcodesAreNotConvertedToHtml(callable $callback, string $value): string
+	{
+		preg_match_all(
+			'/\[[\w\W]+?\]/',
+			$value,
+			$matches
+		);
+
+		foreach ($matches[0] as $match) {
+			$value = str_replace(
+				$match,
+				'<shortcode>' . base64_encode($match) . '</shortcode>',
+				$value
+			);
+		}
+
+		$value = $callback($value);
+
+		preg_match_all(
+			'/<shortcode>([\w\W])+?<\/shortcode>/',
+			$value,
+			$matches
+		);
+
+		foreach ($matches[0] as $match) {
+			$value = str_replace(
+				$match,
+				base64_decode(strip_tags($match)),
+				$value
+			);
+		}
+
+		return $value;
 	}
 
 	/**
