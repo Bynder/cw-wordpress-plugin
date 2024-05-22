@@ -114,7 +114,7 @@ class Pull extends Base {
 	}
 
 	/**
-	 * //TODO gavin - this should have a restriction on what is allowed
+	 * @TODO restrict what tables / columns can be used.
 	 *
 	 * @param string $tableColumnString "tableName.columnName"
 	 * @return false|string[]
@@ -157,15 +157,14 @@ class Pull extends Base {
 			);
 
 			if(!$success){
-				$debugString = json_encode([
+				$errorData = [
 					'table' => $table,
 					'column' => $column,
 					'post_id' => $post_id,
 					'content' => $content
-				]);
+				];
 
-				//TODO gavin - fail properly
-				throw new \Exception('Failed to save content to table: ' . $debugString);
+				throw new Exception('Failed to save content to table',500, $errorData);
 			}
 		}
 	}
