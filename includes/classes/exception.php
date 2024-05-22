@@ -26,7 +26,7 @@ class Exception extends \Exception {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param strin $message Exception message.
+	 * @param string $message Exception message.
 	 * @param int   $code    Exception code.
 	 * @param mixed $data    Additional data.
 	 */
