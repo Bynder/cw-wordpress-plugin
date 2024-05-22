@@ -180,8 +180,7 @@ EOT;
 
 	public function underscore_template( View $view ) {
 		/**
-		 * TODO gavin - surely this cannot be the correct way of dynamic js on
-		 * wordpress pages? Fix this when you suss out how it's meant to be done
+		 * @TODO do on-page javascript properly (how???)
 		 */
 		$tableSelectChangedJavascript = $this->tableSelectChangedJavascript();
 		$columnSelectChangedJavascript = $this->columSelectChangedJavascript();
@@ -207,7 +206,6 @@ EOT;
 					<?= implode('\r\n', $this->getAllTableColOptions()) ?>
 				</select>
 
-				<!--		//TODO gavin - this is the actual input that is passed on form submit -->
 				<input
 					class="hidden-database-table-name"
 					type="hidden"
