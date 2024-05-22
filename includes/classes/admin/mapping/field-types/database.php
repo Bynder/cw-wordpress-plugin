@@ -28,7 +28,7 @@ class Database extends Base implements Type {
 	 * @since 3.0.0
 	 */
 	public function __construct() {
-		$this->tableColumnData = $this->database_types();
+		$this->tableColumnData = $this->getTableColumns();
 
 		$tableNames = array_keys($this->tableColumnData);
 		$this->post_options = array_combine($tableNames, $tableNames);
@@ -95,25 +95,33 @@ class Database extends Base implements Type {
 	}
 
 	/**
-	 * @return Array<string, string[]> - array of table names prefixed with wp_
+	 * Returns valid table -> columns for this input. Only tables that include
+	 * a 'post_id' column.
+	 *
+	 * @return Array<string, string[]> - [tableName => colNames, ...]
 	 */
-	private function database_types(){
+	private function getTableColumns(){
 		global $wpdb;
 
 		$wpTables = $wpdb->get_col("SHOW TABLES LIKE '{$wpdb->prefix}%'");
 
 		$allColumns = [];
 		foreach($wpTables as $tableName){
-			if(!isset($allColumns[$tableName])){
-				$allColumns[$tableName] = [];
-			}
-
 			$tableCols = $wpdb->get_results("SHOW COLUMNS FROM $tableName");
 
-			foreach($tableCols as $tableCol){
-				$str = "$tableCol->Field";
-				$allColumns[$tableName][] = $str;
+			$columnNames = [];
+			foreach ($tableCols as $col) {
+				$columnNames[] = $col->Field;
 			}
+
+			/**
+			 * We are only interested in tables that contain a 'post_id' column
+			 */
+			if(!in_array('post_id', $columnNames)){
+				continue;
+			}
+
+			$allColumns[$tableName] = $columnNames;
 		}
 
 		return $allColumns;
