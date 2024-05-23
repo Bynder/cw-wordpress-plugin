@@ -157,14 +157,12 @@ class Pull extends Base {
 			);
 
 			if(!$success){
-				$errorData = [
+				throw new Exception('Failed to save content to table',500, [
 					'table' => $table,
 					'column' => $column,
 					'post_id' => $post_id,
 					'content' => $content
-				];
-
-				throw new Exception('Failed to save content to table',500, $errorData);
+				]);
 			}
 		}
 	}
