@@ -215,6 +215,9 @@ EOT;
 				<# if ( data.field_value ) { #>value="{{ data.field_value }}"<# } #>
 				/>
 			</div>
+			<p class="description" style="font-size: 10px">
+				You can only select tables that contain a <code style="font-size: 8px">post_id</code> column, as this is necessary to locate the corresponding row within the chosen table.
+			</p>
 		<# } #>
 		<?php
 	}
