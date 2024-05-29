@@ -105,13 +105,9 @@ class Pull extends Base {
 
 		$data = [$column => $content];
 		$where = [$postIdColumn => $post_id];
-		$count = $wpdb->update($table,$data,$where); // false | int
+		$wpdb->update($table,$data,$where); // false | int
 
-		if($count === false || $count === 0){
-			$count = $wpdb->insert($table, array_merge($data, $where));
- 		}
-
-		return is_int($count);
+		return true;
 	}
 
 	/**
