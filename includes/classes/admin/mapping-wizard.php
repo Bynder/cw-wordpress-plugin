@@ -541,15 +541,6 @@ class Mapping_Wizard extends Base {
 				array('additionalClass' => 'gc-component-disabled'),
 				false
 			);
-
-			?>
-				<style>
-					.gc-component-disabled {
-						pointer-events: none;
-						opacity: 0.5;
-					}
-				</style>
-			<?php
 		}
 
 		if ( ! $sync_items && $mapping_id ) {
