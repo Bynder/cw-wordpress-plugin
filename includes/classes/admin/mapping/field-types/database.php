@@ -121,6 +121,8 @@ class Database extends Base implements Type {
 				continue;
 			}
 
+			unset($columnNames[array_search('post_id', $columnNames)]);
+
 			$allColumns[$tableName] = $columnNames;
 		}
 
