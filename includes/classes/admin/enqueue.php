@@ -50,6 +50,8 @@ abstract class Enqueue extends Plugin_Base {
 
 		\GatherContent\Importer\enqueue_script( 'gc-select2', 'vendor/select2-4.0.13/select2', array( 'jquery' ), '4.0.13' );
 
+		\GatherContent\Importer\enqueue_script( 'gathercontent-database', 'gathercontent-database', '1.0.0' );
+
 		// If < WP 4.5, we need the newer version of underscore.js
 		if ( ! Utils::enqueued_at_least( 'underscore', '1.8.3' ) ) {
 

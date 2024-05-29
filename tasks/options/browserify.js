@@ -12,6 +12,7 @@ module.exports = {
 		'assets/js/gathercontent-general.js' : 'assets/js/src/components/general.js',
 		'assets/js/gathercontent-single.js'  : 'assets/js/src/components/single.js',
 		'assets/js/gathercontent-mapping.js' : 'assets/js/src/components/mapping.js',
+		'assets/js/gathercontent-database.js' : 'assets/js/src/components/database.js',
 		'assets/js/gathercontent-sync.js'    : 'assets/js/src/components/sync.js'
 	} }
 };
