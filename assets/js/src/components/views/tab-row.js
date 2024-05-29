@@ -50,6 +50,7 @@ module.exports = function( app, _meta_keys ) {
 		 * 2nd Dropdown - event change
 		 */
 		changeValue: function( evt ) {
+			var component = jQuery( evt.target ).closest('.component-table-wrapper').attr('id');
 			var value = jQuery( evt.target ).val();
 			var type = this.model.get( 'type' );
 			var fieldType = this.model.get( 'field_type' );
@@ -58,19 +59,18 @@ module.exports = function( app, _meta_keys ) {
 				this.model.set( 'field_value', '' );
 				this.model.set( 'field_field', '' );
 				this.model.set( 'field_subfields', {} );
-				jQuery('#'+component+' .component-table-inner ').find('select').html("<option value=''>Unused</option>").val(""); 
+				jQuery('#'+component+' .component-table-inner ').find('select').html("<option value=''>Unused</option>").val("");
 			} else {
 				this.model.set( 'field_value', value );
 				// Components - Update "Field"
 				if( "component" === type ){
-					var component = jQuery( evt.target ).closest('.component-table-wrapper').attr('id');
 					this.updateAjax_Field(component, value, false);
 				}
 				// Repeaters - Update "Field"
 				else if( "wp-type-acf" === fieldType ){
 					var id = jQuery( evt.target ).closest('td').attr('id');
 					this.updateAjax_Field(id, value, false);
-				}	
+				}
 			}
 		},
 
@@ -84,7 +84,7 @@ module.exports = function( app, _meta_keys ) {
 			this.model.set( 'field_subfields', {} );
 			if ( '' === value ) {
 				this.model.set( 'field_field', '' );
-				jQuery('#'+component+' .component-table-inner ').find('select').html("<option value=''>Unused</option>").val(""); 
+				jQuery('#'+component+' .component-table-inner ').find('select').html("<option value=''>Unused</option>").val("");
 			} else {
 				this.model.set( 'field_field', value );
 				// Update subfields
@@ -111,7 +111,7 @@ module.exports = function( app, _meta_keys ) {
 			var options_html = "<option value=''>Unused</option>";
 			jQuery.each(data.field_data, function(i, field) {
 				options_html += "<option class='hidden' value='"+field.key+"' data-type='"+field.type+"'>"+field.label+"</option>";
-			}); 
+			});
 			return options_html;
 		},
 
@@ -119,7 +119,7 @@ module.exports = function( app, _meta_keys ) {
 		 * AJAX Update: "Field" - ACF Field group's field
 		 * - "Field" refers to the 3rd dropdown of the component fields top level
 		 * - After selecting the field group from the 2nd dropdown, call WP_AJAX to get the relevent fields from the group selected and populate the 3rd dropdown (aka "Field")
-		 * 
+		 *
 		 * @param {string} component - ID without the "#" of the component parent row
 		 * @param {string} field_name - Parent field name/key of the sub fields, should be a repeater
 		 * @param {object} saved_fields - OPTIONAL: Pass saved subfields if you want to set pre-existing values
@@ -166,7 +166,7 @@ module.exports = function( app, _meta_keys ) {
 		 * AJAX Update: "Subfields" - ACF Field group's repeater subfields
 		 * - "Subfields" are in the component accordion
 		 * - After selecting the field group from the 3rd dropdown, call WP_AJAX to get the relevent subfields from the ACF Repeater selected and populate the subfields
-		 * 
+		 *
 		 * @param {string} component - ID without the "#" of the component parent row
 		 * @param {string} field_name - Parent field name/key of the sub fields, should be a repeater
 		 * @param {object} saved_fields - OPTIONAL: Pass saved subfields if you want to set pre-existing values
