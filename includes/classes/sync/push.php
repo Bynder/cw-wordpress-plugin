@@ -594,7 +594,7 @@ class Push extends Base {
 
 		global $wpdb;
 
-		$results = $wpdb->get_results($wpdb->prepare("SELECT %s as value from %s where post_id=%s;", $column, $table, $this->post->ID));
+		$results = $wpdb->get_results($wpdb->prepare("SELECT %i as value from %i where post_id=%d;", $column, $table, $this->post->ID));
 
 		$value = $results[0]->value;
 		// @codingStandardsIgnoreStart
