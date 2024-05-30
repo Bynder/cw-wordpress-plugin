@@ -185,14 +185,14 @@ ul.gc-radio-desc li, ul.gc-reveal-items-list li {
 			&.text{
 				option[data-type="text"],
 				option[data-type="textarea"],
-				option[data-type="wysiwyg"]{ 
+				option[data-type="wysiwyg"]{
 					display:block;
 				}
 			}
 			&.attachment{
 				option[data-type="gallery"],
-				option[data-type="image"]{ 
-					display:block; 
+				option[data-type="image"]{
+					display:block;
 				}
 			}
 			&.choice_checkbox{
@@ -204,14 +204,14 @@ ul.gc-radio-desc li, ul.gc-reveal-items-list li {
 			&.repeater{
 				option[data-type="text"],
 				option[data-type="textarea"],
-				option[data-type="wysiwyg"]{ 
+				option[data-type="wysiwyg"]{
 					display:none;
 				}
 				option[data-type="repeater"]{ display:block; }
 			}
 		}
 	}
-	
+
 	.ajax-disabled{
 		opacity:0.75;
 		pointer-events:none;
@@ -389,6 +389,11 @@ ul.gc-radio-desc li, ul.gc-reveal-items-list li {
 
 .gc-auth-required .gc-section-auth table {
 	background-color: #f5bfbf;
+}
+
+.gc-component-disabled {
+	pointer-events: none;
+	opacity: 0.5;
 }
 
 @import 'sync';

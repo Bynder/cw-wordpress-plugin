@@ -1,8 +1,8 @@
 /**
- * Content Workflow Plugin - v1.0.0 - 2024-05-03
- * http://www.gathercontent.com
+ * Content Workflow (by Bynder) - v1.0.0 - 2024-05-29
+ * 
  *
- * Copyright (c) 2024 GatherContent
+ * Copyright (c) 2024 Content Workflow (by Bynder)
  * Licensed under the GPLv2 license.
  */
 
