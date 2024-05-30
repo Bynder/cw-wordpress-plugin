@@ -129,70 +129,13 @@ class Database extends Base implements Type {
 		return $allColumns;
 	}
 
-	private function tableSelectChangedJavascript(): string
-	{
-		return <<<EOT
-/** this runs when the table select is changed */
-const selectElement = this
-const value = selectElement.value
-
-// get the selected options text
-const text = selectElement.options[selectElement.selectedIndex].text
-
-// get the column selector sibling element
-const tableSelect = this.parentElement.querySelector('.cw-column-selector')
-tableSelect.value = ''
-
-// hide any option whose data-tablename is not this text
-tableSelect.querySelectorAll('option').forEach(opt => {
-	const optTableName = opt.getAttribute('data-tablename')
-	opt.style.display = optTableName === text ? 'block' : 'none'
-})
-
-// set this value as the first portion of the hidden element's value
-const hidden = this.parentElement.querySelector('.hidden-database-table-name')
-let hiddenVal = hidden.value
-if(!hiddenVal.includes('.')){
-	hiddenVal = '.'
-}
-const parts = hiddenVal.split('.')
-parts.splice(0, 1, value)
-hidden.value = parts.join('.')
-EOT;
-	}
-
-	private function columSelectChangedJavascript(): string
-	{
-		return <<<EOT
-/** this runs when the column selector is changed */
-const selectElement = this
-const value = selectElement.value
-
-// set this value as the second portion of the hidden element's value
-const hidden = this.parentElement.querySelector('.hidden-database-table-name')
-let hiddenVal = hidden.value
-if(!hiddenVal.includes('.')){
-	hiddenVal = '.'
-}
-const parts = hiddenVal.split('.')
-parts.splice(1, 1, value)
-hidden.value = parts.join('.')
-EOT;
-	}
-
 	public function underscore_template( View $view ) {
-		/**
-		 * @TODO do on-page javascript properly (how???)
-		 */
-		$tableSelectChangedJavascript = $this->tableSelectChangedJavascript();
-		$columnSelectChangedJavascript = $this->columSelectChangedJavascript();
 
 		?>
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type ) { #>
 			<div class="wp-type-database-dropdown-container">
 				<select
-					class="gc-select2 wp-type-value-select <?php $this->e_type_id(); ?>"
-					onchange="<?= $tableSelectChangedJavascript ?>"
+					class="cw-table-selector gc-select2 wp-type-value-select <?php $this->e_type_id(); ?>"
 					name=""
 				>
 					<?php $this->underscore_options( $this->post_options ); ?>
@@ -201,7 +144,6 @@ EOT;
 
 				<select
 					class="cw-column-selector"
-					onchange="<?= $columnSelectChangedJavascript ?>"
 					name=""
 				>
 					<option value="">Select a column</option>
