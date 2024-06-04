@@ -50,6 +50,9 @@ Below the text box is a button that will allow you to simply save all of that in
 
 **Note:** This information contains potentially senstive data. Please be careful with where you post it. Do not post it in the WordPress support forums.
 
+= What external services do we communicate to? =
+We only ping the Content Workflow API to fetch and push data. We do not send any data to any other services. We shall also be pulling your avatar from your account to display in the plugin.
+
 = If you need help =
 * Please [visit our support documentation](https://support.bynder.com/hc/en-us/articles/14786938909458-Content-Workflow-Integrations#wordpress-integration).
 
