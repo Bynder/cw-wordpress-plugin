@@ -60,8 +60,6 @@ Show On Front:            <?php echo $this->get( 'show_on_front' ), "\n"; ?>
 Page On Front:            <?php echo $this->get( 'page_on_front' ), "\n"; ?>
 Page For Posts:           <?php echo $this->get( 'page_for_posts' ), "\n"; ?>
 
-WP Remote Post:           <?php echo $this->get( 'wp_remote_post' ), "\n"; ?>
-
 Session:                  <?php echo $this->get( 'session' ), "\n"; ?>
 Session Name:             <?php echo $this->get( 'session_name' ), "\n"; ?>
 Cookie Path:              <?php echo $this->get( 'cookie_path' ), "\n"; ?>
