@@ -109,9 +109,17 @@ class Mapping_Wizard extends Base {
 		);
 
 		add_filter( 'admin_body_class', array( $this, 'body_class' ) );
-		add_action( 'admin_print_styles-' . $page, array( $this, 'admin_enqueue_style' ) );
-		add_action( 'admin_print_styles-' . $page, array( $this, 'admin_enqueue_script' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_assets' ) );
 		add_action( 'load-' . $page, array( $this, 'add_help_tabs' ) );
+	}
+
+	public function admin_enqueue_assets($hook_suffix) {
+		if($hook_suffix !== self::SLUG) {
+			return;
+		}
+
+		$this->admin_enqueue_style();
+		$this->admin_enqueue_script();
 	}
 
 	protected function get_step_label() {
