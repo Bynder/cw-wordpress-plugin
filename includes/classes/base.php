@@ -68,6 +68,19 @@ abstract class Base {
 	}
 
 	/**
+	 * Returns an array of the key=>value | null in $_GET if the given keys exist.
+	 * @param $keys
+	 * @return array|null
+	 */
+	public function _get_vals($keys){
+		return array_reduce($keys, function($carry, $key){
+			$carry[$key] = $this->_get_val($key);
+
+			return $carry;
+		}, []);
+	}
+
+	/**
 	 * See if the query array has a value and if its value matches the $value.
 	 *
 	 * @since  3.0.0
