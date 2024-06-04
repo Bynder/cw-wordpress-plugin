@@ -32,7 +32,7 @@
 // Useful global constants
 define( 'GATHERCONTENT_VERSION', '1.0.0' );
 define( 'GATHERCONTENT_ENQUEUE_VERSION', '1.0.0' );
-define( 'GATHERCONTENT_SLUG', 'content-workflow-by-bynder' );
+define( 'GATHERCONTENT_SLUG', 'content-workflow' );
 define( 'GATHERCONTENT_PLUGIN', __FILE__ );
 define( 'GATHERCONTENT_URL', plugin_dir_url( __FILE__ ) );
 define( 'GATHERCONTENT_PATH', dirname( __FILE__ ) . '/' );
