@@ -26,7 +26,7 @@ class ACF extends Base implements Type {
      * @since 3.0.0
      */
     public function __construct() {
-        $this->option_label = __( 'ACF Field Groups', 'content-workflow' );
+        $this->option_label = __( 'ACF Field Groups', 'content-workflow-by-bynder' );
     }
 
     public function underscore_template ( View $view ) {
@@ -85,7 +85,7 @@ class ACF extends Base implements Type {
             <select id="field-group-select-{{data.name}}" data-set="{{data.name}}" class="wp-type-value-select gc-select2 gc-select2-add-new field-select-group <?php $this->e_type_id(); ?>" name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
                 <option data-group="" data-set="" value="">Unused</option>
                 <?php $this->underscore_options( $options_acf_groups ); ?>
-                <?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow' ) ); ?>
+                <?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
             </select>
             <span style="display: block; margin: 5px 0;"></span>
             <select id="field-select-{{data.name}}" data-set="{{data.name}}" class="wp-type-field-select gc-select2 gc-select2-add-new field-select-field <?php $this->e_type_id(); ?>" name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][field]">
@@ -96,7 +96,7 @@ class ACF extends Base implements Type {
                 <# if ( data.field_value ) { #>
                     <?php foreach($options_acf_groups_fields as $group_id => $fields ): ?>
                         <# if ( '<?php echo $group_id; ?>' === data.field_value ) { #>
-                            <option value=""><?php _e( 'Unused', 'content-workflow' ); ?></option>
+                            <option value=""><?php _e( 'Unused', 'content-workflow-by-bynder' ); ?></option>
                             <?php foreach($fields as $field_id => $field_name ):
                                 echo '<option <# if ( "' . $field_id . '" === data.field_field ) { #>selected="selected"<# } #> value="' . $field_id . '">' . $field_name . '</option>';
                             endforeach; ?>

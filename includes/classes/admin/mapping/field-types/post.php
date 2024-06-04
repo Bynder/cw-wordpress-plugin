@@ -27,7 +27,7 @@ class Post extends Base implements Type {
 	 */
 	public function __construct( array $post_options ) {
 		$this->post_options = $post_options;
-		$this->option_label = __( 'Post Data', 'content-workflow' );
+		$this->option_label = __( 'Post Data', 'content-workflow-by-bynder' );
 	}
 
 	public function underscore_template( View $view ) {
@@ -35,7 +35,7 @@ class Post extends Base implements Type {
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type ) { #>
 			<select class="gc-select2 wp-type-value-select <?php $this->e_type_id(); ?>" name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
 				<?php $this->underscore_options( $this->post_options ); ?>
-				<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow' ) ); ?>
+				<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
 			</select>
 		<# } #>
 		<?php

@@ -715,7 +715,7 @@ class API extends Base {
 			if ( 500 === $response['response']['code'] && ( $error = wp_remote_retrieve_body( $response ) ) ) {
 
 				$error    = json_decode( $error );
-				$message  = isset( $error->message ) ? $error->message : __( 'Unknown Error', 'content-workflow' );
+				$message  = isset( $error->message ) ? $error->message : __( 'Unknown Error', 'content-workflow-by-bynder' );
 				$response = new WP_Error(
 					'gc_api_error',
 					$message,
@@ -727,7 +727,7 @@ class API extends Base {
 
 			} elseif ( 401 === $response['response']['code'] && ( $error = wp_remote_retrieve_body( $response ) ) ) {
 
-				$message  = $error ? $error : __( 'Unknown Error', 'content-workflow' );
+				$message  = $error ? $error : __( 'Unknown Error', 'content-workflow-by-bynder' );
 				$response = new WP_Error(
 					'gc_api_error',
 					$message,
@@ -769,7 +769,7 @@ class API extends Base {
 				$this->set_user( $settings['account_email'] );
 				$this->set_api_key( $settings['api_key'] );
 			} else {
-				throw new \Exception( __( 'The Content Workflow API connection is not set up.', 'content-workflow' ) );
+				throw new \Exception( __( 'The Content Workflow API connection is not set up.', 'content-workflow-by-bynder' ) );
 			}
 		}
 

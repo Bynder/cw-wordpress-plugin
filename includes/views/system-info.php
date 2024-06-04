@@ -1,5 +1,5 @@
 <div class="wrap gc-admin-wrap">
-	<h2><?php _e( 'System Information', 'content-workflow' ); ?></h2>
+	<h2><?php _e( 'System Information', 'content-workflow-by-bynder' ); ?></h2>
 	<style type="text/css" media="screen">
 		#system-info-textarea {
 			background: none;
@@ -15,7 +15,7 @@
 	</style>
 	<br/>
 	<form action="<?php echo esc_url( admin_url( 'admin.php?page=gathercontent-import-support' ) ); ?>" method="post" dir="ltr">
-		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow' ); ?>">
+		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow-by-bynder' ); ?>">
 ### Begin System Info ###
 
 ## Please include this information when getting in touch with the Content Workflow (by Bynder) support team ##
@@ -89,11 +89,11 @@ Plugin Options:           <?php echo $this->get( 'gc_options' ), "\n"; ?>
 <?php do_action( 'gc_system_info_after' ); ?>
 
 ### End System Info ###</textarea>
-		<p><strong><?php _e( 'For more information:', 'content-workflow' ); ?></strong></p>
-		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration', 'content-workflow' ); ?></a></p>
-		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums', 'content-workflow' ); ?></a></p>
+		<p><strong><?php _e( 'For more information:', 'content-workflow-by-bynder' ); ?></strong></p>
+		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration', 'content-workflow-by-bynder' ); ?></a></p>
+		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums', 'content-workflow-by-bynder' ); ?></a></p>
 
-		<p><?php _e( '<strong>This information contains potentially senstive data.</strong><br>Please be careful with where you post it. Do not post it in the WordPress support forums.', 'content-workflow' ); ?></p>
+		<p><?php _e( '<strong>This information contains potentially senstive data.</strong><br>Please be careful with where you post it. Do not post it in the WordPress support forums.', 'content-workflow-by-bynder' ); ?></p>
 		<p class="submit">
 			<?php wp_nonce_field( 'gc-download-sysinfo-nonce', 'gc-download-sysinfo-nonce' ); ?>
 			<?php submit_button( 'Download System Info File', 'primary', 'gc-download-sysinfo', false ); ?>

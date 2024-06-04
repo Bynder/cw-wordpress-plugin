@@ -292,16 +292,16 @@ class Bulk extends Post_Base {
 			'tmpl-gc-select2-item'    => array(),
 			'tmpl-gc-modal-window'    => array(
 				'nav'     => array(
-					$this->wizard->parent_url            => __( 'Settings', 'content-workflow' ),
+					$this->wizard->parent_url            => __( 'Settings', 'content-workflow-by-bynder' ),
 					$this->wizard->mappings->listing_url => $this->wizard->mappings->args->label,
 					$this->wizard->url                   => $this->wizard->mappings->args->labels->new_item,
 				),
 				'headers' => array(
-					'status'      => __( 'Status', 'content-workflow' ),
-					'itemName'    => __( 'Item', 'content-workflow' ),
-					'updated_at'  => __( 'Updated', 'content-workflow' ),
-					'mappingName' => __( 'Template Mapping', 'content-workflow' ),
-					'post_title'  => __( 'WordPress Title', 'content-workflow' ),
+					'status'      => __( 'Status', 'content-workflow-by-bynder' ),
+					'itemName'    => __( 'Item', 'content-workflow-by-bynder' ),
+					'updated_at'  => __( 'Updated', 'content-workflow-by-bynder' ),
+					'mappingName' => __( 'Template Mapping', 'content-workflow-by-bynder' ),
+					'post_title'  => __( 'WordPress Title', 'content-workflow-by-bynder' ),
 				),
 			),
 			'tmpl-gc-item'            => array(
@@ -354,7 +354,7 @@ class Bulk extends Post_Base {
 		);
 
 		$data['_text'] = array(
-			'no_items' => esc_html__( 'No items found.', 'content-workflow' ),
+			'no_items' => esc_html__( 'No items found.', 'content-workflow-by-bynder' ),
 		);
 
 		return $data;

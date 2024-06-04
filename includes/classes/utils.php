@@ -176,12 +176,12 @@ class Utils extends Base {
 			$types = apply_filters(
 				'gc_field_type_names',
 				array(
-					'text'            => __( 'Text', 'content-workflow' ),
-					'text_rich'       => __( 'Rich Text', 'content-workflow' ),
-					'text_plain'      => __( 'Plain Text', 'content-workflow' ),
-					'choice_radio'    => __( 'Radio', 'content-workflow' ),
-					'choice_checkbox' => __( 'Checkboxes', 'content-workflow' ),
-					'files'           => __( 'Attachment', 'content-workflow' ),
+					'text'            => __( 'Text', 'content-workflow-by-bynder' ),
+					'text_rich'       => __( 'Rich Text', 'content-workflow-by-bynder' ),
+					'text_plain'      => __( 'Plain Text', 'content-workflow-by-bynder' ),
+					'choice_radio'    => __( 'Radio', 'content-workflow-by-bynder' ),
+					'choice_checkbox' => __( 'Checkboxes', 'content-workflow-by-bynder' ),
+					'files'           => __( 'Attachment', 'content-workflow-by-bynder' ),
 				)
 			);
 		}

@@ -32,7 +32,7 @@
 // Useful global constants
 define( 'GATHERCONTENT_VERSION', '1.0.0' );
 define( 'GATHERCONTENT_ENQUEUE_VERSION', '1.0.0' );
-define( 'GATHERCONTENT_SLUG', 'content-workflow' );
+define( 'GATHERCONTENT_SLUG', 'content-workflow-by-bynder' );
 define( 'GATHERCONTENT_PLUGIN', __FILE__ );
 define( 'GATHERCONTENT_URL', plugin_dir_url( __FILE__ ) );
 define( 'GATHERCONTENT_PATH', dirname( __FILE__ ) . '/' );
@@ -65,7 +65,7 @@ if ( version_compare( phpversion(), '7.0', '<' ) ) {
 function gathercontent_importer_php_version_too_low_notice() {
 	printf(
 		'<div id="message" class="error"><p>%s</p></div>',
-		__( 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: <a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>', 'content-workflow' )
+		__( 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: <a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>', 'content-workflow-by-bynder' )
 	);
 }
 
@@ -79,7 +79,7 @@ function gathercontent_importer_php_version_too_low_notice() {
 function gathercontent_importer_wp_version_too_low_notice() {
 	printf(
 		'<div id="message" class="error"><p>%s</p></div>',
-		__( 'Sorry, for security and performance reasons, the Content Workflow plugin requires a minimum WordPress version of 4.4. Please update WordPress to the most recent version.', 'content-workflow' )
+		__( 'Sorry, for security and performance reasons, the Content Workflow plugin requires a minimum WordPress version of 4.4. Please update WordPress to the most recent version.', 'content-workflow-by-bynder' )
 	);
 }
 
