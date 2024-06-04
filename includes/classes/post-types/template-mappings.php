@@ -205,19 +205,19 @@ class Template_Mappings extends Base {
 
 		switch ( $column ) {
 			case 'account':
-				$value = $data[ $column ] ?: __( '&mdash;' );
+				$value = $data[ $column ] ?: __( '&mdash;', 'content-workflow' );
 				if ( $data['base_url'] && $data['account'] ) {
 					$url = $data['base_url'];
 				}
 				break;
 			case 'project':
-				$value = $data[ $column ] ?: __( '&mdash;' );
+				$value = $data[ $column ] ?: __( '&mdash;', 'content-workflow' );
 				if ( $data['base_url'] && $value ) {
 					$url = esc_url( $data['base_url'] . 'projects/view/' . $value );
 				}
 				break;
 			case 'template':
-				$value = $data[ $column ] ?: __( '&mdash;' );
+				$value = $data[ $column ] ?: __( '&mdash;', 'content-workflow' );
 				if ( $data['base_url'] && $data['project'] && $value ) {
 					$url = esc_url( $data['base_url'] . 'templates/' . $data['project'] );
 				}

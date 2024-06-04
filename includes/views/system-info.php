@@ -90,8 +90,8 @@ Plugin Options:           <?php echo $this->get( 'gc_options' ), "\n"; ?>
 
 ### End System Info ###</textarea>
 		<p><strong><?php _e( 'For more information:', 'content-workflow' ); ?></strong></p>
-		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration' ); ?></a></p>
-		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums' ); ?></a></p>
+		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration', 'content-workflow' ); ?></a></p>
+		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums', 'content-workflow' ); ?></a></p>
 
 		<p><?php _e( '<strong>This information contains potentially senstive data.</strong><br>Please be careful with where you post it. Do not post it in the WordPress support forums.', 'content-workflow' ); ?></p>
 		<p class="submit">

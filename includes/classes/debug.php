@@ -330,7 +330,7 @@ class Debug extends Base {
 			wp_die( __( 'Content Workflow log file deleted.', 'content-workflow' ) . $back_button, __( 'Debug Mode', 'content-workflow' ) );
 		}
 
-		wp_die( __( 'Failed to delete Content Workflow log file.' . $back_button, 'content-workflow' ), __( 'Debug Mode', 'content-workflow' ) );
+		wp_die( __( 'Failed to delete Content Workflow log file.', 'content-workflow' ) . $back_button, __( 'Debug Mode', 'content-workflow' ) );
 	}
 
 	/**

@@ -156,8 +156,8 @@ class Mapping_Wizard extends Base {
 
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'content-workflow' ) . '</strong></p>' .
-			'<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank">' . __( 'Content Workflow WordPress Integration' ) . '</a></p>' .
-			'<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank">' . __( 'Support Forums' ) . '</a></p>'
+			'<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank">' . __( 'Content Workflow WordPress Integration', 'content-workflow' ) . '</a></p>' .
+			'<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank">' . __( 'Support Forums', 'content-workflow' ) . '</a></p>'
 		);
 
 		if ( self::TEMPLATE === $this->step ) {
