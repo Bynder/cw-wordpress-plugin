@@ -41,16 +41,11 @@ abstract class Base {
 	 * @throws Exception If the $_GET and $_Post variables are not set on the first initation.
 	 */
 	protected function __construct( array $_get = null, array $_post = null ) {
-		if ( is_array( $_get ) ) {
-			self::$_get = $_get;
-		}
-
-		if ( is_array( $_post ) ) {
-			self::$_post = $_post;
-		}
+		self::$_get = $_get;
+		self::$_post = $_post;
 
 		if ( null === self::$_get || null === self::$_post ) {
-			throw new Exception( __CLASS__ . ' expects the $_GET and $_POST variables as arguments' );
+			throw new Exception( __CLASS__ . ' expects the $_GET and $_POST variables as arguments', 500 );
 		}
 	}
 
