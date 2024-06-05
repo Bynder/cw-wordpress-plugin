@@ -84,7 +84,7 @@ class ACF extends Base {
 
 				$meta_value = $cb( $post_data['meta_input'][ $field['name'] ], $field );
 
-				$post_data['meta_input'][ $field['name'] ] = apply_filters( 'gc_transform_meta_for_acf', $meta_value, $field, $post_data, $pull );
+				$post_data['meta_input'][ $field['name'] ] = apply_filters( 'cwby_transform_meta_for_acf', $meta_value, $field, $post_data, $pull );
 			}
 		}
 
