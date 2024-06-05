@@ -121,7 +121,7 @@ class Pull extends Base {
 				&& $is_up_to_date && apply_filters( 'gc_only_update_if_newer', true )
 			) {
 				throw new Exception(
-					sprintf( __( 'WordPress has most recent changes for %1$s (Item ID: %2$d):', 'content-workflow' ), $this->item->name, $this->item->id ),
+					sprintf( __( 'WordPress has most recent changes for %1$s (Item ID: %2$d):', 'content-workflow-by-bynder' ), $this->item->name, $this->item->id ),
 					__LINE__,
 					array(
 						'post' => $existing->ID,
@@ -860,14 +860,14 @@ class Pull extends Base {
 
 		switch ( $field ) {
 			case 'ID':
-				throw new Exception( __( 'Cannot override post IDs', 'content-workflow' ), __LINE__ );
+				throw new Exception( __( 'Cannot override post IDs', 'content-workflow-by-bynder' ), __LINE__ );
 
 			case 'post_date':
 			case 'post_date_gmt':
 			case 'post_modified':
 			case 'post_modified_gmt':
 				if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
-					throw new Exception( sprintf( __( '%s field requires a numeric timestamp, or date string.', 'content-workflow' ), $field ), __LINE__ );
+					throw new Exception( sprintf( __( '%s field requires a numeric timestamp, or date string.', 'content-workflow-by-bynder' ), $field ), __LINE__ );
 				}
 
 				$value = is_numeric( $value ) ? $value : strtotime( $value );
@@ -877,7 +877,7 @@ class Pull extends Base {
 					: date( 'Y-m-d H:i:s', $value );
 			case 'post_format':
 				if ( isset( $post_data['post_type'] ) && ! post_type_supports( $post_data['post_type'], 'post-formats' ) ) {
-					throw new Exception( sprintf( __( 'The %s post-type does not support post-formats.', 'content-workflow' ), $post_data['post_type'] ), __LINE__ );
+					throw new Exception( sprintf( __( 'The %s post-type does not support post-formats.', 'content-workflow-by-bynder' ), $post_data['post_type'] ), __LINE__ );
 				}
 			case 'post_title':
 				$value = strip_tags( $value, '<strong><em><del><ins><code>' );

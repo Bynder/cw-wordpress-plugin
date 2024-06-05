@@ -1,11 +1,11 @@
-<legend class="screen-reader-text"><?php _e( 'Items Import Progress', 'content-workflow' ); ?></legend>
+<legend class="screen-reader-text"><?php _e( 'Items Import Progress', 'content-workflow-by-bynder' ); ?></legend>
 <table class="gc-sync-table">
 	<tbody>
 		<tr>
 			<th id="progress">
 				<div class="gc-progress-bar">
 					<div class="gc-progress-bar-partial" style="width: {{ data.percent }}%"><span>{{ data.percent }}%</span></div>
-					<button type="button" class="notice-dismiss gc-cancel-sync" title="<?php _e( 'Cancel Import', 'content-workflow' ); ?>"><span class="screen-reader-text"><?php _e( 'Cancel Import', 'content-workflow' ); ?></span></button>
+					<button type="button" class="notice-dismiss gc-cancel-sync" title="<?php _e( 'Cancel Import', 'content-workflow-by-bynder' ); ?>"><span class="screen-reader-text"><?php _e( 'Cancel Import', 'content-workflow-by-bynder' ); ?></span></button>
 				</div>
 			</th>
 		</tr>

@@ -26,7 +26,7 @@ class Taxonomy extends Base implements Type {
 	 */
 	public function __construct( array $post_types ) {
 		$this->post_types   = $post_types;
-		$this->option_label = __( 'Taxonomy/Terms', 'content-workflow' );
+		$this->option_label = __( 'Taxonomy/Terms', 'content-workflow-by-bynder' );
 	}
 
 	public function underscore_options( $tax_array ) {
@@ -40,10 +40,10 @@ class Taxonomy extends Base implements Type {
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type && '<?php echo $type->name; ?>' === data.post_type ) { #>
 			<select class="wp-type-value-select <?php $this->e_type_id(); ?> wp-taxonomy-<?php echo $type->name; ?>-type" name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
 				<?php if ( empty( $type->taxonomies ) ) : ?>
-					<option selected="selected" value=""><?php _e( 'N/A', 'content-workflow' ); ?></option>
+					<option selected="selected" value=""><?php _e( 'N/A', 'content-workflow-by-bynder' ); ?></option>
 				<?php else : ?>
 					<?php $this->underscore_options( $type->taxonomies ); ?>
-					<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow' ) ); ?>
+					<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
 				<?php endif; ?>
 			</select>
 		<# } #>

@@ -18,18 +18,18 @@
 		<# if ( ( data.is_repeatable ) ) { #>
 			<span class="dashicons dashicons-controls-repeat" title="Repeatable Field"></span>
 		<# } #>
-		<a title="<?php _ex( 'Click to show additional details', 'About the Content Workflow object', 'content-workflow' ); ?>" href="#" class="gc-reveal-items <# if(data.component){ #>gc-reveal-items-component<# } #> dashicons-before dashicons-arrow-<# if ( data.expanded ) { #>down<# } else { #>right<# } #>"><strong>{{ data.label }} <small>{{ data.subtitle }}</small></strong></a>
+		<a title="<?php _ex( 'Click to show additional details', 'About the Content Workflow object', 'content-workflow-by-bynder' ); ?>" href="#" class="gc-reveal-items <# if(data.component){ #>gc-reveal-items-component<# } #> dashicons-before dashicons-arrow-<# if ( data.expanded ) { #>down<# } else { #>right<# } #>"><strong>{{ data.label }} <small>{{ data.subtitle }}</small></strong></a>
 		<ul class="gc-reveal-items-list <# if ( !data.expanded ) { #>hidden<# } #>">
 			<# if ( data.typeName ) { #>
-			<li><strong><?php _e( 'Type:', 'content-workflow' ); ?></strong> {{ data.typeName }}</li>
+			<li><strong><?php _e( 'Type:', 'content-workflow-by-bynder' ); ?></strong> {{ data.typeName }}</li>
 			<# } #>
 
 			<# if ( data.limit && data.limit_type ) { #>
-			<li><strong><?php _e( 'Limit:', 'content-workflow' ); ?></strong> {{ data.limit }} {{ data.limit_type }} </li>
+			<li><strong><?php _e( 'Limit:', 'content-workflow-by-bynder' ); ?></strong> {{ data.limit }} {{ data.limit_type }} </li>
 			<# } #>
 
 			<# if ( data.instructions ) { #>
-			<li><strong><?php _e( 'Description:', 'content-workflow' ); ?></strong> {{ data.instructions }}</li>
+			<li><strong><?php _e( 'Description:', 'content-workflow-by-bynder' ); ?></strong> {{ data.instructions }}</li>
 			<# } #>
 		</ul>
 	<# } else { #>
@@ -40,7 +40,7 @@
 <?php // RIGHT COLUMN - WP DATA FIELDS ?>
 <td id="<# if (data.typeName !== 'component') { #>{{data.name}}<# } #>" class="<# if (data.typeName === 'component') { #>gc-component gc-component-disabled column<# } #> <# if ( data.is_repeatable ) { #>type-repeater<# } #>">
 	<select class="wp-type-select type-select" name="<?php $this->output( 'option_base' ); ?>[mapping][{{ data.name }}][type]">
-		<option <# if ( '' === data.field_type ) { #>selected="selected"<# } #> value=""><?php _e( 'Unused', 'content-workflow' ); ?></option>
+		<option <# if ( '' === data.field_type ) { #>selected="selected"<# } #> value=""><?php _e( 'Unused', 'content-workflow-by-bynder' ); ?></option>
 		<?php do_action( 'gathercontent_field_type_option_underscore_template', $this ); ?>
 	</select>
 	<?php do_action( 'gathercontent_field_type_underscore_template', $this ); ?>
@@ -78,19 +78,19 @@
 							<# if ( field.metadata && field.metadata.repeatable && field.metadata.repeatable.isRepeatable ) { #>
 								<span class="dashicons dashicons-controls-repeat" title="Repeatable Field"></span>
 							<# } #>
-							<a title="<?php _ex( 'Click to show additional details', 'About the Content Workflow object', 'content-workflow' ); ?>" href="#" class="gc-reveal-items dashicons-before dashicons-arrow-right">
+							<a title="<?php _ex( 'Click to show additional details', 'About the Content Workflow object', 'content-workflow-by-bynder' ); ?>" href="#" class="gc-reveal-items dashicons-before dashicons-arrow-right">
 								<strong>{{ field.label }} <small>{{ field.subtitle }}</small></strong>
 							</a>
 							<ul class="gc-reveal-items-list gc-reveal-items-hidden hidden">
-								<# if(( field.field_type )){ #> <li><strong><?php _e( 'Type:', 'content-workflow' ); ?></strong> {{ subfield_type_translate[field.field_type] }}</li> <# } #>
-								<# if(( field.instructions )){ #> <li><strong><?php _e( 'Instructions:', 'content-workflow' ); ?></strong> {{ field.instructions }}</li> <# } #>
+								<# if(( field.field_type )){ #> <li><strong><?php _e( 'Type:', 'content-workflow-by-bynder' ); ?></strong> {{ subfield_type_translate[field.field_type] }}</li> <# } #>
+								<# if(( field.instructions )){ #> <li><strong><?php _e( 'Instructions:', 'content-workflow-by-bynder' ); ?></strong> {{ field.instructions }}</li> <# } #>
 							</ul>
 						</td>
 
 						<?php /** COMPONENT SUB-FIELDS: WP SELECTs **/ ?>
 						<td class="acf-components" data-set="{{ data.name }}">
 							<select id="component-child-{{ data.name }}-{{ index }}" data-set="{{ data.name }}" class="component-child wp-subfield-select" data-index="{{index}}" name="<?php $this->output( 'option_base' ); ?>[mapping][{{ data.name }}][sub_fields][{{index}}]">
-								<option value=""><?php _e( 'Unused', 'content-workflow' ); ?></option>
+								<option value=""><?php _e( 'Unused', 'content-workflow-by-bynder' ); ?></option>
 								<?php // do_action( 'gathercontent_field_type_option_underscore_template', $this ); ?>
 							</select>
 						</td>
