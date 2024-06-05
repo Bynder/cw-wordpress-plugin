@@ -83,13 +83,13 @@ abstract class Post_Base extends UI_Base {
 		return array(
 			'_edit_nonce'  => wp_create_nonce( General::get_instance()->admin->mapping_wizard->option_group . '-options' ),
 			'_statuses'    => array(
-				'starting' => __( 'Starting Sync', 'gathercontent-importer' ),
-				'syncing'  => __( 'Syncing', 'gathercontent-importer' ),
-				'complete' => __( 'Sync Complete', 'gathercontent-importer' ),
-				'failed'   => __( 'Sync Failed (review?)', 'gathercontent-importer' ),
+				'starting' => __( 'Starting Sync', 'content-workflow-by-bynder' ),
+				'syncing'  => __( 'Syncing', 'content-workflow-by-bynder' ),
+				'complete' => __( 'Sync Complete', 'content-workflow-by-bynder' ),
+				'failed'   => __( 'Sync Failed (review?)', 'content-workflow-by-bynder' ),
 			),
 			'_errors'      => array(
-				'unknown' => __( 'There was an unknown error', 'gathercontent-importer' ),
+				'unknown' => __( 'There was an unknown error', 'content-workflow-by-bynder' ),
 			),
 			'_step_labels' => Utils::get_step_label( 'all' ),
 		);

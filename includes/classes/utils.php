@@ -207,11 +207,11 @@ class Utils extends Base {
 
 		if ( null === $labels ) {
 			$labels = array(
-				'accounts'  => esc_html__( 'Select an account:', 'gathercontent-importer' ),
-				'projects'  => esc_html__( 'Select a project:', 'gathercontent-importer' ),
-				'templates' => esc_html__( 'Select a template:', 'gathercontent-importer' ),
-				'mappings'  => sprintf( esc_html_x( 'Select a %s:', 'Select a template mapping', 'gathercontent-importer' ), General::get_instance()->admin->mapping_wizard->mappings->args->labels->singular_name ),
-				'import'    => esc_html__( 'Import Items:', 'gathercontent-importer' ),
+				'accounts'  => esc_html__( 'Select an account:', 'content-workflow-by-bynder' ),
+				'projects'  => esc_html__( 'Select a project:', 'content-workflow-by-bynder' ),
+				'templates' => esc_html__( 'Select a template:', 'content-workflow-by-bynder' ),
+				'mappings'  => sprintf( esc_html_x( 'Select a %s:', 'Select a template mapping', 'content-workflow-by-bynder' ), General::get_instance()->admin->mapping_wizard->mappings->args->labels->singular_name ),
+				'import'    => esc_html__( 'Import Items:', 'content-workflow-by-bynder' ),
 			);
 		}
 

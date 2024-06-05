@@ -1,5 +1,5 @@
 <th scope="row" class="gc-check-column">
-	<label class="screen-reader-text" for="cb-select-{{ data.id }}"><?php _e( 'Select Another Item', 'gatdercontent-import' ); ?></label>
+	<label class="screen-reader-text" for="cb-select-{{ data.id }}"><?php _e( 'Select Another Item', 'content-workflow-by-bynder' ); ?></label>
 	<input id="cb-select-{{ data.id }}" type="checkbox" <# if ( data.checked ) { #>checked="checked"<# } #> name="import[]" value="{{ data.id }}">
 </th>
 <td class="gc-status-column">

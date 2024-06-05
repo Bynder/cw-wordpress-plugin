@@ -46,7 +46,7 @@ abstract class Base extends Plugin_Base {
 		$screen = get_current_screen();
 		if ( isset( $screen->post_type ) && $screen->post_type == static::SLUG ) {
 			$name = $this->args->labels->singular_name;
-			return sprintf( __( '%s Title', 'cpt-core' ), $name );
+			return sprintf( __( '%s Title', 'content-workflow-by-bynder' ), $name );
 		}
 
 		return $title;
