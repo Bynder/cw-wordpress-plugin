@@ -133,13 +133,18 @@ class Items_Sync extends Base {
 	 */
 	public function ui_page() {
 		// Output the markup for the JS to build on.
+
+		/**
+		 * Previously the foreach below was iterating over the entire $_GET
+		 * super global. Now we use the specific keys only.
+		 */
+		$hiddenInputs = $this->_get_vals([
+			'page', 'project', 'template', 'sync-items'
+		]);
+
 		?>
 		<input type="hidden" name="mapping_id" id="gc-input-mapping_id" value="<?php echo $this->mapping_id; ?>"/>
-		<?php
-		foreach ( $_GET as $key => $value ) :
-			if ( 'mapping' === $key ) {
-				continue; }
-			?>
+		<?php foreach ( $hiddenInputs as $key => $value ) : ?>
 			<input type="hidden" name="<?php echo esc_attr( $key ); ?>" id="gc-input-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 		<?php endforeach; ?>
 		<p class="gc-submit-top"><input type="submit" name="submit" id="gc-submit-2" class="button button-primary button-large" value="<?php esc_html_e( 'Import Selected Items', 'content-workflow' ); ?>"></p>
