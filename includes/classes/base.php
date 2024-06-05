@@ -67,7 +67,8 @@ abstract class Base {
 	 * @param $keys
 	 * @return array|null
 	 */
-	public function _get_vals($keys){
+	public function _get_vals($keys)
+	{
 		return array_reduce($keys, function($carry, $key){
 			$carry[$key] = $this->_get_val($key);
 
