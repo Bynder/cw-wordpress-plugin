@@ -1,8 +1,3 @@
-<?php
-wp_enqueue_script('system_info_script', GATHERCONTENT_URL . 'assets/js/src/components/system-info.js', array('jquery'), '1.0', true);
-wp_enqueue_style('system_info_style', GATHERCONTENT_URL . 'assets/css/system-info.css', array(), '1.0');
-?>
-
 <div class="wrap gc-admin-wrap">
 	<h2><?php _e( 'System Information', 'content-workflow' ); ?></h2>
 	<br/>

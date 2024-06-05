@@ -114,10 +114,6 @@ class Mapping_Wizard extends Base {
 	}
 
 	public function admin_enqueue_assets($hook_suffix) {
-		if($hook_suffix !== self::SLUG) {
-			return;
-		}
-
 		$this->admin_enqueue_style();
 		$this->admin_enqueue_script();
 	}

@@ -1,6 +1,4 @@
 <?php
-wp_enqueue_script('redirect_script', GATHERCONTENT_URL . 'assets/js/src/components/redirect.js', array(), '1.0', true);
-
 $data = array(
 	'redirectUrl' => $this->get( 'redirect_url' ),
 );
