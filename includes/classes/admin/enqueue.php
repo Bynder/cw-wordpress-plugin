@@ -27,7 +27,7 @@ abstract class Enqueue extends Plugin_Base {
 		\GatherContent\Importer\enqueue_style( 'gc-select2', 'vendor/select2-4.0.13/select2', array(), '4.0.13' );
 		\GatherContent\Importer\enqueue_style( 'gathercontent', 'gathercontent-importer' );
 
-		do_action( 'gc_admin_enqueue_style' );
+		do_action( 'cwby_admin_enqueue_style' );
 	}
 
 	/**
@@ -64,7 +64,7 @@ abstract class Enqueue extends Plugin_Base {
 
 		\GatherContent\Importer\enqueue_script( 'gathercontent', 'gathercontent', array( 'gc-select2', 'wp-backbone' ) );
 
-		do_action( 'gc_admin_enqueue_script' );
+		do_action( 'cwby_admin_enqueue_script' );
 
 		// Localize in footer so that 'gathercontent_localized_data' filter is more useful.
 		add_action( 'admin_footer', array( $this, 'script_localize' ), 1 );
