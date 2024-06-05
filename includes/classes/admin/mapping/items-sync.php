@@ -36,7 +36,7 @@ class Items_Sync extends Base {
 
 		$this->mapping = Mapping_Post::get( $this->mapping_id );
 
-		add_filter( 'gc_admin_notices', array( $this, 'register_import_errors' ) );
+		add_filter( 'cwby_admin_notices', array( $this, 'register_import_errors' ) );
 	}
 
 	public function register_import_errors( $notices ) {
