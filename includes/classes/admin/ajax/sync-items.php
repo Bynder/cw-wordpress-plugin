@@ -129,7 +129,7 @@ class Sync_Items extends Plugin_Base {
 		$in_progress         = get_option( $progress_option_key );
 
 		if ( ! $in_progress ) {
-			do_action( 'gc_pull_items', $this->mapping );
+			do_action( 'cwby_pull_items', $this->mapping );
 		}
 
 	}
@@ -176,7 +176,7 @@ class Sync_Items extends Plugin_Base {
 		// Start the sync and bump percent value.
 		$this->mapping->update_items_to_pull( array( 'pending' => $fields['import'] ) );
 
-		do_action( 'gc_pull_items', $this->mapping );
+		do_action( 'cwby_pull_items', $this->mapping );
 
 		$percent = round( ( .25 / count( $fields['import'] ) ) * 100 );
 

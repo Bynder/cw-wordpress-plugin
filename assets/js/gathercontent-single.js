@@ -1,6 +1,6 @@
 /**
  * Content Workflow (by Bynder) - v1.0.0 - 2024-05-29
- * 
+ *
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
  * Licensed under the GPLv2 license.
@@ -675,7 +675,7 @@ module.exports = function (app, $, gc) {
 
 		doSync: function doSync(direction, data) {
 			this.ajax({
-				action: 'gc_' + direction + '_items',
+				action: 'cwby_' + direction + '_items',
 				// action : 'glsjlfjs',
 				data: data || [this.model.toJSON()],
 				nonce: gc._edit_nonce

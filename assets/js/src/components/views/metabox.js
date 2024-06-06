@@ -148,7 +148,7 @@ module.exports = function( app, $, gc ) {
 
 		doSync: function( direction, data ) {
 			this.ajax( {
-				action : 'gc_'+ direction +'_items',
+				action : 'cwby_'+ direction +'_items',
 				// action : 'glsjlfjs',
 				data   : data || [ this.model.toJSON() ],
 				nonce  : gc._edit_nonce,

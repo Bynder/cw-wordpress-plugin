@@ -66,8 +66,8 @@ class Handlers extends Plugin_Base {
 	public function init_hooks() {
 		add_action( 'wp_ajax_gc_get_option_data', array( $this, 'gc_get_option_data_cb' ) );
 		add_action( 'wp_ajax_gc_sync_items', array( $this->sync_items, 'gc_sync_items_cb' ) );
-		add_action( 'wp_ajax_gc_pull_items', array( $this->sync_bulk, 'gc_pull_items_cb' ) );
-		add_action( 'wp_ajax_gc_push_items', array( $this->sync_bulk, 'gc_push_items_cb' ) );
+		add_action( 'wp_ajax_cwby_pull_items', array( $this->sync_bulk, 'cwby_pull_items_cb' ) );
+		add_action( 'wp_ajax_cwby_push_items', array( $this->sync_bulk, 'cwby_push_items_cb' ) );
 		add_action( 'wp_ajax_gc_get_posts', array( $this, 'gc_get_posts_cb' ) );
 		add_action( 'wp_ajax_gc_get_post_statuses', array( $this, 'gc_get_post_statuses_cb' ) );
 		add_action( 'wp_ajax_set_gc_status', array( $this, 'set_gc_status_cb' ) );
@@ -442,7 +442,7 @@ class Handlers extends Plugin_Base {
 				wp_send_json_success($success_data);
 			}
 		}
-		
+
 		// If success conditions were not met above, complete function with error status
 		wp_send_json_error();
 	}

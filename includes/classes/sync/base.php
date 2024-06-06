@@ -208,7 +208,7 @@ abstract class Base extends Plugin_Base {
 		// If we have more items...
 		if ( ! empty( $ids['pending'] ) ) {
 			// Then trigger the next async request.
-			do_action( "gc_{$this->direction}_items", $this->mapping );
+			do_action( "cwby_{$this->direction}_items", $this->mapping );
 		} else {
 			// Trigger sync complete event.
 			do_action( "gc_{$this->direction}_complete", $this->mapping );
