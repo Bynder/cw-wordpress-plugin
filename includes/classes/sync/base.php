@@ -211,7 +211,7 @@ abstract class Base extends Plugin_Base {
 			do_action( "cwby_{$this->direction}_items", $this->mapping );
 		} else {
 			// Trigger sync complete event.
-			do_action( "gc_{$this->direction}_complete", $this->mapping );
+			do_action( "cwby_{$this->direction}_complete", $this->mapping );
 		}
 
 		return $result;

@@ -61,7 +61,7 @@ class Pull extends Base {
 		parent::init_hooks();
 		add_action( 'wp_async_cwby_pull_items', array( $this, 'sync_items' ) );
 		add_action( 'wp_async_nopriv_cwby_pull_items', array( $this, 'sync_items' ) );
-		add_action( 'gc_pull_complete', array( __CLASS__, 'associate_hierarchy' ) );
+		add_action( 'cwby_pull_complete', array( __CLASS__, 'associate_hierarchy' ) );
 	}
 
 	/**
@@ -1377,7 +1377,7 @@ class Pull extends Base {
 
 		/*
 		 * Schedule an event to associate hierarchy for these posts.
-		 * Will likely never be hit, as the gc_pull_complete event will take precedence.
+		 * Will likely never be hit, as the cwby_pull_complete event will take precedence.
 		 */
 		wp_schedule_single_event( time() + 60, 'gc_associate_hierarchy', $args );
 	}
