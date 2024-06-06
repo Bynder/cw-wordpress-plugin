@@ -50,6 +50,12 @@ Below the text box is a button that will allow you to simply save all of that in
 
 **However**, this information contains potentially senstive data. Please be careful with where you post it. Do not post it in the WordPress support forums.
 
+### Third-Party Services ###
+
+This plugin relies on the following third-party services:
+
+1. **Content Workflow**: This service is used for content management and synchronization between your WordPress site and Content Workflow. For more information, please visit [Content Workflow](https://www.bynder.com/en/products/content-workflow/). The [Terms of Service](https://gathercontent.com/legal/terms-of-service) and [Privacy Policy](https://www.bynder.com/en/legal/privacy-policy/) are available for review.
+
 ## Changelog
 
 ### 1.0.0 ###

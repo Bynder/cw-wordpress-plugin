@@ -14,9 +14,9 @@ module.exports = {
 			' | Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
 			' | Licensed <%= pkg.license %>' +
 			' */\n',
-			mangle: {
-				except: ['jQuery']
-			}
+			// mangle: {
+			// 	except: ['jQuery']
+			// }
 		}
 	}
 };

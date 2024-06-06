@@ -27,8 +27,8 @@ class Exception extends \Exception {
 	 * @since 3.0.0
 	 *
 	 * @param string $message Exception message.
-	 * @param int   $code    Exception code.
-	 * @param mixed $data    Additional data.
+	 * @param int    $code    Exception code.
+	 * @param mixed  $data    Additional data.
 	 */
 	public function __construct( $message, $code, $data = null ) {
 		parent::__construct( $message, $code );

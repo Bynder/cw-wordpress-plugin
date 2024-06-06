@@ -80,10 +80,17 @@ abstract class Enqueue extends Plugin_Base {
 	 * @return void
 	 */
 	public function script_localize() {
+		/**
+		 * Previously we were pulling the entire $_GET array to localise
+		 * the queryargs used on the front-end. These are the only queryargs
+		 * referenced on the front-end.
+		 */
+		$queryArgs = $this->_get_vals(['flush_cache', 'mapping']);
+
 		wp_localize_script( 'gathercontent', 'GatherContent', apply_filters( 'gathercontent_localized_data', array(
 			'debug'       => Utils::script_debug(),
 			// @codingStandardsIgnoreStart
-			'queryargs'   => $_GET,
+			'queryargs'   => $queryArgs,
 			// @codingStandardsIgnoreEnd
 			'_type_names' => Utils::gc_field_type_name( 'all' ),
 		) ) );

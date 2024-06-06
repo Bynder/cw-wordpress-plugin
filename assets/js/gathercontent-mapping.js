@@ -1,8 +1,8 @@
 /**
- * Content Workflow Plugin - v1.0.0 - 2024-05-03
- * http://www.gathercontent.com
+ * Content Workflow (by Bynder) - v1.0.0 - 2024-05-29
+ * 
  *
- * Copyright (c) 2024 GatherContent
+ * Copyright (c) 2024 Content Workflow (by Bynder)
  * Licensed under the GPLv2 license.
  */
 
@@ -452,6 +452,7 @@ module.exports = function (app, _meta_keys) {
    * 2nd Dropdown - event change
    */
 		changeValue: function changeValue(evt) {
+			var component = jQuery(evt.target).closest('.component-table-wrapper').attr('id');
 			var value = jQuery(evt.target).val();
 			var type = this.model.get('type');
 			var fieldType = this.model.get('field_type');
@@ -465,7 +466,6 @@ module.exports = function (app, _meta_keys) {
 				this.model.set('field_value', value);
 				// Components - Update "Field"
 				if ("component" === type) {
-					var component = jQuery(evt.target).closest('.component-table-wrapper').attr('id');
 					this.updateAjax_Field(component, value, false);
 				}
 				// Repeaters - Update "Field"
@@ -523,7 +523,7 @@ module.exports = function (app, _meta_keys) {
    * AJAX Update: "Field" - ACF Field group's field
    * - "Field" refers to the 3rd dropdown of the component fields top level
    * - After selecting the field group from the 2nd dropdown, call WP_AJAX to get the relevent fields from the group selected and populate the 3rd dropdown (aka "Field")
-   * 
+   *
    * @param {string} component - ID without the "#" of the component parent row
    * @param {string} field_name - Parent field name/key of the sub fields, should be a repeater
    * @param {object} saved_fields - OPTIONAL: Pass saved subfields if you want to set pre-existing values
@@ -570,7 +570,7 @@ module.exports = function (app, _meta_keys) {
    * AJAX Update: "Subfields" - ACF Field group's repeater subfields
    * - "Subfields" are in the component accordion
    * - After selecting the field group from the 3rd dropdown, call WP_AJAX to get the relevent subfields from the ACF Repeater selected and populate the subfields
-   * 
+   *
    * @param {string} component - ID without the "#" of the component parent row
    * @param {string} field_name - Parent field name/key of the sub fields, should be a repeater
    * @param {object} saved_fields - OPTIONAL: Pass saved subfields if you want to set pre-existing values
