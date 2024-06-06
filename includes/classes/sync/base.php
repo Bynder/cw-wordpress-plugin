@@ -145,7 +145,7 @@ abstract class Base extends Plugin_Base {
 	 */
 	public function sync_items( $mapping_post ) {
 		$result = $this->_sync_items( $mapping_post );
-		do_action( 'gc_sync_items_result', $result, $this );
+		do_action( 'cwby_sync_items_result', $result, $this );
 		return $result;
 	}
 
