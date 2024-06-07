@@ -74,4 +74,17 @@ window.GatherContent = window.GatherContent || {};
 
 	$( main.init );
 
+	window.onload = function () {
+		var textarea = jQuery('#system-info-textarea');
+		if (textarea.length) {
+			textarea.css('height', jQuery(window).height() * 0.7 + 'px');
+		}
+	};
+
+	document.addEventListener('DOMContentLoaded', function() {
+		if (typeof redirectData !== 'undefined' && redirectData.redirectUrl) {
+			window.location = redirectData.redirectUrl;
+		}
+	});
+
 } )( window, document, jQuery, window.GatherContent );

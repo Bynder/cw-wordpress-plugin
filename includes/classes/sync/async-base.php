@@ -49,36 +49,6 @@ abstract class Async_Base extends \WP_Async_Task {
 	}
 
 	/**
-	 * Verify the postback is valid, then fire any scheduled events.
-	 *
-	 * @uses $_POST['_nonce']
-	 * @uses is_user_logged_in()
-	 * @uses add_filter()
-	 * @uses wp_die()
-	 */
-	public function handle_postback() {
-		$data = $_POST;
-
-		$data['ran_action'] = false;
-
-		if ( isset( $_POST['_nonce'] ) && $this->verify_async_nonce( $_POST['_nonce'] ) ) {
-			$data['ran_action'] = $this->run_action();
-		}
-
-		if ( ! General::get_instance()->admin->get_setting( 'log_importer_requests' ) ) {
-			add_filter(
-				'wp_die_handler',
-				function() {
-					die();
-				}
-			);
-			wp_die();
-		}
-
-		die( wp_json_encode( $data ) );
-	}
-
-	/**
 	 * Prepare data for the asynchronous request
 	 *
 	 * @throws Exception If for any reason the request should not happen

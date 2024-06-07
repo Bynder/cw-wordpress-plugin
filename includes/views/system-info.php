@@ -1,18 +1,5 @@
 <div class="wrap gc-admin-wrap">
 	<h2><?php _e( 'System Information', 'content-workflow-by-bynder' ); ?></h2>
-	<style type="text/css" media="screen">
-		#system-info-textarea {
-			background: none;
-			font-family: Menlo, Monaco, monospace;
-			display: block;
-			overflow: auto;
-			white-space: pre;
-			width: 800px;
-			height: 400px;
-			min-height: 400px;
-			margin-bottom: 1.5em;
-		}
-	</style>
 	<br/>
 	<form action="<?php echo esc_url( admin_url( 'admin.php?page=gathercontent-import-support' ) ); ?>" method="post" dir="ltr">
 		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow-by-bynder' ); ?>">
@@ -97,9 +84,4 @@ Plugin Options:           <?php echo $this->get( 'gc_options' ), "\n"; ?>
 			<?php submit_button( 'Download System Info File', 'primary', 'gc-download-sysinfo', false ); ?>
 		</p>
 	</form>
-	<script>
-		jQuery( function( $ ) {
-			$( document.getElementById( 'system-info-textarea' ) ).height( $( window ).height() * .7 );
-		});
-	</script>
 </div>
