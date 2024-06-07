@@ -86,6 +86,85 @@ class Pull extends Base {
 	}
 
 	/**
+	 * @param string $table 'wp_aioseo_posts'
+	 * @param string $column 'title'
+	 * @param string $postIdColumn 'post_id'
+	 * @param int $post_id 123
+	 * @param string $content 'Some great and cool content'
+	 * @return bool true on success
+	 */
+	public function saveContentToTable(
+		string $table,
+		string $column,
+		string $postIdColumn,
+		int $post_id,
+		string $content
+	)
+	{
+		global $wpdb;
+
+		$data = [$column => $content];
+		$where = [$postIdColumn => $post_id];
+		$wpdb->update($table,$data,$where); // false | int
+
+		return true;
+	}
+
+	/**
+	 * @TODO restrict what tables / columns can be used.
+	 *
+	 * @param string $tableColumnString "tableName.columnName"
+	 * @return false|string[]
+	 */
+	private function isTableColumnStringValid(string $tableColumnString)
+	{
+		global $wpdb;
+
+		$parts = explode('.', $tableColumnString);
+		if(count($parts) !== 2){
+			return false;
+		}
+
+		$table = $parts[0];
+		$column = $parts[1];
+
+		$results = $wpdb->get_results($wpdb->prepare("SHOW COLUMNS FROM %1s;", $table));
+
+		foreach ($results as $row){
+			if($row->Field === $column){
+				return [$table, $column];
+			}
+		}
+
+		return false;
+	}
+
+	private function handleDatabaseMappings(array $databaseMappings, int $post_id)
+	{
+		foreach ($databaseMappings as $tableAndColumn => $content){
+
+			$parts = $this->isTableColumnStringValid($tableAndColumn);
+			if(!$parts) continue;
+
+			$table = $parts[0];
+			$column = $parts[1];
+
+			$success = $this->saveContentToTable(
+				$table, $column, 'post_id', $post_id, $content
+			);
+
+			if(!$success){
+				throw new Exception('Failed to save content to table',500, [
+					'table' => $table,
+					'column' => $column,
+					'post_id' => $post_id,
+					'content' => $content
+				]);
+			}
+		}
+	}
+
+	/**
 	 * Pulls GC item to update a post after some sanitiy checks.
 	 *
 	 * @since  3.0.0
@@ -148,6 +227,13 @@ class Pull extends Base {
 			unset( $post_data['tax_input'] );
 		}
 
+		/**
+		 * Keep any wp-type-database mappings but remove them from post_data as
+		 * these are saved into the main wp_posts table
+		 */
+		$databaseMappings = $post_data['database'] ?? [];
+		unset($post_data['database']);
+
 		$post_id = wp_insert_post( $post_data, 1 );
 
 		if ( is_wp_error( $post_id ) ) {
@@ -166,6 +252,10 @@ class Pull extends Base {
 				'updated_at' => $this->item->updated_at,
 			)
 		);
+
+		if(!empty($databaseMappings)){
+			$this->handleDatabaseMappings($databaseMappings, $post_id);
+		}
 
 		if ( ! empty( $tax_terms ) ) {
 			foreach ( $tax_terms as $taxonomy => $terms ) {
@@ -456,6 +546,10 @@ class Pull extends Base {
 				case 'wp-type-acf':
 					$post_data = $this->set_acf_field_value( $post_data );
 					break;
+
+				case 'wp-type-database':
+					$post_data = $this->set_database_field_value( $destination['value'], $post_data );
+					break;
 			}
 			// @codingStandardsIgnoreStart
 		} catch (\Exception $e) {
@@ -531,6 +625,21 @@ class Pull extends Base {
 		if ( 'attachment' === $this->element->type ) {
 			$post_data = $this->set_media_field_value( $meta_key, $post_data );
 		}
+
+		return $post_data;
+	}
+
+	protected function set_database_field_value($destination, $post_data)
+	{
+		/**
+		 * Update the post_data array to contain a 'database' array where each
+		 * key is the `table.column` and the value is the content
+		 * [...
+		 *   "database" => ["table.column" => "Some great content from content workflow!"],
+		 * ...]
+		 */
+
+		$post_data[ 'database' ][$destination] = $this->element->value;
 
 		return $post_data;
 	}

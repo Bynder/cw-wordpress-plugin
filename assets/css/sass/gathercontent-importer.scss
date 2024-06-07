@@ -399,3 +399,18 @@ ul.gc-radio-desc li, ul.gc-reveal-items-list li {
 @import 'sync';
 @import 'modal';
 @import 'single';
+
+/**
+ * System Info
+ */
+#system-info-textarea {
+	background: none;
+	font-family: Menlo, Monaco, monospace;
+	display: block;
+	overflow: auto;
+	white-space: pre;
+	width: 800px;
+	height: 400px;
+	min-height: 400px;
+	margin-bottom: 1.5em;
+}
