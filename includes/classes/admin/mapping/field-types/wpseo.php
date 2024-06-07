@@ -52,7 +52,7 @@ class WPSEO extends Base implements Type {
 	public function __construct( array $post_types ) {
 		$this->post_types   = $post_types;
 		$this->seo_options  = $this->get_seo_options();
-		$this->option_label = __( 'SEO', 'content-workflow' );
+		$this->option_label = __( 'SEO', 'content-workflow-by-bynder' );
 
 		add_filter( 'gathercontent_importer_custom_field_keys_blacklist', array( $this, 'remove_wpseo_keys' ) );
 	}
@@ -146,7 +146,7 @@ class WPSEO extends Base implements Type {
 					<?php $this->underscore_options( $options ); ?>
 					<# } #>
 				<?php endforeach; ?>
-				<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow' ) ); ?>
+				<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
 			</select>
 		<# } #>
 		<?php

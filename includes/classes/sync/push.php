@@ -126,7 +126,7 @@ class Push extends Base {
 		if ( empty( $config_update ) ) {
 
 			throw new Exception(
-				sprintf( __( 'No update data found for that post ID: %d', 'content-workflow' ), $this->post->ID ),
+				sprintf( __( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), $this->post->ID ),
 				__LINE__,
 				array(
 					'post_id'    => $this->post->ID,

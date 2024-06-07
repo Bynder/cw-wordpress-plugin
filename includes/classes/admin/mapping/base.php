@@ -183,11 +183,11 @@ abstract class Base extends Plugin_Base {
 				break;
 			case 'post_status':
 				$select_options = array(
-					'publish'  => __( 'Published', 'content-workflow' ),
-					'draft'    => __( 'Draft', 'content-workflow' ),
-					'pending'  => __( 'Pending', 'content-workflow' ),
-					'private'  => __( 'Private', 'content-workflow' ),
-					'nochange' => __( 'Do not change', 'content-workflow' ),
+					'publish'  => __( 'Published', 'content-workflow-by-bynder' ),
+					'draft'    => __( 'Draft', 'content-workflow-by-bynder' ),
+					'pending'  => __( 'Pending', 'content-workflow-by-bynder' ),
+					'private'  => __( 'Private', 'content-workflow-by-bynder' ),
+					'nochange' => __( 'Do not change', 'content-workflow-by-bynder' ),
 				);
 				break;
 			case 'post_type':
@@ -343,40 +343,40 @@ abstract class Base extends Plugin_Base {
 	protected function post_column_label( $col ) {
 		switch ( $col ) {
 			case 'ID':
-				return __( 'Author', 'content-workflow' );
+				return __( 'Author', 'content-workflow-by-bynder' );
 			case 'post_author':
-				return __( 'Author', 'content-workflow' );
+				return __( 'Author', 'content-workflow-by-bynder' );
 			case 'post_date':
-				return __( 'Post Date', 'content-workflow' );
+				return __( 'Post Date', 'content-workflow-by-bynder' );
 				return 'post_date';
 			case 'post_date_gmt':
-				return __( 'Post Date (GMT)', 'content-workflow' );
+				return __( 'Post Date (GMT)', 'content-workflow-by-bynder' );
 			case 'post_content':
-				return __( 'Post Content', 'content-workflow' );
+				return __( 'Post Content', 'content-workflow-by-bynder' );
 			case 'post_title':
-				return __( 'Post Title', 'content-workflow' );
+				return __( 'Post Title', 'content-workflow-by-bynder' );
 			case 'post_excerpt':
-				return __( 'Post Excerpt', 'content-workflow' );
+				return __( 'Post Excerpt', 'content-workflow-by-bynder' );
 			case 'post_status':
-				return __( 'Post Status', 'content-workflow' );
+				return __( 'Post Status', 'content-workflow-by-bynder' );
 			case 'comment_status':
-				return __( 'Comment Status', 'content-workflow' );
+				return __( 'Comment Status', 'content-workflow-by-bynder' );
 			case 'ping_status':
-				return __( 'Ping Status', 'content-workflow' );
+				return __( 'Ping Status', 'content-workflow-by-bynder' );
 			case 'post_password':
-				return __( 'Post Password', 'content-workflow' );
+				return __( 'Post Password', 'content-workflow-by-bynder' );
 			case 'post_name':
-				return __( 'Post Name (Slug)', 'content-workflow' );
+				return __( 'Post Name (Slug)', 'content-workflow-by-bynder' );
 			case 'post_modified':
-				return __( 'Post Modified Date', 'content-workflow' );
+				return __( 'Post Modified Date', 'content-workflow-by-bynder' );
 			case 'post_modified_gmt':
-				return __( 'Post Modified Date (GMT)', 'content-workflow' );
+				return __( 'Post Modified Date (GMT)', 'content-workflow-by-bynder' );
 			case 'post_parent':
-				return __( 'Post Parent', 'content-workflow' );
+				return __( 'Post Parent', 'content-workflow-by-bynder' );
 			case 'menu_order':
-				return __( 'Menu Order', 'content-workflow' );
+				return __( 'Menu Order', 'content-workflow-by-bynder' );
 			case 'post_type':
-				return __( 'Post Type', 'content-workflow' );
+				return __( 'Post Type', 'content-workflow-by-bynder' );
 			default:
 				return $col;
 		}
@@ -402,7 +402,7 @@ abstract class Base extends Plugin_Base {
 			$type->taxonomies = array();
 			foreach ( get_object_taxonomies( $type->name, 'objects' ) as $tax ) {
 				if ( 'post_format' === $tax->name ) {
-					$tax->label = __( 'Post Formats', 'content-workflow' );
+					$tax->label = __( 'Post Formats', 'content-workflow-by-bynder' );
 				}
 
 				$type->taxonomies[] = $tax;
