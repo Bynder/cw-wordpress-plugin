@@ -134,7 +134,7 @@ class Single extends Post_Base {
 			),
 			'tmpl-gc-metabox-statuses' => array(),
 			'tmpl-gc-mapping-metabox'  => array(
-				'message' => sprintf( esc_html__( 'This %s does not have an associated item or Template Mapping. (Please make sure that you have added a mapping in Content Workflow > New Mapping)', 'gathercontent-importer' ), $this->post_type_label ),
+				'message' => sprintf( esc_html__( 'This %s does not have an associated item or Template Mapping. (Please make sure that you have added a mapping in Content Workflow > New Mapping)', 'content-workflow-by-bynder' ), $this->post_type_label ),
 			),
 			'tmpl-gc-status-select2'   => array(),
 			'tmpl-gc-select2-item'     => array(),
@@ -153,10 +153,10 @@ class Single extends Post_Base {
 
 		$data['_post'] = $this->post;
 		$data['_sure'] = array(
-			'push_no_item' => sprintf( __( 'Push this %s to Content Workflow?', 'gathercontent-importer' ), $this->post_type_label ),
-			'push'         => sprintf( __( 'Are you sure you want to push this %s to GatherContent? Any unsaved changes in Content Workflow will be overwritten.', 'gathercontent-importer' ), $this->post_type_label ),
-			'pull'         => sprintf( __( 'Are you sure you want to pull this %s from Content Workflow? Any local changes will be overwritten.', 'gathercontent-importer' ), $this->post_type_label ),
-			'disconnect'   => sprintf( __( 'Are you sure you want to disconnect this %s from Content Workflow?', 'gathercontent-importer' ), $this->post_type_label ),
+			'push_no_item' => sprintf( __( 'Push this %s to Content Workflow?', 'content-workflow-by-bynder' ), $this->post_type_label ),
+			'push'         => sprintf( __( 'Are you sure you want to push this %s to GatherContent? Any unsaved changes in Content Workflow will be overwritten.', 'content-workflow-by-bynder' ), $this->post_type_label ),
+			'pull'         => sprintf( __( 'Are you sure you want to pull this %s from Content Workflow? Any local changes will be overwritten.', 'content-workflow-by-bynder' ), $this->post_type_label ),
+			'disconnect'   => sprintf( __( 'Are you sure you want to disconnect this %s from Content Workflow?', 'content-workflow-by-bynder' ), $this->post_type_label ),
 		);
 
 		return $data;

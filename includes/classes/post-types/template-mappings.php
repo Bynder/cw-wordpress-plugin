@@ -581,7 +581,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $projects ) ) {
-			new WP_Error( 'gc_no_projects', esc_html__( 'No projects were found for this account.', 'gathercontent-importer' ) );
+			new WP_Error( 'gc_no_projects', esc_html__( 'No projects were found for this account.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_projects = array();
@@ -620,7 +620,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $accounts ) ) {
-			new WP_Error( 'gc_no_accounts', esc_html__( 'No accounts were found.', 'gathercontent-importer' ) );
+			new WP_Error( 'gc_no_accounts', esc_html__( 'No accounts were found.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_accounts = array();

@@ -18,17 +18,17 @@
 		<# } else { #>
 			<# if ( data.step ) { #>
 				<button id="gc-map-cancel" type="button" class="button gc-button-secondary aligncenter">
-					<?php esc_html_e( 'Cancel', 'gathercontent-importer' ); ?>
+					<?php esc_html_e( 'Cancel', 'content-workflow-by-bynder' ); ?>
 				</button>
 				<button <# if ( data.btnDisabled ) { #>disabled="disabled"<# } #>id="gc-map" type="button" class="button gc-button-primary aligncenter">
 					<# if ( 'mappings' === data.step ) { #>
-					<?php esc_html_e( 'Save Mapping', 'gathercontent-importer' ); ?>
+					<?php esc_html_e( 'Save Mapping', 'content-workflow-by-bynder' ); ?>
 					<# } else { #>
-					<?php esc_html_e( 'Next', 'gathercontent-importer' ); ?>
+					<?php esc_html_e( 'Next', 'content-workflow-by-bynder' ); ?>
 					<# } #>
 				</button>
 			<# } else { #>
-				<button id="gc-map" type="button" class="button gc-button-primary aligncenter"><?php esc_html_e( 'Map to Content Workflow Template', 'gathercontent-importer' ); ?></button>
+				<button id="gc-map" type="button" class="button gc-button-primary aligncenter"><?php esc_html_e( 'Map to Content Workflow Template', 'content-workflow-by-bynder' ); ?></button>
 			<# } #>
 		<# } #>
 	</div>

@@ -152,10 +152,10 @@ class Handlers extends Plugin_Base {
 			$post_updates[ $post['id'] ] = array(
 				'id'         => $post['id'],
 				'status'     => $status,
-				'itemName'   => isset( $item->name ) ? $item->name : __( 'N/A', 'gathercontent-importer' ),
+				'itemName'   => isset( $item->name ) ? $item->name : __( 'N/A', 'content-workflow-by-bynder' ),
 				'updated_at' => isset( $item->updated_at )
 					? Utils::relative_date( $item->updated_at )
-					: __( '&mdash;', 'gathercontent-importer' ),
+					: __( '&mdash;', 'content-workflow-by-bynder' ),
 				'current'    => \GatherContent\Importer\post_is_current( $post['id'], $item ),
 			);
 		}
@@ -330,7 +330,7 @@ class Handlers extends Plugin_Base {
 		switch ( $property ) {
 			case 'mapping':
 				if ( ! isset( $post_data['project'], $post_data['projects'] ) ) {
-					wp_send_json_error( esc_html__( 'Missing required project id.', 'gathercontent-importer' ) );
+					wp_send_json_error( esc_html__( 'Missing required project id.', 'content-workflow-by-bynder' ) );
 				}
 
 				$mapping_ids = array();
@@ -346,7 +346,7 @@ class Handlers extends Plugin_Base {
 
 			case 'project':
 				if ( ! isset( $post_data['account'], $post_data['accounts'] ) ) {
-					wp_send_json_error( esc_html__( 'Missing required account id.', 'gathercontent-importer' ) );
+					wp_send_json_error( esc_html__( 'Missing required account id.', 'content-workflow-by-bynder' ) );
 				}
 
 				$mapping_ids = array();
@@ -442,7 +442,7 @@ class Handlers extends Plugin_Base {
 				wp_send_json_success($success_data);
 			}
 		}
-		
+
 		// If success conditions were not met above, complete function with error status
 		wp_send_json_error();
 	}
