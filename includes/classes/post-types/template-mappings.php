@@ -268,14 +268,14 @@ class Template_Mappings extends Base {
 	public function output_mapping_data( $post ) {
 		if ( self::SLUG === $post->post_type ) {
 			echo '<p class="postbox" style="padding: 1em;background: #f5f5f5;margin: -4px 0 0">';
-			echo '<strong>' . __( 'Project ID:', 'content-workflow-by-bynder' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_project', 1 );
+			echo '<strong>' . esc_attr__( 'Project ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html(get_post_meta( get_the_id(), '_gc_project', 1 ));
 			echo ',&nbsp;';
-			echo '<strong>' . __( 'Template ID:', 'content-workflow-by-bynder' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_template', 1 );
+			echo '<strong>' . esc_attr__( 'Template ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html(get_post_meta( get_the_id(), '_gc_template', 1 ));
 
 			if ( $account = get_post_meta( get_the_id(), '_gc_account', 1 ) ) {
 				$account = 'https://' . $account . '.gathercontent.com/';
 				echo ',&nbsp;';
-				echo '<strong>' . __( 'Account:', 'content-workflow-by-bynder' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
+				echo '<strong>' . esc_attr__( 'Account:', 'content-workflow-by-bynder' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
 			}
 
 			echo '</p>';
@@ -288,7 +288,7 @@ class Template_Mappings extends Base {
 				}
 			}
 
-			echo '<pre><textarea name="content" id="content" rows="20" style="width:100%;">' . print_r( $content, true ) . '</textarea></pre>';
+			echo '<pre><textarea name="content" id="content" rows="20" style="width:100%;">' . esc_html(print_r( $content, true )) . '</textarea></pre>';
 		}
 	}
 
