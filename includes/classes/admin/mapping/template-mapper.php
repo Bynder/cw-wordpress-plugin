@@ -54,7 +54,7 @@ class Template_Mapper extends Base {
 		if ( $this->mapping_id ) {
 
 			echo '<div class="gc-sync-items-descriptions">
-			<p class="description"><a href="' . esc_url( add_query_arg( 'sync-items', 1 ) ) . '"><span class="dashicons dashicons-randomize"> </span>' . __( 'Import Items for this template from Content Workflow', 'content-workflow-by-bynder' ) . '</a></p>
+			<p class="description"><a href="' . esc_url( add_query_arg( 'sync-items', 1 ) ) . '"><span class="dashicons dashicons-randomize"> </span>' . esc_html__( 'Import Items for this template from Content Workflow', 'content-workflow-by-bynder' ) . '</a></p>
 			</div>';
 
 			$this->view(
