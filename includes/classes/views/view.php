@@ -72,7 +72,7 @@ class View {
 		}
 
 		if ( $echo ) {
-			echo self::$views[ $id ];
+			echo esc_html(self::$views[ $id ]);
 		}
 
 		return self::$views[ $id ];
@@ -110,21 +110,14 @@ class View {
 	 * @since  3.0.0
 	 *
 	 * @param  string $arg     The $args key.
-	 * @param  mixed  $esc_cb  An escaping function callback.
 	 * @param  mixed  $default Mixed value.
 	 *
 	 * @return mixed            Value or default.
 	 */
-	public function output( $arg, $esc_cb = '', $default = null ) {
+	public function output( $arg, $default = null ) {
 		$val = $this->get( $arg, $default );
 
-		echo $esc_cb ? $esc_cb( $val ) : $val;
-	}
-
-	public function output_from( $arg, $array_key, $esc_cb = '', $default = null ) {
-		$val = $this->get_from( $array_arg_name, $array_key, $default );
-
-		echo $esc_cb ? $esc_cb( $val ) : $val;
+		echo esc_html( $val );
 	}
 
 	public function __toString() {
