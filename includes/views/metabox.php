@@ -4,7 +4,7 @@
 	<?php if ( $this->get( 'mapping_id' ) ) : ?>
 		<p><span class="spinner is-active"></span>  <?php esc_html_e( 'Loading...', 'content-workflow-by-bynder' ); ?></p>
 	<?php else : ?>
-		<p><?php printf( esc_html__( 'This %s does not have an associated item or Template Mapping.', 'content-workflow-by-bynder' ), $this->get( 'label' ) ); ?></p>
+		<p><?php printf( esc_html__( 'This %s does not have an associated item or Template Mapping.', 'content-workflow-by-bynder' ), esc_html($this->get( 'label' )) ); ?></p>
 		<div class="gc-major-publishing-actions gc-no-mapping">
 			<div class="gc-publishing-action">
 				<span class="spinner"></span>
