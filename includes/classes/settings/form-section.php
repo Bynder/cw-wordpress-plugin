@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Settings;
 
 use GatherContent\Importer\Base as Base;
@@ -8,8 +9,8 @@ class Form_Section extends Base {
 	protected $page;
 	protected $id;
 	public $field;
-	public $title     = '';
-	public $callback  = null;
+	public $title = '';
+	public $callback = null;
 	protected $fields = array();
 	protected static $sections;
 
@@ -38,9 +39,9 @@ class Form_Section extends Base {
 			$html .= $this->do_desc_callback();
 		}
 
-			$html .= '<table class="form-table">';
-			$html .= $this->do_fields();
-			$html .= '</table>';
+		$html .= '<table class="form-table">';
+		$html .= $this->do_fields();
+		$html .= '</table>';
 
 		$html .= '</div>';
 
@@ -51,6 +52,7 @@ class Form_Section extends Base {
 		if ( is_callable( $this->callback ) ) {
 			ob_start();
 			call_user_func( $this->callback, $this );
+
 			return ob_get_clean();
 		}
 
@@ -71,12 +73,12 @@ class Form_Section extends Base {
 				$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
 			}
 
-			echo "<tr{$class}>";
+			echo '<tr' . esc_html( $class ) . '>';
 
 			if ( ! empty( $field['args']['label_for'] ) ) {
-				echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . $field['title'] . '</label></th>';
+				echo '<th scope="row"><label for="' . esc_html( $field['args']['label_for'] ) . '">' . esc_html($field['title']) . '</label></th>';
 			} elseif ( ! empty( $field['title'] ) ) {
-				echo '<th scope="row">' . $field['title'] . '</th>';
+				echo '<th scope="row">' . esc_html( $field['title'] ) . '</th>';
 			}
 
 			echo '<td>';
@@ -104,15 +106,11 @@ class Form_Section extends Base {
 
 	}
 
-	public function do_param( $key ) {
-		echo $this->param( $key );
-	}
-
 	public function param( $key ) {
-		return isset( $this->field[ $key ] ) ? $this->field[ $key ] : null;
+		return $this->field[ $key ] ?? null;
 	}
 
-	public static function get_sections( $page ) {
+	public static function get_sections( $page ): string {
 
 		$html = '';
 		foreach ( self::$sections[ $page ] as $section ) {
