@@ -32,7 +32,7 @@ abstract class Form_Element extends View {
 		}
 
 		if ( $echo ) {
-			echo $content;
+			echo esc_html($content);
 		}
 
 		return $content;
