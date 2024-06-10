@@ -96,11 +96,11 @@ class Mapping_Post extends Base {
 		$post = $post instanceof WP_Post ? $post : get_post( $post );
 
 		if ( ! $post ) {
-			throw new Mapping_Post_Exception( __CLASS__ . ' expects a WP_Post object or post ID.', __LINE__, $post );
+			throw new Mapping_Post_Exception( __CLASS__ . ' expects a WP_Post object or post ID.', __LINE__, esc_html($post) );
 		}
 
 		if ( Template_Mappings::SLUG !== $post->post_type ) {
-			throw new Mapping_Post_Exception( __CLASS__ . ' expects a ' . Template_Mappings::SLUG . ' object.', __LINE__, $post );
+			throw new Mapping_Post_Exception( __CLASS__ . ' expects a ' . esc_html(Template_Mappings::SLUG) . ' object.', __LINE__, esc_html($post->post_title) );
 		}
 
 		return $post;
@@ -474,7 +474,7 @@ class Mapping_Post extends Base {
 				if ( isset( $this->post->{$property} ) ) {
 					return $this->post->{$property};
 				}
-				throw new Mapping_Post_Exception( 'Invalid ' . __CLASS__ . ' property: ' . $property );
+				throw new Mapping_Post_Exception( 'Invalid ' . __CLASS__ . ' property: ' . esc_html($property) );
 		}
 	}
 
