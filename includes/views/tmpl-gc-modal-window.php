@@ -48,7 +48,7 @@
 			<table id="gc-modal-{{ data.currID }}" class="gc-modal-tabs widefat striped gc-table">
 				<thead>
 					<tr>
-						<td id="cb" class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-1"><?php esc_html__( 'Select All', 'content-workflow-by-bynder' ); ?></label>
+						<td id="cb" class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-1"><?php esc_html_e( 'Select All', 'content-workflow-by-bynder' ); ?></label>
 							<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-1" type="checkbox">
 						</td>
 						<?php echo esc_html(new self( 'table-headers', $this->args )); ?>
@@ -61,14 +61,14 @@
 							<span class="spinner is-active" style="margin: 0 4px 0 0;"></span>
 						</td>
 						<td>
-							<span><?php esc_html__( 'Checking for items...', 'content-workflow-by-bynder' ); ?></span>
+							<span><?php esc_html_e( 'Checking for items...', 'content-workflow-by-bynder' ); ?></span>
 						</td>
 					</tr>
 				</tbody>
 
 				<tfoot>
 					<tr>
-						<td class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-2"><?php esc_html__( 'Select All', 'content-workflow-by-bynder' ); ?></label>
+						<td class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-2"><?php esc_html_e( 'Select All', 'content-workflow-by-bynder' ); ?></label>
 							<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-2" type="checkbox">
 						</td>
 						<?php echo esc_html(new self( 'table-headers', $this->args )); ?>
