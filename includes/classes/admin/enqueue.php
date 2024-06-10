@@ -24,10 +24,10 @@ abstract class Enqueue extends Plugin_Base {
 	 * @return void
 	 */
 	public function admin_enqueue_style() {
-		\GatherContent\Importer\enqueue_style( 'gc-select2', 'vendor/select2-4.0.13/select2', array(), '4.0.13' );
-		\GatherContent\Importer\enqueue_style( 'gathercontent', 'content-workflow-by-bynder' );
+		\GatherContent\Importer\enqueue_style( 'cwby-select2', 'vendor/select2-4.0.13/select2', array(), '4.0.13' );
+		\GatherContent\Importer\enqueue_style( 'content-workflow-by-bynder', 'gathercontent-importer' );
 
-		do_action( 'gc_admin_enqueue_style' );
+		do_action( 'cwby_admin_enqueue_style' );
 	}
 
 	/**
