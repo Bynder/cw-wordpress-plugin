@@ -10,7 +10,7 @@
 	<button type="button" class="button-link media-modal-close gc-bb-modal-close">
 		<span class="media-modal-icon">
 			<span class="screen-reader-text">
-				<?php echo __( 'Close', 'content-workflow-by-bynder' ); ?>
+				<?php echo esc_html__( 'Close', 'content-workflow-by-bynder' ); ?>
 			</span>
 		</span>
 	</button>
@@ -21,7 +21,7 @@
 			<div class="media-menu">
 				<?php foreach ( $this->get( 'nav' ) as $url => $text ) { ?>
 					<a class="media-menu-item" href="<?php echo esc_url( $url ); ?>">
-						<?php echo $text; ?>
+						<?php echo esc_attr($text); ?>
 					</a>
 				<?php } ?>
 			</div>
@@ -29,7 +29,7 @@
 
 		<div class="media-frame-title gc-bb-modal-title">
 			<h1>
-				<img width="220px" height="39px" src="<?php echo GATHERCONTENT_URL; ?>images/logo.svg" alt="Content Workflow" />
+				<img width="220px" height="39px" src="<?php echo esc_url(GATHERCONTENT_URL); ?>images/logo.svg" alt="Content Workflow" />
 			</h1>
 			<div id="gc-tablenav" class="tablenav top"></div>
 		</div>
@@ -48,10 +48,10 @@
 			<table id="gc-modal-{{ data.currID }}" class="gc-modal-tabs widefat striped gc-table">
 				<thead>
 					<tr>
-						<td id="cb" class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-1"><?php _e( 'Select All', 'content-workflow-by-bynder' ); ?></label>
+						<td id="cb" class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-1"><?php esc_html__( 'Select All', 'content-workflow-by-bynder' ); ?></label>
 							<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-1" type="checkbox">
 						</td>
-						<?php echo new self( 'table-headers', $this->args ); ?>
+						<?php echo esc_html(new self( 'table-headers', $this->args )); ?>
 					</tr>
 				</thead>
 
@@ -61,17 +61,17 @@
 							<span class="spinner is-active" style="margin: 0 4px 0 0;"></span>
 						</td>
 						<td>
-							<span><?php _e( 'Checking for items...', 'content-workflow-by-bynder' ); ?></span>
+							<span><?php esc_html__( 'Checking for items...', 'content-workflow-by-bynder' ); ?></span>
 						</td>
 					</tr>
 				</tbody>
 
 				<tfoot>
 					<tr>
-						<td class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-2"><?php _e( 'Select All', 'content-workflow-by-bynder' ); ?></label>
+						<td class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-2"><?php esc_html__( 'Select All', 'content-workflow-by-bynder' ); ?></label>
 							<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-2" type="checkbox">
 						</td>
-						<?php echo new self( 'table-headers', $this->args ); ?>
+						<?php echo esc_html(new self( 'table-headers', $this->args )); ?>
 					</tr>
 				</tfoot>
 			</table>
