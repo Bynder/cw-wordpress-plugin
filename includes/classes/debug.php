@@ -124,8 +124,7 @@ class Debug extends Base {
 	 * @return void
 	 */
 	public function debug_disabled_notice() {
-		$msg = esc_html__( 'Content Workflow Debug Mode: Disabled', 'content-workflow-by-bynder' );
-		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
+		echo '<div id="message" class="updated"><p>' . esc_html__( 'Content Workflow Debug Mode: Disabled', 'content-workflow-by-bynder' ) . '</p></div>';
 	}
 
 	/**
@@ -136,8 +135,7 @@ class Debug extends Base {
 	 * @return void
 	 */
 	public function debug_enabled_notice() {
-		$msg = esc_html__( 'Content Workflow Debug Mode: Enabled', 'content-workflow-by-bynder' );
-		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
+		echo '<div id="message" class="updated"><p>' . esc_html__( 'Content Workflow Debug Mode: Enabled', 'content-workflow-by-bynder' ) . '</p></div>';
 	}
 
 	/**
@@ -277,7 +275,7 @@ class Debug extends Base {
 			return $orig_settings;
 		}
 
-		wp_die( '<xmp>' . __LINE__ . ') $settings: ' . print_r( $settings, true ) . '</xmp>' . $back_button, __( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		wp_die( '<xmp>' . __LINE__ . ') $settings: ' . esc_html(print_r( $settings, true )) . '</xmp>' . esc_html($back_button), esc_attr__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 	}
 
 	/**
@@ -304,7 +302,7 @@ class Debug extends Base {
 				);
 			}
 		} else {
-			wp_die( __( 'There are no stuck statuses.', 'content-workflow-by-bynder' ) . $back_button, __( 'Debug Mode', 'content-workflow-by-bynder' ) );
+			wp_die( esc_attr__( 'There are no stuck statuses.', 'content-workflow-by-bynder' ) . esc_html($back_button), esc_attr__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 		}
 
 		if ( $settings['delete_stuck_status'] ) {
@@ -313,7 +311,7 @@ class Debug extends Base {
 			}
 		}
 
-		wp_die( '<xmp>' . __LINE__ . ') $options: ' . print_r( $options, true ) . '</xmp>' . $back_button, __( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		wp_die( '<xmp>' . __LINE__ . ') $options: ' . esc_html(print_r( $options, true )) . '</xmp>' . esc_html($back_button), esc_attr__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 	}
 
 	/**
@@ -327,10 +325,10 @@ class Debug extends Base {
 	 */
 	public function delete_gc_log_file( $back_button ) {
 		if ( unlink( self::$log_path ) ) {
-			wp_die( __( 'Content Workflow log file deleted.', 'content-workflow-by-bynder' ) . $back_button, __( 'Debug Mode', 'content-workflow-by-bynder' ) );
+			wp_die( esc_attr__( 'Content Workflow log file deleted.', 'content-workflow-by-bynder' ) . esc_html($back_button), esc_attr__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 		}
 
-		wp_die( __( 'Failed to delete Content Workflow log file.', 'content-workflow-by-bynder' ) . $back_button, __( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		wp_die( esc_attr__( 'Failed to delete Content Workflow log file.', 'content-workflow-by-bynder' ) . esc_html($back_button), esc_attr__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 	}
 
 	/**
@@ -346,10 +344,10 @@ class Debug extends Base {
 		$log_contents = file_exists( self::$log_path ) ? file_get_contents( self::$log_path ) : '';
 
 		if ( ! $log_contents ) {
-			wp_die( __( 'Content Workflow log file is empty.', 'content-workflow-by-bynder' ) . $back_button, __( 'Debug Mode', 'content-workflow-by-bynder' ) );
+			wp_die( esc_attr__( 'Content Workflow log file is empty.', 'content-workflow-by-bynder' ) . esc_html($back_button), esc_attr__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 		}
 
-		die( '<html><body>' . $back_button . '<pre><textarea style="width:100%;height:100%;min-height:1000px;font-size:14px;font-family:monospace;padding:.5em;">' . print_r( $log_contents, true ) . '</textarea></pre></body></html>' );
+		die( '<html><body>' . esc_html($back_button) . '<pre><textarea style="width:100%;height:100%;min-height:1000px;font-size:14px;font-family:monospace;padding:.5em;">' . esc_html(print_r( $log_contents, true )) . '</textarea></pre></body></html>' );
 	}
 
 	/**
