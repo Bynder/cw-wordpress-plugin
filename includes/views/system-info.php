@@ -1,21 +1,8 @@
 <div class="wrap gc-admin-wrap">
-	<h2><?php _e( 'System Information', 'content-workflow' ); ?></h2>
-	<style type="text/css" media="screen">
-		#system-info-textarea {
-			background: none;
-			font-family: Menlo, Monaco, monospace;
-			display: block;
-			overflow: auto;
-			white-space: pre;
-			width: 800px;
-			height: 400px;
-			min-height: 400px;
-			margin-bottom: 1.5em;
-		}
-	</style>
+	<h2><?php _e( 'System Information', 'content-workflow-by-bynder' ); ?></h2>
 	<br/>
 	<form action="<?php echo esc_url( admin_url( 'admin.php?page=gathercontent-import-support' ) ); ?>" method="post" dir="ltr">
-		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow' ); ?>">
+		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow-by-bynder' ); ?>">
 ### Begin System Info ###
 
 ## Please include this information when getting in touch with the Content Workflow (by Bynder) support team ##
@@ -60,8 +47,6 @@ Show On Front:            <?php echo $this->get( 'show_on_front' ), "\n"; ?>
 Page On Front:            <?php echo $this->get( 'page_on_front' ), "\n"; ?>
 Page For Posts:           <?php echo $this->get( 'page_for_posts' ), "\n"; ?>
 
-WP Remote Post:           <?php echo $this->get( 'wp_remote_post' ), "\n"; ?>
-
 Session:                  <?php echo $this->get( 'session' ), "\n"; ?>
 Session Name:             <?php echo $this->get( 'session_name' ), "\n"; ?>
 Cookie Path:              <?php echo $this->get( 'cookie_path' ), "\n"; ?>
@@ -89,19 +74,14 @@ Plugin Options:           <?php echo $this->get( 'gc_options' ), "\n"; ?>
 <?php do_action( 'gc_system_info_after' ); ?>
 
 ### End System Info ###</textarea>
-		<p><strong><?php _e( 'For more information:', 'content-workflow' ); ?></strong></p>
-		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration' ); ?></a></p>
-		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums' ); ?></a></p>
+		<p><strong><?php _e( 'For more information:', 'content-workflow-by-bynder' ); ?></strong></p>
+		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration', 'content-workflow-by-bynder' ); ?></a></p>
+		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums', 'content-workflow-by-bynder' ); ?></a></p>
 
-		<p><?php _e( '<strong>This information contains potentially senstive data.</strong><br>Please be careful with where you post it. Do not post it in the WordPress support forums.', 'content-workflow' ); ?></p>
+		<p><?php _e( '<strong>This information contains potentially senstive data.</strong><br>Please be careful with where you post it. Do not post it in the WordPress support forums.', 'content-workflow-by-bynder' ); ?></p>
 		<p class="submit">
 			<?php wp_nonce_field( 'gc-download-sysinfo-nonce', 'gc-download-sysinfo-nonce' ); ?>
 			<?php submit_button( 'Download System Info File', 'primary', 'gc-download-sysinfo', false ); ?>
 		</p>
 	</form>
-	<script>
-		jQuery( function( $ ) {
-			$( document.getElementById( 'system-info-textarea' ) ).height( $( window ).height() * .7 );
-		});
-	</script>
 </div>

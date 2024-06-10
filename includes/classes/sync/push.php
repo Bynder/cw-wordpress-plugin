@@ -126,7 +126,7 @@ class Push extends Base {
 		if ( empty( $config_update ) ) {
 
 			throw new Exception(
-				sprintf( __( 'No update data found for that post ID: %d', 'content-workflow' ), $this->post->ID ),
+				sprintf( __( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), $this->post->ID ),
 				__LINE__,
 				array(
 					'post_id'    => $this->post->ID,
@@ -471,6 +471,9 @@ class Push extends Base {
 				$updated = $this->set_acf_field_value( $source_key );
 				break;
 
+			case 'wp-type-database':
+				$updated = $this->set_database_field_value( $source_key );
+				break;
 		}
 
 		return $updated;
@@ -586,6 +589,34 @@ class Push extends Base {
 		return $updated;
 	}
 
+	protected function set_database_field_value( $tableColumnString ) {
+		$updated  = false;
+		$el_value = $this->element->value;
+
+		$parts = explode('.', $tableColumnString);
+		if(count($parts) !== 2){
+			return false;
+		}
+
+		$table = $parts[0];
+		$column = $parts[1];
+
+		global $wpdb;
+
+		$results = $wpdb->get_results($wpdb->prepare("SELECT %i as value from %i where post_id=%d;", $column, $table, $this->post->ID));
+
+		$value = $results[0]->value;
+		// @codingStandardsIgnoreStart
+		// We don't necessarily want strict comparison here.
+		if ( $value != $el_value ) {
+			// @codingStandardsIgnoreEnd
+			$this->element->value = $value;
+			$updated              = true;
+		}
+
+		return $updated;
+  }
+    
 	private function ensureShortcodesAreNotConvertedToHtml(callable $callback, string $value): string
 	{
 		preg_match_all(

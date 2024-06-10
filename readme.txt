@@ -41,6 +41,12 @@ This section describes how to install the plugin and get it working.
 
 For more detailed installation instructions please visit our [Help Centre](http://help.gathercontent.com/importing-and-exporting-content#wordpress-integration).
 
+== Third-Party Services ==
+
+This plugin relies on the following third-party services:
+
+1. **Content Workflow**: This service is used for content management and synchronization between your WordPress site and Content Workflow. For more information, please visit [Content Workflow](https://www.bynder.com/en/products/content-workflow/). The [Terms of Service](https://gathercontent.com/legal/terms-of-service) and [Privacy Policy](https://www.bynder.com/en/legal/privacy-policy/) are available for review.
+
 == Frequently Asked Questions ==
 
 = What is the Support page? =

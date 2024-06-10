@@ -55,7 +55,7 @@ class Items_Sync extends Base {
 			foreach ( $parts as $part ) {
 				$msg .= '</strong></p>';
 				$msg .= $part;
-				$msg .= '<p><strong><button type="button" class="button gc-notice-dismiss" id="dismiss-item-import-errors">' . __( 'Dismiss', 'content-workflow' ) . '</button>';
+				$msg .= '<p><strong><button type="button" class="button gc-notice-dismiss" id="dismiss-item-import-errors">' . __( 'Dismiss', 'content-workflow-by-bynder' ) . '</button>';
 			}
 
 			$notices[] = array(
@@ -67,7 +67,7 @@ class Items_Sync extends Base {
 		if ( $item_errors ) {
 			if ( is_array( $item_errors ) ) {
 				$msg  = '';
-				$main = __( 'There were some errors with the item import:', 'content-workflow' );
+				$main = __( 'There were some errors with the item import:', 'content-workflow-by-bynder' );
 				$msg .= '<ul>';
 				foreach ( $item_errors as $error ) {
 					$parts = $this->error_parts( $error );
@@ -76,7 +76,7 @@ class Items_Sync extends Base {
 				}
 				$msg .= '</ul>';
 
-				$msg = $main . '</strong></p>' . $msg . '<p><strong><button type="button" class="button gc-notice-dismiss" id="dismiss-item-import-errors">' . __( 'Dismiss', 'content-workflow' ) . '</button>';
+				$msg = $main . '</strong></p>' . $msg . '<p><strong><button type="button" class="button gc-notice-dismiss" id="dismiss-item-import-errors">' . __( 'Dismiss', 'content-workflow-by-bynder' ) . '</button>';
 
 				$notices[] = array(
 					'id'      => 'gc-import-errors',
@@ -102,7 +102,7 @@ class Items_Sync extends Base {
 			$msg_parts[] = '<xmp style="display:none;">' . print_r( $error->get_error_data(), true ) . '</xmp>';
 
 		} else {
-			$msg_parts[] = __( 'Error!', 'content-workflow' );
+			$msg_parts[] = __( 'Error!', 'content-workflow-by-bynder' );
 			$msg_parts[] = '<xmp style="display:none;"> ' . print_r( $error, true ) . ' </xmp>';
 		}
 
@@ -133,16 +133,21 @@ class Items_Sync extends Base {
 	 */
 	public function ui_page() {
 		// Output the markup for the JS to build on.
+
+		/**
+		 * Previously the foreach below was iterating over the entire $_GET
+		 * super global. Now we use the specific keys only.
+		 */
+		$hiddenInputs = $this->_get_vals([
+			'page', 'project', 'template', 'sync-items'
+		]);
+
 		?>
 		<input type="hidden" name="mapping_id" id="gc-input-mapping_id" value="<?php echo $this->mapping_id; ?>"/>
-		<?php
-		foreach ( $_GET as $key => $value ) :
-			if ( 'mapping' === $key ) {
-				continue; }
-			?>
+		<?php foreach ( $hiddenInputs as $key => $value ) : ?>
 			<input type="hidden" name="<?php echo esc_attr( $key ); ?>" id="gc-input-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 		<?php endforeach; ?>
-		<p class="gc-submit-top"><input type="submit" name="submit" id="gc-submit-2" class="button button-primary button-large" value="<?php esc_html_e( 'Import Selected Items', 'content-workflow' ); ?>"></p>
+		<p class="gc-submit-top"><input type="submit" name="submit" id="gc-submit-2" class="button button-primary button-large" value="<?php esc_html_e( 'Import Selected Items', 'content-workflow-by-bynder' ); ?>"></p>
 		<div id="gc-items-search"></div>
 		<div id="sync-tabs"><span class="gc-loader spinner is-active"></span></div>
 		<p class="description">
@@ -163,7 +168,7 @@ class Items_Sync extends Base {
 			'percent' => $this->mapping->get_pull_percent(),
 			'_items'  => $this->items,
 			'_text'   => array(
-				'no_items' => esc_html__( 'No items found.', 'content-workflow' ),
+				'no_items' => esc_html__( 'No items found.', 'content-workflow-by-bynder' ),
 			),
 		);
 	}
@@ -181,11 +186,11 @@ class Items_Sync extends Base {
 			'tmpl-gc-table-nav'           => array(),
 			'tmpl-gc-items-sync'          => array(
 				'headers' => array(
-					'status'      => __( 'Status', 'content-workflow' ),
-					'itemName'    => __( 'Item', 'content-workflow' ),
-					'updated_at'  => __( 'Updated', 'content-workflow' ),
-					'mappingName' => __( 'Template Mapping', 'content-workflow' ),
-					'post_title'  => __( 'WordPress Title', 'content-workflow' ),
+					'status'      => __( 'Status', 'content-workflow-by-bynder' ),
+					'itemName'    => __( 'Item', 'content-workflow-by-bynder' ),
+					'updated_at'  => __( 'Updated', 'content-workflow-by-bynder' ),
+					'mappingName' => __( 'Template Mapping', 'content-workflow-by-bynder' ),
+					'post_title'  => __( 'WordPress Title', 'content-workflow-by-bynder' ),
 				),
 			),
 			'tmpl-gc-item'                => array(

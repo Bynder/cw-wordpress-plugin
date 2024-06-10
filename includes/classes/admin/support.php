@@ -69,8 +69,8 @@ class Support extends Base {
 	public function admin_menu() {
 		add_submenu_page(
 			self::SLUG,
-			__( 'Support', 'content-workflow' ),
-			__( 'Support', 'content-workflow' ),
+			__( 'Support', 'content-workflow-by-bynder' ),
+			__( 'Support', 'content-workflow-by-bynder' ),
 			\GatherContent\Importer\view_capability(),
 			self::SLUG . '-support',
 			array( $this, 'admin_page' )
@@ -136,8 +136,6 @@ class Support extends Base {
 					'page_on_front'           => $this->get_page( 'page_on_front' ),
 					'page_for_posts'          => $this->get_page( 'page_for_posts' ),
 
-					'wp_remote_post'          => $this->wp_remote_post(),
-
 					'session'                 => isset( $_SESSION ) ? 'Enabled' : 'Disabled',
 					'session'                 => esc_html( ini_get( 'session.name' ) ),
 					'session_name'            => esc_html( ini_get( 'session.name' ) ),
@@ -192,26 +190,6 @@ class Support extends Base {
 	public function pre_length() {
 		$length = strlen( $GLOBALS['wpdb']->prefix );
 		return 'Length: ' . $length . ', Status: ' . ( $length > 16 ? 'ERROR: Too Long' : 'Acceptable' );
-	}
-
-	public function wp_remote_post() {
-		$request['cmd'] = '_notify-validate';
-		$response       = wp_remote_post(
-			'https://www.paypal.com/cgi-bin/webscr',
-			array(
-				'sslverify' => false,
-				'timeout'   => 60,
-				'body'      => $request,
-			)
-		);
-
-		if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
-			$works = 'wp_remote_post() works' . "\n";
-		} else {
-			$works = 'wp_remote_post() does not work' . "\n";
-		}
-
-		return $works;
 	}
 
 	public function active_plugins() {

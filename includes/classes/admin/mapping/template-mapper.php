@@ -54,7 +54,7 @@ class Template_Mapper extends Base {
 		if ( $this->mapping_id ) {
 
 			echo '<div class="gc-sync-items-descriptions">
-			<p class="description"><a href="' . esc_url( add_query_arg( 'sync-items', 1 ) ) . '"><span class="dashicons dashicons-randomize"> </span>' . __( 'Import Items for this template from Content Workflow', 'domain' ) . '</a></p>
+			<p class="description"><a href="' . esc_url( add_query_arg( 'sync-items', 1 ) ) . '"><span class="dashicons dashicons-randomize"> </span>' . __( 'Import Items for this template from Content Workflow', 'content-workflow-by-bynder' ) . '</a></p>
 			</div>';
 
 			$this->view(
@@ -87,7 +87,7 @@ class Template_Mapper extends Base {
 				'type'  => 'hidden',
 				'id'    => 'gc-template-title',
 				'name'  => $this->option_name . '[title]',
-				'value' => esc_attr( isset( $this->template->data->name ) ? $this->template->data->name : __( 'Mapped Template', 'content-workflow' ) ),
+				'value' => esc_attr( isset( $this->template->data->name ) ? $this->template->data->name : __( 'Mapped Template', 'content-workflow-by-bynder' ) ),
 			)
 		);
 
@@ -163,25 +163,25 @@ class Template_Mapper extends Base {
 				'default' => array(
 					'gc' => array(
 						'id'    => 'gc-field-th',
-						'label' => __( 'Content Workflow Field', 'content-workflow' ),
+						'label' => __( 'Content Workflow Field', 'content-workflow-by-bynder' ),
 					),
 					'wp' => array(
 						'id'    => 'wp-field-th',
-						'label' => __( 'Mapped WordPress Field', 'content-workflow' ),
+						'label' => __( 'Mapped WordPress Field', 'content-workflow-by-bynder' ),
 					),
 				),
 				'status'  => array(
 					'gc'      => array(
 						'id'    => 'gc-status-th',
-						'label' => __( 'Content Workflow Status', 'content-workflow' ),
+						'label' => __( 'Content Workflow Status', 'content-workflow-by-bynder' ),
 					),
 					'wp'      => array(
 						'id'    => 'wp-status-th',
-						'label' => __( 'Mapped WordPress Status', 'content-workflow' ),
+						'label' => __( 'Mapped WordPress Status', 'content-workflow-by-bynder' ),
 					),
 					'gcafter' => array(
 						'id'    => 'gcafter-status-th',
-						'label' => __( 'On Import, Change Status', 'content-workflow' ),
+						'label' => __( 'On Import, Change Status', 'content-workflow-by-bynder' ),
 					),
 				),
 			),
@@ -208,7 +208,7 @@ class Template_Mapper extends Base {
 			 'tmpl-gc-mapping-defaults-tab' => array(
 				 'post_author_label'   => $this->post_column_label( 'post_author' ),
 				 'post_status_options' => $post_status_options,
-				 'post_status_label'   => __( 'Default Status', 'content-workflow' ),
+				 'post_status_label'   => __( 'Default Status', 'content-workflow-by-bynder' ),
 				 'post_type_label'     => $this->post_column_label( 'post_type' ),
 				 'post_type_options'   => $this->get_default_field_options( 'post_type' ),
 				 'gc_status_options'   => $this->statuses,
@@ -237,7 +237,7 @@ class Template_Mapper extends Base {
 			new Field_Types\Taxonomy( $this->post_types() ),
 			new Field_Types\Meta(),
 			new Field_Types\Media(),
-			//new Field_Types\ACF(),
+			new Field_Types\Database(),
 		);
 
 		$is_acf_installed = class_exists('acf_pro');
@@ -271,7 +271,7 @@ class Template_Mapper extends Base {
 		$dismissed = explode( ',', (string) $dismissed );
 
 		$pointers = array(
-			'select_type'        => '<h3>' . __( 'Select your Post Type', 'content-workflow' ) . '</h3><p>' . __( 'To get started, select your default Post Type for this mapping.', 'content-workflow' ) . '</p>',
+			'select_type'        => '<h3>' . __( 'Select your Post Type', 'content-workflow-by-bynder' ) . '</h3><p>' . __( 'To get started, select your default Post Type for this mapping.', 'content-workflow-by-bynder' ) . '</p>',
 			'select_tab_how_to'  => '',
 			'map_status_how_to'  => '',
 			'refresh_connection' => '',
@@ -280,16 +280,16 @@ class Template_Mapper extends Base {
 		if ( $initial ) {
 
 			if ( ! in_array( 'gc_select_tab_how_to', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Template Tabs and Fields', 'content-workflow' ) . '</h3>';
-				$content .= '<p>' . __( 'You\'ll find the tabs from the Content Workflow Template here. Select a tab to start mapping the Template fields.', 'content-workflow' ) . '</p>';
+				$content  = '<h3>' . __( 'Template Tabs and Fields', 'content-workflow-by-bynder' ) . '</h3>';
+				$content .= '<p>' . __( 'You\'ll find the tabs from the Content Workflow Template here. Select a tab to start mapping the Template fields.', 'content-workflow-by-bynder' ) . '</p>';
 
 				$pointers['select_tab_how_to'] = $content;
 				$enqueue                       = true;
 			}
 
 			if ( ! in_array( 'gc_map_status_how_to', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Content Workflow Status &Rarr; WordPress Status', 'content-workflow' ) . '</h3>';
-				$content .= '<p>' . __( 'Here you\'ll be able to map each individual Content Workflow status to a WordPress status, and optionally, change the Content Workflow status when your items are imported to WordPress.', 'content-workflow' ) . '</p>';
+				$content  = '<h3>' . __( 'Content Workflow Status &Rarr; WordPress Status', 'content-workflow-by-bynder' ) . '</h3>';
+				$content .= '<p>' . __( 'Here you\'ll be able to map each individual Content Workflow status to a WordPress status, and optionally, change the Content Workflow status when your items are imported to WordPress.', 'content-workflow-by-bynder' ) . '</p>';
 
 				$pointers['map_status_how_to'] = $content;
 				$enqueue                       = true;
@@ -297,9 +297,9 @@ class Template_Mapper extends Base {
 		} else {
 
 			if ( ! in_array( 'gc_refresh_connection', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Refresh data from Content Workflow', 'content-workflow' ) . '</h3>';
-				$content .= '<p>' . __( 'To make the plugin more speedy, we cache the requests to Content Workflow for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.', 'content-workflow' ) . '</p>';
-				$content .= '<p>' . __( 'For more help, click the "Help" tab in the upper-right-hand corner.', 'content-workflow' ) . '</p>';
+				$content  = '<h3>' . __( 'Refresh data from Content Workflow', 'content-workflow-by-bynder' ) . '</h3>';
+				$content .= '<p>' . __( 'To make the plugin more speedy, we cache the requests to Content Workflow for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.', 'content-workflow-by-bynder' ) . '</p>';
+				$content .= '<p>' . __( 'For more help, click the "Help" tab in the upper-right-hand corner.', 'content-workflow-by-bynder' ) . '</p>';
 
 				$pointers['refresh_connection'] = $content;
 				$enqueue                        = true;
@@ -387,7 +387,7 @@ class Template_Mapper extends Base {
 
 		$default_tab = [
 			'id' => 'mapping-defaults',
-			'label' => __('Mapping Defaults', 'content-workflow'),
+			'label' => __('Mapping Defaults', 'content-workflow-by-bynder'),
 			'hidden' => true,
 			'navClasses' => 'alignright',
 			'rows' => $this->post_options(),

@@ -259,17 +259,17 @@ function prepare_js_data( $args, $item = null, $type = 'post' ) {
 		$args,
 		array(
 			'item'        => 0,
-			'itemName'    => __( 'N/A', 'gathercontent-importer' ),
+			'itemName'    => __( 'N/A', 'content-workflow-by-bynder' ),
 			'mapping'     => 0,
 			'post_id'     => 0,
 			'mappingLink' => '',
-			'mappingName' => __( '&mdash;', 'gathercontent-importer' ),
+			'mappingName' => __( '&mdash;', 'content-workflow-by-bynder' ),
 			'status'      => (object) array(),
-			'itemName'    => __( 'N/A', 'gathercontent-importer' ),
-			'updated_at'  => __( '&mdash;', 'gathercontent-importer' ),
+			'itemName'    => __( 'N/A', 'content-workflow-by-bynder' ),
+			'updated_at'  => __( '&mdash;', 'content-workflow-by-bynder' ),
 			'editLink'    => '',
-			'post_title'  => __( '&mdash;', 'gathercontent-importer' ),
-			'ptLabel'     => __( 'Post', 'gathercontent-importer' ),
+			'post_title'  => __( '&mdash;', 'content-workflow-by-bynder' ),
+			'ptLabel'     => __( 'Post', 'content-workflow-by-bynder' ),
 		)
 	);
 
@@ -319,7 +319,7 @@ function prepare_js_data( $args, $item = null, $type = 'post' ) {
  * @return string       Singular post-type label.
  */
 function get_post_type_singular_label( $post ) {
-	$label = __( 'Post', 'gathercontent-importer' );
+	$label = __( 'Post', 'content-workflow-by-bynder' );
 	if ( ! isset( $post->post_type ) ) {
 		return $label;
 	}
