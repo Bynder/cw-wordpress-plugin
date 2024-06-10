@@ -23,7 +23,7 @@ class Async_Save_Hook extends \WP_Async_Task {
 		$post_id = $data[0];
 		$post    = $data[1];
 		if ( $this->post_type !== $post->post_type ) {
-			throw new \Exception( 'We only want async tasks for: ' . $this->post_type );
+			throw new \Exception( 'We only want async tasks for: ' . esc_html__($this->post_type) );
 		}
 		return array( 'post_id' => $post_id );
 	}
