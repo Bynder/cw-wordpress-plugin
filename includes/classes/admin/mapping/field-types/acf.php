@@ -44,15 +44,16 @@ class ACF extends Base implements Type {
         // FIELD GROUPS
         if($group_results){
             // Extract group IDs
-            $groupIds = array_map(function ($group) use ($wpdb) {
-                return $wpdb->prepare('%d', $group->ID);
+            $groupIds = array_map(function ($group) {
+                return $group->ID;
             }, $group_results);
-
-            $groupIds = implode(',', $groupIds);
+			$groupIdPlaceholders = implode(', ', array_map(function () {
+				return '%d';
+			}, $groupIds));
 
             // Prepare and execute query to get all fields for all groups
-            $fields_query = "SELECT * FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE '%repeater%' AND post_parent IN ($groupIds)";
-            $fields_results = $wpdb->get_results($fields_query);
+            $fields_query = "SELECT * FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE '%repeater%' AND post_parent IN ($groupIdPlaceholders)";
+            $fields_results = $wpdb->get_results($wpdb->prepare($fields_query, $groupIds));
 
             // Group the field results by parent group
             $grouped_field_results = [];
