@@ -1,6 +1,6 @@
 <div class="gc-auth-enabled">
 	<p>
-		<?php _e( 'It appears you have enabled <a href="http://www.htaccesstools.com/htaccess-authentication/">HTTP authentication</a> for this site.', 'content-workflow-by-bynder' ); ?>
+		<?php esc_html_e( 'It appears you have enabled <a href="http://www.htaccesstools.com/htaccess-authentication/">HTTP authentication</a> for this site.', 'content-workflow-by-bynder' ); ?>
 		<br>
 		<?php esc_html_e( 'Please enter the authentication username and password in order for this plugin to work.', 'content-workflow-by-bynder' ); ?>
 	</p>
