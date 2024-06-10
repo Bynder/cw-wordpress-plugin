@@ -769,7 +769,7 @@ class API extends Base {
 				$this->set_user( $settings['account_email'] );
 				$this->set_api_key( $settings['api_key'] );
 			} else {
-				throw new \Exception( __( 'The Content Workflow API connection is not set up.', 'content-workflow-by-bynder' ) );
+				throw new \Exception( esc_attr__( 'The Content Workflow API connection is not set up.', 'content-workflow-by-bynder' ) );
 			}
 		}
 
