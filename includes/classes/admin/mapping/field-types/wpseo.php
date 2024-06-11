@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Mapping\Field_Types;
 
 use GatherContent\Importer\Views\View;
@@ -16,8 +17,8 @@ class WPSEO extends Base implements Type {
 		'text_plain',
 	);
 
-	protected $type_id           = 'wp-type-meta--seo';
-	protected $post_types        = array();
+	protected $type_id = 'wp-type-meta--seo';
+	protected $post_types = array();
 	protected $yoast_field_types = array(
 		'text',
 		'textarea',
@@ -60,7 +61,7 @@ class WPSEO extends Base implements Type {
 	protected function get_seo_options() {
 		$this->initialize_wpseo();
 
-		$options = array('all_types' => []);
+		$options = array( 'all_types' => [] );
 
 		global $post;
 
@@ -139,15 +140,16 @@ class WPSEO extends Base implements Type {
 		unset( $seo_options['all_types'] );
 		?>
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type ) { #>
-			<select class="gc-select2 wp-type-value-select <?php $this->e_type_id(); ?>" name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
-				<?php $this->underscore_options( $all ); ?>
-				<?php foreach ( $seo_options as $post_type => $options ) : ?>
-					<# if ( '<?php echo $post_type; ?>' === data.post_type ) { #>
-					<?php $this->underscore_options( $options ); ?>
-					<# } #>
-				<?php endforeach; ?>
-				<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
-			</select>
+		<select class="gc-select2 wp-type-value-select <?php $this->e_type_id(); ?>"
+				name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
+			<?php $this->underscore_options( $all ); ?>
+			<?php foreach ( $seo_options as $post_type => $options ) : ?>
+				<# if ( '<?php echo esc_attr( $post_type ); ?>' === data.post_type ) { #>
+				<?php $this->underscore_options( $options ); ?>
+				<# } #>
+			<?php endforeach; ?>
+			<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
+		</select>
 		<# } #>
 		<?php
 	}

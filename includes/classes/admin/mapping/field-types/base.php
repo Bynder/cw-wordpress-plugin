@@ -52,16 +52,16 @@ abstract class Base extends Plugin_Base implements Type {
 	/**
 	 * Returns type_id property
 	 *
+	 * @return [type]  [description]
 	 * @since  [since]
 	 *
-	 * @return [type]  [description]
 	 */
 	public function type_id() {
 		return $this->type_id;
 	}
 
 	public function e_type_id() {
-		echo $this->type_id;
+		echo esc_attr( $this->type_id );
 	}
 
 	public function option_underscore_template( View $view ) {
@@ -71,7 +71,7 @@ abstract class Base extends Plugin_Base implements Type {
 			$option = '<# if ( data.type in ' . $types . ' ) { #>' . $option . '<# } #>';
 		}
 
-		echo "\n\t" . $option;
+		echo "\n\t" . wp_kses_post( $option );
 	}
 
 	public function underscore_options( $array ) {
@@ -81,7 +81,7 @@ abstract class Base extends Plugin_Base implements Type {
 	}
 
 	public function underscore_option( $value, $label ) {
-		echo '<option <# if ( "' . $value . '" === data.field_value ) { #>selected="selected"<# } #> value="' . $value . '">' . $label . '</option>';
+		echo '<option <# if ( "' . esc_attr( $value ) . '" === data.field_value ) { #>selected="selected"<# } #> value="' . esc_attr( $value ) . '">' . esc_html( $label ) . '</option>';
 	}
 
 	public function underscore_empty_option( $label ) {

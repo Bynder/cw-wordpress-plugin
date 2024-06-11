@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Mapping;
 
 use GatherContent\Importer\Mapping_Post;
@@ -25,7 +26,7 @@ class Items_Sync extends Base {
 	protected $mapping;
 
 	protected $items = array();
-	protected $url   = '';
+	protected $url = '';
 
 	public function __construct( array $args ) {
 		parent::__construct( $args );
@@ -51,7 +52,7 @@ class Items_Sync extends Base {
 			$msg = '';
 
 			$parts = $this->error_parts( $last_error );
-			$msg  .= array_shift( $parts );
+			$msg   .= array_shift( $parts );
 			foreach ( $parts as $part ) {
 				$msg .= '</strong></p>';
 				$msg .= $part;
@@ -68,7 +69,7 @@ class Items_Sync extends Base {
 			if ( is_array( $item_errors ) ) {
 				$msg  = '';
 				$main = __( 'There were some errors with the item import:', 'content-workflow-by-bynder' );
-				$msg .= '<ul>';
+				$msg  .= '<ul>';
 				foreach ( $item_errors as $error ) {
 					$parts = $this->error_parts( $error );
 					// $main = array_shift( $parts );
@@ -116,9 +117,9 @@ class Items_Sync extends Base {
 	/**
 	 * The page-specific script ID to enqueue.
 	 *
+	 * @return string
 	 * @since  3.0.0
 	 *
-	 * @return string
 	 */
 	protected function script_id() {
 		return 'gathercontent-sync';
@@ -127,9 +128,9 @@ class Items_Sync extends Base {
 	/**
 	 * The sync page UI callback.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function ui_page() {
 		// Output the markup for the JS to build on.
@@ -138,20 +139,28 @@ class Items_Sync extends Base {
 		 * Previously the foreach below was iterating over the entire $_GET
 		 * super global. Now we use the specific keys only.
 		 */
-		$hiddenInputs = $this->_get_vals([
-			'page', 'project', 'template', 'sync-items'
-		]);
+		$hiddenInputs = $this->_get_vals( [
+			'page',
+			'project',
+			'template',
+			'sync-items'
+		] );
 
 		?>
-		<input type="hidden" name="mapping_id" id="gc-input-mapping_id" value="<?php echo $this->mapping_id; ?>"/>
+		<input type="hidden" name="mapping_id" id="gc-input-mapping_id"
+			   value="<?php echo esc_attr( $this->mapping_id ); ?>"/>
 		<?php foreach ( $hiddenInputs as $key => $value ) : ?>
-			<input type="hidden" name="<?php echo esc_attr( $key ); ?>" id="gc-input-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $key ); ?>" id="gc-input-<?php echo esc_attr( $key ); ?>"
+				   value="<?php echo esc_attr( $value ); ?>"/>
 		<?php endforeach; ?>
-		<p class="gc-submit-top"><input type="submit" name="submit" id="gc-submit-2" class="button button-primary button-large" value="<?php esc_html_e( 'Import Selected Items', 'content-workflow-by-bynder' ); ?>"></p>
+		<p class="gc-submit-top"><input type="submit" name="submit" id="gc-submit-2"
+										class="button button-primary button-large"
+										value="<?php esc_html_e( 'Import Selected Items', 'content-workflow-by-bynder' ); ?>">
+		</p>
 		<div id="gc-items-search"></div>
 		<div id="sync-tabs"><span class="gc-loader spinner is-active"></span></div>
 		<p class="description">
-			<a href="<?php echo $this->mapping->get_edit_post_link(); ?>"><?php echo $this->mappings->args->labels->edit_item; ?></a>
+			<a href="<?php echo esc_url( $this->mapping->get_edit_post_link() ); ?>"><?php echo esc_html( $this->mappings->args->labels->edit_item ); ?></a>
 		</p>
 		<?php
 	}
@@ -159,9 +168,9 @@ class Items_Sync extends Base {
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	protected function get_localize_data() {
 		return array(
@@ -176,9 +185,9 @@ class Items_Sync extends Base {
 	/**
 	 * Gets the underscore templates array.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	protected function get_underscore_templates() {
 		return array(

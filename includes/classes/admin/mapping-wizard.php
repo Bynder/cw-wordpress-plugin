@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin;
 
 use GatherContent\Importer\Utils;
@@ -13,11 +14,11 @@ use GatherContent\Importer\Post_Types\Template_Mappings;
  */
 class Mapping_Wizard extends Base {
 
-	const SLUG     = 'gathercontent-import-add-new-template';
-	const ACCOUNT  = 0;
-	const PROJECT  = 1;
+	const SLUG = 'gathercontent-import-add-new-template';
+	const ACCOUNT = 0;
+	const PROJECT = 1;
 	const TEMPLATE = 2;
-	const SYNC     = 3;
+	const SYNC = 3;
 
 	protected $slugs = array(
 		self::ACCOUNT  => 'gc-account',
@@ -94,9 +95,9 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Registers our menu item and admin page.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function admin_menu() {
 		$page = add_submenu_page(
@@ -113,7 +114,7 @@ class Mapping_Wizard extends Base {
 		add_action( 'load-' . $page, array( $this, 'add_help_tabs' ) );
 	}
 
-	public function admin_enqueue_assets($hook_suffix) {
+	public function admin_enqueue_assets( $hook_suffix ) {
 		$this->admin_enqueue_style();
 		$this->admin_enqueue_script();
 	}
@@ -151,10 +152,10 @@ class Mapping_Wizard extends Base {
 				'id'      => 'gc-help-me',
 				'title'   => __( 'Content Workflow', 'content-workflow-by-bynder' ),
 				'content' => __(
-					'<p>Thank you for using the Content Workflow WordPress plugin!</p>' .
-					'<p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.</p>',
-					'content-workflow-by-bynder'
-				) . '<p>' . $this->refresh_connection_link() . '</p>',
+					             '<p>Thank you for using the Content Workflow WordPress plugin!</p>' .
+					             '<p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.</p>',
+					             'content-workflow-by-bynder'
+				             ) . '<p>' . $this->refresh_connection_link() . '</p>',
 			)
 		);
 
@@ -285,9 +286,9 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Initializes the plugin's setting, and settings sections/Fields.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function initialize_settings_sections() {
 
@@ -314,9 +315,9 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Step one of the mapping wizard, pick a project from list of accounts.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function select_project() {
 		$section = new Form_Section(
@@ -408,9 +409,9 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Step two of the mapping wizard, pick a template in the chosen project.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function select_template() {
 		$project = $this->api()->get_project( absint( $this->_get_val( 'project' ) ) );
@@ -491,9 +492,9 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Step three, the final step of the mapping wizard. Create a template-mapping.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function map_template() {
 
@@ -524,13 +525,13 @@ class Mapping_Wizard extends Base {
 		$sync_items = $mapping_id && $this->_get_val( 'sync-items' );
 		$notes      = '';
 
-		$is_acf_pro_installed = class_exists('acf_pro');
+		$is_acf_pro_installed           = class_exists( 'acf_pro' );
 		$template_has_repeatable_fields = false;
-		if (isset($template->related->structure->groups)) {
-			foreach ($template->related->structure->groups as $group) {
-				if (isset($group->fields)) {
-					foreach ($group->fields as $field) {
-						if (isset($field->metadata->repeatable) && $field->metadata->repeatable->isRepeatable) {
+		if ( isset( $template->related->structure->groups ) ) {
+			foreach ( $template->related->structure->groups as $group ) {
+				if ( isset( $group->fields ) ) {
+					foreach ( $group->fields as $field ) {
+						if ( isset( $field->metadata->repeatable ) && $field->metadata->repeatable->isRepeatable ) {
 							$template_has_repeatable_fields = true;
 							break 2;
 						}
@@ -539,10 +540,10 @@ class Mapping_Wizard extends Base {
 			}
 		}
 
-		if ($template_has_repeatable_fields && !$is_acf_pro_installed ){
+		if ( $template_has_repeatable_fields && ! $is_acf_pro_installed ) {
 			$notes .= $this->view(
 				'graceful-degradation',
-				array('additionalClass' => 'gc-component-disabled'),
+				array( 'additionalClass' => 'gc-component-disabled' ),
 				false
 			);
 		}
@@ -637,11 +638,11 @@ class Mapping_Wizard extends Base {
 	 * Does not actually save fields, but simply uses the field values to determine where
 	 * we are in the process (wizard).
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $options Array of options
+	 * @param array $options Array of options
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	public function sanitize_settings( $options ) {
 		if ( ! isset( $options['project'] ) ) {
@@ -672,11 +673,11 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Redirects to the template-picker page of the wizard.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $project GC Project ID.
+	 * @param int $project GC Project ID.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	protected function redirect_to_template_picker( $project ) {
 		wp_safe_redirect( esc_url_raw( add_query_arg( 'project', $project, $this->url ) ) );
@@ -686,12 +687,12 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Redirects to the (final) mapping-creator page of the wizard.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $project  GC Project ID.
-	 * @param  int $template GC Template ID.
+	 * @param int $project GC Project ID.
+	 * @param int $template GC Template ID.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	protected function redirect_to_mapping_creation( $project, $template ) {
 
@@ -714,13 +715,13 @@ class Mapping_Wizard extends Base {
 	 * Creates/Saves a mapping post after submission and redirects back
 	 * to mapping-creator page to edit new mapping.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int   $project  GC Project ID.
-	 * @param  int   $template GC Template ID.
-	 * @param  array $options Array of options/values submitted.
+	 * @param int $project GC Project ID.
+	 * @param int $template GC Template ID.
+	 * @param array $options Array of options/values submitted.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	protected function save_mapping_post_and_redirect( $project, $template, $options ) {
 		if ( ! wp_verify_nonce( $options['create_mapping'], md5( $project . $template ) ) ) {
@@ -732,7 +733,7 @@ class Mapping_Wizard extends Base {
 		$post_id = $this->create_or_update_mapping_post( $options );
 
 		if ( is_wp_error( $post_id ) ) {
-			wp_die( $post_id->get_error_message(), __( 'Failed creating mapping!', 'content-workflow-by-bynder' ) );
+			wp_die( esc_html( $post_id->get_error_message() ), esc_html__( 'Failed creating mapping!', 'content-workflow-by-bynder' ) );
 		}
 
 		$edit_url = get_edit_post_link( $post_id, 'raw' );
@@ -746,9 +747,9 @@ class Mapping_Wizard extends Base {
 	/**
 	 * A URL for flushing the cached connection to GC's API
 	 *
+	 * @return string URL for flushing cache.
 	 * @since  3.0.0
 	 *
-	 * @return string URL for flushing cache.
 	 */
 	public function refresh_connection_link() {
 		return \GatherContent\Importer\refresh_connection_link();
@@ -768,12 +769,12 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Filter all the items in a project by template_id.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $project_id
-	 * @param  int $template_id
+	 * @param int $project_id
+	 * @param int $template_id
 	 *
 	 * @return mixed result of request
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_project_items_by_template( $project_id, $template_id ) {
 
@@ -782,17 +783,18 @@ class Mapping_Wizard extends Base {
 		}
 
 		$this->project_items[ $project_id ] = $this->api()->get_project_items( $project_id, $template_id, true );
+
 		return $this->project_items[ $project_id ];
 	}
 
 	/**
 	 * Create or update a template mapping post using the saved options/values.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $options Array of options from mapping UI.
+	 * @param array $options Array of options from mapping UI.
 	 *
 	 * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function create_or_update_mapping_post( $options ) {
 		$post_args = $mapping_args = array();
@@ -819,9 +821,9 @@ class Mapping_Wizard extends Base {
 	/**
 	 * Determine if any conditions are met to cause us to redirect.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	protected function handle_redirects() {
 		$this->maybe_redirect_to_create_new_mapping();
@@ -832,9 +834,9 @@ class Mapping_Wizard extends Base {
 	 * Determine if we should redirect to new-mapping settings page
 	 * when trying to create a new Template Mapping.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	protected function maybe_redirect_to_create_new_mapping() {
 		global $pagenow;
@@ -849,9 +851,9 @@ class Mapping_Wizard extends Base {
 	 * Determine if we should redirect to a defined mapping template to edit.
 	 * (based on template/project id)
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	protected function maybe_redirect_to_edit_mapping_template() {
 		if (

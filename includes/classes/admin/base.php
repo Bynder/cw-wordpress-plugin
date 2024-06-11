@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin;
 
 use GatherContent\Importer\API;
@@ -6,11 +7,11 @@ use GatherContent\Importer\Settings\Setting;
 
 abstract class Base extends Enqueue {
 
-	const SLUG            = GATHERCONTENT_SLUG;
-	public $option_name   = '';
-	public $option_group  = '';
-	public $url           = '';
-	public $step          = 0;
+	const SLUG = GATHERCONTENT_SLUG;
+	public $option_name = '';
+	public $option_group = '';
+	public $url = '';
+	public $step = 0;
 	public $menu_priority = 9;
 
 	/**
@@ -47,9 +48,10 @@ abstract class Base extends Enqueue {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param $api API object
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param $api API object
 	 */
 	public function __construct() {
 		$this->url  = admin_url( 'admin.php?page=' . static::SLUG );
@@ -59,9 +61,9 @@ abstract class Base extends Enqueue {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		$callbacks = array(
@@ -81,9 +83,9 @@ abstract class Base extends Enqueue {
 	/**
 	 * Registers our menu item and admin page.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	abstract public function admin_menu();
 
@@ -92,9 +94,9 @@ abstract class Base extends Enqueue {
 	/**
 	 * Initializes the plugin's setting, and settings sections/Fields.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	protected function initialize_settings_sections() {
 		register_setting(
@@ -106,22 +108,24 @@ abstract class Base extends Enqueue {
 
 	public function sanitize_settings( $options ) {
 		self::$api->flush_cache();
+
 		return $this->settings()->sanitize_settings( $options );
 	}
 
 	/**
 	 * `add_settings_error` wrapper which is useable before `add_settings_error` is.
 	 *
+	 * @param string $setting Slug title of the setting to which this error applies
+	 * @param string $code Slug-name to identify the error. Used as part of 'id' attribute in HTML output.
+	 * @param string $message The formatted message text to display to the user (will be shown inside styled
+	 *                        `<div>` and `<p>` tags).
+	 * @param string $type Optional. Message type, controls HTML class. Accepts 'error' or 'updated'.
+	 *                        Default 'error'.
+	 *
 	 * @since NEXT
 	 *
 	 * @global array $wp_settings_errors Storage array of errors registered during this pageload
 	 *
-	 * @param string $setting Slug title of the setting to which this error applies
-	 * @param string $code    Slug-name to identify the error. Used as part of 'id' attribute in HTML output.
-	 * @param string $message The formatted message text to display to the user (will be shown inside styled
-	 *                        `<div>` and `<p>` tags).
-	 * @param string $type    Optional. Message type, controls HTML class. Accepts 'error' or 'updated'.
-	 *                        Default 'error'.
 	 */
 	protected function add_settings_error( $setting, $code, $message, $type = 'error' ) {
 		if ( function_exists( 'add_settings_error' ) ) {
@@ -143,11 +147,11 @@ abstract class Base extends Enqueue {
 	/**
 	 * Determine which step user is on.
 	 *
-	 * @todo  This should be determined which options they have filled out, and redirect user to step.
-	 *
+	 * @return int  Step number.
 	 * @since  3.0.0
 	 *
-	 * @return int  Step number.
+	 * @todo  This should be determined which options they have filled out, and redirect user to step.
+	 *
 	 */
 	public function which_step() {
 		return $this->step;
@@ -156,11 +160,11 @@ abstract class Base extends Enqueue {
 	/**
 	 * Get option value.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $key Key from options array to retrieve.
+	 * @param string $key Key from options array to retrieve.
 	 *
 	 * @return mixed       Value for option.
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_setting( $key ) {
 		return $this->settings()->get( $key );
@@ -169,9 +173,9 @@ abstract class Base extends Enqueue {
 	/**
 	 * Gets the Settings object
 	 *
+	 * @return Settings
 	 * @since  3.0.0
 	 *
-	 * @return Settings
 	 */
 	public function settings() {
 		if ( null === $this->settings ) {
@@ -183,7 +187,7 @@ abstract class Base extends Enqueue {
 
 	protected function api() {
 		if ( null === self::$api ) {
-			throw new \Exception( 'Must set the API object with ' . get_class( $this ) . '::set_api( $api ).' );
+			throw new \Exception( 'Must set the API object with ' . esc_html( get_class( $this ) ) . '::set_api( $api ).' );
 		}
 
 		return self::$api;
@@ -197,9 +201,9 @@ abstract class Base extends Enqueue {
 	 * Uses the platform URL to determine which account in the accounts object
 	 * (from the API) to set as the account.
 	 *
+	 * @return  bool Whether account was successfully set.
 	 * @since 3.0.0
 	 *
-	 * @return  bool Whether account was successfully set.
 	 */
 	public function set_my_account() {
 		$accounts     = $this->api()->get_accounts();
@@ -212,6 +216,7 @@ abstract class Base extends Enqueue {
 		foreach ( $accounts as $index => $account ) {
 			if ( $account_slug === $account->slug ) {
 				$this->account = $account;
+
 				return true;
 			}
 		}
@@ -222,11 +227,11 @@ abstract class Base extends Enqueue {
 	/**
 	 * Get the platform URL using the saved account slug.
 	 *
-	 * @since  3.0.0
-	 *
 	 * @param string $path Optionally append a path to the platform URL.
 	 *
 	 * @return string  The account platform url.
+	 * @since  3.0.0
+	 *
 	 */
 	public function platform_url( $path = '' ) {
 		return 'https://' . $this->_get_account_slug() . '.gathercontent.com/' . $path;
