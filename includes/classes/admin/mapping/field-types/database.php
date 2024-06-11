@@ -147,7 +147,7 @@ class Database extends Base implements Type {
 					name=""
 				>
 					<option value="">Select a column</option>
-					<?= echo wp_kses_post(implode('\r\n', $this->getAllTableColOptions())) ?>
+					<?= wp_kses_post(implode('\r\n', $this->getAllTableColOptions())) ?>
 				</select>
 
 				<input

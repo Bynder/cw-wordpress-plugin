@@ -151,7 +151,7 @@ class Items_Sync extends Base {
 		<div id="gc-items-search"></div>
 		<div id="sync-tabs"><span class="gc-loader spinner is-active"></span></div>
 		<p class="description">
-			<a href="<?php echo esc_url($this->mapping->get_edit_post_link()); ?>"><?php esc_attr_e($this->mappings->args->labels->edit_item); ?></a>
+			<a href="<?php echo esc_url($this->mapping->get_edit_post_link()); ?>"><?php esc_html_e($this->mappings->args->labels->edit_item); ?></a>
 		</p>
 		<?php
 	}

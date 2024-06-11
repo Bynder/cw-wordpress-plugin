@@ -5,9 +5,9 @@
 		echo wp_kses_post( $message );
 		?>
 		<br>
-		<?php esc_attr_e( 'Please enter the authentication username and password in order for this plugin to work.', 'content-workflow-by-bynder' ); ?>
+		<?php esc_html_e( 'Please enter the authentication username and password in order for this plugin to work.', 'content-workflow-by-bynder' ); ?>
 	</p>
 	<p class="description">
-		<?php esc_attr_e( 'If you\'re not sure what this is, please contact your site adminstrator.', 'content-workflow-by-bynder' ); ?>
+		<?php esc_html_e( 'If you\'re not sure what this is, please contact your site adminstrator.', 'content-workflow-by-bynder' ); ?>
 	</p>
 </div>

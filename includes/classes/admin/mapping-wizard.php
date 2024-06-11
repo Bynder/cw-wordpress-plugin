@@ -732,7 +732,7 @@ class Mapping_Wizard extends Base {
 		$post_id = $this->create_or_update_mapping_post( $options );
 
 		if ( is_wp_error( $post_id ) ) {
-			wp_die( esc_html($post_id->get_error_message()), esc_attr__( 'Failed creating mapping!', 'content-workflow-by-bynder' ) );
+			wp_die( esc_attr($post_id->get_error_message()), esc_attr__( 'Failed creating mapping!', 'content-workflow-by-bynder' ) );
 		}
 
 		$edit_url = get_edit_post_link( $post_id, 'raw' );

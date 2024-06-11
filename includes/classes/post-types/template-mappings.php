@@ -268,14 +268,14 @@ class Template_Mappings extends Base {
 	public function output_mapping_data( $post ) {
 		if ( self::SLUG === $post->post_type ) {
 			echo '<p class="postbox" style="padding: 1em;background: #f5f5f5;margin: -4px 0 0">';
-			echo '<strong>' . esc_attr__( 'Project ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html(get_post_meta( get_the_id(), '_gc_project', 1 ));
+			echo '<strong>' . esc_html__( 'Project ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html(get_post_meta( get_the_id(), '_gc_project', 1 ));
 			echo ',&nbsp;';
-			echo '<strong>' . esc_attr__( 'Template ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html(get_post_meta( get_the_id(), '_gc_template', 1 ));
+			echo '<strong>' . esc_html__( 'Template ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html(get_post_meta( get_the_id(), '_gc_template', 1 ));
 
 			if ( $account = get_post_meta( get_the_id(), '_gc_account', 1 ) ) {
 				$account = 'https://' . $account . '.gathercontent.com/';
 				echo ',&nbsp;';
-				echo '<strong>' . esc_attr__( 'Account:', 'content-workflow-by-bynder' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
+				echo '<strong>' . esc_html__( 'Account:', 'content-workflow-by-bynder' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
 			}
 
 			echo '</p>';
@@ -288,7 +288,7 @@ class Template_Mappings extends Base {
 				}
 			}
 
-			echo '<pre><textarea name="content" id="content" rows="20" style="width:100%;">' . esc_html(print_r( $content, true )) . '</textarea></pre>';
+			echo '<pre><textarea name="content" id="content" rows="20" style="width:100%;">' . wp_kses_post(print_r( $content, true )) . '</textarea></pre>';
 		}
 	}
 
@@ -342,8 +342,8 @@ class Template_Mappings extends Base {
 			$actions['sync-items'] = sprintf(
 				'<a href="%s" aria-label="%s">%s</a>',
 				add_query_arg( 'sync-items', 1, get_edit_post_link( $post->ID, 'raw' ) ),
-				esc_attr( __( 'Review Items for Import', 'content-workflow-by-bynder' ) ),
-				__( 'Review Items for Import', 'content-workflow-by-bynder' )
+				esc_html__( 'Review Items for Import', 'content-workflow-by-bynder' ),
+				esc_html__( 'Review Items for Import', 'content-workflow-by-bynder' )
 			);
 		}
 
@@ -581,7 +581,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $projects ) ) {
-			new WP_Error( 'gc_no_projects', esc_html__( 'No projects were found for this account.', 'content-workflow-by-bynder' ) );
+			new WP_Error( 'gc_no_projects', esc_attr__( 'No projects were found for this account.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_projects = array();
@@ -620,7 +620,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $accounts ) ) {
-			new WP_Error( 'gc_no_accounts', esc_html__( 'No accounts were found.', 'content-workflow-by-bynder' ) );
+			new WP_Error( 'gc_no_accounts', esc_attr( 'No accounts were found.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_accounts = array();

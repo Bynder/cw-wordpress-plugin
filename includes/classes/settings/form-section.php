@@ -76,9 +76,9 @@ class Form_Section extends Base {
 			echo '<tr' . esc_attr( $class ) . '>';
 
 			if ( ! empty( $field['args']['label_for'] ) ) {
-				echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . esc_attr($field['title']) . '</label></th>';
+				echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . esc_html($field['title']) . '</label></th>';
 			} elseif ( ! empty( $field['title'] ) ) {
-				echo '<th scope="row">' . esc_attr( $field['title'] ) . '</th>';
+				echo '<th scope="row">' . esc_html( $field['title'] ) . '</th>';
 			}
 
 			echo '<td>';

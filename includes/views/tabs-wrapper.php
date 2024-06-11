@@ -11,7 +11,7 @@
 	<?php foreach ( $this->get( 'tabs' ) as $tab_id => $tab ) : ?>
 		<fieldset class="gc-template-tab <?php echo esc_attr($tab['tab_class'] ?? ''); ?>" id="<?php echo esc_attr( $tab['id'] ); ?>">
 		<legend class="screen-reader-text"><?php echo esc_html($tab['label']); ?></legend>
-		<?php echo esc_html($tab['content']); ?>
+		<?php echo wp_kses_post($tab['content']); ?>
 		</fieldset>
 	<?php endforeach; ?>
 
