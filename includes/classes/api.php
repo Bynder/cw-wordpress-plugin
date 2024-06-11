@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer;
 
 use GatherContent\Importer\General;
@@ -7,13 +8,13 @@ use WP_Error;
 
 class API extends Base {
 
-	protected $base_url            = 'https://api.gathercontent.com/';
-	protected $user                = '';
-	protected $api_key             = '';
-	protected $only_cached         = false;
+	protected $base_url = 'https://api.gathercontent.com/';
+	protected $user = '';
+	protected $api_key = '';
+	protected $only_cached = false;
 	protected $reset_request_cache = false;
-	protected $disable_cache       = false;
-	protected $last_response       = false;
+	protected $disable_cache = false;
+	protected $last_response = false;
 
 	/**
 	 * WP_Http instance
@@ -48,12 +49,13 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/me" endpoint.
 	 *
+	 * @param bool $uncached Whether bypass cache when making request.
+	 *
+	 * @return mixed          Results of request.
 	 * @since  3.0.0
 	 *
 	 * @link https://gathercontent.com/developers/me/get-me/
 	 *
-	 * @param  bool $uncached Whether bypass cache when making request.
-	 * @return mixed          Results of request.
 	 */
 	public function get_me( $uncached = false ) {
 		if ( $uncached ) {
@@ -66,11 +68,11 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/accounts" endpoint.
 	 *
-	 * @since  3.0.0
-	 *
+	 * @return mixed Results of request.
 	 * @link https://gathercontent.com/developers/accounts/get-accounts/
 	 *
-	 * @return mixed Results of request.
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_accounts() {
 		return $this->get( 'accounts' );
@@ -79,11 +81,11 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/account/<ACCOUNT_ID>" endpoint.
 	 *
-	 * @since  3.0.0
-	 *
+	 * @return mixed Results of request.
 	 * @link https://gathercontent.com/developers/accounts/get-account/
 	 *
-	 * @return mixed Results of request.
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_account( $account_id ) {
 		return $this->get(
@@ -99,12 +101,13 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/projects?account_id=<ACCOUNT_ID>" endpoint.
 	 *
+	 * @param int $account_id Account ID.
+	 *
+	 * @return mixed             Results of request.
 	 * @since  3.0.0
 	 *
 	 * @link https://gathercontent.com/developers/projects/get-projects/
 	 *
-	 * @param  int $account_id Account ID.
-	 * @return mixed             Results of request.
 	 */
 	public function get_account_projects( $account_id ) {
 		return $this->get( 'projects?account_id=' . $account_id );
@@ -113,12 +116,13 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/projects/<PROJECT_ID>" endpoint.
 	 *
+	 * @param int $project_id Project ID.
+	 *
+	 * @return mixed             Results of request.
 	 * @since  3.0.0
 	 *
 	 * @link https://gathercontent.com/developers/projects/get-projects-by-id/
 	 *
-	 * @param  int $project_id Project ID.
-	 * @return mixed             Results of request.
 	 */
 	public function get_project( $project_id ) {
 		return $this->get( 'projects/' . $project_id );
@@ -127,14 +131,14 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/projects/<PROJECT_ID>/statuses" endpoint.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @link https://gathercontent.com/developers/projects/get-projects-statuses/
-	 *
-	 * @param  int    $project_id Project ID.
-	 * @param  string $response   Response result type.
+	 * @param int $project_id Project ID.
+	 * @param string $response Response result type.
 	 *
 	 * @return mixed             Results of request.
+	 * @link https://gathercontent.com/developers/projects/get-projects-statuses/
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_project_statuses( $project_id, $response = '' ) {
 		return $this->get( 'projects/' . $project_id . '/statuses', array(), $response );
@@ -145,15 +149,15 @@ class API extends Base {
 	 *
 	 * Pass template_id to filter it with template_id as well
 	 *
+	 * @param int $project_id Project ID.
+	 * @param int $template_id Template ID.
+	 * @param bool $include_status bool defaults to false.
+	 *
+	 * @return mixed             Results of request.
 	 * @since  3.2.0
 	 *
 	 * @link https://docs.gathercontent.com/reference/listitems
 	 *
-	 * @param  int  $project_id Project ID.
-	 * @param  int  $template_id Template ID.
-	 * @param  bool $include_status bool defaults to false.
-	 *
-	 * @return mixed             Results of request.
 	 */
 	public function get_project_items( $project_id, $template_id, $include_status = false ) {
 
@@ -175,7 +179,7 @@ class API extends Base {
 		);
 
 		if ( $include_status ) {
-			foreach ($response as $i => $item) {
+			foreach ( $response as $i => $item ) {
 				$response[ $i ]->status = (object) $this->add_status_to_item( $item );
 			}
 		}
@@ -186,14 +190,14 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/items/{item_id}" endpoint.
 	 *
-	 * @since  3.2.0
-	 *
-	 * @link https://docs.gathercontent.com/reference/getitem
-	 *
-	 * @param  int  $item_id Item ID.
-	 * @param  bool $exclude_status set this to true to avoid appending status data
+	 * @param int $item_id Item ID.
+	 * @param bool $exclude_status set this to true to avoid appending status data
 	 *
 	 * @return mixed        Results of request.
+	 * @link https://docs.gathercontent.com/reference/getitem
+	 *
+	 * @since  3.2.0
+	 *
 	 */
 	public function get_item( $item_id, $exclude_status = false ) {
 
@@ -218,10 +222,11 @@ class API extends Base {
 	/**
 	 * Add project status to single item.
 	 *
+	 * @param mixed $item item result object.
+	 *
+	 * @return mixed $status_data.
 	 * @since  3.2.0
 	 *
-	 * @param  mixed $item item result object.
-	 * @return mixed $status_data.
 	 */
 	public function add_status_to_item( $item ) {
 
@@ -245,12 +250,13 @@ class API extends Base {
 	/**
 	 * GC V2 API request to get the results from the "/projects/{project_id}/statuses/:status_id" endpoint.
 	 *
+	 * @param int $project_id Project ID, int $status_id Status ID.
+	 *
+	 * @return mixed             Results of request.
 	 * @since  3.2.0
 	 *
 	 * @link https://docs.gathercontent.com/v0.5/reference/get-project-statuses-by-id
 	 *
-	 * @param  int $project_id Project ID, int $status_id Status ID.
-	 * @return mixed             Results of request.
 	 */
 	public function get_project_status_information( $project_id, $status_id ) {
 		return $this->get( 'projects/' . $project_id . '/statuses/' . $status_id );
@@ -259,14 +265,14 @@ class API extends Base {
 	/**
 	 * GC V2 API request to get the files from the "/projects/{project_id}/files" endpoint.
 	 *
-	 * @since  3.2.0
-	 *
-	 * @link https://docs.gathercontent.com/reference/listfiles
-	 *
-	 * @param  string $project_id required project_id to fetch the files.
-	 * @param  array  $file_ids optional array to filter files with the project id.
+	 * @param string $project_id required project_id to fetch the files.
+	 * @param array $file_ids optional array to filter files with the project id.
 	 *
 	 * @return mixed          Results of request.
+	 * @link https://docs.gathercontent.com/reference/listfiles
+	 *
+	 * @since  3.2.0
+	 *
 	 */
 	public function get_item_files( $project_id, $file_ids = array() ) {
 
@@ -287,15 +293,15 @@ class API extends Base {
 	/**
 	 * GC V2 API request to get the files from the "/projects/{project_id}/files" endpoint.
 	 *
+	 * @param string $project_id required project_id to fetch the files.
+	 * @param string $file_id to update meta data.
+	 * @param array $meta_data to update
+	 *
+	 * @return int|false status code
 	 * @since  3.2.0
 	 *
 	 * @link https://docs.gathercontent.com/reference/listfiles
 	 *
-	 * @param  string $project_id required project_id to fetch the files.
-	 * @param  string $file_id to update meta data.
-	 * @param  array  $meta_data to update
-	 *
-	 * @return int|false status code
 	 */
 	public function update_file_meta( $project_id, $file_id, $meta_data ) {
 
@@ -322,12 +328,13 @@ class API extends Base {
 	/**
 	 * GC V2 API request to get the results from the "/projects/{project_id}/templates" endpoint.
 	 *
+	 * @param int $project_id Project ID.
+	 *
+	 * @return mixed             Results of request.
 	 * @since  3.0.0
 	 *
 	 * @link https://docs.gathercontent.com/reference/listtemplates
 	 *
-	 * @param  int $project_id Project ID.
-	 * @return mixed             Results of request.
 	 */
 	public function get_project_templates( $project_id ) {
 
@@ -344,12 +351,13 @@ class API extends Base {
 	/**
 	 * GC API request to get the results from the "/templates/{template_id}" endpoint.
 	 *
+	 * @param int $template_id Template ID.
+	 *
+	 * @return mixed              Results of request.
 	 * @since  3.0.0
 	 *
 	 * @link https://docs.gathercontent.com/reference/gettemplate
 	 *
-	 * @param  int $template_id Template ID.
-	 * @return mixed              Results of request.
 	 */
 	public function get_template( $template_id ) {
 		$response = $this->get(
@@ -361,6 +369,7 @@ class API extends Base {
 			),
 			'full_data'
 		);
+
 		return $response;
 	}
 
@@ -369,13 +378,14 @@ class API extends Base {
 	 *
 	 * /items/<ITEM_ID>/choose_status
 	 *
-	 * @since  3.0.0
+	 * @param int $item_id GatherContent Item Id.
+	 * @param int $status_id Id of status to set.
 	 *
+	 * @return bool            If request was successful.
 	 * @link https://gathercontent.com/developers/items/post-items-choose_status/
 	 *
-	 * @param  int $item_id   GatherContent Item Id.
-	 * @param  int $status_id Id of status to set.
-	 * @return bool            If request was successful.
+	 * @since  3.0.0
+	 *
 	 */
 	public function set_item_status( $item_id, $status_id ) {
 		$response = $this->post(
@@ -405,13 +415,14 @@ class API extends Base {
 	 *
 	 * /items/<ITEM_ID>/content
 	 *
-	 * @since 3.0.0
+	 * @param int $item_id GatherContent Item Id.
+	 * @param array $content Data to save.
 	 *
+	 * @return bool           If request was successful.
 	 * @link https://docs.gathercontent.com/reference/updateitemcontent
 	 *
-	 * @param  int   $item_id GatherContent Item Id.
-	 * @param  array $content  Data to save.
-	 * @return bool           If request was successful.
+	 * @since 3.0.0
+	 *
 	 */
 	public function update_item( $item_id, $content ) {
 
@@ -438,10 +449,10 @@ class API extends Base {
 	 *
 	 * @link https://docs.gathercontent.com/reference/createitem
 	 *
-	 * @param  int    $project_id Project ID.
-	 * @param  int    $template_id Template ID.
-	 * @param  string $name Item name.
-	 * @param array  $content
+	 * @param int $project_id Project ID.
+	 * @param int $template_id Template ID.
+	 * @param string $name Item name.
+	 * @param array $content
 	 *
 	 * @return bool                If request was successful.
 	 */
@@ -465,6 +476,7 @@ class API extends Base {
 		if ( 201 === $response['response']['code'] ) {
 			$item_id = json_decode( wp_remote_retrieve_body( $response ) )->data->id;
 		}
+
 		return $item_id;
 
 	}
@@ -476,10 +488,10 @@ class API extends Base {
 	 *
 	 * @link https://docs.gathercontent.com/reference/createitem
 	 *
-	 * @param  int    $project_id Project ID.
-	 * @param  int    $template_id Template ID.
-	 * @param  string $name Item name.
-	 * @param array  $content
+	 * @param int $project_id Project ID.
+	 * @param int $template_id Template ID.
+	 * @param string $name Item name.
+	 * @param array $content
 	 *
 	 * @return bool                If request was successful.
 	 */
@@ -503,6 +515,7 @@ class API extends Base {
 		if ( 201 === $response['response']['code'] ) {
 			$item_id = json_decode( wp_remote_retrieve_body( $response ) )->data->id;
 		}
+
 		return $item_id;
 
 	}
@@ -511,12 +524,13 @@ class API extends Base {
 	/**
 	 * GC V2 API request to get the results from the "/projects/{project_id}/components" endpoint.
 	 *
+	 * @param int $project_id Project Id.
+	 *
+	 * @return mixed              Results of request.
 	 * @since  3.0.0
 	 *
 	 * @link https://docs.gathercontent.com/reference/listcomponents
 	 *
-	 * @param  int $project_id Project Id.
-	 * @return mixed              Results of request.
 	 */
 	public function get_components( $project_id ) {
 		return $this->get(
@@ -528,15 +542,17 @@ class API extends Base {
 			)
 		);
 	}
+
 	/**
 	 * GC V2 API request to get the results from the "/components/{component_uuid}" endpoint.
 	 *
+	 * @param int $component_uuid Component UUid.
+	 *
+	 * @return mixed              Results of request.
 	 * @since  3.0.0
 	 *
 	 * @link https://docs.gathercontent.com/reference/getcomponent
 	 *
-	 * @param  int $component_uuid Component UUid.
-	 * @return mixed              Results of request.
 	 */
 	public function get_component( $component_uuid ) {
 		return $this->get(
@@ -552,13 +568,14 @@ class API extends Base {
 	/**
 	 * POST request helper, which assumes a data parameter in response.
 	 *
-	 * @since  3.0.0
+	 * @param string $endpoint GatherContent API endpoint to retrieve.
+	 * @param array $args Optional. Request arguments. Default empty array.
 	 *
+	 * @return mixed            The response.
 	 * @see    API::cache_get() For additional information
 	 *
-	 * @param  string $endpoint GatherContent API endpoint to retrieve.
-	 * @param  array  $args     Optional. Request arguments. Default empty array.
-	 * @return mixed            The response.
+	 * @since  3.0.0
+	 *
 	 */
 	public function post( $endpoint, $args = array() ) {
 		return $this->request( $endpoint, $args, 'POST' );
@@ -567,32 +584,34 @@ class API extends Base {
 	/**
 	 * PUT request helper, which assumes a data parameter in response.
 	 *
-	 * @since  3.2.0
+	 * @param string $endpoint GatherContent API endpoint to retrieve.
+	 * @param array $args Optional. Request arguments. Default empty array.
 	 *
+	 * @return mixed            The response.
 	 * @see    API::cache_get() For additional information
 	 *
-	 * @param  string $endpoint GatherContent API endpoint to retrieve.
-	 * @param  array  $args     Optional. Request arguments. Default empty array.
-	 * @return mixed            The response.
+	 * @since  3.2.0
+	 *
 	 */
 	public function put( $endpoint, $args = array() ) {
 		$final_args = array_merge( array( 'method' => 'PUT' ), $args );
+
 		return $this->request( $endpoint, $final_args, 'PUT' );
 	}
 
 	/**
 	 * GET request helper which assumes caching, and assumes a data parameter in response.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @see    API::cache_get() For additional information
-	 *
-	 * @param  string $endpoint         GatherContent API endpoint to retrieve.
-	 * @param  array  $args             Optional. Request arguments. Default empty array.
-	 * @param  string $response_type    Optional. expected response. Default empty
-	 * @param  array  $query_params     Optional. Request query parameters to append to the URL. Default empty array.
+	 * @param string $endpoint GatherContent API endpoint to retrieve.
+	 * @param array $args Optional. Request arguments. Default empty array.
+	 * @param string $response_type Optional. expected response. Default empty
+	 * @param array $query_params Optional. Request query parameters to append to the URL. Default empty array.
 	 *
 	 * @return mixed  The response.
+	 * @see    API::cache_get() For additional information
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	public function get( $endpoint, $args = array(), $response_type = '', $query_params = array() ) {
 
@@ -610,16 +629,16 @@ class API extends Base {
 	/**
 	 * Retrieve and cache the HTTP request.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @see    API::request() For additional information
-	 *
-	 * @param  string $endpoint      GatherContent API endpoint to retrieve.
-	 * @param  string $expiration    The expiration time. Defaults to an hour.
-	 * @param  array  $args          Optional. Request arguments. Default empty array.
-	 * @param  array  $query_params  Optional. Request query parameters to append to the URL. Default empty array.
+	 * @param string $endpoint GatherContent API endpoint to retrieve.
+	 * @param string $expiration The expiration time. Defaults to an hour.
+	 * @param array $args Optional. Request arguments. Default empty array.
+	 * @param array $query_params Optional. Request query parameters to append to the URL. Default empty array.
 	 *
 	 * @return array                 The response.
+	 * @see    API::request() For additional information
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	public function cache_get( $endpoint, $expiration = HOUR_IN_SECONDS, $args = array(), $method = 'get', $query_params = array() ) {
 
@@ -628,6 +647,7 @@ class API extends Base {
 
 		if ( $this->only_cached ) {
 			$this->only_cached = false;
+
 			return $response;
 		}
 
@@ -660,15 +680,16 @@ class API extends Base {
 	 *  - Default 'POST' for wp_remote_post()
 	 *  - Default 'HEAD' for wp_remote_head()
 	 *
-	 * @since  3.0.0
+	 * @param string $endpoint GatherContent API endpoint to retrieve.
+	 * @param array $args Optional. Request arguments. Default empty array.
+	 * @param array $method Optional. Request method, defaults to 'GET'.
+	 * @param array $query_params Optional. Request query parameters to append to the URL. Default empty array.
 	 *
+	 * @return array            The response.
 	 * @see    WP_Http::request() For additional information on default arguments.
 	 *
-	 * @param  string $endpoint         GatherContent API endpoint to retrieve.
-	 * @param  array  $args             Optional. Request arguments. Default empty array.
-	 * @param  array  $method           Optional. Request method, defaults to 'GET'.
-	 * @param  array  $query_params     Optional. Request query parameters to append to the URL. Default empty array.
-	 * @return array            The response.
+	 * @since  3.0.0
+	 *
 	 */
 	public function request( $endpoint, $args = array(), $method = 'GET', $query_params = array() ) {
 
@@ -752,11 +773,11 @@ class API extends Base {
 	/**
 	 * Prepares headers for GC requests.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $args Array of request args.
+	 * @param array $args Array of request args.
 	 *
 	 * @return array        Modified array of request args.
+	 * @since  3.0.0
+	 *
 	 */
 	public function request_args( $args ) {
 		if ( ! $this->user || ! $this->api_key ) {
@@ -769,7 +790,7 @@ class API extends Base {
 				$this->set_user( $settings['account_email'] );
 				$this->set_api_key( $settings['api_key'] );
 			} else {
-				throw new \Exception( __( 'The Content Workflow API connection is not set up.', 'content-workflow-by-bynder' ) );
+				throw new \Exception( esc_html__( 'The Content Workflow API connection is not set up.', 'content-workflow-by-bynder' ) );
 			}
 		}
 
@@ -795,12 +816,13 @@ class API extends Base {
 	 *
 	 * e.g. `$this->only_cached()->get( 'me' )`
 	 *
+	 * @return $this
 	 * @since  3.0.0
 	 *
-	 * @return $this
 	 */
 	public function only_cached() {
 		$this->reset_request_cache = true;
+
 		return $this;
 	}
 
@@ -810,21 +832,22 @@ class API extends Base {
 	 *
 	 * E.g. `$this->uncached()->get( 'me' )`
 	 *
+	 * @return $this
 	 * @since  3.0.0
 	 *
-	 * @return $this
 	 */
 	public function uncached() {
 		$this->reset_request_cache = true;
+
 		return $this;
 	}
 
 	/**
 	 * Some methods return false if response is not found. This allows retrieving the last response.
 	 *
+	 * @return mixed  The last request response.
 	 * @since  3.0.0
 	 *
-	 * @return mixed  The last request response.
 	 */
 	public function get_last_response() {
 		return $this->last_response;
@@ -833,11 +856,11 @@ class API extends Base {
 	/**
 	 * Flush all cached responses, or only for a given endpoint.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $endpoint Optional endpoint to clear cached response.
+	 * @param string $endpoint Optional endpoint to clear cached response.
 	 *
 	 * @return bool             Status of cache flush/deletion.
+	 * @since  3.0.0
+	 *
 	 */
 	public function flush_cache( $endpoint = '' ) {
 		$deleted = false;

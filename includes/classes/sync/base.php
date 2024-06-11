@@ -13,13 +13,15 @@ use GatherContent\Importer\Mapping_Post;
 use GatherContent\Importer\API;
 use GatherContent\Importer\Dom;
 use WP_Error;
+use WP_Post;
 
 /**
  * Sync-specific exception class w/ data property.
  *
  * @since 3.0.0
  */
-class Exception extends Base_Exception {}
+class Exception extends Base_Exception {
+}
 
 /**
  * Base class for pushing/pulling content to GC.
@@ -97,10 +99,11 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param API $api API object.
+	 * @param Async_Base $async Async_Base object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param API        $api   API object.
-	 * @param Async_Base $async Async_Base object.
 	 */
 	public function __construct( API $api, Async_Base $async ) {
 		$this->api    = $api;
@@ -111,9 +114,9 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		$this->logger->init_hooks();
@@ -122,43 +125,44 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Handles pushing/pulling item.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $id id of thing to sync.
-	 *
-	 * @throws Exception On failure.
+	 * @param int $id id of thing to sync.
 	 *
 	 * @return mixed Result of push.
+	 * @throws Exception On failure.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	abstract protected function do_item( $id );
 
 	/**
 	 * Handles syncing items for a mapping.
 	 *
+	 * @param int $mapping_post Mapping post object.
+	 *
+	 * @return mixed Result of sync. WP_Error on failure.
 	 * @todo  Store errors.
 	 *
 	 * @since  3.0.0
 	 *
-	 * @param  int $mapping_post Mapping post object.
-	 *
-	 * @return mixed Result of sync. WP_Error on failure.
 	 */
 	public function sync_items( $mapping_post ) {
 		$result = $this->_sync_items( $mapping_post );
 		do_action( 'gc_sync_items_result', $result, $this );
+
 		return $result;
 	}
 
 	/**
 	 * Handles syncing items for a mapping.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $mapping_post Mapping post object.
-	 *
-	 * @throws Exception On failure.
+	 * @param int $mapping_post Mapping post object.
 	 *
 	 * @return mixed Result of sync.
+	 * @throws Exception On failure.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	protected function _sync_items( $mapping_post ) {
 		try {
@@ -220,18 +224,18 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Wrapper for `get_post` that throws an exception if not found.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int|object $post_id Post id or post object.
-	 *
-	 * @throws Exception On failure.
+	 * @param int|object $post_id Post id or post object.
 	 *
 	 * @return object Post object.
+	 * @throws Exception On failure.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	protected function get_post( $post_id ) {
 		$post = $post_id instanceof WP_Post ? $post_id : get_post( $post_id );
 		if ( ! $post ) {
-			throw new Exception( sprintf( __( 'No post object by that id: %d', 'content-workflow-by-bynder' ), $post_id ), __LINE__ );
+			throw new Exception( sprintf( esc_html__( 'No post object by that id: %d', 'content-workflow-by-bynder' ), esc_html( $post_id ) ), __LINE__ );
 		}
 
 		return $post;
@@ -240,21 +244,21 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Gets an item from the API, then sets it as the class item property.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param int  $item_id Item id.
-	 * @param  bool $exclude_status set this to true to avoid appending status data
-	 *
-	 * @throws Exception On failure.
+	 * @param int $item_id Item id.
+	 * @param bool $exclude_status set this to true to avoid appending status data
 	 *
 	 * @return object Item object.
+	 * @throws Exception On failure.
+	 *
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_item( $item_id, $exclude_status = false ) {
 		$this->item = $this->api->uncached()->get_item( $item_id, $exclude_status );
 
 		if ( ! isset( $this->item->id ) ) {
 			// @todo maybe check if error was temporary.
-			throw new Exception( sprintf( __( 'Content Workflow could not get an item for that item id: %d', 'content-workflow-by-bynder' ), $item_id ), __LINE__, $this->item );
+			throw new Exception( sprintf( esc_html__( 'Content Workflow could not get an item for that item id: %d', 'content-workflow-by-bynder' ), esc_html( $item_id ) ), __LINE__, esc_html( print_r( $this->item, true ) ) );
 		}
 
 		return $this->item;
@@ -263,17 +267,17 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Gets the pending sync items.
 	 *
-	 * @since 3.0.0
-	 *
+	 * @return array Array of pending sync items.
 	 * @throws Exception On failure.
 	 *
-	 * @return array Array of pending sync items.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function get_items_to_sync() {
 		$items = $this->mapping->get_items_to_sync( $this->direction );
 
 		if ( empty( $items['pending'] ) ) {
-			throw new Exception( sprintf( __( 'No items to %1$s for: %2$s', 'content-workflow-by-bynder' ), $this->direction, $this->mapping->ID ), __LINE__ );
+			throw new Exception( sprintf( esc_html__( 'No items to %1$s for: %2$s', 'content-workflow-by-bynder' ), esc_html( $this->direction ), esc_html( $this->mapping->ID ) ), __LINE__ );
 		}
 
 		return $items;
@@ -282,40 +286,41 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Ensures the mapping has mapping data set.
 	 *
-	 * @since 3.0.0
-	 *
+	 * @return void
 	 * @throws Exception On failure.
 	 *
-	 * @return void
+	 * @since 3.0.0
+	 *
 	 */
 	protected function check_mapping_data() {
 		$mapping_data = $this->mapping->data();
 		if ( empty( $mapping_data ) ) {
 			// @todo maybe check if error was temporary.
-			throw new Exception( sprintf( __( 'No mapping data found for: %s', 'content-workflow-by-bynder' ), $this->mapping->ID ), __LINE__ );
+			throw new Exception( sprintf( esc_html__( 'No mapping data found for: %s', 'content-workflow-by-bynder' ), esc_html( $this->mapping->ID ) ), __LINE__ );
 		}
 	}
 
 	/**
 	 * Gets the current element's value, and passes through a filter.
 	 *
+	 * @return mixed  The current element's value.
 	 * @since  3.0.0
 	 *
-	 * @return mixed  The current element's value.
 	 */
 	protected function get_element_value() {
 		$val = $this->get_value_for_element( $this->element );
+
 		return apply_filters( 'gc_get_element_value', $val, $this->element, $this->item );
 	}
 
 	/**
 	 * Gets the element's value, based on the element type.
 	 *
-	 * @since  3.0.0
-	 *
 	 * @param object $element The element to get the value for.
 	 *
 	 * @return mixed  The current element's value.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function get_value_for_element( $element ) {
 		$val = false;
@@ -333,17 +338,17 @@ abstract class Base extends Plugin_Base {
 						'#\<p\>(.+?)\<\/p\>#s',
 						function ( $matches ) {
 							return '<p>' . str_replace(
-								array(
-									"\n    ",
-									"\r\n    ",
-									"\r    ",
-									"\n",
-									"\r\n",
-									"\r",
-								),
-								'',
-								$matches[1]
-							) . '</p>';
+									array(
+										"\n    ",
+										"\r\n    ",
+										"\r    ",
+										"\n",
+										"\r\n",
+										"\r",
+									),
+									'',
+									$matches[1]
+								) . '</p>';
 						},
 						$val
 					);
@@ -372,7 +377,7 @@ abstract class Base extends Plugin_Base {
 					// http://regexr.com/3dpcf -- example.
 					$val = preg_replace_callback(
 						'~(&amp;)(?:[a-z,A-Z,0-9]+|#\d+|#x[0-9a-f]+);~',
-						function( $matches ) {
+						function ( $matches ) {
 							return str_replace( '&amp;', '&', $matches[0] );
 						},
 						$val
@@ -384,7 +389,7 @@ abstract class Base extends Plugin_Base {
 
 			case 'choice_radio':
 				$val = '';
-				error_log('RADIO: ' . json_encode($element));
+				error_log( 'RADIO: ' . json_encode( $element ) );
 				foreach ( $element->options as $idx => $option ) {
 					if ( $option->selected ) {
 						if ( isset( $option->value ) ) {
@@ -408,18 +413,18 @@ abstract class Base extends Plugin_Base {
 
 			case 'attachment':
 				$element_value = is_array( $element->value ) ? $element->value : array();
-				$val = $element_value ? array_map(
+				$val           = $element_value ? array_map(
 					function ( $v ) {
 						return (object) array(
-							'id' => $v->file_id,
-							'project_id' => $this->item->project_id,
-							'url' => $v->url,
+							'id'                  => $v->file_id,
+							'project_id'          => $this->item->project_id,
+							'url'                 => $v->url,
 							'optimised_image_url' => $v->optimised_image_url,
-							'download_url' => $v->download_url,
-							'filename' => $v->filename,
-							'size' => $v->size,
-							'mime_type' => $v->mime_type,
-							'alt_text' => $v->alt_text,
+							'download_url'        => $v->download_url,
+							'filename'            => $v->filename,
+							'size'                => $v->size,
+							'mime_type'           => $v->mime_type,
+							'alt_text'            => $v->alt_text,
 						);
 					},
 					$element_value
@@ -433,15 +438,15 @@ abstract class Base extends Plugin_Base {
 				break;
 		}
 
-			return $val;
+		return $val;
 	}
 
 	/**
 	 * Sets the current element's value.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	protected function set_element_value() {
 		$this->element->value = $this->get_element_value();
@@ -450,14 +455,14 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Format the element's values to the required data format.
 	 *
-	 * @since  3.2.0
-	 *
-	 * @param mixed       $field object.
+	 * @param mixed $field object.
 	 * @param string|null $component_uuid optional component uuid only if the field is component.
-	 * @param bool        $append_component_id optional to append the component's id in the field, default is true
-	 * @param bool        $is_component_repeatable optional to tell that the field is a part of repeatable component
+	 * @param bool $append_component_id optional to append the component's id in the field, default is true
+	 * @param bool $is_component_repeatable optional to tell that the field is a part of repeatable component
 	 *
 	 * @return array
+	 * @since  3.2.0
+	 *
 	 */
 	protected function format_element_data( $field, $component_uuid = '', $append_component_id = true, $is_component_repeatable = false ): array {
 
@@ -469,11 +474,11 @@ abstract class Base extends Plugin_Base {
 		$content       = isset( $this->item->content ) ? ( $component_uuid ? ( $this->item->content->$component_uuid ?? null ) : $this->item->content ) : null;
 		$field_value   = $content ? ( $content->$field_name ?? null ) : null;
 
-		if( ! $field_value && $component_uuid && $is_component_repeatable ){
+		if ( ! $field_value && $component_uuid && $is_component_repeatable ) {
 			$content_to_push = [];
-			foreach($content as $data) {
-				if( isset ( $data->$field_name ) ){
-					array_push($content_to_push, $data->$field_name );
+			foreach ( $content as $data ) {
+				if ( isset ( $data->$field_name ) ) {
+					array_push( $content_to_push, $data->$field_name );
 				}
 			}
 			$field_value = $content_to_push;
@@ -484,7 +489,7 @@ abstract class Base extends Plugin_Base {
 			'type'       => $field->field_type,
 			'label'      => $field->label,
 			'plain_text' => (bool) $is_plain,
-			'value'      => $this->format_field_value($field, $field_value, $is_component_repeatable, $is_repeatable),
+			'value'      => $this->format_field_value( $field, $field_value, $is_component_repeatable, $is_repeatable ),
 			'repeatable' => (bool) $is_repeatable,
 			'options'    => $this->format_selected_options_data( $metadata, $field_value ),
 		);
@@ -493,34 +498,35 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Format the field's value.
 	 *
-	 * @since  3.2.0
-	 *
 	 * @param mixed $field object.
 	 * @param mixed $field_value object.
-	 * @param bool  $is_component_repeatable to tell that the field is a part of repeatable component
-	 * @param bool	$is_repeatable to tell that the field itself is a repeatable
+	 * @param bool $is_component_repeatable to tell that the field is a part of repeatable component
+	 * @param bool $is_repeatable to tell that the field itself is a repeatable
 	 *
 	 * @return mixed
+	 * @since  3.2.0
+	 *
 	 */
-	protected function format_field_value( $field, $field_value, $is_component_repeatable, $is_repeatable) {
-		error_log('value: ' . json_encode($field_value));
+	protected function format_field_value( $field, $field_value, $is_component_repeatable, $is_repeatable ) {
+		error_log( 'value: ' . json_encode( $field_value ) );
 
 
-		if( empty( $field_value ) ) {
+		if ( empty( $field_value ) ) {
 			return '';
 		}
 
 		// handle repeatables
-		if($is_component_repeatable || $is_repeatable) {
+		if ( $is_component_repeatable || $is_repeatable ) {
 
 			// handle attachment repeatables
-			if( 'attachment' === $field->field_type && $is_component_repeatable ){
+			if ( 'attachment' === $field->field_type && $is_component_repeatable ) {
 				$attachments = [];
-				foreach($field_value as $value){
-					foreach($value as $val){
-						array_push($attachments, $val);
+				foreach ( $field_value as $value ) {
+					foreach ( $value as $val ) {
+						array_push( $attachments, $val );
 					}
 				}
+
 				return $attachments;
 			}
 
@@ -528,15 +534,15 @@ abstract class Base extends Plugin_Base {
 				( is_array( $field_value ) ? array_values(
 					array_filter(
 						$field_value,
-						function( $val ) {
-							if(is_string($val)){
+						function ( $val ) {
+							if ( is_string( $val ) ) {
 								return trim( $val ) !== '';
 							} else {
 								return $val;
 							}
 						}
 					)
-			) : $field_value ));
+				) : $field_value ) );
 		}
 
 		return $field_value;
@@ -547,12 +553,12 @@ abstract class Base extends Plugin_Base {
 	 * Format the element's options.
 	 * This method only returns the selected options
 	 *
-	 * @since  3.2.0
-	 *
 	 * @param mixed $metadata object.
 	 * @param mixed $field_value object.
 	 *
 	 * @return array
+	 * @since  3.2.0
+	 *
 	 */
 	protected function format_selected_options_data( $metadata, $field_value ): array {
 
@@ -569,18 +575,18 @@ abstract class Base extends Plugin_Base {
 			$options[] = (object) array(
 				'name'     => $option->optionId,
 				'label'    => $option->label,
-				'selected' => ! empty($matched_option),
+				'selected' => ! empty( $matched_option ),
 			);
 		}
 
-		if (isset($metadata->choice_fields->otherOption)) {
-			$option = $metadata->choice_fields->otherOption;
+		if ( isset( $metadata->choice_fields->otherOption ) ) {
+			$option         = $metadata->choice_fields->otherOption;
 			$matched_option = wp_list_filter( $field_value, array( 'id' => $option->optionId ) );
 
 			$options[] = (object) [
 				'name'     => $option->optionId,
 				'label'    => $field_value[0]->label,
-				'selected' => ! empty($matched_option),
+				'selected' => ! empty( $matched_option ),
 			];
 		}
 
@@ -590,11 +596,11 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Determines if the field can be appended to.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $field Field to check.
+	 * @param string $field Field to check.
 	 *
 	 * @return bool          Whether field can append.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function type_can_append( $field ) {
 		$can_append = in_array( $field, $this->append_types, true );
@@ -606,13 +612,13 @@ abstract class Base extends Plugin_Base {
 	 * Check for existence of image/media shortcodes in the GC content, and parse the attributes.
 	 * `[media-$number align=left|right|center|none linkto=file|attachment-page size=thumbnail|medium|large|etc]`
 	 *
-	 * @since  3.0.0
-	 * @uses   get_shortcode_regex
-	 *
-	 * @param  string $content The GC content.
-	 * @param  int    $args    Args for field/image positional argument.
+	 * @param string $content The GC content.
+	 * @param int $args Args for field/image positional argument.
 	 *
 	 * @return false|array     Array of attributes on success.
+	 * @uses   get_shortcode_regex
+	 *
+	 * @since  3.0.0
 	 */
 	public function get_media_shortcode_attributes( $content, $args ) {
 		$args = wp_parse_args(
@@ -661,13 +667,13 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * If a GC "shortcode" is found, we'll parse the attributes and retun an image for insertion.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $atts      Array of attributes.
-	 * @param  int   $media_id  The GC media object id.
-	 * @param  int   $attach_id The WP media id.
+	 * @param array $atts Array of attributes.
+	 * @param int $media_id The GC media object id.
+	 * @param int $attach_id The WP media id.
 	 *
 	 * @return string           Image markup, if successful.
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_requested_media( $atts, $media_id, $attach_id ) {
 		$image = '';
@@ -756,11 +762,11 @@ abstract class Base extends Plugin_Base {
 	 * and converts them to GC shortcodes. This is intended for PUSHING
 	 * content to GatherContent.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $content HTML content.
+	 * @param string $content HTML content.
 	 *
 	 * @return string          Updated content.
+	 * @since  3.0.0
+	 *
 	 */
 	public function convert_media_to_shortcodes( $content ) {
 		$dom          = new Dom( $content );
@@ -779,7 +785,7 @@ abstract class Base extends Plugin_Base {
 			// It's possible GC media shortcodes could be used more than once
 			// Only increase the index if the gcid (gc media id) is unique.
 			if ( ! isset( $ids[ $gcid ] ) ) {
-				$index++;
+				$index ++;
 			}
 
 			// Mark this gc media id.
@@ -796,7 +802,10 @@ abstract class Base extends Plugin_Base {
 					}
 
 					// If wrapped in a link, need to get that too.
-					if ( isset( $data['linkto'] ) && in_array( $data['linkto'], array( 'attachment-page', 'file' ), true ) ) {
+					if ( isset( $data['linkto'] ) && in_array( $data['linkto'], array(
+							'attachment-page',
+							'file'
+						), true ) ) {
 						// @codingStandardsIgnoreStart
 						if ( 'a' === $img->parentNode->tagName ) {
 							$node_to_replace = $dom->saveHTML( $img->parentNode );
@@ -822,7 +831,8 @@ abstract class Base extends Plugin_Base {
 	 * U+200D zero width joiner Unicode code point
 	 * U+FEFF zero width no-break space Unicode code point
 	 *
-	 * @param  string $string The string to clean.
+	 * @param string $string The string to clean.
+	 *
 	 * @return string The cleaned up string.
 	 */
 	public static function remove_zero_width( $string ) {
@@ -832,7 +842,8 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Magic getter for our object, to make protected properties accessible.
 	 *
-	 * @param  string $property Protected class property.
+	 * @param string $property Protected class property.
+	 *
 	 * @return mixed
 	 */
 	public function __get( $property ) {

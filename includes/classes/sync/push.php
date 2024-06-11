@@ -126,12 +126,12 @@ class Push extends Base {
 		if ( empty( $config_update ) ) {
 
 			throw new Exception(
-				sprintf( __( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), $this->post->ID ),
+				sprintf( esc_html__( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), esc_html($this->post->ID) ),
 				__LINE__,
 				array(
-					'post_id'    => $this->post->ID,
-					'mapping_id' => $this->mapping->ID,
-					'item_id'    => $this->item->id ?? 0,
+					'post_id'    => esc_html($this->post->ID),
+					'mapping_id' => esc_html($this->mapping->ID),
+					'item_id'    => esc_html($this->item->id) ?? 0,
 				)
 			);
 		}
@@ -616,7 +616,7 @@ class Push extends Base {
 
 		return $updated;
   }
-    
+
 	private function ensureShortcodesAreNotConvertedToHtml(callable $callback, string $value): string
 	{
 		preg_match_all(
