@@ -204,6 +204,8 @@ module.exports = function( app, _meta_keys ) {
 								jQuery(dropdown).val(saved_fields[i]);
 							});
 						}
+					} else {
+						window.alert('The chosen field is not a repeater field and therefore not compatible with Content Workflow components');
 					}
 				}
 				// ERROR
