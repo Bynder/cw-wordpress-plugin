@@ -6,7 +6,7 @@
 			<td id="cb-for-gc" class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-1"><?php esc_html_e( 'Select All', 'content-workflow-by-bynder' ); ?></label>
 				<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-1" type="checkbox">
 			</td>
-			<?php echo esc_html(new self( 'table-headers', $this->args )); ?>
+			<?php echo wp_kses_post(new self( 'table-headers', $this->args )); ?>
 		</tr>
 	</thead>
 	<tbody>
@@ -17,7 +17,7 @@
 			<td class="gc-field-th manage-column column-cb gc-check-column"><label class="screen-reader-text" for="gc-select-all-2"><?php esc_html_e( 'Select All', 'content-workflow-by-bynder' ); ?></label>
 				<input <# if ( data.checked ) { #>checked="checked"<# } #> id="gc-select-all-2" type="checkbox">
 			</td>
-			<?php echo esc_html(new self( 'table-headers', $this->args )); ?>
+			<?php echo wp_kses_post(new self( 'table-headers', $this->args )); ?>
 		</tr>
 	</tfoot>
 </table>

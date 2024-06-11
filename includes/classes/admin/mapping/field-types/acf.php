@@ -96,7 +96,7 @@ class ACF extends Base implements Type {
                 <# if ( data.field_value ) { #>
                     <?php foreach($options_acf_groups_fields as $group_id => $fields ): ?>
                         <# if ( '<?php echo esc_attr($group_id); ?>' === data.field_value ) { #>
-                            <option value=""><?php esc_html_e( 'Unused', 'content-workflow-by-bynder' ); ?></option>
+                            <option value=""><?php esc_attr_e( 'Unused', 'content-workflow-by-bynder' ); ?></option>
                             <?php foreach($fields as $field_id => $field_name ):
                                 echo '<option <# if ( "' . esc_attr($field_id) . '" === data.field_field ) { #>selected="selected"<# } #> value="' . esc_attr($field_id) . '">' . esc_attr($field_name) . '</option>';
                             endforeach; ?>

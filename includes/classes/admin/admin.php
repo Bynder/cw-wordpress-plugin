@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin;
 
 use GatherContent\Importer\API;
@@ -8,7 +9,7 @@ use GatherContent\Importer\Settings\Form_Section;
 
 class Admin extends Base {
 
-	public $option_name  = General::OPTION_NAME;
+	public $option_name = General::OPTION_NAME;
 	public $option_group = 'gathercontent_importer_settings';
 	public $mapping_wizard;
 
@@ -27,9 +28,10 @@ class Admin extends Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param $api API object
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param $api API object
 	 */
 	public function __construct( API $api ) {
 		global $pagenow;
@@ -92,9 +94,9 @@ class Admin extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		parent::init_hooks();
@@ -155,9 +157,9 @@ class Admin extends Base {
 	/**
 	 * Registers our menu item and admin page.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function admin_menu() {
 		$page = add_menu_page(
@@ -170,18 +172,21 @@ class Admin extends Base {
 		);
 
 		add_action( 'admin_print_styles-' . $page, array( $this, 'admin_enqueue_style' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( GATHERCONTENT_PATH . 'gathercontent-importer.php' ), array( $this, 'settings_link' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( GATHERCONTENT_PATH . 'gathercontent-importer.php' ), array(
+			$this,
+			'settings_link'
+		) );
 
 	}
 
 	/**
 	 * Add Settings page to plugin action links in the Plugins table.
 	 *
-	 * @since  3.0.3
-	 *
-	 * @param  array $links Default plugin action links.
+	 * @param array $links Default plugin action links.
 	 *
 	 * @return array $links Amended plugin action links.
+	 * @since  3.0.3
+	 *
 	 */
 	public function settings_link( $links ) {
 
@@ -212,9 +217,9 @@ class Admin extends Base {
 	/**
 	 * Initializes the plugin's setting, and settings sections/Fields.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function initialize_settings_sections() {
 		if ( $this->step > 0 ) {
@@ -276,14 +281,25 @@ class Admin extends Base {
 	}
 
 	public function api_setup_settings_cb() {
+
 		if ( $key = $this->should_migrate() ) {
-			echo '<p><strong>' . esc_html__( 'NOTE:', 'content-workflow-by-bynder' ) . '</strong> ' . sprintf( esc_html__( 'It looks like you are migrating from a previous version of the GatherContent plugin.<br>You will need to set up new GatherContent API credentials to continue. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'content-workflow-by-bynder' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
+			echo '<p><strong>' .
+			     esc_html__( 'NOTE:', 'content-workflow-by-bynder' ) .
+			     '</strong> ' .
+			     esc_html__( 'It looks like you are migrating from a previous version of the GatherContent plugin.', 'content-workflow-by-bynder' ) .
+			     '<br>' .
+			     esc_html__( 'You will need to set up new GatherContent API credentials to continue. Instructions for getting your API key can be found ', 'content-workflow-by-bynder' ) .
+			     sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( 'https://gathercontent.com/developers/authentication/' ), esc_html__( 'here', 'content-workflow-by-bynder' ) ) .
+			     '</p>';
 
 			if ( $slug = get_option( $key . '_api_url' ) ) {
 				$this->settings()->options['platform_url_slug'] = $slug;
 			}
 		} else {
-			echo '<p>' . sprintf( esc_html__( 'Enter your Content Workflow API credentials. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'content-workflow-by-bynder' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
+			echo '<p>' .
+			     esc_html__( 'Enter your Content Workflow API credentials. Instructions for getting your API key can be found ', 'content-workflow-by-bynder' ) .
+			     sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( 'https://gathercontent.com/developers/authentication/' ), esc_html__( 'here', 'content-workflow-by-bynder' ) ) .
+			     '</p>';
 		}
 	}
 
@@ -420,9 +436,9 @@ class Admin extends Base {
 	/**
 	 * Determine if settings need to be migrated from previous version.
 	 *
+	 * @return mixed Settings key prefix, if old settings are found.
 	 * @since  3.0.0
 	 *
-	 * @return mixed Settings key prefix, if old settings are found.
 	 */
 	public function should_migrate() {
 		if ( $this->get_setting( 'migrated' ) ) {
@@ -438,9 +454,9 @@ class Admin extends Base {
 	 * Since previous version used `plugin_basename( __FILE__ )` to determine
 	 * the option prefix, we have to check a couple possible variations.
 	 *
+	 * @return mixed Settings key prefix, if old settings are found.
 	 * @since  3.0.0.9
 	 *
-	 * @return mixed Settings key prefix, if old settings are found.
 	 */
 	public function prev_option_key() {
 		$prefixes = array(

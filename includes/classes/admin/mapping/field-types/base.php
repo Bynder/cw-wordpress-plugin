@@ -71,7 +71,7 @@ abstract class Base extends Plugin_Base implements Type {
 			$option = '<# if ( data.type in ' . $types . ' ) { #>' . $option . '<# } #>';
 		}
 
-		echo "\n\t" . esc_html($option);
+		echo "\n\t" . wp_kses_post($option);
 	}
 
 	public function underscore_options( $array ) {

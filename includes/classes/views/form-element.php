@@ -32,7 +32,7 @@ abstract class Form_Element extends View {
 		}
 
 		if ( $echo ) {
-			echo esc_html($content);
+			echo wp_kses_post($content);
 		}
 
 		return $content;

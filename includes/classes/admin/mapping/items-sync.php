@@ -147,11 +147,11 @@ class Items_Sync extends Base {
 		<?php foreach ( $hiddenInputs as $key => $value ) : ?>
 			<input type="hidden" name="<?php echo esc_attr( $key ); ?>" id="gc-input-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 		<?php endforeach; ?>
-		<p class="gc-submit-top"><input type="submit" name="submit" id="gc-submit-2" class="button button-primary button-large" value="<?php esc_html_e( 'Import Selected Items', 'content-workflow-by-bynder' ); ?>"></p>
+		<p class="gc-submit-top"><input type="submit" name="submit" id="gc-submit-2" class="button button-primary button-large" value="<?php esc_attr_e( 'Import Selected Items', 'content-workflow-by-bynder' ); ?>"></p>
 		<div id="gc-items-search"></div>
 		<div id="sync-tabs"><span class="gc-loader spinner is-active"></span></div>
 		<p class="description">
-			<a href="<?php echo esc_url($this->mapping->get_edit_post_link()); ?>"><?php echo esc_html($this->mappings->args->labels->edit_item); ?></a>
+			<a href="<?php echo esc_url($this->mapping->get_edit_post_link()); ?>"><?php esc_attr_e($this->mappings->args->labels->edit_item); ?></a>
 		</p>
 		<?php
 	}
@@ -168,7 +168,7 @@ class Items_Sync extends Base {
 			'percent' => $this->mapping->get_pull_percent(),
 			'_items'  => $this->items,
 			'_text'   => array(
-				'no_items' => esc_html__( 'No items found.', 'content-workflow-by-bynder' ),
+				'no_items' => esc_attr__( 'No items found.', 'content-workflow-by-bynder' ),
 			),
 		);
 	}

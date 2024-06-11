@@ -2,7 +2,7 @@
 	<h2><?php esc_html_e( 'System Information', 'content-workflow-by-bynder' ); ?></h2>
 	<br/>
 	<form action="<?php echo esc_url( admin_url( 'admin.php?page=gathercontent-import-support' ) ); ?>" method="post" dir="ltr">
-		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php esc_html_e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow-by-bynder' ); ?>">
+		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php esc_attr_e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow-by-bynder' ); ?>">
 ### Begin System Info ###
 
 ## Please include this information when getting in touch with the Content Workflow (by Bynder) support team ##

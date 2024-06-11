@@ -72,7 +72,7 @@ class View {
 		}
 
 		if ( $echo ) {
-			echo esc_html(self::$views[ $id ]);
+			echo esc_attr(self::$views[ $id ]);
 		}
 
 		return self::$views[ $id ];

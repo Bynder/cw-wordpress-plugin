@@ -44,7 +44,7 @@ class Taxonomy extends Base implements Type {
 				name="<?php echo esc_attr( $view->output( 'option_base' ) ); ?>[mapping][{{ data.name }}][value]">
 				<?php if ( empty( $type->taxonomies ) ) : ?>
 					<option selected="selected"
-							value=""><?php esc_html_e( 'N/A', 'content-workflow-by-bynder' ); ?></option>
+							value=""><?php esc_attr_e( 'N/A', 'content-workflow-by-bynder' ); ?></option>
 				<?php else : ?>
 					<?php $this->underscore_options( $type->taxonomies ); ?>
 					<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>

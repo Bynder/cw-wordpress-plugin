@@ -3,13 +3,13 @@
 </div>
 
 <div class="misc-pub-section misc-gc-updated">
-	<span class="dashicons dashicons-calendar"></span> <?php echo esc_html_x( 'Last Updated:', 'Content Workflow updated date', 'content-workflow-by-bynder' ); ?> <b><?php echo esc_html(new self( 'underscore-data-updated', $this->args) ); ?></b>
+	<span class="dashicons dashicons-calendar"></span> <?php echo esc_html_x( 'Last Updated:', 'Content Workflow updated date', 'content-workflow-by-bynder' ); ?> <b><?php echo wp_kses_post(new self( 'underscore-data-updated', $this->args) ); ?></b>
 </div>
 
 <div class="misc-pub-section misc-pub-gc-mapping">
 	<span class="dashicons dashicons-media-document"></span>
 	<?php esc_html_e( 'Mapping Template:', 'content-workflow-by-bynder' ); ?>
-	<strong><?php echo esc_html(new self( 'underscore-data-mapping-name' )); ?></strong>
+	<strong><?php echo wp_kses_post(new self( 'underscore-data-mapping-name' )); ?></strong>
 </div>
 
 <div class="gc-major-publishing-actions">
