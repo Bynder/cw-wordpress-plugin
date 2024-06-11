@@ -1,12 +1,10 @@
 <?php foreach ( $this->get( 'headers' ) as $sort_key => $label ) : ?>
 	<?php
-	echo new self(
-		'table-header',
-		array(
-			'sort_key' => $sort_key,
-			'label'    => $label,
-		)
-	);
+	/**
+	 * This is escaped at the end of the flow @see includes/views/table-header.php
+	 */
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo new self( 'table-header', [ 'sort_key' => $sort_key, 'label' => $label, ] );
 	?>
-	<?php
+<?php
 endforeach;

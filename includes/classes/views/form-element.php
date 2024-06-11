@@ -31,8 +31,15 @@ abstract class Form_Element extends View {
 			$content .= '<p class="description">' . $desc . '</p>';
 		}
 
+		/*
+		 * It's not reasonable escape the content here, as it contains various different types.
+		 * However, it is data from our plugin and our own API, so we can trust it.
+		 */
 		if ( $echo ) {
-			echo $content;
+			// Affixing _safe as instructed by https://developer.wordpress.org/apis/security/escaping/#toc_4
+			$content_safe = $content;
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $content_safe;
 		}
 
 		return $content;

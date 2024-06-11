@@ -90,7 +90,7 @@ class Database extends Base implements Type {
 			<# if ( '" . $value . "' === (data.field_value ? data.field_value : '').split('.')[0] ) { #>selected='selected'<# } #>
 		";
 
-		echo '<option ' . esc_attr($fieldValueJs) . ' value="' . esc_attr($value) . '">' . esc_html($label) . '</option>';
+		echo '<option ' . esc_attr( $fieldValueJs ) . ' value="' . esc_attr( $value ) . '">' . esc_html( $label ) . '</option>';
 	}
 
 	/**
@@ -146,7 +146,10 @@ class Database extends Base implements Type {
 				name=""
 			>
 				<option value="">Select a column</option>
-				<?= implode( '\r\n', $this->getAllTableColOptions() ) ?>
+
+				<?php
+				echo wp_kses_post( implode( '\r\n', $this->getAllTableColOptions() ) );
+				?>
 			</select>
 
 			<input
