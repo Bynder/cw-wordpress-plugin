@@ -405,7 +405,7 @@ class Admin extends Base {
 
 				$data['avatar'] = ! empty( $data['avatar'] )
 					? 'https://gathercontent-production-avatars.s3-us-west-2.amazonaws.com/' . $data['avatar']
-					: 'https://app.gathercontent.com/assets/img/avatar.png';
+					: GATHERCONTENT_URL . 'images/avatar.png';
 
 				if ( $this->set_my_account() ) {
 
