@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <span>
 	{{ data.text }}
 	<# if ( data.color ) { #>

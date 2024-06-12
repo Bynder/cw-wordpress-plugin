@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <# if ( data[ data.step ] ) { #>
 <div class="misc-pub-section">
 	<label class="screen-reader-text" for="select-gc-next-step">{{ data.label }}</label>

@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="misc-pub-section gc-item-name">
 	<span class="dashicons dashicons-edit"></span> <?php echo esc_html_x( 'Item:', 'Content Workflow item name', 'content-workflow-by-bynder' ); ?> <# if ( data.item ) { #><a href="<?php $this->output( 'url' ); ?>item/{{ data.item }}" target="_blank" title="<?php esc_attr_e( 'Item ID:', 'content-workflow-by-bynder' ); ?> {{ data.item }}"><# } #>{{ data.itemName }}<# if ( data.item ) { #></a><# } #>
 </div>

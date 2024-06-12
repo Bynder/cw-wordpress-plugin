@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <# if ( data.label ) { #><legend class="screen-reader-text">{{ data.label }}</legend><# } #>
 <table class="widefat" <# if ( data.table_id ) { #>id="{{ data.table_id }}"<# } #>>
 	<thead>

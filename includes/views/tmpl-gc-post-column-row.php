@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <span class="gc-status-column" data-id="{{ data.id }}" data-item="{{ data.item }}" data-mapping="{{ data.mapping }}">
 <# if ( data.status.display_name ) { #>
 	<div class="gc-item-status">
@@ -8,4 +9,3 @@
 <# } #>
 </span>
 <?php
-	// echo "<# console.log( 'data', data ); #>";

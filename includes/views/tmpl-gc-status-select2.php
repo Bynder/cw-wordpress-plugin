@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <# if ( data.statuses.length ) { #>
 	<select class="gc-default-mapping-select gc-select2" data-column="gc_status" data-id="{{ data.id }}" name="gc_status">
 		<option data-color="" data-description="" <# if ( ! data.status.id ) { #>selected="selected"<# } #> value=""><?php _e( 'Unchanged' ); ?></option>

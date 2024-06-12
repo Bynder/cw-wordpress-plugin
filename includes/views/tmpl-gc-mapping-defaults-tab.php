@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <tr id="default-mapping-post_type">
 	<td>
 		<strong><?php $this->output( 'post_type_label' ); ?></strong>

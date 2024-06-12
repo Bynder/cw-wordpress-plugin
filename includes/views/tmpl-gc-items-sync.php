@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div id="gc-tablenav" class="tablenav top"></div>
 <legend class="screen-reader-text"><?php _e( 'Import Items', 'content-workflow-by-bynder' ); ?></legend>
 <table class="widefat striped gc-table">

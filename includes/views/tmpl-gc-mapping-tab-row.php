@@ -1,4 +1,5 @@
-<?php /*******************************************
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+/*******************************************
 	Component: Wrapper table - Open
 ***********************************************/ ?>
 <# if ( data.typeName === 'component' ) { #>

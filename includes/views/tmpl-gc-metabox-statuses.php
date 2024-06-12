@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <span class="dashicons dashicons-post-status"></span> <?php echo esc_html_x( 'Status:', 'Content Workflow item status', 'content-workflow-by-bynder' ); ?>
 <# if ( data.status && data.status.display_name ) { #>
 <span class="gc-metabox-status">

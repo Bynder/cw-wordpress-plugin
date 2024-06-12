@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <legend class="screen-reader-text"><?php _e( 'Items Import Progress', 'content-workflow-by-bynder' ); ?></legend>
 <table class="gc-sync-table">
 	<tbody>
