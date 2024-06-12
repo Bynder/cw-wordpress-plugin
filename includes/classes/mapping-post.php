@@ -98,11 +98,15 @@ class Mapping_Post extends Base {
 		$post = $post instanceof WP_Post ? $post : get_post( $post );
 
 		if ( ! $post ) {
-			throw new Mapping_Post_Exception( __CLASS__ . ' expects a WP_Post object or post ID.', __LINE__, wp_kses_post( print_r( $post, true ) ) );
+			throw new Mapping_Post_Exception( __CLASS__ . ' expects a WP_Post object or post ID.', __LINE__ );
 		}
 
 		if ( Template_Mappings::SLUG !== $post->post_type ) {
-			throw new Mapping_Post_Exception( __CLASS__ . ' expects a ' . esc_html( Template_Mappings::SLUG ) . ' object.', __LINE__, wp_kses_post( print_r( $post, true ) ) );
+			/**
+			 * We want the entire $post object to be available for debugging, so no need to escape
+			 */
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			throw new Mapping_Post_Exception( __CLASS__ . ' expects a ' . esc_html( Template_Mappings::SLUG ) . ' object.', __LINE__, $post );
 		}
 
 		return $post;
@@ -481,7 +485,7 @@ class Mapping_Post extends Base {
 				if ( isset( $this->post->{$property} ) ) {
 					return $this->post->{$property};
 				}
-				throw new Mapping_Post_Exception( 'Invalid ' . __CLASS__ . ' property: ' . esc_html($property) );
+				throw new Mapping_Post_Exception( 'Invalid ' . __CLASS__ . ' property: ' . esc_html( $property ) );
 		}
 	}
 
