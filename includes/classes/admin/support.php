@@ -114,7 +114,7 @@ class Support extends Base {
 
 					'php_version'             => PHP_VERSION,
 					'mysql_version'           => @$wpdb->db_version(),
-					'web_server_info'         => $_SERVER['SERVER_SOFTWARE'],
+					'web_server_info'         => sanitize_text_field($_SERVER['SERVER_SOFTWARE']),
 
 					'wordpress_memory_limit'  => WP_MEMORY_LIMIT,
 					'php_safe_mode'           => ini_get( 'safe_mode' ) ? 'Yes' : 'No',
