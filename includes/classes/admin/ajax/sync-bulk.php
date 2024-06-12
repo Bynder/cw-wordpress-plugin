@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Ajax;
 
 use GatherContent\Importer\General;
@@ -6,7 +7,7 @@ use GatherContent\Importer\Mapping_Post;
 
 class Sync_Bulk extends Sync_Items {
 
-	protected $mappings  = array();
+	protected $mappings = array();
 	protected $direction = 'pull';
 
 	public function gc_pull_items_cb() {
@@ -93,6 +94,7 @@ class Sync_Bulk extends Sync_Items {
 				);
 			}
 		}
+
 		return $posts;
 	}
 

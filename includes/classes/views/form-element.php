@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Views;
 
 abstract class Form_Element extends View {
@@ -17,11 +18,11 @@ abstract class Form_Element extends View {
 	/**
 	 * Loads the view and outputs it
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  boolean $echo Whether to output or return the template
+	 * @param boolean $echo Whether to output or return the template
 	 *
 	 * @return string        Rendered template
+	 * @since  3.0.0
+	 *
 	 */
 	public function load( $echo = true ) {
 

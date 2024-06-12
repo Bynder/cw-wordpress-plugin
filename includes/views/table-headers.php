@@ -8,5 +8,5 @@
 		)
 	);
 	?>
-	<?php
+<?php
 endforeach;

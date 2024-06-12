@@ -1,9 +1,11 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Mapping\Field_Types;
 
 use GatherContent\Importer\Base as Plugin_Base;
 
-class Exception extends \Exception {}
+class Exception extends \Exception {
+}
 
 class Types extends Plugin_Base {
 
@@ -42,7 +44,10 @@ class Types extends Plugin_Base {
 			}
 
 			$this->field_types[ $type->type_id() ] = $type;
-			add_action( 'gathercontent_field_type_option_underscore_template', array( $type, 'option_underscore_template' ) );
+			add_action( 'gathercontent_field_type_option_underscore_template', array(
+				$type,
+				'option_underscore_template'
+			) );
 			add_action( 'gathercontent_field_type_underscore_template', array( $type, 'underscore_template' ) );
 		}
 

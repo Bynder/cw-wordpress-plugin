@@ -38,9 +38,9 @@ class Log extends Plugin_Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		add_action( 'gc_sync_items_result', array( $this, 'handle_logging' ), 10, 2 );
@@ -49,12 +49,12 @@ class Log extends Plugin_Base {
 	/**
 	 * Handles logging sync errors to mapping post-meta.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  mixed $maybe_error Result of sync. WP_Error on failure.
-	 * @param  Base  $sync        GatherContent\Importer\Sync\Base object.
+	 * @param mixed $maybe_error Result of sync. WP_Error on failure.
+	 * @param Base $sync GatherContent\Importer\Sync\Base object.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	public function handle_logging( $maybe_error, $sync ) {
 		if (
@@ -74,9 +74,9 @@ class Log extends Plugin_Base {
 	/**
 	 * Log the error to the mapping post meta.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function log_errors() {
 		if ( 0 === strpos( $this->error->get_error_code(), "gc_{$this->sync->direction}_item_fail_" ) ) {
@@ -110,11 +110,11 @@ class Log extends Plugin_Base {
 	/**
 	 * Checks if the given WP_Error object matches our existing error object.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  WP_Error $to_compare WP_Error object.
+	 * @param WP_Error $to_compare WP_Error object.
 	 *
 	 * @return bool Whether given WP_Error object matches existing error object.
+	 * @since  3.0.0
+	 *
 	 */
 	public function error_same( $to_compare ) {
 		return (
