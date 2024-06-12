@@ -441,6 +441,8 @@ class Handlers extends Plugin_Base {
 				);
 				wp_send_json_success($success_data);
 			}
+
+			return wp_send_json_success(['field_data' => []]);
 		}
 
 		// If success conditions were not met above, complete function with error status

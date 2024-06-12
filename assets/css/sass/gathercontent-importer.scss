@@ -391,11 +391,6 @@ ul.gc-radio-desc li, ul.gc-reveal-items-list li {
 	background-color: #f5bfbf;
 }
 
-.gc-component-disabled {
-	pointer-events: none;
-	opacity: 0.5;
-}
-
 @import 'sync';
 @import 'modal';
 @import 'single';
