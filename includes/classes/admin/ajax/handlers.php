@@ -72,7 +72,7 @@ class Handlers extends Plugin_Base {
 		add_action( 'wp_ajax_cwby_get_post_statuses', array( $this, 'cwby_get_post_statuses_cb' ) );
 		add_action( 'wp_ajax_set_cwby_status', array( $this, 'set_cwby_status_cb' ) );
 		add_action( 'wp_ajax_cwby_disconnect_post', array( $this, 'cwby_disconnect_post_cb' ) );
-		add_action( 'wp_ajax_gc_fetch_js_post', array( $this, 'gc_fetch_js_post_cb' ) );
+		add_action( 'wp_ajax_cwby_fetch_js_post', array( $this, 'cwby_fetch_js_post_cb' ) );
 		add_action( 'wp_ajax_gc_wp_filter_mappings', array( $this, 'gc_wp_filter_mappings_cb' ) );
 		add_action( 'wp_ajax_gc_save_mapping_id', array( $this, 'gc_save_mapping_id_cb' ) );
 		add_action( 'wp_ajax_gc_dismiss_notice', array( $this, 'gc_dismiss_notice_cb' ) );
@@ -233,7 +233,7 @@ class Handlers extends Plugin_Base {
 	 *
 	 * @return void
 	 */
-	public function gc_fetch_js_post_cb() {
+	public function cwby_fetch_js_post_cb() {
 
 		if ( $post_id = $this->_get_val( 'id' ) ) {
 			wp_send_json(
