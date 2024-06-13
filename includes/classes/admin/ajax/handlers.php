@@ -64,7 +64,7 @@ class Handlers extends Plugin_Base {
 	 * @return void
 	 */
 	public function init_hooks() {
-		add_action( 'wp_ajax_gc_get_option_data', array( $this, 'gc_get_option_data_cb' ) );
+		add_action( 'wp_ajax_cwby_get_option_data', array( $this, 'cwby_get_option_data_cb' ) );
 		add_action( 'wp_ajax_gc_sync_items', array( $this->sync_items, 'gc_sync_items_cb' ) );
 		add_action( 'wp_ajax_cwby_pull_items', array( $this->sync_bulk, 'cwby_pull_items_cb' ) );
 		add_action( 'wp_ajax_cwby_push_items', array( $this->sync_bulk, 'cwby_push_items_cb' ) );
@@ -86,7 +86,7 @@ class Handlers extends Plugin_Base {
 	 *
 	 * @return void
 	 */
-	public function gc_get_option_data_cb() {
+	public function cwby_get_option_data_cb() {
 		if ( ! $this->_get_val( 'q' ) || ! $this->_get_val( 'column' ) ) {
 			wp_send_json_error();
 		}
