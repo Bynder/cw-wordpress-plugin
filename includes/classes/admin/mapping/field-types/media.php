@@ -35,7 +35,7 @@ class Media extends Base implements Type {
 			'attachment'     => __( 'Attachment(s)', 'content-workflow-by-bynder' ),
 		);
 
-		$options = apply_filters( 'gc_media_location_options', $options );
+		$options = apply_filters( 'cwby_media_location_options', $options );
 
 		?>
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type ) { #>

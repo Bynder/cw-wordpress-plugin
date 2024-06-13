@@ -136,7 +136,7 @@ module.exports = function (app, _meta_keys) {
 			jQuery('#' + component + ' .wp-type-field-select ~ span.select2').addClass('ajax-disabled');
 			// Get Updated Data
 			jQuery.post(window.ajaxurl, {
-				action: 'gc_component_subfields',
+				action: 'cwby_component_subfields',
 				subfields_data: {
 					name: field_name,
 				}
@@ -183,7 +183,7 @@ module.exports = function (app, _meta_keys) {
 			jQuery('#' + component + ' .component-table-inner').find('select').addClass('ajax-disabled');
 			// Get Updated Data
 			jQuery.post(window.ajaxurl, {
-				action: 'gc_component_subfields',
+				action: 'cwby_component_subfields',
 				subfields_data: {
 					name: field_name,
 				}

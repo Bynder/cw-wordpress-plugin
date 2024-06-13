@@ -43,7 +43,7 @@ class Log extends Plugin_Base {
 	 *
 	 */
 	public function init_hooks() {
-		add_action( 'gc_sync_items_result', array( $this, 'handle_logging' ), 10, 2 );
+		add_action( 'cwby_sync_items_result', array( $this, 'handle_logging' ), 10, 2 );
 	}
 
 	/**

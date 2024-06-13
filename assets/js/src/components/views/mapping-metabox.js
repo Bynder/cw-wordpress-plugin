@@ -50,7 +50,7 @@ module.exports = function (app, $, gc) {
 			};
 
 			this.ajax({
-				action: 'gc_save_mapping_id',
+				action : 'cwby_save_mapping_id',
 			}, success, this.failMsg);
 		},
 
@@ -86,7 +86,7 @@ module.exports = function (app, $, gc) {
 			} else {
 
 				this.ajax({
-					action: 'gc_wp_filter_mappings',
+					action   : 'cwby_wp_filter_mappings',
 					property: this.stepArgs.property
 				}, this.successHandler, this.failMsg);
 

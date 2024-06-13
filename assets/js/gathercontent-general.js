@@ -1,5 +1,5 @@
 /**
- * Content Workflow (by Bynder) - v1.0.0 - 2024-06-05
+ * Content Workflow (by Bynder) - v1.0.0 - 2024-06-13
  *
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
@@ -488,7 +488,7 @@
 
 		module.exports = function (app, defaults) {
 			defaults = jQuery.extend({}, {
-				action: 'gc_sync_items',
+		action: 'cwby_sync_items',
 				data: '',
 				percent: 0,
 				nonce: '',
@@ -620,7 +620,7 @@
 				searchAttributes: ['itemName', 'mappingName', 'post_title'],
 
 				url: function url() {
-					var url = window.ajaxurl + '?action=gc_fetch_js_post&id=' + this.get('id');
+			var url = window.ajaxurl + '?action=cwby_fetch_js_post&id=' + this.get('id');
 					if (this.get('uncached')) {
 						this.set('uncached', false);
 						url += '&flush_cache=force';
@@ -782,7 +782,7 @@
 					};
 
 					this.ajax({
-						action: 'gc_save_mapping_id'
+				action: 'cwby_save_mapping_id'
 					}, success, this.failMsg);
 				},
 
@@ -817,7 +817,7 @@
 					} else {
 
 						this.ajax({
-							action: 'gc_wp_filter_mappings',
+					action: 'cwby_wp_filter_mappings',
 							property: this.stepArgs.property
 						}, this.successHandler, this.failMsg);
 					}
@@ -1103,7 +1103,7 @@
 
 				setupAjax: function setupAjax() {
 					var Ajax = require('./../models/ajax.js')(app, {
-						action: 'gc_pull_items',
+				action: 'cwby_pull_items',
 						nonce: gc._edit_nonce,
 						flush_cache: gc.queryargs.flush_cache ? 1 : 0
 					});
@@ -1371,7 +1371,7 @@
 				},
 
 				doAjax: function doAjax(formData, direction) {
-					this.ajax.set('action', 'gc_' + direction + '_items');
+			this.ajax.set('action', 'cwby_' + direction + '_items');
 
 					this.ajax.send(formData, this.ajaxSuccess.bind(this), 0, this.ajaxFail.bind(this));
 				},
@@ -1439,7 +1439,7 @@
 				updatePosts: function updatePosts() {
 					// Trigger an un-cached update for the posts
 					$.post(window.ajaxurl, {
-						action: 'gc_get_posts',
+				action: 'cwby_get_posts',
 						posts: gc._posts,
 						flush_cache: gc.queryargs.flush_cache ? 1 : 0
 					}, function (response) {
@@ -1482,7 +1482,7 @@
 					}
 
 					$.post(window.ajaxurl, {
-						action: 'gc_get_post_statuses',
+				action: 'cwby_get_post_statuses',
 						postId: postId,
 						flush_cache: gc.queryargs.flush_cache ? 1 : 0
 					}, this.ajaxResponse).done(function () {

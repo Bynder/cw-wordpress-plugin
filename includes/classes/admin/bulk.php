@@ -68,7 +68,7 @@ class Bulk extends Post_Base {
 		}
 
 		// Handle quick-edit/bulk-edit ajax-post-saving.
-		add_action( 'save_post', array( $this, 'set_gc_status' ), 10, 2 );
+		add_action( 'save_post', array( $this, 'set_cwby_status' ), 10, 2 );
 	}
 
 	/**
@@ -255,7 +255,7 @@ class Bulk extends Post_Base {
 	 * @since 3.0.0
 	 *
 	 */
-	public function set_gc_status( $post_id, $post ) {
+	public function set_cwby_status( $post_id, $post ) {
 		if (
 			wp_is_post_autosave( $post )
 			|| wp_is_post_revision( $post )

@@ -80,7 +80,7 @@ module.exports = function (app, gc, $) {
 
 		setupAjax: function () {
 			var Ajax = require('./../models/ajax.js')(app, {
-				action: 'gc_pull_items',
+				action      : 'cwby_pull_items',
 				nonce: gc._edit_nonce,
 				flush_cache: gc.queryargs.flush_cache ? 1 : 0,
 			});
@@ -351,7 +351,7 @@ module.exports = function (app, gc, $) {
 		},
 
 		doAjax: function (formData, direction) {
-			this.ajax.set('action', 'gc_' + direction + '_items');
+			this.ajax.set( 'action', 'cwby_'+ direction +'_items' );
 
 			this.ajax.send(
 				formData,

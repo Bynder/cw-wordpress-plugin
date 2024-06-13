@@ -102,9 +102,9 @@ class General extends Base {
 	protected function __construct()
 	{
 		// Below are all the pieces of data we expect to retrieve from the frontend.
-		$expectedGetData = array_intersect_key(
+		$expectedGetData  = array_intersect_key(
 			$_GET,
-			[
+			array_flip( [
 				'column',
 				'delete-trans',
 				'flush_cache',
@@ -117,11 +117,13 @@ class General extends Base {
 				'sync-items',
 				'template',
 				'updated',
-			]
+				'gc_templates',
+				'post_type',
+			] )
 		);
 		$expectedPostData = array_intersect_key(
 			$_POST,
-			[
+			array_flip( [
 				'data',
 				'flush_cache',
 				'gc-download-sysinfo-nonce',
@@ -139,7 +141,9 @@ class General extends Base {
 				'property',
 				'status',
 				'subfields_data',
-			]
+				'gc_templates',
+				'post_type',
+			] )
 		);
 
 		parent::__construct( $expectedGetData, $expectedPostData );
