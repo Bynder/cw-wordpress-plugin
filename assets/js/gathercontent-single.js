@@ -303,7 +303,7 @@ module.exports = function (app, $, gc) {
 			} else {
 
 				this.ajax({
-					action: 'gc_wp_filter_mappings',
+					action: 'cwby_wp_filter_mappings',
 					property: this.stepArgs.property
 				}, this.successHandler, this.failMsg);
 			}

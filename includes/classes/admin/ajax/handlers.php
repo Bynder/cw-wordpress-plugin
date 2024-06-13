@@ -73,7 +73,7 @@ class Handlers extends Plugin_Base {
 		add_action( 'wp_ajax_set_cwby_status', array( $this, 'set_cwby_status_cb' ) );
 		add_action( 'wp_ajax_cwby_disconnect_post', array( $this, 'cwby_disconnect_post_cb' ) );
 		add_action( 'wp_ajax_cwby_fetch_js_post', array( $this, 'cwby_fetch_js_post_cb' ) );
-		add_action( 'wp_ajax_gc_wp_filter_mappings', array( $this, 'gc_wp_filter_mappings_cb' ) );
+		add_action( 'wp_ajax_cwby_wp_filter_mappings', array( $this, 'cwby_wp_filter_mappings_cb' ) );
 		add_action( 'wp_ajax_gc_save_mapping_id', array( $this, 'gc_save_mapping_id_cb' ) );
 		add_action( 'wp_ajax_gc_dismiss_notice', array( $this, 'gc_dismiss_notice_cb' ) );
 		add_action( 'wp_ajax_gc_component_subfields', array( $this, 'gc_component_subfields_cb' ) );
@@ -316,7 +316,7 @@ class Handlers extends Plugin_Base {
 	 *
 	 * @return void
 	 */
-	public function gc_wp_filter_mappings_cb() {
+	public function cwby_wp_filter_mappings_cb() {
 		$post_data = $this->_post_val( 'post' );
 		$property  = $this->_post_val( 'property' );
 
