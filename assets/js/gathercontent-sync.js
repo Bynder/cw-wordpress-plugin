@@ -1,6 +1,6 @@
 /**
  * Content Workflow (by Bynder) - v1.0.0 - 2024-06-13
- * 
+ *
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
  * Licensed under the GPLv2 license.
@@ -437,7 +437,7 @@ window.GatherContent = window.GatherContent || {};
 		$(document.body).on('click', '#setting-error-gc-import-last-error .notice-dismiss, #setting-error-gc-import-errors .notice-dismiss', function () {
 			var lastError = $(this).parents('#setting-error-gc-import-last-error').length > 0;
 			$.post(window.ajaxurl, {
-				action: 'gc_dismiss_notice',
+				action: 'cwby_dismiss_notice',
 				lastError: lastError ? 1 : 0,
 				mapping: gc.queryargs.mapping
 			}, function (response) {
