@@ -638,7 +638,7 @@ class Push extends Base {
 			: array();
 
 		$updated = $this->set_taxonomy_field_value_from_names( $term_names );
-		return apply_filters( 'gc_config_taxonomy_field_value_updated', $updated, $taxonomy, $terms, $this );
+		return apply_filters( 'cwby_config_taxonomy_field_value_updated', $updated, $taxonomy, $terms, $this );
 	}
 
 	public function set_taxonomy_field_value_from_names( $term_names ) {
