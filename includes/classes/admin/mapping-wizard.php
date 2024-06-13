@@ -151,11 +151,15 @@ class Mapping_Wizard extends Base {
 			array(
 				'id'      => 'gc-help-me',
 				'title'   => __( 'Content Workflow', 'content-workflow-by-bynder' ),
-				'content' => __(
-					             '<p>Thank you for using the Content Workflow WordPress plugin!</p>' .
-					             '<p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.</p>',
-					             'content-workflow-by-bynder'
-				             ) . '<p>' . $this->refresh_connection_link() . '</p>',
+				'content' => sprintf(
+					__('<p>Thank you for using the Content Workflow WordPress plugin!</p><p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.</p>%s', 'content-workflow-by-bynder'),
+					'<p>' . $this->refresh_connection_link() . '</p>'
+				),
+//				'content' => __(
+//					             '<p>Thank you for using the Content Workflow WordPress plugin!</p>' .
+//					             '<p>To make the plugin more speedy, we cache the requests to GatherContent for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.</p>',
+//					             'content-workflow-by-bynder'
+//				             ) . '<p>' . $this->refresh_connection_link() . '</p>',
 			)
 		);
 

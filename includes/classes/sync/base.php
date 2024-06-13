@@ -389,7 +389,7 @@ abstract class Base extends Plugin_Base {
 
 			case 'choice_radio':
 				$val = '';
-				error_log( 'RADIO: ' . json_encode( $element ) );
+				error_log( 'RADIO: ' . wp_json_encode( $element ) );
 				foreach ( $element->options as $idx => $option ) {
 					if ( $option->selected ) {
 						if ( isset( $option->value ) ) {
@@ -508,7 +508,7 @@ abstract class Base extends Plugin_Base {
 	 *
 	 */
 	protected function format_field_value( $field, $field_value, $is_component_repeatable, $is_repeatable ) {
-		error_log( 'value: ' . json_encode( $field_value ) );
+		error_log( 'value: ' . wp_json_encode( $field_value ) );
 
 
 		if ( empty( $field_value ) ) {

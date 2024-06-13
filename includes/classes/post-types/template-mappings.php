@@ -288,7 +288,7 @@ class Template_Mappings extends Base {
 
 			$content = $post->post_content;
 			if ( defined( 'JSON_PRETTY_PRINT' ) ) {
-				$pretty = json_encode( json_decode( $content ), JSON_PRETTY_PRINT );
+				$pretty = wp_json_encode( json_decode( $content ), JSON_PRETTY_PRINT );
 				if ( $pretty && $pretty !== $content ) {
 					$content = $pretty;
 				}

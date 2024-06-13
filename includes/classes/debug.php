@@ -87,7 +87,7 @@ class Debug extends Base {
 	 */
 	public function init_hooks() {
 		if ( is_admin() && isset( $_GET[ self::$query_string ] ) ) {
-			$enabled = self::toggle_debug_mode((bool) $_GET[ self::$query_string ] );
+			$enabled = self::toggle_debug_mode( (bool) $_GET[ self::$query_string ] );
 			unset( $_GET[ self::$query_string ] );
 			add_action( 'all_admin_notices', array(
 				$this,
@@ -253,7 +253,7 @@ class Debug extends Base {
 			)
 		);
 
-		$back_url    = isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field($_SERVER['HTTP_REFERER']) : '';
+		$back_url    = isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( $_SERVER['HTTP_REFERER'] ) : '';
 		$back_button = $back_url ? '<p><a href="' . $back_url . '">' . __( 'Go Back', 'content-workflow-by-bynder' ) . '</a></p>' : '';
 
 		if ( $settings['review_stuck_status'] || $settings['delete_stuck_status'] ) {
@@ -280,7 +280,7 @@ class Debug extends Base {
 			return $orig_settings;
 		}
 
-		wp_die( '<xmp>' . __LINE__ . ') $settings: ' . esc_html(print_r( $settings, true )) . '</xmp>' . wp_kses_post($back_button), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		wp_die( '<xmp>' . __LINE__ . ') $settings: ' . esc_html( print_r( $settings, true ) ) . '</xmp>' . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 	}
 
 	/**
@@ -296,8 +296,12 @@ class Debug extends Base {
 	public function handle_stuck_statuses( $settings, $back_button ) {
 		global $wpdb;
 
-		$sql     = "SELECT `option_name` FROM `$wpdb->options` WHERE `option_name` LIKE ('gc_pull_item_%') OR `option_name` LIKE ('gc_push_item_%');";
-		$options = $wpdb->get_results( $sql );
+		$options = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT `option_name` FROM %s WHERE `option_name` LIKE ('gc_pull_item_%%') OR `option_name` LIKE ('gc_push_item_%%');",
+				$wpdb->options
+			)
+		);
 
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $key => $option ) {
@@ -307,7 +311,7 @@ class Debug extends Base {
 				);
 			}
 		} else {
-			wp_die( esc_html__( 'There are no stuck statuses.', 'content-workflow-by-bynder' ) . wp_kses_post($back_button), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
+			wp_die( esc_html__( 'There are no stuck statuses.', 'content-workflow-by-bynder' ) . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 		}
 
 		if ( $settings['delete_stuck_status'] ) {
@@ -316,7 +320,7 @@ class Debug extends Base {
 			}
 		}
 
-		wp_die( '<xmp>' . __LINE__ . ') $options: ' . esc_html(print_r( $options, true )) . '</xmp>' . wp_kses_post($back_button), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		wp_die( '<xmp>' . __LINE__ . ') $options: ' . esc_html( print_r( $options, true ) ) . '</xmp>' . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 	}
 
 	/**
@@ -329,11 +333,11 @@ class Debug extends Base {
 	 *
 	 */
 	public function delete_gc_log_file( $back_button ) {
-		if ( unlink( self::$log_path ) ) {
-			wp_die( esc_html__( 'Content Workflow log file deleted.', 'content-workflow-by-bynder' ) . wp_kses_post($back_button), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		if ( wp_delete_file( self::$log_path ) ) {
+			wp_die( esc_html__( 'Content Workflow log file deleted.', 'content-workflow-by-bynder' ) . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 		}
 
-		wp_die( esc_html__( 'Failed to delete Content Workflow log file.', 'content-workflow-by-bynder' ) . wp_kses_post($back_button), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		wp_die( esc_html__( 'Failed to delete Content Workflow log file.', 'content-workflow-by-bynder' ) . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 	}
 
 	/**
@@ -346,13 +350,13 @@ class Debug extends Base {
 	 *
 	 */
 	public function view_gc_log_file( $back_button ) {
-		$log_contents = file_exists( self::$log_path ) ? file_get_contents( self::$log_path ) : '';
+		$log_contents = file_exists( self::$log_path ) ? wp_remote_get( self::$log_path ) : '';
 
 		if ( ! $log_contents ) {
-			wp_die( esc_html__( 'Content Workflow log file is empty.', 'content-workflow-by-bynder' ) . wp_kses_post($back_button), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
+			wp_die( esc_html__( 'Content Workflow log file is empty.', 'content-workflow-by-bynder' ) . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 		}
 
-		die( '<html><body>' . wp_kses_post($back_button) . '<pre><textarea style="width:100%;height:100%;min-height:1000px;font-size:14px;font-family:monospace;padding:.5em;">' . esc_textarea(print_r( $log_contents, true )) . '</textarea></pre></body></html>' );
+		die( '<html><body>' . wp_kses_post( $back_button ) . '<pre><textarea style="width:100%;height:100%;min-height:1000px;font-size:14px;font-family:monospace;padding:.5em;">' . esc_textarea( print_r( $log_contents, true ) ) . '</textarea></pre></body></html>' );
 	}
 
 	/**
@@ -391,7 +395,7 @@ class Debug extends Base {
 		if ( ! $debug_enabled ) {
 			delete_option( self::$query_string );
 			$changed = ! empty( self::$debug_mode );
-		} elseif ( date( 'm-d-Y' ) === $debug_enabled ) {
+		} elseif ( gmdate( 'm-d-Y' ) === $debug_enabled ) {
 			update_option( self::$query_string, time() + DAY_IN_SECONDS );
 			$changed = empty( self::$debug_mode );
 		} else {
@@ -441,7 +445,7 @@ class Debug extends Base {
 		if ( $title ) {
 			$message = print_r( $title, 1 ) . ': ' . $message;
 		}
-		error_log( date( 'Y-m-d H:i:s' ) . ': ' . $message . "\r\n", 3, self::$log_path );
+		error_log( gmdate( 'Y-m-d H:i:s' ) . ': ' . $message . "\r\n", 3, self::$log_path );
 	}
 
 }

@@ -63,13 +63,13 @@ if ( version_compare( phpversion(), '7.0', '<' ) ) {
  *
  */
 function gathercontent_importer_php_version_too_low_notice() {
-	$message = 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: ';
+	$message = esc_html__( 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: ', 'content-workflow-by-bynder' );
 
 	echo '<div id="message" class="error">
 		<p> ' .
-	     esc_html__( $message, 'content-workflow-by-bynder' ) .
-		'<a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>' .
-		'</p>
+	     esc_html($message) .
+	     '<a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>' .
+	     '</p>
 	</div>';
 
 }

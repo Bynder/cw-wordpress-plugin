@@ -38,8 +38,9 @@ class ACF extends Base implements Type {
 		$options_acf_groups_fields = array();
 
 		// ============= BUILD FIELD GROUP OPTIONS =============
-		$groups_query  = "SELECT * FROM wp_posts WHERE post_type = 'acf-field-group' AND post_status = 'publish' AND post_parent = 0";
-		$group_results = $wpdb->get_results( $groups_query );
+		$group_results = $wpdb->get_results(
+			"SELECT * FROM wp_posts WHERE post_type = 'acf-field-group' AND post_status = 'publish' AND post_parent = 0"
+		);
 
 		// FIELD GROUPS
 		if ( $group_results ) {
@@ -52,8 +53,13 @@ class ACF extends Base implements Type {
 			}, $groupIds ) );
 
 			// Prepare and execute query to get all fields for all groups
-			$fields_query   = "SELECT * FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE '%repeater%' AND post_parent IN ($groupIdPlaceholders)";
-			$fields_results = $wpdb->get_results( $wpdb->prepare( $fields_query, $groupIds ) );
+			$fields_results = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT * FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE %s AND post_parent IN ($groupIdPlaceholders)",
+					'%' . $wpdb->esc_like('repeater') . '%',
+					$groupIds
+				)
+			);
 
 			// Group the field results by parent group
 			$grouped_field_results = [];

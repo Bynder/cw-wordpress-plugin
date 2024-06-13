@@ -20,7 +20,6 @@ use WP_Error;
  */
 class Pull extends Base {
 
-
 	/**
 	 * Sync direction.
 	 *
@@ -265,7 +264,7 @@ class Pull extends Base {
 				$taxonomy_obj = get_taxonomy( $taxonomy );
 				if ( ! $taxonomy_obj ) {
 					/* translators: %s: taxonomy name */
-					_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'Invalid taxonomy: %s.' ), esc_html($taxonomy) ), '4.4.0' );
+					_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'Invalid taxonomy: %s.' ), esc_html( $taxonomy ) ), '4.4.0' );
 					continue;
 				}
 
@@ -757,7 +756,7 @@ class Pull extends Base {
 							continue;
 						}
 						// Convert object to associative array
-						$component_row_data = json_decode( json_encode( $component_row_data ), true );
+						$component_row_data = json_decode( wp_json_encode( $component_row_data ), true );
 						add_row( $value['field'], $component_row_data, $post_id );
 
 						$subfield_key_id = - 1;
@@ -792,7 +791,7 @@ class Pull extends Base {
 									if ( $item['type'] == 'image' ) {
 										$upload_dir = wp_upload_dir();
 										$image_url  = $subsubfield_field->url;
-										$image_data = file_get_contents( $image_url );
+										$image_data = wp_remote_get( $image_url );
 										$filename   = $subsubfield_field->filename;
 
 										// Check if the attachment already exists
@@ -812,7 +811,12 @@ class Pull extends Base {
 												$file = $upload_dir['basedir'] . '/' . $filename;
 											}
 
-											file_put_contents( $file, $image_data );
+											require_once( ABSPATH . 'wp-admin/includes/file.php' );
+											WP_Filesystem();
+											global $wp_filesystem;
+											$wp_filesystem->put_contents( $file, $image_data );
+
+											// file_put_contents( $file, $image_data );
 
 											$wp_filetype = wp_check_filetype( $filename, null );
 
@@ -986,17 +990,20 @@ class Pull extends Base {
 			case 'post_modified':
 			case 'post_modified_gmt':
 				if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
-					throw new Exception( sprintf( esc_html__( '%s field requires a numeric timestamp, or date string.', 'content-workflow-by-bynder' ), esc_html($field) ), __LINE__ );
+					throw new Exception( sprintf( esc_html__( '%s field requires a numeric timestamp, or date string.', 'content-workflow-by-bynder' ), esc_html( $field ) ), __LINE__ );
 				}
 
 				$value = is_numeric( $value ) ? $value : strtotime( $value );
 
-				return false !== strpos( $field, '_gmt' )
-					? gmdate( 'Y-m-d H:i:s', $value )
-					: date( 'Y-m-d H:i:s', $value );
+
+				/**
+				 * Ignoring as we need handling for data that aren't always GMT/UTC
+				 */
+				// phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+				return false !== strpos( $field, '_gmt' ) ? gmdate( 'Y-m-d H:i:s', $value ) : date( 'Y-m-d H:i:s', $value );
 			case 'post_format':
 				if ( isset( $post_data['post_type'] ) && ! post_type_supports( $post_data['post_type'], 'post-formats' ) ) {
-					throw new Exception( sprintf( esc_html__( 'The %s post-type does not support post-formats.', 'content-workflow-by-bynder' ), esc_html($post_data['post_type']) ), __LINE__ );
+					throw new Exception( sprintf( esc_html__( 'The %s post-type does not support post-formats.', 'content-workflow-by-bynder' ), esc_html( $post_data['post_type'] ) ), __LINE__ );
 				}
 			case 'post_title':
 				$value = strip_tags( $value, '<strong><em><del><ins><code>' );
