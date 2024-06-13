@@ -87,7 +87,7 @@ class Debug extends Base {
 	 */
 	public function init_hooks() {
 		if ( is_admin() && isset( $_GET[ self::$query_string ] ) ) {
-			$enabled = self::toggle_debug_mode( $_GET[ self::$query_string ] );
+			$enabled = self::toggle_debug_mode((bool) $_GET[ self::$query_string ] );
 			unset( $_GET[ self::$query_string ] );
 			add_action( 'all_admin_notices', array(
 				$this,
@@ -255,7 +255,7 @@ class Debug extends Base {
 			)
 		);
 
-		$back_url    = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : '';
+		$back_url    = isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field($_SERVER['HTTP_REFERER']) : '';
 		$back_button = $back_url ? '<p><a href="' . $back_url . '">' . __( 'Go Back', 'content-workflow-by-bynder' ) . '</a></p>' : '';
 
 		if ( $settings['review_stuck_status'] || $settings['delete_stuck_status'] ) {
