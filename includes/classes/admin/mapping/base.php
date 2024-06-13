@@ -61,9 +61,10 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Constructor
 	 *
+	 * @param array $args Arguments.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $args Arguments.
 	 */
 	public function __construct( array $args ) {
 		$this->mapping_id     = $args['mapping_id'];
@@ -77,45 +78,45 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * The page-specific script ID to enqueue.
 	 *
+	 * @return string
 	 * @since  3.0.0
 	 *
-	 * @return string
 	 */
 	abstract protected function script_id();
 
 	/**
 	 * The page-specific Form_Section section UI callback.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	abstract protected function ui_page();
 
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	abstract protected function get_localize_data();
 
 	/**
 	 * Gets the underscore templates array.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	abstract protected function get_underscore_templates();
 
 	/**
 	 * The Form_Section section UI callback.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function ui() {
 		if ( false === $this->ui_page() ) {
@@ -136,9 +137,9 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Output the underscore templates in the footer.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function footer_mapping_js_templates() {
 		foreach ( $this->get_underscore_templates() as $template_id => $view_args ) {
@@ -151,11 +152,11 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Add to the localized data array.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $data Array of localizable data.
+	 * @param array $data Array of localizable data.
 	 *
 	 * @return array       Modified array of data.
+	 * @since  3.0.0
+	 *
 	 */
 	public function localize_data( $data ) {
 		return array_merge( $data, $this->get_localize_data() );
@@ -164,11 +165,11 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Get's the default <select> options for a Post column.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $col Post column.
+	 * @param string $col Post column.
 	 *
 	 * @return array       Array of <select> options.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function get_default_field_options( $col ) {
 		$select_options = array();
@@ -203,9 +204,9 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Gets the columns from the posts table for the <select> option.
 	 *
+	 * @return array Array of <select> options.
 	 * @since  3.0.0
 	 *
-	 * @return array Array of <select> options.
 	 */
 	protected function post_options() {
 		static $options = null;
@@ -232,9 +233,9 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Gets a list of unique keys from the postmeta table. Value is cached for a day.
 	 *
+	 * @return array Array of keys to be used in a backbone collection.
 	 * @since  3.0.0
 	 *
-	 * @return array Array of keys to be used in a backbone collection.
 	 */
 	protected function custom_field_keys() {
 		global $wpdb;
@@ -307,11 +308,11 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Only allow a certain set of post-table columns to be mappable .
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $col Post table column.
+	 * @param string $col Post table column.
 	 *
 	 * @return bool        Whether column passed the blacklist check.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function post_column_option_is_blacklisted( $col ) {
 		return in_array(
@@ -334,11 +335,11 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Maps the post-table's column names to a human-readable value.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $col Post table column.
+	 * @param string $col Post table column.
 	 *
 	 * @return string      Human readable value if we have one.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function post_column_label( $col ) {
 		switch ( $col ) {
@@ -348,6 +349,7 @@ abstract class Base extends Plugin_Base {
 				return __( 'Author', 'content-workflow-by-bynder' );
 			case 'post_date':
 				return __( 'Post Date', 'content-workflow-by-bynder' );
+
 				return 'post_date';
 			case 'post_date_gmt':
 				return __( 'Post Date (GMT)', 'content-workflow-by-bynder' );
@@ -385,9 +387,9 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Get all post-types and related taxonomies.
 	 *
+	 * @return array  Array of post-types w/ thier taxonomies.
 	 * @since  3.0.0
 	 *
-	 * @return array  Array of post-types w/ thier taxonomies.
 	 */
 	protected function post_types() {
 		static $post_types = null;
@@ -417,13 +419,13 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Get a specific value from the array of values stored to the template-mapping post.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string   $key      Array key to check.
-	 * @param  callable $callback Callback to send data through.
-	 * @param  mixed    $default  Default value if value doesn't exist.
+	 * @param string $key Array key to check.
+	 * @param callable $callback Callback to send data through.
+	 * @param mixed $default Default value if value doesn't exist.
 	 *
 	 * @return mixed              Value of field.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function get_value( $key, $callback = null, $default = null ) {
 		static $values = null;
@@ -440,9 +442,9 @@ abstract class Base extends Plugin_Base {
 	/**
 	 * Get the stored mapping values from the template-mapping post's content field.
 	 *
+	 * @return array  Array of values.
 	 * @since  3.0.0
 	 *
-	 * @return array  Array of values.
 	 */
 	protected function stored_values() {
 		$values = array();
