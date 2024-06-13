@@ -17,7 +17,8 @@ use GatherContent\Importer\Utils;
  *
  * @since 3.0.0
  */
-class Post_Enqueue extends Enqueue {}
+class Post_Enqueue extends Enqueue {
+}
 
 /**
  * Class for managing syncing template items.
@@ -60,10 +61,11 @@ abstract class Post_Base extends UI_Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param API $api API object.
+	 * @param Mapping_Wizard $wizard Mapping_Wizard object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param API            $api      API object.
-	 * @param Mapping_Wizard $wizard Mapping_Wizard object.
 	 */
 	public function __construct( API $api, Mapping_Wizard $wizard ) {
 		$this->api        = $api;
@@ -75,9 +77,9 @@ abstract class Post_Base extends UI_Base {
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	protected function get_localize_data() {
 		return array(

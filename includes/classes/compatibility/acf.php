@@ -27,25 +27,28 @@ class ACF extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.1.5
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		add_filter( 'gc_new_wp_post_data', array( $this, 'maybe_transform_meta_for_acf' ), 10, 2 );
 		add_filter( 'gc_update_wp_post_data', array( $this, 'maybe_transform_meta_for_acf' ), 10, 2 );
-		add_filter( 'gc_config_pre_meta_field_value_updated', array( $this, 'maybe_transform_config_meta_from_acf' ), 10, 4 );
+		add_filter( 'gc_config_pre_meta_field_value_updated', array(
+			$this,
+			'maybe_transform_config_meta_from_acf'
+		), 10, 4 );
 	}
 
 	/**
 	 * Handles transforming certain meta values from GC to ACF.
 	 *
-	 * @since  3.1.5
-	 *
-	 * @param  array $post_data The post data to import/update.
-	 * @param  Pull  $pull      The Pull object.
+	 * @param array $post_data The post data to import/update.
+	 * @param Pull $pull The Pull object.
 	 *
 	 * @return array            The possibly modified post data array.
+	 * @since  3.1.5
+	 *
 	 */
 	public function maybe_transform_meta_for_acf( $post_data, Pull $pull ) {
 		if ( empty( $post_data['meta_input'] ) ) {
@@ -94,14 +97,14 @@ class ACF extends Base {
 	/**
 	 * Handles transforming certain meta values from ACF to GC.
 	 *
-	 * @since  3.1.5
-	 *
-	 * @param  bool   $updated    Whether config element was updated.
-	 * @param  mixed  $meta_value The meta value to transform.
-	 * @param  string $meta_key   The meta key to transform.
-	 * @param  Push   $push       The Push object.
+	 * @param bool $updated Whether config element was updated.
+	 * @param mixed $meta_value The meta value to transform.
+	 * @param string $meta_key The meta key to transform.
+	 * @param Push $push The Push object.
 	 *
 	 * @return bool               Whether the config element is updated.
+	 * @since  3.1.5
+	 *
 	 */
 	public function maybe_transform_config_meta_from_acf( $updated, $meta_value, $meta_key, Push $push ) {
 		if ( ! isset( $push->element->type, $this->gc_acf_type_map[ $push->element->type ] ) || empty( $meta_value ) ) {
@@ -141,7 +144,7 @@ class ACF extends Base {
 
 				$updated = $cb( $meta_value, $push, $field );
 				break 2;
-					// $updated = $this->maybe_transform_checkbox_push_value( func_get_args() );
+				// $updated = $this->maybe_transform_checkbox_push_value( func_get_args() );
 			}
 		}
 
@@ -151,12 +154,12 @@ class ACF extends Base {
 	/**
 	 * Maybe transform checkbox value to ACF compatible version.
 	 *
-	 * @since  3.1.5
-	 *
-	 * @param  mixed $meta_value GC Checkbox Field value
-	 * @param  array $field      ACF Field array
+	 * @param mixed $meta_value GC Checkbox Field value
+	 * @param array $field ACF Field array
 	 *
 	 * @return mixed              Possibly modified meta value.
+	 * @since  3.1.5
+	 *
 	 */
 	public function maybe_transform_pull_value_checkbox( $meta_value, $field ) {
 		if (
@@ -165,12 +168,12 @@ class ACF extends Base {
 			&& ! empty( $field['choices'] )
 		) {
 			$meta_value = array_map(
-				function( $meta_arr_value ) use ( $field ) {
+				function ( $meta_arr_value ) use ( $field ) {
 
 					// Replace choice with the choice key from ACF.
 					$key = array_search( $meta_arr_value, $field['choices'] );
 					if ( false !== $key ) {
-						  $meta_arr_value = $key;
+						$meta_arr_value = $key;
 					}
 
 					return $meta_arr_value;
@@ -186,13 +189,13 @@ class ACF extends Base {
 	/**
 	 * Maybe transform checkbox value to GC compatible version.
 	 *
-	 * @since  3.1.5
-	 *
-	 * @param  mixed $meta_value GC Checkbox Field value
-	 * @param  Push  $push       The Push object.
-	 * @param  array $field      ACF Field array
+	 * @param mixed $meta_value GC Checkbox Field value
+	 * @param Push $push The Push object.
+	 * @param array $field ACF Field array
 	 *
 	 * @return mixed              Possibly modified meta value.
+	 * @since  3.1.5
+	 *
 	 */
 	public function maybe_transform_push_value_checkbox( $meta_value, $push, $field ) {
 		$updated = false;
@@ -211,7 +214,7 @@ class ACF extends Base {
 		}
 
 		$updated = $push->update_element_selected_options(
-			function( $label ) use ( $meta_value ) {
+			function ( $label ) use ( $meta_value ) {
 				return in_array( $label, $meta_value, true );
 			}
 		);
@@ -222,12 +225,12 @@ class ACF extends Base {
 	/**
 	 * Get the ACF objects for a post-type and post-id.
 	 *
-	 * @since  3.1.5
-	 *
-	 * @param  string  $post_type The post-type to filter by.
-	 * @param  integer $post_id   The (optional) post-id to filter by.
+	 * @param string $post_type The post-type to filter by.
+	 * @param integer $post_id The (optional) post-id to filter by.
 	 *
 	 * @return bool|array         Array of ACF objects if found, or false.
+	 * @since  3.1.5
+	 *
 	 */
 	public function get_acfs( $post_type, $post_id = 0 ) {
 		$filter = array(
@@ -251,7 +254,7 @@ class ACF extends Base {
 
 		$acfs = array_filter(
 			$field_groups,
-			function( $acf ) use ( $metabox_ids ) {
+			function ( $acf ) use ( $metabox_ids ) {
 				return isset( $acf['id'] ) && in_array( $acf['id'], $metabox_ids );
 			}
 		);
@@ -262,11 +265,11 @@ class ACF extends Base {
 	/**
 	 * Get the ACF fields for a given ACF object array.
 	 *
-	 * @since  3.1.5
-	 *
-	 * @param  array $acf The ACF config array.
+	 * @param array $acf The ACF config array.
 	 *
 	 * @return bool|array  Array of fields for this config, or false.
+	 * @since  3.1.5
+	 *
 	 */
 	public function get_acf_fields( $acf ) {
 		if ( ! isset( $acf['id'] ) ) {

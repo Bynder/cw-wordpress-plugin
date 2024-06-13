@@ -2,7 +2,7 @@ module.exports = {
 	// Copy the theme to a versioned release directory
 	main: {
 		expand: true,
-		src:  [
+		src: [
 			'**',
 			'!**/.*',
 			'!**/readme.md',

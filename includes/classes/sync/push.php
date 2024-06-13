@@ -46,7 +46,7 @@ class Push extends Base {
 	 *
 	 * @var string
 	 */
-	protected $config      = array();
+	protected $config = array();
 	protected $item_config = array();
 
 	private $item_id = null;
@@ -54,9 +54,10 @@ class Push extends Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param API $api API object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param API $api API object.
 	 */
 	public function __construct( API $api ) {
 		parent::__construct( $api, new Async_Push_Action() );
@@ -65,9 +66,9 @@ class Push extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		parent::init_hooks();
@@ -78,11 +79,11 @@ class Push extends Base {
 	/**
 	 * A method for trying to push directly (without async hooks).
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $mapping_post_id Mapping post ID.
+	 * @param int $mapping_post_id Mapping post ID.
 	 *
 	 * @return mixed Result of push. WP_Error on failure.
+	 * @since  3.0.0
+	 *
 	 */
 	public function maybe_push_item( $mapping_post_id ) {
 		try {
@@ -104,13 +105,13 @@ class Push extends Base {
 	/**
 	 * Pushes WP post to GC after some sanitiy checks.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $id WP post ID.
-	 *
-	 * @throws Exception On failure.
+	 * @param int $id WP post ID.
 	 *
 	 * @return mixed Result of push.
+	 * @throws Exception On failure.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	protected function do_item( $id ) {
 
@@ -143,13 +144,13 @@ class Push extends Base {
 	/**
 	 * Pushes WP post to GC.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $update The item config update delta array.
-	 *
-	 * @throws Exception On failure.
+	 * @param array $update The item config update delta array.
 	 *
 	 * @return mixed Result of push.
+	 * @throws Exception On failure.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	public function maybe_do_item_update( $update ) {
 		// Get our initial croonfig reference.
@@ -163,8 +164,8 @@ class Push extends Base {
 			if ( $updated_element->repeatable ) {
 
 				// $repeatable_value = ! empty( $updated_element->value ) ? @json_decode( $updated_element->value, true ) : $updated_element->value;
-				if (is_string($updated_element->value)) {
-					$repeatable_value = !empty( $updated_element->value ) ? json_decode( $updated_element->value, true) : $updated_element->value;
+				if ( is_string( $updated_element->value ) ) {
+					$repeatable_value = ! empty( $updated_element->value ) ? json_decode( $updated_element->value, true ) : $updated_element->value;
 				} else {
 					// Handle the case where $updated_element->value is already an array
 					$repeatable_value = $updated_element->value;
@@ -188,14 +189,14 @@ class Push extends Base {
 					$config->content->$component_uuid = (object) array();
 				}
 
-				if (is_array($config->content->$component_uuid)) {
-					if (is_array($updated_element->value)) {
+				if ( is_array( $config->content->$component_uuid ) ) {
+					if ( is_array( $updated_element->value ) ) {
 						// Directly use the array
 						$decoded_value = $updated_element->value;
 					} else {
 						// Decode JSON string
-						$decoded_value = json_decode($updated_element->value);
-						if ($decoded_value === null && json_last_error() !== JSON_ERROR_NONE) {
+						$decoded_value = json_decode( $updated_element->value );
+						if ( $decoded_value === null && json_last_error() !== JSON_ERROR_NONE ) {
 							// JSON decoding failed, handle the error
 							// For example, you can log the error or take appropriate action
 							// Here, we are setting an empty array
@@ -205,13 +206,13 @@ class Push extends Base {
 
 					// Handle repeatable components
 					$i = 0;
-					foreach ($decoded_value as $value) {
-						if (isset($config->content->$component_uuid[$i])) {
-							$config->content->$component_uuid[$i]->$element_id = $value;
+					foreach ( $decoded_value as $value ) {
+						if ( isset( $config->content->$component_uuid[ $i ] ) ) {
+							$config->content->$component_uuid[ $i ]->$element_id = $value;
 						}
-						$i++;
+						$i ++;
 					}
-				}else {
+				} else {
 					$config->content->$component_uuid->$element_id = $updated_element->value;
 				}
 
@@ -253,7 +254,7 @@ class Push extends Base {
 			);
 		}
 
-		if ($result === false) {
+		if ( $result === false ) {
 			wp_send_json_error( 'Failed to push content to Content Workflow' );
 		}
 
@@ -263,14 +264,14 @@ class Push extends Base {
 	/**
 	 * Sets the item to be pushed to. If it doesn't exist yet, we create it now.
 	 *
-	 * @since 3.0.0
-	 *
 	 * @param integer $item_id Item id.
-	 * @param  bool    $exclude_status set this to true to avoid appending status data
-	 *
-	 * @throws Exception On failure.
+	 * @param bool $exclude_status set this to true to avoid appending status data
 	 *
 	 * @return $item
+	 * @throws Exception On failure.
+	 *
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_item( $item_id, $exclude_status = false ) {
 		$this->item_id = $item_id;
@@ -292,9 +293,9 @@ class Push extends Base {
 	/**
 	 * Maps the WP post data to the GC item config.
 	 *
+	 * @return array Item config array on success.
 	 * @since  3.0.0
 	 *
-	 * @return array Item config array on success.
 	 */
 	protected function map_wp_data_to_gc_data() {
 		$config = $this->loop_item_elements_and_map();
@@ -305,9 +306,9 @@ class Push extends Base {
 	/**
 	 * Loops the GC item config elements and maps the WP post data.
 	 *
+	 * @return array Modified item config array on success.
 	 * @since  3.0.0
 	 *
-	 * @return array Modified item config array on success.
 	 */
 	public function loop_item_elements_and_map() {
 		if ( empty( $this->item_config ) ) {
@@ -336,8 +337,8 @@ class Push extends Base {
 				$component_uuid = 'component' === $field->field_type ? $field->uuid : '';
 
 				$is_component_repeatable = false;
-				if($component_uuid) {
-					$metadata      = $field->metadata;
+				if ( $component_uuid ) {
+					$metadata                = $field->metadata;
 					$is_component_repeatable = ( is_object( $metadata ) && isset( $metadata->repeatable ) ) ? $metadata->repeatable->isRepeatable : false;
 				}
 
@@ -352,19 +353,19 @@ class Push extends Base {
 					$uuid = $this->element->name;
 					if ( $component_uuid ) {
 						$this->element->component_uuid = $component_uuid;
-						$uuid = $component_uuid . '_component_' . $component_uuid;
+						$uuid                          = $component_uuid . '_component_' . $component_uuid;
 					}
 
 					$source      = $this->mapping->data( $uuid );
 					$source_type = isset( $source['type'] ) ? $source['type'] : '';
 
 					// Check if $source['field'] exists, then use it as the key
-					if (isset($source['field'])) {
+					if ( isset( $source['field'] ) ) {
 						// not sure if the field can be empty, will need to check that later on
 						$source_key = $source['field'];
 					} else {
 						// If $source['field'] doesn't exist, fall back to using $source['value']
-						$source_key = isset($source['value']) ? $source['value'] : '';
+						$source_key = isset( $source['value'] ) ? $source['value'] : '';
 					}
 
 
@@ -400,11 +401,11 @@ class Push extends Base {
 	/**
 	 * Loops the $done array and looks for duplicates (unknowns) and removes them.
 	 *
-	 * @todo Fix this. Probably need a reverse mapping UI for each item push, or something.
-	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
+	 * @todo Fix this. Probably need a reverse mapping UI for each item push, or something.
+	 *
 	 */
 	protected function remove_unknowns() {
 		foreach ( $this->done as $source_type => $keys ) {
@@ -440,12 +441,12 @@ class Push extends Base {
 	/**
 	 * Sets the item config element value, if it is determeined that the value changed.
 	 *
-	 * @since 3.0.0
-	 *
 	 * @param string $source_type The data source type.
-	 * @param string $source_key  The data source key.
+	 * @param string $source_key The data source key.
 	 *
 	 * @return array $updated Whether value was updated.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_values_from_wp( $source_type, $source_key ) {
 		$updated = false;
@@ -483,11 +484,11 @@ class Push extends Base {
 	/**
 	 * Updates the featured image alt_text if changed
 	 *
-	 * @since 3.2.0
-	 *
 	 * @param string $source_key source key.
 	 *
 	 * @return void
+	 * @since 3.2.0
+	 *
 	 */
 	protected function set_featured_image_alt( $source_key ) {
 
@@ -541,11 +542,11 @@ class Push extends Base {
 	 * Sets the item config element value for WP post fields,
 	 * if it is determeined that the value changed.
 	 *
-	 * @since 3.0.0
-	 *
 	 * @param string $post_column The post data column.
 	 *
 	 * @return bool $updated Whether value was updated.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_post_field_value( $post_column ) {
 		$updated  = false;
@@ -564,7 +565,7 @@ class Push extends Base {
 				$el_value = wp_kses_post( $this->get_element_value() );
 				if ( 'post_content' === $post_column ) {
 					$value = $this->ensureShortcodesAreNotConvertedToHtml(
-						function ($value) {
+						function ( $value ) {
 							return apply_filters( 'the_content', $value );
 						},
 						$value
@@ -593,17 +594,17 @@ class Push extends Base {
 		$updated  = false;
 		$el_value = $this->element->value;
 
-		$parts = explode('.', $tableColumnString);
-		if(count($parts) !== 2){
+		$parts = explode( '.', $tableColumnString );
+		if ( count( $parts ) !== 2 ) {
 			return false;
 		}
 
-		$table = $parts[0];
+		$table  = $parts[0];
 		$column = $parts[1];
 
 		global $wpdb;
 
-		$results = $wpdb->get_results($wpdb->prepare("SELECT %i as value from %i where post_id=%d;", $column, $table, $this->post->ID));
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT %i as value from %i where post_id=%d;", $column, $table, $this->post->ID ) );
 
 		$value = $results[0]->value;
 		// @codingStandardsIgnoreStart
@@ -615,25 +616,24 @@ class Push extends Base {
 		}
 
 		return $updated;
-  }
-    
-	private function ensureShortcodesAreNotConvertedToHtml(callable $callback, string $value): string
-	{
+	}
+
+	private function ensureShortcodesAreNotConvertedToHtml( callable $callback, string $value ): string {
 		preg_match_all(
 			'/\[[\w\W]+?\]/',
 			$value,
 			$matches
 		);
 
-		foreach ($matches[0] as $match) {
+		foreach ( $matches[0] as $match ) {
 			$value = str_replace(
 				$match,
-				'<shortcode>' . base64_encode($match) . '</shortcode>',
+				'<shortcode>' . base64_encode( $match ) . '</shortcode>',
 				$value
 			);
 		}
 
-		$value = $callback($value);
+		$value = $callback( $value );
 
 		preg_match_all(
 			'/<shortcode>([\w\W])+?<\/shortcode>/',
@@ -641,10 +641,10 @@ class Push extends Base {
 			$matches
 		);
 
-		foreach ($matches[0] as $match) {
+		foreach ( $matches[0] as $match ) {
 			$value = str_replace(
 				$match,
-				base64_decode(strip_tags($match)),
+				base64_decode( strip_tags( $match ) ),
 				$value
 			);
 		}
@@ -656,11 +656,11 @@ class Push extends Base {
 	 * Sets the item config element value for WP taxonomy terms,
 	 * if it is determeined that the value changed.
 	 *
-	 * @since 3.0.0
-	 *
 	 * @param string $taxonomy The taxonomy name.
 	 *
 	 * @return bool $updated Whether value was updated.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_taxonomy_field_value( $taxonomy ) {
 		$terms      = get_the_terms( $this->post, $taxonomy );
@@ -669,6 +669,7 @@ class Push extends Base {
 			: array();
 
 		$updated = $this->set_taxonomy_field_value_from_names( $term_names );
+
 		return apply_filters( 'gc_config_taxonomy_field_value_updated', $updated, $taxonomy, $terms, $this );
 	}
 
@@ -694,7 +695,7 @@ class Push extends Base {
 			case 'choice_checkbox':
 			case 'choice_radio':
 				$updated = $this->update_element_selected_options(
-					function( $label ) use ( $term_names ) {
+					function ( $label ) use ( $term_names ) {
 						return in_array( $label, $term_names, true );
 					}
 				);
@@ -726,11 +727,11 @@ class Push extends Base {
 	 * Sets the item config element value for WP meta fields,
 	 * if it is determeined that the value changed.
 	 *
-	 * @since 3.0.0
-	 *
 	 * @param string $meta_key The meta key.
 	 *
 	 * @return bool $updated Whether value was updated.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_meta_field_value( $meta_key ) {
 		$updated    = false;
@@ -755,7 +756,7 @@ class Push extends Base {
 
 			case 'choice_radio':
 				$updated = $this->update_element_selected_options(
-					function( $label ) use ( $meta_value ) {
+					function ( $label ) use ( $meta_value ) {
 						return $meta_value === $label;
 					}
 				);
@@ -769,7 +770,7 @@ class Push extends Base {
 				}
 
 				$updated = $this->update_element_selected_options(
-					function( $label ) use ( $meta_value ) {
+					function ( $label ) use ( $meta_value ) {
 						return in_array( $label, $meta_value, true );
 					}
 				);
@@ -782,44 +783,44 @@ class Push extends Base {
 
 
 	/**
-	* Sets the item config element value for ACF fields,
-	* if it is determeined that the value changed.
-	*
-	* @since 3.0.0
-	*
-	* @param  string $group_key  The ACF group key.
-	* @param  string $field_key  The ACF field key.
-	* @param  array  $post_data  The WP Post data array.
-	*
-	* @return bool $updated Whether value was updated.
-	*/
+	 * Sets the item config element value for ACF fields,
+	 * if it is determeined that the value changed.
+	 *
+	 * @param string $group_key The ACF group key.
+	 * @param string $field_key The ACF field key.
+	 * @param array $post_data The WP Post data array.
+	 *
+	 * @return bool $updated Whether value was updated.
+	 * @since 3.0.0
+	 *
+	 */
 
-	protected function set_acf_field_value($group_key) {
+	protected function set_acf_field_value( $group_key ) {
 		$updated = false;
 
 		// Get the post ID
 		$post_id = $this->post->ID;
 
 		// Fetch the ACF field group using the group key
-		$field_group = get_field($group_key, $post_id);
+		$field_group = get_field( $group_key, $post_id );
 
-		$el = $this->element;
+		$el       = $this->element;
 		$el_value = $this->element->value;
-		if (is_object($el) && property_exists($el, 'component_uuid')) {
+		if ( is_object( $el ) && property_exists( $el, 'component_uuid' ) ) {
 			// We have a component here
-			$structure_groups = $this->item->structure->groups;
+			$structure_groups    = $this->item->structure->groups;
 			$componentFieldsKeys = [];
 
-			foreach ($structure_groups as $group) {
+			foreach ( $structure_groups as $group ) {
 				$fields = $group->fields;
-				foreach ($fields as $field) {
-					if ($field->uuid == $el->component_uuid) {
+				foreach ( $fields as $field ) {
+					if ( $field->uuid == $el->component_uuid ) {
 						$component = $field->component;
 						// Check if the component property exists and is an object
-						if (is_object($component) && property_exists($component, 'fields')) {
+						if ( is_object( $component ) && property_exists( $component, 'fields' ) ) {
 							// Access the fields property of the component object
 							$componentFields = $component->fields;
-							foreach ($componentFields as $componentField) {
+							foreach ( $componentFields as $componentField ) {
 								$componentFieldsKeys[] = $componentField->uuid;
 							}
 						}
@@ -827,61 +828,60 @@ class Push extends Base {
 				}
 			}
 			$groupData = [];
-			foreach ($field_group as $group) {
+			foreach ( $field_group as $group ) {
 				// Combine keys from componentFieldsKeys with values from the current group
-				$new_group = array_combine($componentFieldsKeys, $group);
+				$new_group   = array_combine( $componentFieldsKeys, $group );
 				$groupData[] = $new_group;
 			}
 
 
-
 			// Define a mapping between field types and processing functions
 			$fieldTypeProcessors = [
-				'text' => 'processTextField',
-				'attachment' => 'processAttachmentField',
+				'text'            => 'processTextField',
+				'attachment'      => 'processAttachmentField',
 				'choice_checkbox' => 'processChoiceCheckboxField',
-				'choice_radio' => 'processChoiceRadioField',
+				'choice_radio'    => 'processChoiceRadioField',
 				// Add more field types and corresponding processing functions as needed
 			];
 
 			// Initialize an associative array to store grouped items
 			$groupedData = [];
 			// Iterate through each group data
-			foreach ($groupData as $dataInstance) {
+			foreach ( $groupData as $dataInstance ) {
 				// Iterate through each field UUID and its corresponding value
-				foreach ($dataInstance as $field_uuid => $field_value) {
+				foreach ( $dataInstance as $field_uuid => $field_value ) {
 					// Check if the field UUID exists as a key in the grouped data array
-					if (!isset($groupedData[$field_uuid])) {
+					if ( ! isset( $groupedData[ $field_uuid ] ) ) {
 						// If the key doesn't exist, initialize it as an empty array
-						$groupedData[$field_uuid] = [];
+						$groupedData[ $field_uuid ] = [];
 					}
 					// Append the field value to the corresponding key in the grouped data array
-					$groupedData[$field_uuid][] = $field_value;
+					$groupedData[ $field_uuid ][] = $field_value;
 				}
 			}
 
 			// Iterate through each field type and its corresponding field UUIDs
-			foreach ($groupedData as $field_uuid => $field_values) {
+			foreach ( $groupedData as $field_uuid => $field_values ) {
 				// Process field values based on field type
 				$field_type = null;
-				foreach ($componentFields as $componentField) {
-					if ($componentField->uuid === $field_uuid) {
+				foreach ( $componentFields as $componentField ) {
+					if ( $componentField->uuid === $field_uuid ) {
 						$field_type = $componentField->field_type;
 						break; // Stop iterating once the field with the matching UUID is found
 					}
 				}
 
-				if (isset($fieldTypeProcessors[$field_type])) {
-					if ($this->element->name == $field_uuid){
+				if ( isset( $fieldTypeProcessors[ $field_type ] ) ) {
+					if ( $this->element->name == $field_uuid ) {
 						// Call the corresponding processing function for each field UUID
-						$processorFunction = $fieldTypeProcessors[$field_type];
-						$processorResult = $this->$processorFunction($field_values);
+						$processorFunction = $fieldTypeProcessors[ $field_type ];
+						$processorResult   = $this->$processorFunction( $field_values );
 
 						// Check if the result is an array with 'options' and 'value'
-						if (is_array($processorResult) && array_key_exists('options', $processorResult) && array_key_exists('value', $processorResult)) {
+						if ( is_array( $processorResult ) && array_key_exists( 'options', $processorResult ) && array_key_exists( 'value', $processorResult ) ) {
 							// If the result contains both 'options' and 'value', extract them
 							$jsonOptions = $processorResult['options'];
-							$jsonValue = $processorResult['value'];
+							$jsonValue   = $processorResult['value'];
 						} else {
 							// If the result is not an array with 'options' and 'value', assume it's just the value
 							$jsonValue = $processorResult;
@@ -890,9 +890,9 @@ class Push extends Base {
 
 
 					// Assign the processed value to the corresponding element
-					if (($this->element->name == $field_uuid) && ($this->element->value !=  $jsonValue)){
+					if ( ( $this->element->name == $field_uuid ) && ( $this->element->value != $jsonValue ) ) {
 						$this->element->value = $jsonValue;
-						if ($jsonOptions){
+						if ( $jsonOptions ) {
 							$this->element->options = $jsonOptions;
 						}
 						$updated = true;
@@ -901,74 +901,74 @@ class Push extends Base {
 					// Handle unknown field types or skip
 				}
 			}
-		}else {
+		} else {
 			$outputArray = array();
-			foreach ($field_group as $item) {
+			foreach ( $field_group as $item ) {
 				// Get the values of the sub-array dynamically
-				$values = array_values($item);
+				$values = array_values( $item );
 				// Use json_encode to encode the value
-				$outputArray[] = json_encode($values[0]);
+				$outputArray[] = json_encode( $values[0] );
 			}
 
-			$jsonValue = '[' . implode(',', $outputArray) . ']';
-			if ($this->element->value !=  $jsonValue){
+			$jsonValue = '[' . implode( ',', $outputArray ) . ']';
+			if ( $this->element->value != $jsonValue ) {
 				$this->element->value = $jsonValue;
-				$updated = true;
+				$updated              = true;
 			}
 		}
 
 		return $updated;
 	}
 
-	protected function processTextField($field_value) {
+	protected function processTextField( $field_value ) {
 		// Handle text field type
 		$jsonValues = []; // Array to store JSON encoded values
 
 		// Check if the field value is an array
-		if (is_array($field_value)) {
-			foreach ($field_value as $item) {
+		if ( is_array( $field_value ) ) {
+			foreach ( $field_value as $item ) {
 				// Check if the item is an array
-				if (is_array($item)) {
+				if ( is_array( $item ) ) {
 					// If the item is an array, encode its elements separately
 					$encodedValues = [];
-					foreach ($item as $value) {
-						if (!is_array($value)) {
+					foreach ( $item as $value ) {
+						if ( ! is_array( $value ) ) {
 							// If the value is not an array, encode it directly
-							$trimmedValue = rtrim($value, "\n\r");
-							$encodedValues[] = '"' . addslashes($trimmedValue) . '"';
+							$trimmedValue    = rtrim( $value, "\n\r" );
+							$encodedValues[] = '"' . addslashes( $trimmedValue ) . '"';
 						} else {
 							// If the value is an array, encode its elements separately
 							$encodedInnerValues = [];
-							foreach ($value as $innerValue) {
-								$trimmedValue = rtrim($innerValue, "\n\r");
-								$encodedInnerValues[] = '"' . addslashes($trimmedValue) . '"';
+							foreach ( $value as $innerValue ) {
+								$trimmedValue         = rtrim( $innerValue, "\n\r" );
+								$encodedInnerValues[] = '"' . addslashes( $trimmedValue ) . '"';
 							}
 							// Encode the inner array as a JSON array
-							$encodedValues[] = implode(',', $encodedInnerValues);
+							$encodedValues[] = implode( ',', $encodedInnerValues );
 						}
 					}
 					// Encode the outer array as a JSON array
-					$jsonValues[] = '[' . implode(',', $encodedValues) . ']';
+					$jsonValues[] = '[' . implode( ',', $encodedValues ) . ']';
 				} else {
 					// If the item is not an array, encode it directly
-					$trimmedValue = rtrim($item, "\n\r");
-					$jsonValues[] = '"' . addslashes($trimmedValue) . '"';
+					$trimmedValue = rtrim( $item, "\n\r" );
+					$jsonValues[] = '"' . addslashes( $trimmedValue ) . '"';
 				}
 			}
 
 		} else {
 			// If the field value is not an array, encode it directly
-			$trimmedValue = rtrim($field_value, "\n\r");
-			$jsonValues[] = '"' . addslashes($trimmedValue) . '"';
+			$trimmedValue = rtrim( $field_value, "\n\r" );
+			$jsonValues[] = '"' . addslashes( $trimmedValue ) . '"';
 		}
 
 		// Return the JSON encoded values
-		return '[' . implode(',', $jsonValues) . ']';
+		return '[' . implode( ',', $jsonValues ) . ']';
 	}
 
-	protected function processAttachmentField($field_value) {
+	protected function processAttachmentField( $field_value ) {
 		// Check if the field value is empty or not set
-		if (empty($field_value)) {
+		if ( empty( $field_value ) ) {
 			// Field value is empty, meaning attachments should be removed
 			return '[]'; // Send an empty array to remove all attachments
 		} else {
@@ -978,9 +978,9 @@ class Push extends Base {
 			$fileIds = [];
 
 			// Loop through each attachment data in the field value array
-			foreach ($field_value as $attachment) {
+			foreach ( $field_value as $attachment ) {
 				// Check if the attachment has an 'ID' key
-				if (isset($attachment['ID'])) {
+				if ( isset( $attachment['ID'] ) ) {
 					// Attachment already exists, add its ID to the file IDs array
 					$fileIds[] = $attachment['ID'];
 				}
@@ -989,33 +989,33 @@ class Push extends Base {
 			}
 
 			// Return the file IDs as a JSON array
-			return json_encode($fileIds);
+			return json_encode( $fileIds );
 		}
 	}
 
-	protected function processChoiceCheckboxField($field_value) {
-		$options = $this->element->options; // Get the options
+	protected function processChoiceCheckboxField( $field_value ) {
+		$options        = $this->element->options; // Get the options
 		$result_options = []; // Array to store the result for options
-		$result_value = []; // Array to store the result for value
+		$result_value   = []; // Array to store the result for value
 
 		// Iterate through each item in the field value array
-		foreach ($field_value as $value) {
+		foreach ( $field_value as $value ) {
 			$selected_options = []; // Array to store options for this value
-			$selected_value = []; // Array to store value for this value
+			$selected_value   = []; // Array to store value for this value
 
 			// Iterate through each option and set 'selected' property accordingly
-			foreach ($options as $option) {
+			foreach ( $options as $option ) {
 				$selected_option = clone $option; // Clone the option object
 
 				// Set 'selected' property based on whether the label matches any value in the current $field_value item
-				$selected_option->selected = in_array($option->label, $value) ? 1 : 0;
+				$selected_option->selected = in_array( $option->label, $value ) ? 1 : 0;
 
 				// Add the modified option to the array
 				$selected_options[] = $selected_option;
 
 				// If the label matches any value in the current $field_value item, store the value details
-				if (in_array($option->label, $value)) {
-					$selected_value[] = ['id' => $option->name, 'label' => $option->label];
+				if ( in_array( $option->label, $value ) ) {
+					$selected_value[] = [ 'id' => $option->name, 'label' => $option->label ];
 				}
 			}
 
@@ -1026,32 +1026,32 @@ class Push extends Base {
 			$result_value[] = $selected_value;
 		}
 
-		return ['options' => $result_options, 'value' => $result_value]; // Return both results
+		return [ 'options' => $result_options, 'value' => $result_value ]; // Return both results
 	}
 
-	protected function processChoiceRadioField($field_value) {
-		$options = $this->element->options; // Get the options
+	protected function processChoiceRadioField( $field_value ) {
+		$options        = $this->element->options; // Get the options
 		$result_options = []; // Array to store the result for options
-		$result_value = []; // Array to store the result for value
+		$result_value   = []; // Array to store the result for value
 
 		// Iterate through each item in the field value array
-		foreach ($field_value as $value) {
+		foreach ( $field_value as $value ) {
 			$selected_options = []; // Array to store options for this value
-			$selected_value = []; // Array to store value for this value
+			$selected_value   = []; // Array to store value for this value
 
 			// Iterate through each option and set 'selected' property accordingly
-			foreach ($options as $option) {
+			foreach ( $options as $option ) {
 				$selected_option = clone $option; // Clone the option object
 
 				// Set 'selected' property based on whether the label matches the value
-				$selected_option->selected = ($option->label === $value) ? 1 : 0;
+				$selected_option->selected = ( $option->label === $value ) ? 1 : 0;
 
 				// Add the modified option to the array
 				$selected_options[] = $selected_option;
 
 				// If the label matches the value, store the value details
-				if ($option->label === $value) {
-					$selected_value[] = ['id' => $option->name, 'label' => $option->label];
+				if ( $option->label === $value ) {
+					$selected_value[] = [ 'id' => $option->name, 'label' => $option->label ];
 				}
 			}
 
@@ -1062,20 +1062,18 @@ class Push extends Base {
 			$result_value[] = $selected_value;
 		}
 
-		return ['options' => $result_options, 'value' => $result_value]; // Return both results
+		return [ 'options' => $result_options, 'value' => $result_value ]; // Return both results
 	}
-
-
 
 
 	/**
 	 * Uses $callback to determine if each option value should be selected,
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  callable $callback Closure.
+	 * @param callable $callback Closure.
 	 *
 	 * @return bool             Whether the options were updated or not.
+	 * @since  3.0.0
+	 *
 	 */
 	public function update_element_selected_options( $callback ) {
 		$pre_options = wp_json_encode( $this->element->value );
@@ -1096,7 +1094,7 @@ class Push extends Base {
 
 			if ( $callback( self::remove_zero_width( $label ) ) ) {
 				$values[] = [
-					'id' => $option->name,
+					'id'    => $option->name,
 					'label' => $option->label,
 				];
 			} else {
@@ -1111,7 +1109,7 @@ class Push extends Base {
 		}
 
 		$this->element->value = $values;
-		$post_options = wp_json_encode( $this->element->value );
+		$post_options         = wp_json_encode( $this->element->value );
 
 		// @codingStandardsIgnoreStart
 		// Check if the values have been updated.

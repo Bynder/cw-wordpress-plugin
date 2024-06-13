@@ -13,16 +13,16 @@ use WP_Query;
 /**
  * Style enqueue helper w/ GC defaults.
  *
- * @since 3.0.0
- *
- * @param string           $handle   Name of the stylesheet. Should be unique.
- * @param string           $filename Path (w/o extension/suffix) to CSS file in /assets/css/.
- * @param array            $deps     Optional. An array of registered stylesheet handles this stylesheet
+ * @param string $handle Name of the stylesheet. Should be unique.
+ * @param string $filename Path (w/o extension/suffix) to CSS file in /assets/css/.
+ * @param array $deps Optional. An array of registered stylesheet handles this stylesheet
  *                                   depends on. Default empty array.
- * @param string|bool|null $ver      Optional. String specifying stylesheet version number,
+ * @param string|bool|null $ver Optional. String specifying stylesheet version number,
  *                                   if it has one, which is added to the URL.
  *
  * @return void
+ * @since 3.0.0
+ *
  */
 function enqueue_style( $handle, $filename, $deps = array(), $ver = GATHERCONTENT_ENQUEUE_VERSION ) {
 	$suffix = Utils::asset_suffix();
@@ -32,16 +32,16 @@ function enqueue_style( $handle, $filename, $deps = array(), $ver = GATHERCONTEN
 /**
  * Script enqueue helper w/ GC defaults.
  *
- * @since 3.0.0
- *
- * @param string           $handle   Name of the script. Should be unique.
- * @param string           $filename Path (w/o extension/suffix) to JS file in /assets/js/.
- * @param array            $deps     Optional. An array of registered script handles this
+ * @param string $handle Name of the script. Should be unique.
+ * @param string $filename Path (w/o extension/suffix) to JS file in /assets/js/.
+ * @param array $deps Optional. An array of registered script handles this
  *                                   script depends on. Default empty array.
- * @param string|bool|null $ver      Optional. String specifying script version number,
+ * @param string|bool|null $ver Optional. String specifying script version number,
  *                                   if it has one, which is added to the URL.
  *
  * @return void
+ * @since 3.0.0
+ *
  */
 function enqueue_script( $handle, $filename, $deps = array(), $ver = GATHERCONTENT_ENQUEUE_VERSION ) {
 	$suffix = Utils::asset_suffix();
@@ -51,12 +51,12 @@ function enqueue_script( $handle, $filename, $deps = array(), $ver = GATHERCONTE
 /**
  * Wrapper for WP_Query that gets the assocated post for a GatherContent Item Id.
  *
- * @since 3.0.0
- *
- * @param int   $item_id GatherContent Item Id.
- * @param array $args    Optional array of WP_Query args.
+ * @param int $item_id GatherContent Item Id.
+ * @param array $args Optional array of WP_Query args.
  *
  * @return mixed          WP_Post if an associated post is found.
+ * @since 3.0.0
+ *
  */
 function get_post_by_item_id( $item_id, $args = array() ) {
 	global $wpml_query_filter;
@@ -73,14 +73,14 @@ function get_post_by_item_id( $item_id, $args = array() ) {
 				'post_type'      => \GatherContent\Importer\available_mapping_post_types(),
 				'posts_per_page' => 1,
 				'no_found_rows'  => true,
-		// @codingStandardsIgnoreStart
-		'meta_query'     => array(
-			array(
-				'key'   => '_gc_mapped_item_id',
-				'value' => $item_id,
-			),
-		),
-		// @codingStandardsIgnoreEnd
+				// @codingStandardsIgnoreStart
+				'meta_query'     => array(
+					array(
+						'key'   => '_gc_mapped_item_id',
+						'value' => $item_id,
+					),
+				),
+				// @codingStandardsIgnoreEnd
 			)
 		)
 	);
@@ -91,25 +91,25 @@ function get_post_by_item_id( $item_id, $args = array() ) {
 /**
  * Wrapper for get_post_meta that gets the associated GatherContent item ID, if it exists.
  *
- * @since 3.0.0
- *
  * @param int $post_id The ID of the post to check.
  *
  * @return mixed         Result of get_post_meta.
+ * @since 3.0.0
+ *
  */
 function get_post_item_id( $post_id ) {
-	 return get_post_meta( $post_id, '_gc_mapped_item_id', 1 );
+	return get_post_meta( $post_id, '_gc_mapped_item_id', 1 );
 }
 
 /**
  * Wrapper for update_post_meta that saves the associated GatherContent item ID to the post's meta.
  *
- * @since 3.0.0
- *
  * @param int $post_id The ID of the post to store the item ID against.
  * @param int $item_id The item id to store against the post.
  *
  * @return mixed         Result of update_post_meta.
+ * @since 3.0.0
+ *
  */
 function update_post_item_id( $post_id, $item_id ) {
 	return update_post_meta( $post_id, '_gc_mapped_item_id', $item_id );
@@ -118,39 +118,40 @@ function update_post_item_id( $post_id, $item_id ) {
 /**
  * Wrapper for get_post_meta that gets the associated GatherContent item meta, if it exists.
  *
- * @since 3.0.0
- *
  * @param int $post_id The ID of the post to check.
  *
  * @return mixed         Result of get_post_meta.
+ * @since 3.0.0
+ *
  */
 function get_post_item_meta( $post_id ) {
 	$meta = get_post_meta( $post_id, '_gc_mapped_meta', 1 );
+
 	return $meta;
 }
 
 /**
  * Wrapper for update_post_meta that saves the associated GatherContent item meta to the post's meta.
  *
- * @since 3.0.0
- *
- * @param int   $post_id The ID of the post to update.
- * @param mixed $meta    The item meta to store against the post.
+ * @param int $post_id The ID of the post to update.
+ * @param mixed $meta The item meta to store against the post.
  *
  * @return mixed          Result of update_post_meta.
+ * @since 3.0.0
+ *
  */
 function update_post_item_meta( $post_id, $meta ) {
-	 return update_post_meta( $post_id, '_gc_mapped_meta', $meta );
+	return update_post_meta( $post_id, '_gc_mapped_meta', $meta );
 }
 
 /**
  * Wrapper for get_post_meta that gets the associated GatherContent mapping post ID, if it exists.
  *
- * @since 3.0.0
- *
  * @param int $post_id The ID of the post to check.
  *
  * @return mixed Result of get_post_meta.
+ * @since 3.0.0
+ *
  */
 function get_post_mapping_id( $post_id ) {
 	return get_post_meta( $post_id, '_gc_mapping_id', 1 );
@@ -159,26 +160,26 @@ function get_post_mapping_id( $post_id ) {
 /**
  * Wrapper for update_post_meta that saves the associated GatherContent mapping post ID to the post's meta.
  *
- * @since 3.0.0
- *
- * @param int $post_id         The ID of the post to update.
+ * @param int $post_id The ID of the post to update.
  * @param int $mapping_post_id The ID of the mapping post.
  *
  * @return mixed Result of update_post_meta.
+ * @since 3.0.0
+ *
  */
 function update_post_mapping_id( $post_id, $mapping_post_id ) {
-	 return update_post_meta( $post_id, '_gc_mapping_id', $mapping_post_id );
+	return update_post_meta( $post_id, '_gc_mapping_id', $mapping_post_id );
 }
 
 /**
  * Augment a GatherContent item object with additional data for JS templating.
  *
- * @since 3.0.0
- *
- * @param object $item       GatherContent item object.
- * @param int    $mapping_id Optional. ID of the mapping post.
+ * @param object $item GatherContent item object.
+ * @param int $mapping_id Optional. ID of the mapping post.
  *
  * @return array              Object prepared for JS.
+ * @since 3.0.0
+ *
  */
 function prepare_item_for_js( $item, $mapping_id = 0 ) {
 	$post = \GatherContent\Importer\get_post_by_item_id( $item->id );
@@ -204,12 +205,12 @@ function prepare_item_for_js( $item, $mapping_id = 0 ) {
 /**
  * Get a an array of data from a WP_Post object to be used as a backbone model.
  *
- * @since 3.0.0
- *
- * @param mixed $post     WP_Post or post ID.
- * @param bool  $uncached Whether to fetch item data uncached. Default is to ONLY fetch from cache.
+ * @param mixed $post WP_Post or post ID.
+ * @param bool $uncached Whether to fetch item data uncached. Default is to ONLY fetch from cache.
  *
  * @return array           JS post array.
+ * @since 3.0.0
+ *
  */
 function prepare_post_for_js( $post, $uncached = false ) {
 	$post = $post instanceof WP_Post ? $post : get_post( $post );
@@ -236,8 +237,8 @@ function prepare_post_for_js( $post, $uncached = false ) {
 	$item = null;
 	if ( $js_post['item'] ) {
 		$item = $uncached
-		? General::get_instance()->api->uncached()->get_item( $js_post['item'] )
-		: General::get_instance()->api->only_cached()->get_item( $js_post['item'] );
+			? General::get_instance()->api->uncached()->get_item( $js_post['item'] )
+			: General::get_instance()->api->only_cached()->get_item( $js_post['item'] );
 	}
 
 	return \GatherContent\Importer\prepare_js_data( $js_post, $item );
@@ -246,13 +247,13 @@ function prepare_post_for_js( $post, $uncached = false ) {
 /**
  * Get a an array of data from a WP_Post or GC item object to be used as a backbone model.
  *
- * @since 3.0.0
- *
- * @param array  $args Array of args to be added to.
+ * @param array $args Array of args to be added to.
  * @param object $item GatherContent item object.
  * @param string $type Which type of data we are preparing, 'post' or 'item'.
  *
  * @return array        Array of modified args.
+ * @since 3.0.0
+ *
  */
 function prepare_js_data( $args, $item = null, $type = 'post' ) {
 	$args = wp_parse_args(
@@ -286,12 +287,12 @@ function prepare_js_data( $args, $item = null, $type = 'post' ) {
 		}
 
 		$args['status'] = isset( $item->status->data )
-		? $item->status->data
-		: (object) array();
+			? $item->status->data
+			: (object) array();
 
 		$args['typeName'] = isset( $item->type )
-		? Utils::gc_field_type_name( $item->type )
-		: '';
+			? Utils::gc_field_type_name( $item->type )
+			: '';
 
 		if ( isset( $item->updated_at ) ) {
 			$args['updated_at'] = Utils::relative_date( $item->updated_at );
@@ -312,11 +313,11 @@ function prepare_js_data( $args, $item = null, $type = 'post' ) {
 /**
  * Gets the singular label for a post's post-type object.
  *
- * @since 3.0.0
- *
  * @param mixed $post WP_Post
  *
  * @return string       Singular post-type label.
+ * @since 3.0.0
+ *
  */
 function get_post_type_singular_label( $post ) {
 	$label = __( 'Post', 'content-workflow-by-bynder' );
@@ -326,19 +327,19 @@ function get_post_type_singular_label( $post ) {
 	$object = get_post_type_object( $post->post_type );
 
 	return isset( $object->labels->singular_name )
-	? $object->labels->singular_name
-	: $object->labels->name;
+		? $object->labels->singular_name
+		: $object->labels->name;
 }
 
 /**
  * Checks to see if a post is current with a GatherContent item.
  *
- * @since 3.0.0
- *
- * @param int   $post_id Post ID.
- * @param mixed $item    GatherContent item object.
+ * @param int $post_id Post ID.
+ * @param mixed $item GatherContent item object.
  *
  * @return bool           Whether post is current.
+ * @since 3.0.0
+ *
  */
 function post_is_current( $post_id, $item ) {
 	$meta = \GatherContent\Importer\get_post_item_meta( $post_id );
@@ -363,9 +364,9 @@ function post_is_current( $post_id, $item ) {
 /**
  * A button for flushing the cached connection to GC's API.
  *
+ * @return string URL for flushing cache.
  * @since 3.0.0
  *
- * @return string URL for flushing cache.
  */
 function refresh_connection_link() {
 	$args = array(
@@ -379,7 +380,7 @@ function refresh_connection_link() {
 	);
 	// @codingStandardsIgnoreStart
 	if ( isset( $_GET['flush_cache'], $_GET['redirect'] ) ) {
-	// @codingStandardsIgnoreEnd
+		// @codingStandardsIgnoreEnd
 		update_option( 'gc-api-updated', 1, false );
 		$args['redirect_url'] = remove_query_arg( 'flush_cache', remove_query_arg( 'redirect' ) );
 	}
@@ -392,9 +393,9 @@ function refresh_connection_link() {
 /**
  * Determine if current user can view GC settings.
  *
+ * @return bool Whether current user can view GC settings.
  * @since 3.0.0
  *
- * @return bool Whether current user can view GC settings.
  */
 function user_allowed() {
 	return current_user_can( \GatherContent\Importer\view_capability() );
@@ -403,9 +404,9 @@ function user_allowed() {
 /**
  * Capability for user to be able to view GC settings.
  *
+ * @return string Capability
  * @since 3.0.0
  *
- * @return string Capability
  */
 function view_capability() {
 	return apply_filters( 'gathercontent_settings_view_capability', 'publish_pages' );
@@ -415,32 +416,35 @@ function view_capability() {
  * The filtered list of post-types available for mapping to GC items.
  * Modify with the 'gathercontent_mapping_post_types' filter.
  *
+ * @return array  Array of post-type slugs.
  * @since 3.0.3
  *
- * @return array  Array of post-type slugs.
  */
 function available_mapping_post_types() {
 	$post_types = get_post_types( array( 'public' => true ) );
+
 	return apply_filters( 'gathercontent_mapping_post_types', $post_types );
 }
 
 /**
  * Detect if HTTP Auth is enabled.
  *
+ * @return string|bool The Auth username if enabled, or false.
  * @since 3.0.7
  *
- * @return string|bool The Auth username if enabled, or false.
  */
 function auth_enabled() {
 	if ( ! empty( $_SERVER['REMOTE_USER'] ) ) {
 		return sanitize_text_field($_SERVER['REMOTE_USER']);
 	}
 
-	foreach ( array(
-		'PHP_AUTH_USER',
-		'PHP_AUTH_PW',
-		'HTTP_AUTHORIZATION',
-	) as $var ) {
+	foreach (
+		array(
+			'PHP_AUTH_USER',
+			'PHP_AUTH_PW',
+			'HTTP_AUTHORIZATION',
+		) as $var
+	) {
 		if ( ! empty( $_SERVER[ $var ] ) ) {
 			return true;
 		}

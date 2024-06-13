@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Mapping;
 
 use GatherContent\Importer\Utils;
@@ -11,7 +12,7 @@ use GatherContent\Importer\Utils;
 class Template_Mapper extends Base {
 
 	protected $option_name = '';
-	protected $statuses    = array();
+	protected $statuses = array();
 
 	const EXCLUDED_FIELDS = array( 'section', 'guidelines' );
 	const COMPONENT_FIELD = 'component';
@@ -32,9 +33,9 @@ class Template_Mapper extends Base {
 	/**
 	 * The page-specific script ID to enqueue.
 	 *
+	 * @return string
 	 * @since  3.0.0
 	 *
-	 * @return string
 	 */
 	protected function script_id() {
 		return 'gathercontent-mapping';
@@ -43,9 +44,9 @@ class Template_Mapper extends Base {
 	/**
 	 * The mapping page UI callback.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function ui_page() {
 		// Output the markup for the JS to build on.
@@ -147,9 +148,9 @@ class Template_Mapper extends Base {
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	protected function get_localize_data() {
 		$initial = ! $this->mapping_id;
@@ -191,45 +192,45 @@ class Template_Mapper extends Base {
 	/**
 	 * Gets the underscore templates array.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	protected function get_underscore_templates() {
 		$post_status_options = $this->get_default_field_options( 'post_status' );
 
-		 return array(
-			 'tmpl-gc-tabs-wrapper'         => array(),
-			 'tmpl-gc-tab-wrapper'          => array(),
-			 'tmpl-gc-mapping-tab-row'      => array(
-				 'option_base' => $this->option_name,
-				 'post_types'  => $this->post_types(),
-			 ),
-			 'tmpl-gc-mapping-defaults-tab' => array(
-				 'post_author_label'   => $this->post_column_label( 'post_author' ),
-				 'post_status_options' => $post_status_options,
-				 'post_status_label'   => __( 'Default Status', 'content-workflow-by-bynder' ),
-				 'post_type_label'     => $this->post_column_label( 'post_type' ),
-				 'post_type_options'   => $this->get_default_field_options( 'post_type' ),
-				 'gc_status_options'   => $this->statuses,
-				 'option_base'         => $this->option_name,
-			 ),
-			 'tmpl-gc-mapping-defaults-tab-status-mappings' => array(
-				 'option_base'         => $this->option_name,
-				 'gc_status_options'   => $this->statuses,
-				 'post_status_options' => $post_status_options,
-			 ),
-			 'tmpl-gc-select2-item'         => array(),
-		 );
+		return array(
+			'tmpl-gc-tabs-wrapper'                         => array(),
+			'tmpl-gc-tab-wrapper'                          => array(),
+			'tmpl-gc-mapping-tab-row'                      => array(
+				'option_base' => $this->option_name,
+				'post_types'  => $this->post_types(),
+			),
+			'tmpl-gc-mapping-defaults-tab'                 => array(
+				'post_author_label'   => $this->post_column_label( 'post_author' ),
+				'post_status_options' => $post_status_options,
+				'post_status_label'   => __( 'Default Status', 'content-workflow-by-bynder' ),
+				'post_type_label'     => $this->post_column_label( 'post_type' ),
+				'post_type_options'   => $this->get_default_field_options( 'post_type' ),
+				'gc_status_options'   => $this->statuses,
+				'option_base'         => $this->option_name,
+			),
+			'tmpl-gc-mapping-defaults-tab-status-mappings' => array(
+				'option_base'         => $this->option_name,
+				'gc_status_options'   => $this->statuses,
+				'post_status_options' => $post_status_options,
+			),
+			'tmpl-gc-select2-item'                         => array(),
+		);
 	}
 
 	/**
 	 * Initiates the mapped field types. By default, post fields, taxonomies, and meta fields.
 	 * If WP-SEO is installed, that field type will be iniitated as well.
 	 *
+	 * @return Field_Types\Types object
 	 * @since  3.0.0
 	 *
-	 * @return Field_Types\Types object
 	 */
 	protected function initiate_mapped_field_types() {
 		$core_field_types = array(
@@ -240,8 +241,8 @@ class Template_Mapper extends Base {
 			new Field_Types\Database(),
 		);
 
-		$is_acf_installed = class_exists('acf_pro');
-		if ($is_acf_installed) {
+		$is_acf_installed = class_exists( 'acf_pro' );
+		if ( $is_acf_installed ) {
 			$core_field_types[] = new Field_Types\ACF();
 		}
 
@@ -257,11 +258,11 @@ class Template_Mapper extends Base {
 	/**
 	 * Gets the Help Pointers array.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  bool $initial Whether we have a mapping ID.
+	 * @param bool $initial Whether we have a mapping ID.
 	 *
 	 * @return array  Array of Pointers.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function get_pointers( $initial ) {
 		$enqueue   = false;
@@ -280,7 +281,7 @@ class Template_Mapper extends Base {
 		if ( $initial ) {
 
 			if ( ! in_array( 'gc_select_tab_how_to', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Template Tabs and Fields', 'content-workflow-by-bynder' ) . '</h3>';
+				$content = '<h3>' . __( 'Template Tabs and Fields', 'content-workflow-by-bynder' ) . '</h3>';
 				$content .= '<p>' . __( 'You\'ll find the tabs from the Content Workflow Template here. Select a tab to start mapping the Template fields.', 'content-workflow-by-bynder' ) . '</p>';
 
 				$pointers['select_tab_how_to'] = $content;
@@ -288,7 +289,7 @@ class Template_Mapper extends Base {
 			}
 
 			if ( ! in_array( 'gc_map_status_how_to', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Content Workflow Status &Rarr; WordPress Status', 'content-workflow-by-bynder' ) . '</h3>';
+				$content = '<h3>' . __( 'Content Workflow Status &Rarr; WordPress Status', 'content-workflow-by-bynder' ) . '</h3>';
 				$content .= '<p>' . __( 'Here you\'ll be able to map each individual Content Workflow status to a WordPress status, and optionally, change the Content Workflow status when your items are imported to WordPress.', 'content-workflow-by-bynder' ) . '</p>';
 
 				$pointers['map_status_how_to'] = $content;
@@ -297,7 +298,7 @@ class Template_Mapper extends Base {
 		} else {
 
 			if ( ! in_array( 'gc_refresh_connection', $dismissed, 1 ) ) {
-				$content  = '<h3>' . __( 'Refresh data from Content Workflow', 'content-workflow-by-bynder' ) . '</h3>';
+				$content = '<h3>' . __( 'Refresh data from Content Workflow', 'content-workflow-by-bynder' ) . '</h3>';
 				$content .= '<p>' . __( 'To make the plugin more speedy, we cache the requests to Content Workflow for 1 day, but if you find that you need to update the data from Content Workflow, just hit the "Refresh" button.', 'content-workflow-by-bynder' ) . '</p>';
 				$content .= '<p>' . __( 'For more help, click the "Help" tab in the upper-right-hand corner.', 'content-workflow-by-bynder' ) . '</p>';
 
@@ -317,12 +318,12 @@ class Template_Mapper extends Base {
 	/**
 	 * Get's the GC tabs and adds a default tab for universal settings.
 	 *
+	 * @return array  Array of tabs.
 	 * @since  3.0.0
 	 *
-	 * @return array  Array of tabs.
 	 */
 
-	 /**
+	/**
 	 * Retrieves and structures tabs with associated fields or components.
 	 * Handles tab groups, checks for ACF Pro presence, and constructs tab arrays.
 	 * Utilizes switch cases based on ACF Pro installation status.
@@ -331,37 +332,37 @@ class Template_Mapper extends Base {
 	 */
 
 	protected function get_tabs() {
-		$tabs = [];
-		$post_type = $this->get_value('post_type', 'esc_attr');
-		$tab_groups = $this->template->related->structure->groups ?? [];
-		$is_acf_pro_installed = class_exists('acf_pro');
+		$tabs                 = [];
+		$post_type            = $this->get_value( 'post_type', 'esc_attr' );
+		$tab_groups           = $this->template->related->structure->groups ?? [];
+		$is_acf_pro_installed = class_exists( 'acf_pro' );
 
-		foreach ($tab_groups as $tab) {
-			$rows = [];
+		foreach ( $tab_groups as $tab ) {
+			$rows   = [];
 			$fields = $tab->fields ?? [];
 
-			foreach ($fields as $field) {
-				$metadata = $field->metadata;
-				$is_repeatable = (is_object($metadata) && isset($metadata->repeatable)) ? $metadata->repeatable->isRepeatable : false;
+			foreach ( $fields as $field ) {
+				$metadata      = $field->metadata;
+				$is_repeatable = ( is_object( $metadata ) && isset( $metadata->repeatable ) ) ? $metadata->repeatable->isRepeatable : false;
 
 				//We use components  as rows and fields in the components as subrows if ACF PRo is installed
-				if ($is_acf_pro_installed) {
+				if ( $is_acf_pro_installed ) {
 
-					if (self::COMPONENT_FIELD !== $field->field_type) {
-						$this->formatAndAddField($field, $post_type, '', $is_repeatable, $rows);
+					if ( self::COMPONENT_FIELD !== $field->field_type ) {
+						$this->formatAndAddField( $field, $post_type, '', $is_repeatable, $rows );
 					}
 
-					if (self::COMPONENT_FIELD === $field->field_type) {
-						$component_id = $field->uuid;
+					if ( self::COMPONENT_FIELD === $field->field_type ) {
+						$component_id   = $field->uuid;
 						$component_name = $field->label;
-						$this->formatAndAddField($field, $post_type, $component_name, $is_repeatable, $rows, $component_id);
+						$this->formatAndAddField( $field, $post_type, $component_name, $is_repeatable, $rows, $component_id );
 					}
 				} else {
 					// When ACF Pro is not installed, use the original logic:
 					// each row is just as it comes in. (each component field is an individual row)
-					$fields_data = ($field->component->fields ?? [$field]);
+					$fields_data = ( $field->component->fields ?? [ $field ] );
 
-					foreach ($fields_data as $field_data) {
+					foreach ( $fields_data as $field_data ) {
 						$formatted_field = $this->format_fields(
 							$field_data,
 							$post_type,
@@ -370,7 +371,7 @@ class Template_Mapper extends Base {
 							self::COMPONENT_FIELD === $field->field_type ? $field->uuid : ''
 						);
 
-						if ($formatted_field) {
+						if ( $formatted_field ) {
 							$rows[] = $formatted_field;
 						}
 					}
@@ -378,26 +379,26 @@ class Template_Mapper extends Base {
 			}
 
 			$tabs[] = [
-				'id' => $tab->uuid,
-				'label' => $tab->name,
-				'hidden' => !empty($tabs),
-				'rows' => $rows,
+				'id'     => $tab->uuid,
+				'label'  => $tab->name,
+				'hidden' => ! empty( $tabs ),
+				'rows'   => $rows,
 			];
 		}
 
 		$default_tab = [
-			'id' => 'mapping-defaults',
-			'label' => __('Mapping Defaults', 'content-workflow-by-bynder'),
-			'hidden' => true,
-			'navClasses' => 'alignright',
-			'rows' => $this->post_options(),
-			'post_author' => $this->get_value('post_author', 'absint', 1),
-			'post_status' => $this->get_value('post_status', 'esc_attr', 'draft'),
-			'post_type' => $post_type,
-			'gc_status' => $this->get_gc_statuses(),
+			'id'          => 'mapping-defaults',
+			'label'       => __( 'Mapping Defaults', 'content-workflow-by-bynder' ),
+			'hidden'      => true,
+			'navClasses'  => 'alignright',
+			'rows'        => $this->post_options(),
+			'post_author' => $this->get_value( 'post_author', 'absint', 1 ),
+			'post_status' => $this->get_value( 'post_status', 'esc_attr', 'draft' ),
+			'post_type'   => $post_type,
+			'gc_status'   => $this->get_gc_statuses(),
 		];
 
-		$default_tab['select2:post_author:' . $default_tab['post_author']] = $this->get_default_field_options('post_author');
+		$default_tab[ 'select2:post_author:' . $default_tab['post_author'] ] = $this->get_default_field_options( 'post_author' );
 
 		$tabs[] = $default_tab;
 
@@ -405,11 +406,10 @@ class Template_Mapper extends Base {
 	}
 
 
+	private function formatAndAddField( $field, $post_type, $component_name, $is_repeatable, &$rows, $component_id = '' ) {
+		$formatted_field = $this->format_fields( $field, $post_type, $component_name, $is_repeatable, $component_id );
 
-	private function formatAndAddField($field, $post_type, $component_name, $is_repeatable, &$rows, $component_id = '') {
-		$formatted_field = $this->format_fields($field, $post_type, $component_name, $is_repeatable, $component_id);
-
-		if ($formatted_field) {
+		if ( $formatted_field ) {
 			$rows[] = $formatted_field;
 		}
 	}
@@ -417,15 +417,15 @@ class Template_Mapper extends Base {
 	/**
 	 * Format field object based on the field type
 	 *
-	 * @since 4.0.0
-	 *
-	 * @param mixed       $field
+	 * @param mixed $field
 	 * @param string|null $post_type
-	 * @param string      $component_name
-	 * @param bool        $is_repeatable
-	 * @param string|int  $component_id optional
+	 * @param string $component_name
+	 * @param bool $is_repeatable
+	 * @param string|int $component_id optional
 	 *
 	 * @return null|mixed formatted field object.
+	 * @since 4.0.0
+	 *
 	 */
 	private function format_fields( $field, $post_type, string $component_name = '', bool $is_repeatable = false, string $component_id = '' ) {
 
@@ -453,10 +453,10 @@ class Template_Mapper extends Base {
 		$field->typeName = Utils::gc_field_type_name( $field_type );
 
 		if ( $val = $this->get_value( $field->uuid ) ) {
-			$field->field_type  = isset( $val['type'] ) ? $val['type'] : '';
-			$field->field_value = isset( $val['value'] ) ? $val['value'] : '';
-			$field->field_field = isset( $val['field'] ) ? $val['field'] : '';
-			$field->field_subfields = isset( $val['sub_fields'] ) ? (array)$val['sub_fields'] : '';
+			$field->field_type      = isset( $val['type'] ) ? $val['type'] : '';
+			$field->field_value     = isset( $val['value'] ) ? $val['value'] : '';
+			$field->field_field     = isset( $val['field'] ) ? $val['field'] : '';
+			$field->field_subfields = isset( $val['sub_fields'] ) ? (array) $val['sub_fields'] : '';
 		}
 
 		$field->is_repeatable = $is_repeatable;

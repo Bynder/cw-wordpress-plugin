@@ -81,15 +81,18 @@ class Debug extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.1
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		if ( is_admin() && isset( $_GET[ self::$query_string ] ) ) {
 			$enabled = self::toggle_debug_mode((bool) $_GET[ self::$query_string ] );
 			unset( $_GET[ self::$query_string ] );
-			add_action( 'all_admin_notices', array( $this, $enabled ? 'debug_enabled_notice' : 'debug_disabled_notice' ) );
+			add_action( 'all_admin_notices', array(
+				$this,
+				$enabled ? 'debug_enabled_notice' : 'debug_disabled_notice'
+			) );
 		}
 
 		if ( ! self::$debug_mode ) {
@@ -105,12 +108,12 @@ class Debug extends Base {
 	/**
 	 * Hooked to `gc_sync_items_result`, logs results to the debug mode log.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  mixed  $maybe_error Result of sync.
-	 * @param  object $sync        The GatherContent\Importer\Sync\Pull or GatherContent\Importer\Sync\Push object.
+	 * @param mixed $maybe_error Result of sync.
+	 * @param object $sync The GatherContent\Importer\Sync\Pull or GatherContent\Importer\Sync\Push object.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	public function log_sync_results( $maybe_error, $sync ) {
 		self::debug_log( $maybe_error, $sync->direction . ' items result' );
@@ -119,9 +122,9 @@ class Debug extends Base {
 	/**
 	 * Outputs admin notice that the debug mode has been disabled.
 	 *
+	 * @return void
 	 * @since  3.0.1
 	 *
-	 * @return void
 	 */
 	public function debug_disabled_notice() {
 		$msg = esc_html__( 'Content Workflow Debug Mode: Disabled', 'content-workflow-by-bynder' );
@@ -131,9 +134,9 @@ class Debug extends Base {
 	/**
 	 * Outputs admin notice that the debug mode has been enabled.
 	 *
+	 * @return void
 	 * @since  3.0.1
 	 *
-	 * @return void
 	 */
 	public function debug_enabled_notice() {
 		$msg = esc_html__( 'Content Workflow Debug Mode: Enabled', 'content-workflow-by-bynder' );
@@ -194,11 +197,11 @@ class Debug extends Base {
 	/**
 	 * The Debug mode checkbox toggle field callback.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  GatherContent\Importer\Settings\Form_Section $field Form_Section object.
+	 * @param GatherContent\Importer\Settings\Form_Section $field Form_Section object.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	public function debug_checkbox_field_cb( $field ) {
 		$id = $field->param( 'id' );
@@ -221,16 +224,17 @@ class Debug extends Base {
 	/**
 	 * Handles the actions associated with the debug checkbox toggle fields.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  array $settings Array of settings.
+	 * @param array $settings Array of settings.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	public function do_debug_options_actions( $settings ) {
 		if ( empty( $settings['debug']['log_importer_requests'] ) ) {
 			$settings['log_importer_requests'] = false;
 			unset( $settings['debug'] );
+
 			return $settings;
 		}
 
@@ -274,6 +278,7 @@ class Debug extends Base {
 		} elseif ( $settings['log_importer_requests'] ) {
 			$orig_settings['log_importer_requests'] = true;
 			unset( $orig_settings['debug'] );
+
 			return $orig_settings;
 		}
 
@@ -283,12 +288,12 @@ class Debug extends Base {
 	/**
 	 * Handles the actions associated with the stuck statuses checkboxes.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  array  $settings    Array of settings
-	 * @param  string $back_button The back button markup.
+	 * @param array $settings Array of settings
+	 * @param string $back_button The back button markup.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	public function handle_stuck_statuses( $settings, $back_button ) {
 		global $wpdb;
@@ -319,11 +324,11 @@ class Debug extends Base {
 	/**
 	 * Handles the deleting the debug mode log.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  string $back_button The back button markup.
+	 * @param string $back_button The back button markup.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	public function delete_gc_log_file( $back_button ) {
 		if ( unlink( self::$log_path ) ) {
@@ -336,11 +341,11 @@ class Debug extends Base {
 	/**
 	 * Handles the view for the debug mode log.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  string $back_button The back button markup.
+	 * @param string $back_button The back button markup.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	public function view_gc_log_file( $back_button ) {
 		$log_contents = file_exists( self::$log_path ) ? file_get_contents( self::$log_path ) : '';
@@ -355,9 +360,9 @@ class Debug extends Base {
 	/**
 	 * Check if GATHERCONTENT_DEBUG_MODE constant is set.
 	 *
+	 * @return string
 	 * @since  3.0.2
 	 *
-	 * @return string
 	 */
 	public static function has_debug_constant() {
 		return defined( 'GATHERCONTENT_DEBUG_MODE' ) && GATHERCONTENT_DEBUG_MODE;
@@ -366,9 +371,9 @@ class Debug extends Base {
 	/**
 	 * Check if SCRIPT_DEBUG is enabled.
 	 *
+	 * @return string
 	 * @since  3.0.1
 	 *
-	 * @return string
 	 */
 	public static function debug_mode() {
 		return self::$debug_mode;
@@ -377,11 +382,11 @@ class Debug extends Base {
 	/**
 	 * Enable/disable the Debug Mode.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  bool $debug_enabled Enable/Disable
+	 * @param bool $debug_enabled Enable/Disable
 	 *
 	 * @return bool                 Whether it has been enabled.
+	 * @since  3.0.1
+	 *
 	 */
 	public static function toggle_debug_mode( $debug_enabled ) {
 		$changed = false;
@@ -411,12 +416,12 @@ class Debug extends Base {
 	/**
 	 * Write a message to the log if debug enabled.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  string $message Message to write to log file.
-	 * @param  string $title   Describes what is being logged.
+	 * @param string $message Message to write to log file.
+	 * @param string $title Describes what is being logged.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	public static function debug_log( $message = '', $title = '' ) {
 		if ( self::$debug_mode ) {
@@ -427,11 +432,11 @@ class Debug extends Base {
 	/**
 	 * Write a message to the log.
 	 *
-	 * @since  3.0.1
-	 *
-	 * @param  string $message Message to write to log file.
+	 * @param string $message Message to write to log file.
 	 *
 	 * @return void
+	 * @since  3.0.1
+	 *
 	 */
 	protected static function _debug_log( $message = '', $title = '' ) {
 		$message = print_r( $message, 1 );

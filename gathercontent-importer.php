@@ -58,9 +58,9 @@ if ( version_compare( phpversion(), '7.0', '<' ) ) {
  * If the server does not have the minimum supported version of PHP,
  * this notice will be shown in the dashboard.
  *
+ * @return void
  * @since  3.0.0
  *
- * @return void
  */
 function gathercontent_importer_php_version_too_low_notice() {
 	printf(
@@ -72,9 +72,9 @@ function gathercontent_importer_php_version_too_low_notice() {
 /**
  * If the version of WordPress is not supported, this notice will be shown in the dashboard.
  *
+ * @return void
  * @since  3.0.0
  *
- * @return void
  */
 function gathercontent_importer_wp_version_too_low_notice() {
 	printf(
@@ -86,20 +86,21 @@ function gathercontent_importer_wp_version_too_low_notice() {
 /**
  * Registers the default textdomain.
  *
- * @since  3.0.0
- *
+ * @return void
  * @uses apply_filters()
  * @uses get_locale()
  * @uses load_textdomain()
  * @uses load_plugin_textdomain()
  * @uses plugin_basename()
  *
- * @return void
+ * @since  3.0.0
+ *
  */
 function gathercontent_importer_i18n() {
 	$text_domain = GATHERCONTENT_SLUG;
-	$locale = apply_filters( 'plugin_locale', get_locale(), $text_domain );
+	$locale      = apply_filters( 'plugin_locale', get_locale(), $text_domain );
 	load_textdomain( $text_domain, WP_LANG_DIR . "/{$text_domain}/{$text_domain}-{$locale}.mo" );
 	load_plugin_textdomain( $text_domain, false, plugin_basename( GATHERCONTENT_PATH ) . '/languages/' );
 }
+
 add_action( 'init', 'gathercontent_importer_i18n' );
