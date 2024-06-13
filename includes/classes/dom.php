@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer;
 
 use DOMDocument;
@@ -27,12 +28,13 @@ class Dom extends DOMDocument {
 	/**
 	 * Returns the normalized content.
 	 *
+	 * @return string  HTML content
 	 * @since  3.0.0
 	 *
-	 * @return string  HTML content
 	 */
 	public function get_content() {
 		$body = $this->saveHTML( $this->getElementsByTagName( 'body' )->item( 0 ) );
+
 		return str_replace( array( '<body>', '</body>' ), '', $body );
 	}
 

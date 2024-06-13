@@ -2,6 +2,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 .gc-major-publishing-actions {
 	padding: 10px;
 	// margin: 10px -12px -12px;
@@ -14,10 +15,12 @@
 	text-align: right;
 	float: right;
 	line-height: 23px;
+
 	button.button, .button {
 		margin-left: .5em;
 	}
 }
+
 #gc-manage {
 	.dashicons {
 		color: #82878c;
@@ -30,13 +33,16 @@
 
 #gc-related-data {
 	overflow: hidden;
+
 	&.no-js, &.gc-mapping-metabox:not( .gc-mapping-started ) {
 		text-align: center;
 	}
+
 	.spinner {
 		float: none;
 		margin: .2em;
 	}
+
 	> p {
 		text-align: center;
 	}
@@ -48,6 +54,7 @@
 		margin-top: 2px;
 		margin-left: 4px;
 	}
+
 	.gc-status-name {
 		font-weight: 600;
 	}
@@ -57,6 +64,7 @@
 	&.current {
 		color: $greendk;
 	}
+
 	&.not-current {
 		color: $reddk;
 	}
@@ -65,24 +73,29 @@
 .gc-no-mapping {
 	.spinner {
 		display: none;
+
 		&.is-active {
 			display: inline-block;
 		}
 	}
+
 	.gc-publishing-action {
 		text-align: center;
 		float: none;
+
 		button.button, .button {
 			margin-left: 0;
 		}
 	}
 }
+
 .gc-mapping-started {
 	label {
 		margin-bottom: .2em;
 		display: block;
 	}
 }
+
 .gc-metabox-status {
 	display: inline-block;
 	position: relative;

@@ -45,9 +45,10 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param API $api API object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param API $api API object.
 	 */
 	public function __construct( API $api ) {
 
@@ -59,9 +60,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Initiates the ajax hook callbacks.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		add_action( 'wp_ajax_gc_get_option_data', array( $this, 'gc_get_option_data_cb' ) );
@@ -82,9 +83,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Fetches select2 options.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function gc_get_option_data_cb() {
 		if ( ! $this->_get_val( 'q' ) || ! $this->_get_val( 'column' ) ) {
@@ -113,9 +114,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Fetches post item updates for the post-listing page.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function gc_get_posts_cb() {
 
@@ -166,9 +167,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Fetches post mapping project's available statuses.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function gc_get_post_statuses_cb() {
 		$post_id = $this->_post_val( 'postId' );
@@ -200,9 +201,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Sets the GatherContent status for an item.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function set_gc_status_cb() {
 		$post_data = $this->_post_val( 'post' );
@@ -229,9 +230,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Fetches fresh post-data for post model.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function gc_fetch_js_post_cb() {
 
@@ -267,9 +268,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Sets mapping id for a post or posts.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function gc_save_mapping_id_cb() {
 		$post_data = $this->_post_val( 'post' );
@@ -312,9 +313,9 @@ class Handlers extends Plugin_Base {
 	 * Gets listing of accounts, projects, or template-mappings, only if template-mapping
 	 * exists for that account/project.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function gc_wp_filter_mappings_cb() {
 		$post_data = $this->_post_val( 'post' );
@@ -381,9 +382,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Ajax callback when dismissing import errors.. will delete those errors to not show again.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function gc_dismiss_notice_cb() {
 		if ( ! $this->_post_val( 'mapping' ) ) {
@@ -408,9 +409,9 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Ajax callback when getting Component subfields for the mapping UI
 	 *
+	 * @return void
 	 * @since  3.2.20
 	 *
-	 * @return void
 	 */
 	public function gc_component_subfields_cb() {
 		// If data not provided from FE, stop and return error
@@ -421,26 +422,27 @@ class Handlers extends Plugin_Base {
 		$data = $this->_post_val( 'subfields_data' );
 
 		// If ACF Field group
-		if ( $data['name'] && str_contains($data['name'],"group") ){
-			$field_group = acf_get_fields($data['name']);
+		if ( $data['name'] && str_contains( $data['name'], "group" ) ) {
+			$field_group = acf_get_fields( $data['name'] );
 			// If Repeater with sub fields
-			if($field_group){
+			if ( $field_group ) {
 				$success_data = array(
 					'field_data' => $field_group,
 				);
-				wp_send_json_success($success_data);
+				wp_send_json_success( $success_data );
 			}
-		}
-		// If field, get sub fields
-		elseif ( $data['name'] && str_contains($data['name'],"field") ){
-			$field_parent = get_field_object($data['name']);
+		} // If field, get sub fields
+		elseif ( $data['name'] && str_contains( $data['name'], "field" ) ) {
+			$field_parent = get_field_object( $data['name'] );
 			// If Repeater with sub fields
-			if($field_parent['sub_fields']){
+			if ( $field_parent['sub_fields'] ) {
 				$success_data = array(
 					'field_data' => $field_parent['sub_fields'],
 				);
-				wp_send_json_success($success_data);
+				wp_send_json_success( $success_data );
 			}
+
+			return wp_send_json_success(['field_data' => []]);
 		}
 
 		// If success conditions were not met above, complete function with error status
@@ -454,11 +456,11 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Ajax-search for a WP user.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $search_term Search term.
+	 * @param string $search_term Search term.
 	 *
 	 * @return array               Array of results for select2.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function post_author( $search_term ) {
 		if ( ! \GatherContent\Importer\user_allowed() ) {
@@ -473,7 +475,7 @@ class Handlers extends Plugin_Base {
 		);
 
 		$users = array_map(
-			function( $user ) {
+			function ( $user ) {
 				return array(
 					'text' => $user->user_login,
 					'id'   => $user->ID,
@@ -488,11 +490,11 @@ class Handlers extends Plugin_Base {
 	/**
 	 * Nonce-verifier helper.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $nonce Nonce value.
+	 * @param string $nonce Nonce value.
 	 *
 	 * @return bool         Whether nonce was verified.
+	 * @since  3.0.0
+	 *
 	 */
 	public function verify_nonce( $nonce ) {
 		return wp_verify_nonce( $nonce, GATHERCONTENT_SLUG );

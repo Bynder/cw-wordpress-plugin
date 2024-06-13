@@ -1,14 +1,14 @@
-module.exports = function( app, $, gc ) {
+module.exports = function (app, $, gc) {
 	return app.views.base.extend({
-		template : wp.template( 'gc-table-nav' ),
+		template: wp.template('gc-table-nav'),
 
-		render : function() {
+		render: function () {
 			var collection = this.collection.current();
 
-			this.$el.html( this.template( {
-				count    : collection.length,
-				selected : collection.checked ? collection.checked().length : 0,
-			} ) );
+			this.$el.html(this.template({
+				count: collection.length,
+				selected: collection.checked ? collection.checked().length : 0,
+			}));
 
 			return this;
 		},

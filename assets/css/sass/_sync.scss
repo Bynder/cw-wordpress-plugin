@@ -8,14 +8,17 @@
 
 #sync-tabs {
 	margin-bottom: 1.5em;
+
 	.gc-check-column {
 		width: 20px;
 		padding: 6px 0 6px 6px;
 		vertical-align: middle;
 	}
+
 	#gc-edit {
 		width: 20px;
 	}
+
 	// For now, until we can have more than one mapping on this page.
 	th:nth-child( 5 ), td:nth-child( 5 ) {
 		display: none;
@@ -26,9 +29,10 @@
 	#progress {
 		padding: 0;
 		border: 1px solid #e5e5e5;
-		-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
-		box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+		-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 	}
+
 	table {
 		background: none;
 	}
@@ -40,6 +44,7 @@
 
 .gc-progress-bar {
 	position: relative;
+
 	&:before {
 		content: '';
 		background: #dbf4f6;
@@ -61,6 +66,7 @@
 	-moz-transition: width 400ms ease-in-out;
 	-o-transition: width 400ms ease-in-out;
 	transition: width 400ms ease-in-out;
+
 	span {
 		display: block;
 		min-width: 3.2em;

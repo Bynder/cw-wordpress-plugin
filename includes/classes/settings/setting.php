@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Settings;
 
 class Setting {
@@ -27,11 +28,11 @@ class Setting {
 	/**
 	 * Get option value.
 	 *
-	 * @since  3.0.0
-	 *
 	 * @param  [type] $key [description]
 	 *
 	 * @return [type]       [description]
+	 * @since  3.0.0
+	 *
 	 */
 	public function get( $key ) {
 		if ( array_key_exists( $key, $this->options ) ) {
