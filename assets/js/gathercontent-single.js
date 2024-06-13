@@ -1,5 +1,5 @@
 /**
- * Content Workflow (by Bynder) - v1.0.0 - 2024-05-29
+ * Content Workflow (by Bynder) - v1.0.0 - 2024-06-13
  *
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
@@ -614,7 +614,7 @@ module.exports = function (app, $, gc) {
 			this.model.set('status', newStatus);
 
 			this.ajax({
-				action: 'set_gc_status',
+				action: 'set_cwby_status',
 				status: newStatusId
 			}, this.refreshData, function () {
 				this.model.set('status', oldStatus);

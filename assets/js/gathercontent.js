@@ -1,5 +1,5 @@
 /**
- * Content Workflow (by Bynder) - v1.0.0 - 2024-05-29
+ * Content Workflow (by Bynder) - v1.0.0 - 2024-06-13
  * 
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
