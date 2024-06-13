@@ -45,7 +45,7 @@ class Support extends Base {
 			header( 'Content-Type: text/plain' );
 			header( 'Content-Disposition: attachment; filename="gathercontent-system-info.txt"' );
 
-			echo wp_strip_all_tags( $this->_post_val( 'gc-sysinfo' ) );
+			echo esc_html( wp_strip_all_tags( $this->_post_val( 'gc-sysinfo' ) ) );
 			die();
 		}
 	}
@@ -161,7 +161,7 @@ class Support extends Base {
 		// set_transient( 'gc_sys_info', $sys_info, 20 * MINUTE_IN_SECONDS );
 		// }
 
-		echo $sys_info;
+		echo wp_kses_post( $sys_info );
 	}
 
 	public function theme() {

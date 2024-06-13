@@ -187,7 +187,7 @@ abstract class Base extends Enqueue {
 
 	protected function api() {
 		if ( null === self::$api ) {
-			throw new \Exception( 'Must set the API object with ' . get_class( $this ) . '::set_api( $api ).' );
+			throw new \Exception( 'Must set the API object with ' . esc_html( get_class( $this ) ) . '::set_api( $api ).' );
 		}
 
 		return self::$api;

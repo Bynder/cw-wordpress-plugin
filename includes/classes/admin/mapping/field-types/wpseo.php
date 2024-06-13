@@ -144,7 +144,7 @@ class WPSEO extends Base implements Type {
 				name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
 			<?php $this->underscore_options( $all ); ?>
 			<?php foreach ( $seo_options as $post_type => $options ) : ?>
-				<# if ( '<?php echo $post_type; ?>' === data.post_type ) { #>
+				<# if ( '<?php echo esc_attr( $post_type ); ?>' === data.post_type ) { #>
 				<?php $this->underscore_options( $options ); ?>
 				<# } #>
 			<?php endforeach; ?>

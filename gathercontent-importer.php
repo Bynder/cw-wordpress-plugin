@@ -63,10 +63,15 @@ if ( version_compare( phpversion(), '7.0', '<' ) ) {
  *
  */
 function gathercontent_importer_php_version_too_low_notice() {
-	printf(
-		'<div id="message" class="error"><p>%s</p></div>',
-		__( 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: <a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>', 'content-workflow-by-bynder' )
-	);
+	$message = 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: ';
+
+	echo '<div id="message" class="error">
+		<p> ' .
+	     esc_html__( $message, 'content-workflow-by-bynder' ) .
+		'<a href="https://wordpress.org/about/requirements/">https://wordpress.org/about/requirements/</a>' .
+		'</p>
+	</div>';
+
 }
 
 /**
@@ -79,7 +84,7 @@ function gathercontent_importer_php_version_too_low_notice() {
 function gathercontent_importer_wp_version_too_low_notice() {
 	printf(
 		'<div id="message" class="error"><p>%s</p></div>',
-		__( 'Sorry, for security and performance reasons, the Content Workflow plugin requires a minimum WordPress version of 4.4. Please update WordPress to the most recent version.', 'content-workflow-by-bynder' )
+		esc_html__( 'Sorry, for security and performance reasons, the Content Workflow plugin requires a minimum WordPress version of 4.4. Please update WordPress to the most recent version.', 'content-workflow-by-bynder' )
 	);
 }
 
