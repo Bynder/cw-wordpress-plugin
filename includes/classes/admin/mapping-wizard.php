@@ -248,7 +248,7 @@ class Mapping_Wizard extends Base {
 			}
 		}
 
-		$notices = apply_filters( 'gc_admin_notices', $notices );
+		$notices = apply_filters( 'cwby_admin_notices', $notices );
 		foreach ( $notices as $notice ) {
 			$notice['type'] = isset( $notice['type'] ) ? $notice['type'] : 'error';
 

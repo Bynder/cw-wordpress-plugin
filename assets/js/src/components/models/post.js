@@ -29,7 +29,7 @@ module.exports = function (gc) {
 		],
 
 		url: function () {
-			var url = window.ajaxurl + '?action=gc_fetch_js_post&id=' + this.get('id');
+			var url = window.ajaxurl +'?action=cwby_fetch_js_post&id='+ this.get( 'id' );
 			if (this.get('uncached')) {
 				this.set('uncached', false);
 				url += '&flush_cache=force';

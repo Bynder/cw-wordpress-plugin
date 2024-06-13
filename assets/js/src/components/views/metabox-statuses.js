@@ -34,7 +34,7 @@ module.exports = function (app, $, gc) {
 		asyncInit: function () {
 			this.rendered = false;
 			$.post(window.ajaxurl, {
-				action: 'gc_get_post_statuses',
+				action      : 'cwby_get_post_statuses',
 				postId: this.model.get('id'),
 				flush_cache: gc.queryargs.flush_cache ? 1 : 0
 			}, this.ajaxResponse.bind(this)).done(function () {

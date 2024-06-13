@@ -10,13 +10,13 @@ class Sync_Bulk extends Sync_Items {
 	protected $mappings = array();
 	protected $direction = 'pull';
 
-	public function gc_pull_items_cb() {
+	public function cwby_pull_items_cb() {
 
 		$this->direction = 'pull';
 		$this->callback();
 	}
 
-	public function gc_push_items_cb() {
+	public function cwby_push_items_cb() {
 		$this->direction = 'push';
 		$this->callback();
 	}
@@ -106,7 +106,7 @@ class Sync_Bulk extends Sync_Items {
 			// Start the sync and bump percent value.
 			$mapping->update_items_to_sync( array( 'pending' => $items ), $this->direction );
 
-			do_action( "gc_{$this->direction}_items", $mapping );
+			do_action( "cwby_{$this->direction}_items", $mapping );
 		}
 
 		wp_send_json_success(

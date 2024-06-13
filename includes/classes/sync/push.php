@@ -72,8 +72,8 @@ class Push extends Base {
 	 */
 	public function init_hooks() {
 		parent::init_hooks();
-		add_action( 'wp_async_gc_push_items', array( $this, 'sync_items' ) );
-		add_action( 'wp_async_nopriv_gc_push_items', array( $this, 'sync_items' ) );
+		add_action( 'wp_async_cwby_push_items', array( $this, 'sync_items' ) );
+		add_action( 'wp_async_nopriv_cwby_push_items', array( $this, 'sync_items' ) );
 	}
 
 	/**
@@ -670,7 +670,7 @@ class Push extends Base {
 
 		$updated = $this->set_taxonomy_field_value_from_names( $term_names );
 
-		return apply_filters( 'gc_config_taxonomy_field_value_updated', $updated, $taxonomy, $terms, $this );
+		return apply_filters( 'cwby_config_taxonomy_field_value_updated', $updated, $taxonomy, $terms, $this );
 	}
 
 	public function set_taxonomy_field_value_from_names( $term_names ) {
@@ -737,7 +737,7 @@ class Push extends Base {
 		$updated    = false;
 		$meta_value = get_post_meta( $this->post->ID, $meta_key, 1 );
 
-		$check = apply_filters( 'gc_config_pre_meta_field_value_updated', null, $meta_value, $meta_key, $this );
+		$check = apply_filters( 'cwby_config_pre_meta_field_value_updated', null, $meta_value, $meta_key, $this );
 		if ( null !== $check ) {
 			return $check;
 		}

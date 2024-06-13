@@ -102,11 +102,11 @@ class Debug extends Base {
 		add_filter( "sanitize_option_{$this->admin->option_name}", array( $this, 'do_debug_options_actions' ), 5 );
 
 		add_action( 'admin_init', array( $this, 'add_debug_fields' ), 50 );
-		add_action( 'gc_sync_items_result', array( $this, 'log_sync_results' ), 10, 2 );
+		add_action( 'cwby_sync_items_result', array( $this, 'log_sync_results' ), 10, 2 );
 	}
 
 	/**
-	 * Hooked to `gc_sync_items_result`, logs results to the debug mode log.
+	 * Hooked to `cwby_sync_items_result`, logs results to the debug mode log.
 	 *
 	 * @param mixed $maybe_error Result of sync.
 	 * @param object $sync The GatherContent\Importer\Sync\Pull or GatherContent\Importer\Sync\Push object.

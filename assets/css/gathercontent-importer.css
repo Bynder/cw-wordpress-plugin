@@ -360,6 +360,10 @@ ul.gc-radio-desc li, ul.gc-reveal-items-list li {
 	opacity: 0.5;
 }
 
+.gc-component-disabled {
+  pointer-events: none;
+  opacity: 0.5; }
+
 #gc-items-search {
 	float: left;
 }

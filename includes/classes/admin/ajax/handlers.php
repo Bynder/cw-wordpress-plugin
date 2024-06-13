@@ -65,19 +65,19 @@ class Handlers extends Plugin_Base {
 	 *
 	 */
 	public function init_hooks() {
-		add_action( 'wp_ajax_gc_get_option_data', array( $this, 'gc_get_option_data_cb' ) );
-		add_action( 'wp_ajax_gc_sync_items', array( $this->sync_items, 'gc_sync_items_cb' ) );
-		add_action( 'wp_ajax_gc_pull_items', array( $this->sync_bulk, 'gc_pull_items_cb' ) );
-		add_action( 'wp_ajax_gc_push_items', array( $this->sync_bulk, 'gc_push_items_cb' ) );
-		add_action( 'wp_ajax_gc_get_posts', array( $this, 'gc_get_posts_cb' ) );
-		add_action( 'wp_ajax_gc_get_post_statuses', array( $this, 'gc_get_post_statuses_cb' ) );
-		add_action( 'wp_ajax_set_gc_status', array( $this, 'set_gc_status_cb' ) );
-		add_action( 'wp_ajax_gc_disconnect_post', array( $this, 'gc_disconnect_post_cb' ) );
-		add_action( 'wp_ajax_gc_fetch_js_post', array( $this, 'gc_fetch_js_post_cb' ) );
-		add_action( 'wp_ajax_gc_wp_filter_mappings', array( $this, 'gc_wp_filter_mappings_cb' ) );
-		add_action( 'wp_ajax_gc_save_mapping_id', array( $this, 'gc_save_mapping_id_cb' ) );
-		add_action( 'wp_ajax_gc_dismiss_notice', array( $this, 'gc_dismiss_notice_cb' ) );
-		add_action( 'wp_ajax_gc_component_subfields', array( $this, 'gc_component_subfields_cb' ) );
+		add_action( 'wp_ajax_cwby_get_option_data', array( $this, 'cwby_get_option_data_cb' ) );
+		add_action( 'wp_ajax_cwby_sync_items', array( $this->sync_items, 'cwby_sync_items_cb' ) );
+		add_action( 'wp_ajax_cwby_pull_items', array( $this->sync_bulk, 'cwby_pull_items_cb' ) );
+		add_action( 'wp_ajax_cwby_push_items', array( $this->sync_bulk, 'cwby_push_items_cb' ) );
+		add_action( 'wp_ajax_cwby_get_posts', array( $this, 'cwby_get_posts_cb' ) );
+		add_action( 'wp_ajax_cwby_get_post_statuses', array( $this, 'cwby_get_post_statuses_cb' ) );
+		add_action( 'wp_ajax_set_cwby_status', array( $this, 'set_cwby_status_cb' ) );
+		add_action( 'wp_ajax_cwby_disconnect_post', array( $this, 'cwby_disconnect_post_cb' ) );
+		add_action( 'wp_ajax_cwby_fetch_js_post', array( $this, 'cwby_fetch_js_post_cb' ) );
+		add_action( 'wp_ajax_cwby_wp_filter_mappings', array( $this, 'cwby_wp_filter_mappings_cb' ) );
+		add_action( 'wp_ajax_cwby_save_mapping_id', array( $this, 'cwby_save_mapping_id_cb' ) );
+		add_action( 'wp_ajax_cwby_dismiss_notice', array( $this, 'cwby_dismiss_notice_cb' ) );
+		add_action( 'wp_ajax_cwby_component_subfields', array( $this, 'cwby_component_subfields_cb' ) );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function gc_get_option_data_cb() {
+	public function cwby_get_option_data_cb() {
 		if ( ! $this->_get_val( 'q' ) || ! $this->_get_val( 'column' ) ) {
 			wp_send_json_error();
 		}
@@ -118,7 +118,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function gc_get_posts_cb() {
+	public function cwby_get_posts_cb() {
 
 		$posts = $this->_post_val( 'posts' );
 		if ( empty( $posts ) || ! is_array( $posts ) ) {
@@ -171,7 +171,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function gc_get_post_statuses_cb() {
+	public function cwby_get_post_statuses_cb() {
 		$post_id = $this->_post_val( 'postId' );
 		if ( empty( $post_id ) || ! ( $post = get_post( $post_id ) ) ) {
 			wp_send_json_error( array( 'postId' => $post_id ) );
@@ -205,7 +205,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function set_gc_status_cb() {
+	public function set_cwby_status_cb() {
 		$post_data = $this->_post_val( 'post' );
 		$status    = absint( $this->_post_val( 'status' ) );
 		$nonce     = $this->_post_val( 'nonce' );
@@ -234,7 +234,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function gc_fetch_js_post_cb() {
+	public function cwby_fetch_js_post_cb() {
 
 		if ( $post_id = $this->_get_val( 'id' ) ) {
 			wp_send_json(
@@ -246,7 +246,7 @@ class Handlers extends Plugin_Base {
 		}
 	}
 
-	public function gc_disconnect_post_cb() {
+	public function cwby_disconnect_post_cb() {
 		$post_data = $this->_post_val( 'post' );
 		$nonce     = $this->_post_val( 'nonce' );
 
@@ -272,7 +272,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function gc_save_mapping_id_cb() {
+	public function cwby_save_mapping_id_cb() {
 		$post_data = $this->_post_val( 'post' );
 
 		if ( empty( $post_data['id'] ) || empty( $post_data['mapping'] ) || ! $this->verify_nonce( $this->_post_val( 'nonce' ) ) ) {
@@ -317,7 +317,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function gc_wp_filter_mappings_cb() {
+	public function cwby_wp_filter_mappings_cb() {
 		$post_data = $this->_post_val( 'post' );
 		$property  = $this->_post_val( 'property' );
 
@@ -386,7 +386,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function gc_dismiss_notice_cb() {
+	public function cwby_dismiss_notice_cb() {
 		if ( ! $this->_post_val( 'mapping' ) ) {
 			wp_send_json_error();
 		}
@@ -413,7 +413,7 @@ class Handlers extends Plugin_Base {
 	 * @since  3.2.20
 	 *
 	 */
-	public function gc_component_subfields_cb() {
+	public function cwby_component_subfields_cb() {
 		// If data not provided from FE, stop and return error
 		if ( ! $this->_post_val( 'subfields_data' ) ) {
 			wp_send_json_error();

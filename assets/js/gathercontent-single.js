@@ -1,5 +1,5 @@
 /**
- * Content Workflow (by Bynder) - v1.0.0 - 2024-06-05
+ * Content Workflow (by Bynder) - v1.0.0 - 2024-06-13
  *
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
@@ -117,7 +117,7 @@
 				searchAttributes: ['itemName', 'mappingName', 'post_title'],
 
 				url: function url() {
-					var url = window.ajaxurl + '?action=gc_fetch_js_post&id=' + this.get('id');
+			var url = window.ajaxurl + '?action=cwby_fetch_js_post&id=' + this.get('id');
 					if (this.get('uncached')) {
 						this.set('uncached', false);
 						url += '&flush_cache=force';
@@ -304,7 +304,7 @@
 					};
 
 					this.ajax({
-						action: 'gc_save_mapping_id'
+				action: 'cwby_save_mapping_id'
 					}, success, this.failMsg);
 				},
 
@@ -339,7 +339,7 @@
 					} else {
 
 						this.ajax({
-							action: 'gc_wp_filter_mappings',
+					action: 'cwby_wp_filter_mappings',
 							property: this.stepArgs.property
 						}, this.successHandler, this.failMsg);
 					}
@@ -505,7 +505,7 @@
 				asyncInit: function asyncInit() {
 					this.rendered = false;
 					$.post(window.ajaxurl, {
-						action: 'gc_get_post_statuses',
+				action: 'cwby_get_post_statuses',
 						postId: this.model.get('id'),
 						flush_cache: gc.queryargs.flush_cache ? 1 : 0
 					}, this.ajaxResponse.bind(this)).done(function () {
@@ -653,7 +653,7 @@
 					this.model.set('status', newStatus);
 
 					this.ajax({
-						action: 'set_gc_status',
+				action: 'set_cwby_status',
 						status: newStatusId
 					}, this.refreshData, function () {
 						this.model.set('status', oldStatus);
@@ -664,7 +664,7 @@
 					if (window.confirm(gc._sure.disconnect)) {
 						thisView.model.set('mappingStatus', 'starting');
 						this.ajax({
-							action: 'gc_disconnect_post',
+					action: 'cwby_disconnect_post',
 							data: thisView.model.toJSON(),
 							nonce: gc._edit_nonce
 						}, this.disconnectResponse, this.syncFail);
@@ -714,7 +714,7 @@
 
 				doSync: function doSync(direction, data) {
 					this.ajax({
-						action: 'gc_' + direction + '_items',
+				action: 'cwby_' + direction + '_items',
 						// action : 'glsjlfjs',
 						data: data || [this.model.toJSON()],
 						nonce: gc._edit_nonce

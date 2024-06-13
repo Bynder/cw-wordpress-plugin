@@ -86,7 +86,7 @@ module.exports = function (app, $, gc) {
 			this.model.set('status', newStatus);
 
 			this.ajax({
-				action: 'set_gc_status',
+				action : 'set_cwby_status',
 				status: newStatusId,
 			}, this.refreshData, function () {
 				this.model.set('status', oldStatus);
@@ -97,7 +97,7 @@ module.exports = function (app, $, gc) {
 			if (window.confirm(gc._sure.disconnect)) {
 				thisView.model.set('mappingStatus', 'starting');
 				this.ajax({
-					action: 'gc_disconnect_post',
+					action : 'cwby_disconnect_post',
 					data: thisView.model.toJSON(),
 					nonce: gc._edit_nonce,
 				}, this.disconnectResponse, this.syncFail);
@@ -148,7 +148,7 @@ module.exports = function (app, $, gc) {
 
 		doSync: function (direction, data) {
 			this.ajax({
-				action: 'gc_' + direction + '_items',
+				action : 'cwby_'+ direction +'_items',
 				// action : 'glsjlfjs',
 				data: data || [this.model.toJSON()],
 				nonce: gc._edit_nonce,
