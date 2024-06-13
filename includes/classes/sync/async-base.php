@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Sync;
 
 use GatherContent\Importer\General;
@@ -40,22 +41,22 @@ abstract class Async_Base extends \WP_Async_Task {
 	 * data at least has time to get into the object cache.
 	 */
 	public function launch_on_shutdown() {
-		if ( empty( $this->_body_data ) || ! isset($this->_body_data['mapping_id'])) {
+		if ( empty( $this->_body_data ) || ! isset( $this->_body_data['mapping_id'] ) ) {
 			return;
 		}
 
 		$mapping_post = get_post( $this->_body_data['mapping_id'] );
-		do_action($this->_body_data['action'], $mapping_post);
+		do_action( $this->_body_data['action'], $mapping_post );
 	}
 
 	/**
 	 * Prepare data for the asynchronous request
 	 *
-	 * @throws Exception If for any reason the request should not happen
-	 *
 	 * @param array $data An array of data sent to the hook
 	 *
 	 * @return array
+	 * @throws Exception If for any reason the request should not happen
+	 *
 	 */
 	protected function prepare_data( $data ) {
 		return array( 'mapping_id' => isset( $data[0]->ID ) ? $data[0]->ID : 0 );
@@ -79,15 +80,16 @@ abstract class Async_Base extends \WP_Async_Task {
 	/**
 	 * Run the given async task action
 	 *
+	 * @return bool Whether the do_action was called.
 	 * @since  3.1.4
 	 *
-	 * @return bool Whether the do_action was called.
 	 */
 	protected function run_given_action( $action_name ) {
 		$mapping_id = absint( $_POST['mapping_id'] );
 
 		if ( $mapping_id && ( $mapping_post = get_post( $mapping_id ) ) ) {
 			do_action( "wp_async_$action_name", $mapping_post );
+
 			return true;
 		}
 

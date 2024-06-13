@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Views;
 
 class View {
@@ -31,7 +32,7 @@ class View {
 	 * Render an HTML view with the given arguments and return the view's contents.
 	 *
 	 * @param string $template The template file name, relative to the includes/templates/ folder - with or without .php extension
-	 * @param array  $args     An array of arguments to extract as variables into the template
+	 * @param array $args An array of arguments to extract as variables into the template
 	 *
 	 * @return void
 	 */
@@ -47,11 +48,11 @@ class View {
 	/**
 	 * Loads the view and outputs it
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  boolean $echo Whether to output or return the template
+	 * @param boolean $echo Whether to output or return the template
 	 *
 	 * @return string        Rendered template
+	 * @since  3.0.0
+	 *
 	 */
 	public function load( $echo = true ) {
 
@@ -107,13 +108,13 @@ class View {
 	/**
 	 * Output one of the $args values.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $arg     The $args key.
-	 * @param  mixed  $esc_cb  An escaping function callback.
-	 * @param  mixed  $default Mixed value.
+	 * @param string $arg The $args key.
+	 * @param mixed $esc_cb An escaping function callback.
+	 * @param mixed $default Mixed value.
 	 *
 	 * @return mixed            Value or default.
+	 * @since  3.0.0
+	 *
 	 */
 	public function output( $arg, $esc_cb = '', $default = null ) {
 		$val = $this->get( $arg, $default );

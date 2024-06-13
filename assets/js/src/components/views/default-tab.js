@@ -1,63 +1,63 @@
-module.exports = function( app, table_headings ) {
+module.exports = function (app, table_headings) {
 	return app.views.tab.extend({
-		events : {
-			'change select'          : 'changeDefault',
-			'click .gc-reveal-items' : 'toggleExpanded'
+		events: {
+			'change select': 'changeDefault',
+			'click .gc-reveal-items': 'toggleExpanded'
 		},
 
-		defaultTabTemplate     : wp.template( 'gc-mapping-defaults-tab' ),
-		statusMappingsTemplate : wp.template( 'gc-mapping-defaults-tab-status-mappings' ),
+		defaultTabTemplate: wp.template('gc-mapping-defaults-tab'),
+		statusMappingsTemplate: wp.template('gc-mapping-defaults-tab-status-mappings'),
 
-		changeDefault: function( evt ) {
-			var $this = jQuery( evt.target );
+		changeDefault: function (evt) {
+			var $this = jQuery(evt.target);
 			var value = $this.val();
-			var column = $this.data( 'column' );
+			var column = $this.data('column');
 
-			if ( value ) {
-				if ( $this.data( 'select2' ) ) {
-					var data = $this.select2( 'data' )[0];
-					if ( data.text ) {
-						this.model.set( 'select2:'+ column +':'+ value, data.text );
+			if (value) {
+				if ($this.data('select2')) {
+					var data = $this.select2('data')[0];
+					if (data.text) {
+						this.model.set('select2:' + column + ':' + value, data.text);
 					}
 				}
-				this.model.set( column, value );
+				this.model.set(column, value);
 			}
 		},
 
-		render : function() {
+		render: function () {
 			var json = this.model.toJSON();
 
-			this.$el.html( this.htmlWrap( json ) );
-			this.$el.find( 'tbody' ).first().html( this.defaultTabTemplate( json ) );
-			this.$el.find( '#gc-status-mappings tbody' ).html( this.statusMappingsTemplate( json ) );
+			this.$el.html(this.htmlWrap(json));
+			this.$el.find('tbody').first().html(this.defaultTabTemplate(json));
+			this.$el.find('#gc-status-mappings tbody').html(this.statusMappingsTemplate(json));
 
 			this.renderSelect2();
 
 			return this;
 		},
 
-		htmlWrap: function( json ) {
-			var html = this.template( json );
+		htmlWrap: function (json) {
+			var html = this.template(json);
 
 			// Only add the GatherContent status => WP status table if initialized.
-			if ( ! this.model.get( 'initial' ) ) {
+			if (!this.model.get('initial')) {
 				json.table_id = 'gc-status-mappings';
 				delete json.label;
 				json.col_headings = table_headings.status;
 
 				html += '<br>';
-				html += this.template( json );
+				html += this.template(json);
 			}
 
 			return html;
 		},
 
-		select2Args: function( data ) {
+		select2Args: function (data) {
 			var args = {};
 
-			switch ( data.column ) {
+			switch (data.column) {
 				case 'gc_status':
-					args = app.views.statusSelect2.prototype.select2Args.call( this, data );
+					args = app.views.statusSelect2.prototype.select2Args.call(this, data);
 					break;
 
 				case 'post_author':
@@ -65,7 +65,7 @@ module.exports = function( app, table_headings ) {
 					args.minimumInputLength = 2;
 					args.ajax = {
 						url: data.url,
-						data: function ( params ) {
+						data: function (params) {
 							return {
 								q: params.term,
 								column: data.column

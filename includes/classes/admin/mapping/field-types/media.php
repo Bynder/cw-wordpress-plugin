@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Mapping\Field_Types;
 
 use GatherContent\Importer\Views\View;
@@ -38,10 +39,11 @@ class Media extends Base implements Type {
 
 		?>
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type ) { #>
-			<select class="wp-type-value-select <?php $this->e_type_id(); ?>" name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
-				<?php $this->underscore_options( $options ); ?>
-				<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
-			</select>
+		<select class="wp-type-value-select <?php $this->e_type_id(); ?>"
+				name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
+			<?php $this->underscore_options( $options ); ?>
+			<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
+		</select>
 		<# } #>
 		<?php
 	}

@@ -90,7 +90,7 @@ class Database extends Base implements Type {
 			<# if ( '" . $value . "' === (data.field_value ? data.field_value : '').split('.')[0] ) { #>selected='selected'<# } #>
 		";
 
-		echo '<option ' . esc_attr($fieldValueJs) . ' value="' . esc_attr($value) . '">' . esc_html($label) . '</option>';
+		echo '<option ' . esc_attr($fieldValueJs ) . ' value="' . esc_attr($value) . '">' . esc_html($label) . '</option>';
 	}
 
 	/**
