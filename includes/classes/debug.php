@@ -320,7 +320,7 @@ class Debug extends Base {
 			}
 		}
 
-		wp_die( '<xmp>' . __LINE__ . ') $options: ' . esc_html( print_r( $options, true ) ) . '</xmp>' . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
+		wp_die( '<xmp>' . __LINE__ . ') $options: <pre>' . esc_html( print_r( $options, true ) ) . '</pre></xmp>' . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 	}
 
 	/**
