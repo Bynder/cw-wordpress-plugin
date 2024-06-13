@@ -50,7 +50,7 @@ module.exports = function( app, $, gc ) {
 			};
 
 			this.ajax( {
-				action : 'gc_save_mapping_id',
+				action : 'cwby_save_mapping_id',
 			}, success, this.failMsg );
 		},
 
