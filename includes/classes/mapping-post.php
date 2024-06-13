@@ -15,7 +15,8 @@ use WP_Post;
  *
  * @since 3.0.0
  */
-class Mapping_Post_Exception extends Exception {}
+class Mapping_Post_Exception extends Exception {
+}
 
 /**
  * A wrapper for get_post which bundles a lot of mapping-specific functionality.
@@ -48,14 +49,14 @@ class Mapping_Post extends Base {
 	/**
 	 * Get a Mapping_Post object instance by Post ID/object
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  WP_Post|int $post        WP_Post object or ID.
-	 * @param  bool        $throw_error Request to throw an error on failure.
-	 *
-	 * @throws Exception If requesting to throw an error.
+	 * @param WP_Post|int $post WP_Post object or ID.
+	 * @param bool $throw_error Request to throw an error on failure.
 	 *
 	 * @return Mapping_Post|false Will return false if $post is not found or not a template-mapping post.
+	 * @throws Exception If requesting to throw an error.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	public static function get( $post, $throw_error = false ) {
 		if ( $post instanceof Mapping_Post ) {
@@ -76,6 +77,7 @@ class Mapping_Post extends Base {
 			if ( $throw_error ) {
 				throw $e;
 			}
+
 			return false;
 		}
 	}
@@ -83,13 +85,13 @@ class Mapping_Post extends Base {
 	/**
 	 * Get the full post object.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  mixed $post Post id or object.
-	 *
-	 * @throws Mapping_Post_Exception If post could not be retrieved.
+	 * @param mixed $post Post id or object.
 	 *
 	 * @return WP_Post Post object.
+	 * @throws Mapping_Post_Exception If post could not be retrieved.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	protected static function get_post( $post ) {
 
@@ -109,9 +111,10 @@ class Mapping_Post extends Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param WP_Post $post Post object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param WP_Post $post Post object.
 	 */
 	protected function __construct( WP_Post $post ) {
 
@@ -122,11 +125,11 @@ class Mapping_Post extends Base {
 	/**
 	 * Initiate the data property from the post content.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  WP_Post $post Post object.
+	 * @param WP_Post $post Post object.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	protected function init_data( $post ) {
 
@@ -150,12 +153,12 @@ class Mapping_Post extends Base {
 	/**
 	 * Get value from mapping data.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $arg     The arg key.
-	 * @param  string $sub_arg Optional sub-arg key.
+	 * @param string $arg The arg key.
+	 * @param string $sub_arg Optional sub-arg key.
 	 *
 	 * @return mixed           Result of lookup.
+	 * @since  3.0.0
+	 *
 	 */
 	public function data( $arg = null, $sub_arg = null ) {
 		if ( null === $arg ) {
@@ -184,11 +187,11 @@ class Mapping_Post extends Base {
 	/**
 	 * Get the corresponding WP post status based on the item status id.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  object $item Item object.
+	 * @param object $item Item object.
 	 *
 	 * @return mixed        WP post status or false.
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_wp_status_for_item( $item ) {
 		$status_id = isset( $item->status_id ) ? $item->status_id : $item;
@@ -204,11 +207,11 @@ class Mapping_Post extends Base {
 	/**
 	 * Get the status which the item should transition to.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  object $item Item object.
+	 * @param object $item Item object.
 	 *
 	 * @return mixed        New item status or false.
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_item_new_status( $item ) {
 		$status_id = isset( $item->status_id ) ? $item->status_id : $item;
@@ -217,15 +220,16 @@ class Mapping_Post extends Base {
 				return absint( $gc_status['after'] );
 			}
 		}
+
 		return false;
 	}
 
 	/**
 	 * Get the mapping edit link.
 	 *
+	 * @return string
 	 * @since  3.0.0
 	 *
-	 * @return string
 	 */
 	public function get_edit_post_link() {
 		return get_edit_post_link( $this->post->ID );
@@ -234,13 +238,13 @@ class Mapping_Post extends Base {
 	/**
 	 * Wrapper for update_post_meta.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param string $meta_key   Metadata key.
-	 * @param mixed  $meta_value Metadata value. Must be serializable if non-scalar.
+	 * @param string $meta_key Metadata key.
+	 * @param mixed $meta_value Metadata value. Must be serializable if non-scalar.
 	 *
 	 * @return int|bool Meta ID if the key didn't exist, true on successful update,
 	 *                  false on failure.
+	 * @since  3.0.0
+	 *
 	 */
 	public function update_meta( $meta_key, $meta_value ) {
 
@@ -252,6 +256,7 @@ class Mapping_Post extends Base {
 	 *
 	 * @param string $meta_key The meta key to retrieve. By default, returns
 	 *                         data for all keys. Default empty.
+	 *
 	 * @return mixed Will be an array if $single is false. Will be value of meta data
 	 *               field if $single is true.
 	 */
@@ -273,9 +278,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the _gc_template meta value.
 	 *
+	 * @return mixed
 	 * @since  3.0.0
 	 *
-	 * @return mixed
 	 */
 	public function get_template() {
 		return $this->get_meta( '_gc_template' );
@@ -284,9 +289,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the _gc_project meta value.
 	 *
+	 * @return mixed
 	 * @since  3.0.0
 	 *
-	 * @return mixed
 	 */
 	public function get_project() {
 		return $this->get_meta( '_gc_project' );
@@ -295,9 +300,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the _gc_account_id meta value.
 	 *
+	 * @return mixed
 	 * @since  3.0.0
 	 *
-	 * @return mixed
 	 */
 	public function get_account_id() {
 		return $this->get_meta( '_gc_account_id' );
@@ -306,9 +311,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the _gc_account meta value.
 	 *
+	 * @return mixed
 	 * @since  3.0.0
 	 *
-	 * @return mixed
 	 */
 	public function get_account_slug() {
 		return $this->get_meta( '_gc_account' );
@@ -317,9 +322,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the items to pull.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	public function get_items_to_pull() {
 
@@ -329,12 +334,12 @@ class Mapping_Post extends Base {
 	/**
 	 * Updates the items to pull.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $items Array of items to store to meta.
+	 * @param array $items Array of items to store to meta.
 	 *
 	 * @return int|bool Meta ID if the key didn't exist, true on successful update,
 	 *                  false on failure.
+	 * @since  3.0.0
+	 *
 	 */
 	public function update_items_to_pull( $items ) {
 
@@ -344,9 +349,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the percent of items pulled.
 	 *
+	 * @return int
 	 * @since  3.0.0
 	 *
-	 * @return int
 	 */
 	public function get_pull_percent() {
 		return $this->get_sync_percent();
@@ -355,9 +360,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the items to push.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	public function get_items_to_push() {
 		return $this->get_items_to_sync( 'push' );
@@ -366,12 +371,12 @@ class Mapping_Post extends Base {
 	/**
 	 * Updates the items to pull.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $items Array of items to store to meta.
+	 * @param array $items Array of items to store to meta.
 	 *
 	 * @return int|bool Meta ID if the key didn't exist, true on successful update,
 	 *                  false on failure.
+	 * @since  3.0.0
+	 *
 	 */
 	public function update_items_to_push( $items ) {
 		return $this->update_items_to_sync( $items, 'push' );
@@ -380,9 +385,9 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the percent of items pushed.
 	 *
+	 * @return int
 	 * @since  3.0.0
 	 *
-	 * @return int
 	 */
 	public function get_push_percent() {
 		return $this->get_sync_percent( 'push' );
@@ -391,27 +396,28 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the items to sync, based on $direction
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $direction Push or pull.
+	 * @param string $direction Push or pull.
 	 *
 	 * @return array
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_items_to_sync( $direction = 'pull' ) {
 		$items = $this->get_meta( "_gc_{$direction}_items" );
+
 		return is_array( $items ) ? $items : array();
 	}
 
 	/**
 	 * Updates the items to sync, based on $direction.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array  $items Array of items to store to meta.
-	 * @param  string $direction Push or pull.
+	 * @param array $items Array of items to store to meta.
+	 * @param string $direction Push or pull.
 	 *
 	 * @return int|bool Meta ID if the key didn't exist, true on successful update,
 	 *                  false on failure.
+	 * @since  3.0.0
+	 *
 	 */
 	public function update_items_to_sync( $items, $direction = 'pull' ) {
 
@@ -426,11 +432,11 @@ class Mapping_Post extends Base {
 	/**
 	 * Gets the percent of items synced.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $direction Push or pull.
+	 * @param string $direction Push or pull.
 	 *
 	 * @return int
+	 * @since  3.0.0
+	 *
 	 */
 	public function get_sync_percent( $direction = 'pull' ) {
 		$percent = 1;
@@ -456,9 +462,10 @@ class Mapping_Post extends Base {
 	/**
 	 * Magic getter for our object.
 	 *
-	 * @param  string $property The class property to get.
-	 * @throws Mapping_Post_Exception Throws an exception if the field is invalid.
+	 * @param string $property The class property to get.
+	 *
 	 * @return mixed
+	 * @throws Mapping_Post_Exception Throws an exception if the field is invalid.
 	 */
 	public function __get( $property ) {
 
@@ -482,6 +489,7 @@ class Mapping_Post extends Base {
 	 * Magic isset checker for our object.
 	 *
 	 * @param string $property The class property to check if isset.
+	 *
 	 * @return bool
 	 */
 	public function __isset( $property ) {

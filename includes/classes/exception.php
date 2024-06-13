@@ -24,11 +24,12 @@ class Exception extends \Exception {
 	/**
 	 * Constructor. Handles assigning the data property.
 	 *
+	 * @param string $message Exception message.
+	 * @param int $code Exception code.
+	 * @param mixed $data Additional data.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param string $message Exception message.
-	 * @param int    $code    Exception code.
-	 * @param mixed  $data    Additional data.
 	 */
 	public function __construct( $message, $code, $data = null ) {
 		parent::__construct( $message, $code );
@@ -40,9 +41,9 @@ class Exception extends \Exception {
 	/**
 	 * Fetch the Exception data.
 	 *
+	 * @return mixed Exception data
 	 * @since  3.0.0
 	 *
-	 * @return mixed Exception data
 	 */
 	public function get_data() {
 		return $this->data;

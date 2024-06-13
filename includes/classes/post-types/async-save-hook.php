@@ -1,8 +1,9 @@
 <?php
+
 namespace GatherContent\Importer\Post_Types;
 
 class Async_Save_Hook extends \WP_Async_Task {
-	protected $action    = 'save_post';
+	protected $action = 'save_post';
 	protected $post_type = 'save_post';
 
 	public function __construct( $post_type ) {
@@ -13,11 +14,11 @@ class Async_Save_Hook extends \WP_Async_Task {
 	/**
 	 * Prepare data for the asynchronous request
 	 *
-	 * @throws Exception If for any reason the request should not happen
-	 *
 	 * @param array $data An array of data sent to the hook
 	 *
 	 * @return array
+	 * @throws Exception If for any reason the request should not happen
+	 *
 	 */
 	protected function prepare_data( $data ) {
 		$post_id = $data[0];
@@ -25,6 +26,7 @@ class Async_Save_Hook extends \WP_Async_Task {
 		if ( $this->post_type !== $post->post_type ) {
 			throw new \Exception( 'We only want async tasks for: ' . $this->post_type );
 		}
+
 		return array( 'post_id' => $post_id );
 	}
 

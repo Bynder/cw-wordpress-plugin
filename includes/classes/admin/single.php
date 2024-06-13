@@ -37,9 +37,9 @@ class Single extends Post_Base {
 	/**
 	 * The page-specific script ID to enqueue.
 	 *
+	 * @return string
 	 * @since  3.0.0
 	 *
-	 * @return string
 	 */
 	protected function script_id() {
 		return 'gathercontent-single';
@@ -48,9 +48,9 @@ class Single extends Post_Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		if ( ! is_admin() ) {
@@ -64,7 +64,7 @@ class Single extends Post_Base {
 			$pagenow
 			&& ! empty( $this->post_types )
 			&& 'post.php' === $pagenow
-			) {
+		) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'ui' ) );
 		}
 	}
@@ -72,9 +72,9 @@ class Single extends Post_Base {
 	/**
 	 * The Bulk Edit page UI callback.
 	 *
+	 * @return void|bool
 	 * @since  3.0.0
 	 *
-	 * @return void|bool
 	 */
 	public function ui_page() {
 		$screen = get_current_screen();
@@ -90,17 +90,20 @@ class Single extends Post_Base {
 
 		$this->enqueue->admin_enqueue_style();
 		$this->enqueue->admin_enqueue_script();
-		add_meta_box( 'gc-manage', 'Content Workflow <span class="dashicons dashicons-randomize"></span>', array( $this, 'meta_box' ), $screen, 'side', 'high' );
+		add_meta_box( 'gc-manage', 'Content Workflow <span class="dashicons dashicons-randomize"></span>', array(
+			$this,
+			'meta_box'
+		), $screen, 'side', 'high' );
 	}
 
 	/**
 	 * Metabox callback for outputting the metabox contents.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  object $post Post object.
+	 * @param object $post Post object.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	public function meta_box( $post ) {
 		$object                = get_post_type_object( $post->post_type );
@@ -122,9 +125,9 @@ class Single extends Post_Base {
 	/**
 	 * Gets the underscore templates array.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	protected function get_underscore_templates() {
 		return array(
@@ -144,9 +147,9 @@ class Single extends Post_Base {
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	protected function get_localize_data() {
 		$data = parent::get_localize_data();

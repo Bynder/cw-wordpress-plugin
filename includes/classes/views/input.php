@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Views;
 
 class Input extends Form_Element {

@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Ajax;
 
 use GatherContent\Importer\Base as Plugin_Base;

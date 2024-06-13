@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer;
 
 class General extends Base {
@@ -87,8 +88,8 @@ class General extends Base {
 	/**
 	 * Creates or returns an instance of this class.
 	 *
-	 * @since  3.0.0
 	 * @return General A single instance of this class.
+	 * @since  3.0.0
 	 */
 	public static function get_instance() {
 		if ( null === self::$single_instance ) {
@@ -132,9 +133,9 @@ class General extends Base {
 	/**
 	 * Initiate plugins_loaded hooks.
 	 *
+	 * @return void
 	 * @since  3.0.2
 	 *
-	 * @return void
 	 */
 	public static function init_plugins_loaded_hooks() {
 		Sync\Pull::init_plugins_loaded_hooks();
@@ -143,9 +144,9 @@ class General extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		$this->admin->init_hooks();
@@ -173,6 +174,7 @@ class General extends Base {
 	 * Magic getter for our object, to make protected properties accessible.
 	 *
 	 * @param string $field
+	 *
 	 * @return mixed
 	 */
 	public function __get( $field ) {

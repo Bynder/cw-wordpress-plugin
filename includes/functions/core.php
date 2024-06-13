@@ -10,10 +10,11 @@ namespace GatherContent\Importer;
 /**
  * Will look for Some_Class\Name in /includes/classes/some-class/name.php
  *
+ * @param string $class_name Class name.
+ *
+ * @return void
  * @since  3.0.0
  *
- * @param  string $class_name Class name.
- * @return void
  */
 function autoload( $class_name ) {
 
@@ -50,19 +51,19 @@ function autoload( $class_name ) {
 /**
  * Default setup routine
  *
- * @since  3.0.0
- *
+ * @return void
  * @uses add_action()
  * @uses do_action()
  *
- * @return void
+ * @since  3.0.0
+ *
  */
 function setup() {
-	$n = function( $function ) {
+	$n = function ( $function ) {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	spl_autoload_register($n( 'autoload' ));
+	spl_autoload_register( $n( 'autoload' ) );
 
 	include_once GATHERCONTENT_PATH . 'vendor/autoload.php';
 
@@ -79,11 +80,11 @@ function setup() {
 /**
  * Initializes the plugin and fires an action other plugins can hook into.
  *
- * @since  3.0.0
- *
+ * @return void
  * @uses do_action()
  *
- * @return void
+ * @since  3.0.0
+ *
  */
 function init() {
 
@@ -96,12 +97,12 @@ function init() {
 /**
  * Activate the plugin
  *
- * @since  3.0.0
- *
+ * @return void
  * @uses init()
  * @uses flush_rewrite_rules()
  *
- * @return void
+ * @since  3.0.0
+ *
  */
 function activate() {
 	// First load the init scripts in case any rewrite functionality is being loaded.
@@ -114,9 +115,9 @@ function activate() {
  *
  * Uninstall routines should be in uninstall.php
  *
+ * @return void
  * @since  3.0.0
  *
- * @return void
  */
 function deactivate() {
 }

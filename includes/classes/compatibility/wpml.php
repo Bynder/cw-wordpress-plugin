@@ -21,14 +21,17 @@ class WPML extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.1.7
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		add_filter( 'gc_new_wp_post_data', array( $this, 'maybe_transform_meta_for_wpml' ), 10, 2 );
 		add_filter( 'gc_update_wp_post_data', array( $this, 'maybe_transform_meta_for_wpml' ), 10, 2 );
-		add_filter( 'gc_config_taxonomy_field_value_updated', array( $this, 'maybe_update_taxonomy_item_value_from_wpml' ), 10, 4 );
+		add_filter( 'gc_config_taxonomy_field_value_updated', array(
+			$this,
+			'maybe_update_taxonomy_item_value_from_wpml'
+		), 10, 4 );
 	}
 
 	/**
@@ -36,12 +39,12 @@ class WPML extends Base {
 	 *
 	 * If the GC item uses the foreign language term name, then this will need to be unhooked.
 	 *
-	 * @since  3.1.7
-	 *
-	 * @param  array $post_data The post data to import/update.
-	 * @param  Pull  $pull      The Pull object.
+	 * @param array $post_data The post data to import/update.
+	 * @param Pull $pull The Pull object.
 	 *
 	 * @return array            The possibly modified post data array.
+	 * @since  3.1.7
+	 *
 	 */
 	public function maybe_transform_meta_for_wpml( $post_data, Pull $pull ) {
 		if (
@@ -84,14 +87,14 @@ class WPML extends Base {
 	 *
 	 * If the GC item uses the foreign language term name, then this will need to be unhooked.
 	 *
-	 * @since  3.1.7
-	 *
-	 * @param  bool   $updated  Whether this value was updated.
-	 * @param  string $taxonomy The taxonomy
-	 * @param  array  $terms    The array of taxonomy terms for this post.
-	 * @param  Push   $push     The Push object
+	 * @param bool $updated Whether this value was updated.
+	 * @param string $taxonomy The taxonomy
+	 * @param array $terms The array of taxonomy terms for this post.
+	 * @param Push $push The Push object
 	 *
 	 * @return bool             Whether this value was updated.
+	 * @since  3.1.7
+	 *
 	 */
 	public function maybe_update_taxonomy_item_value_from_wpml( $updated, $taxonomy, $terms, Push $push ) {
 		if (

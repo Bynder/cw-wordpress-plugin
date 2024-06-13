@@ -2,8 +2,10 @@
 <div class="wrap gc-admin-wrap">
 	<h2><?php _e( 'System Information', 'content-workflow-by-bynder' ); ?></h2>
 	<br/>
-	<form action="<?php echo esc_url( admin_url( 'admin.php?page=gathercontent-import-support' ) ); ?>" method="post" dir="ltr">
-		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow-by-bynder' ); ?>">
+	<form action="<?php echo esc_url( admin_url( 'admin.php?page=gathercontent-import-support' ) ); ?>" method="post"
+		  dir="ltr">
+		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="gc-sysinfo"
+				  title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'content-workflow-by-bynder' ); ?>">
 ### Begin System Info ###
 
 ## Please include this information when getting in touch with the Content Workflow (by Bynder) support team ##
@@ -18,11 +20,11 @@ Plugin Version:           <?php echo $this->get( 'gc_version' ), "\n"; ?>
 WordPress Version:        <?php echo $this->get( 'wp_version' ), "\n"; ?>
 Permalink Structure:      <?php echo $this->get( 'permalink_structure' ), "\n"; ?>
 Active Theme:             <?php echo $this->get( 'theme' ), "\n"; ?>
-<?php if ( $this->get( 'host' ) ) : ?>
-Host:                     <?php echo $this->get( 'host' ), "\n"; ?>
-<?php endif; ?>
+			<?php if ( $this->get( 'host' ) ) : ?>
+				Host:                     <?php echo $this->get( 'host' ), "\n"; ?>
+			<?php endif; ?>
 
-<?php $this->output( 'browser' ); ?>
+			<?php $this->output( 'browser' ); ?>
 
 PHP Version:              <?php echo $this->get( 'php_version' ), "\n"; ?>
 MySQL Version:            <?php echo $this->get( 'mysql_version' ), "\n"; ?>
@@ -64,20 +66,23 @@ SUHOSIN:                  <?php echo $this->get( 'suhosin' ), "\n"; ?>
 ACTIVE PLUGINS:
 
 <?php $this->output( 'active_plugins' ); ?>
-<?php if ( $this->get( 'network_active_plugins' ) ) : ?>
+			<?php if ( $this->get( 'network_active_plugins' ) ) : ?>
 
-NETWORK ACTIVE PLUGINS:
+				NETWORK ACTIVE PLUGINS:
 
-	<?php $this->output( 'network_active_plugins' ); ?>
-<?php endif; ?>
+				<?php $this->output( 'network_active_plugins' ); ?>
+			<?php endif; ?>
 
 Plugin Options:           <?php echo $this->get( 'gc_options' ), "\n"; ?>
-<?php do_action( 'gc_system_info_after' ); ?>
+			<?php do_action( 'gc_system_info_after' ); ?>
 
 ### End System Info ###</textarea>
 		<p><strong><?php _e( 'For more information:', 'content-workflow-by-bynder' ); ?></strong></p>
-		<p><a href="https://gathercontent.com/support/wordpress-integration/" target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration', 'content-workflow-by-bynder' ); ?></a></p>
-		<p><a href="https://wordpress.org/support/plugin/gathercontent-import" target="_blank"><?php _e( 'WordPress Plugin Support Forums', 'content-workflow-by-bynder' ); ?></a></p>
+		<p><a href="https://gathercontent.com/support/wordpress-integration/"
+			  target="_blank"><?php _e( 'Support for Content Workflow WordPress Integration', 'content-workflow-by-bynder' ); ?></a>
+		</p>
+		<p><a href="https://wordpress.org/support/plugin/gathercontent-import"
+			  target="_blank"><?php _e( 'WordPress Plugin Support Forums', 'content-workflow-by-bynder' ); ?></a></p>
 
 		<p><?php _e( '<strong>This information contains potentially senstive data.</strong><br>Please be careful with where you post it. Do not post it in the WordPress support forums.', 'content-workflow-by-bynder' ); ?></p>
 		<p class="submit">
