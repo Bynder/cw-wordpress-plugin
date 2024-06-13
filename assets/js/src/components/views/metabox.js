@@ -97,7 +97,7 @@ module.exports = function( app, $, gc ) {
 			if ( window.confirm( gc._sure.disconnect ) ) {
 				thisView.model.set( 'mappingStatus', 'starting' );
 				this.ajax( {
-					action : 'gc_disconnect_post',
+					action : 'cwby_disconnect_post',
 					data   : thisView.model.toJSON(),
 					nonce  : gc._edit_nonce,
 				}, this.disconnectResponse, this.syncFail );

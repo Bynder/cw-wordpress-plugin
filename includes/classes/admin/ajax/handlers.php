@@ -71,7 +71,7 @@ class Handlers extends Plugin_Base {
 		add_action( 'wp_ajax_cwby_get_posts', array( $this, 'cwby_get_posts_cb' ) );
 		add_action( 'wp_ajax_cwby_get_post_statuses', array( $this, 'cwby_get_post_statuses_cb' ) );
 		add_action( 'wp_ajax_set_cwby_status', array( $this, 'set_cwby_status_cb' ) );
-		add_action( 'wp_ajax_gc_disconnect_post', array( $this, 'gc_disconnect_post_cb' ) );
+		add_action( 'wp_ajax_cwby_disconnect_post', array( $this, 'cwby_disconnect_post_cb' ) );
 		add_action( 'wp_ajax_gc_fetch_js_post', array( $this, 'gc_fetch_js_post_cb' ) );
 		add_action( 'wp_ajax_gc_wp_filter_mappings', array( $this, 'gc_wp_filter_mappings_cb' ) );
 		add_action( 'wp_ajax_gc_save_mapping_id', array( $this, 'gc_save_mapping_id_cb' ) );
@@ -245,7 +245,7 @@ class Handlers extends Plugin_Base {
 		}
 	}
 
-	public function gc_disconnect_post_cb() {
+	public function cwby_disconnect_post_cb() {
 		$post_data = $this->_post_val( 'post' );
 		$nonce     = $this->_post_val( 'nonce' );
 
