@@ -296,12 +296,13 @@ class Debug extends Base {
 	public function handle_stuck_statuses( $settings, $back_button ) {
 		global $wpdb;
 
-		$options = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT `option_name` FROM %s WHERE `option_name` LIKE ('gc_pull_item_%%') OR `option_name` LIKE ('gc_push_item_%%');",
-				$wpdb->options
-			)
-		);
+		/**
+		 * Ignoring the prepared rule as it doesn't work with a table name as a parameter.
+		 * The table name is a WordPress core table and is not user input.
+		 */
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$sql     = "SELECT `option_name` FROM `$wpdb->options` WHERE `option_name` LIKE ('gc_pull_item_%') OR `option_name` LIKE ('gc_push_item_%');";
+		$options = $wpdb->get_results( $sql );
 
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $key => $option ) {
