@@ -816,8 +816,6 @@ class Pull extends Base {
 											global $wp_filesystem;
 											$wp_filesystem->put_contents( $file, $image_data );
 
-											// file_put_contents( $file, $image_data );
-
 											$wp_filetype = wp_check_filetype( $filename, null );
 
 											$attachment = array(
