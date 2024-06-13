@@ -29,9 +29,9 @@ class Bulk extends Post_Base {
 	/**
 	 * The page-specific script ID to enqueue.
 	 *
+	 * @return string
 	 * @since  3.0.0
 	 *
-	 * @return string
 	 */
 	protected function script_id() {
 		return 'gathercontent-general';
@@ -40,9 +40,9 @@ class Bulk extends Post_Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		if ( ! is_admin() ) {
@@ -56,7 +56,7 @@ class Bulk extends Post_Base {
 			$pagenow
 			&& ! empty( $this->post_types )
 			&& 'edit.php' === $pagenow
-			) {
+		) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'ui' ) );
 		}
 
@@ -74,9 +74,9 @@ class Bulk extends Post_Base {
 	/**
 	 * The Bulk Edit page UI callback.
 	 *
+	 * @return void|bool
 	 * @since  3.0.0
 	 *
-	 * @return void|bool
 	 */
 	public function ui_page() {
 		$screen = get_current_screen();
@@ -103,11 +103,11 @@ class Bulk extends Post_Base {
 	/**
 	 * Hooks the column callbacks for the current screen's post-type.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $post_type Current screen's post-type.
+	 * @param string $post_type Current screen's post-type.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	public function hook_columns( $post_type ) {
 		add_filter( "manage_{$post_type}_posts_columns", array( $this, 'register_column_headers' ), 8 );
@@ -121,14 +121,14 @@ class Bulk extends Post_Base {
 	/**
 	 * Register the GC column header.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  array $columns Array of column header names.
+	 * @param array $columns Array of column header names.
 	 *
 	 * @return array
+	 * @since 3.0.0
+	 *
 	 */
 	public function register_column_headers( $columns ) {
-		$columns['gathercontent'] = '<div title="' . __( 'GatherContent Item Status', 'gathercontent-importer' ) . '" class="gc-column-header"><span class="gc-logo-column"><img src="' . GATHERCONTENT_URL . 'images/logo.svg" alt="GatherContent" /></span>' . _x( 'Status', 'Content Workflow Item Status', 'gathercontent-importer' ) . '</div>';
+		$columns['gathercontent'] = '<div title="' . __( 'GatherContent Item Status', 'content-workflow-by-bynder' ) . '" class="gc-column-header"><span class="gc-logo-column"><img src="' . GATHERCONTENT_URL . 'images/logo.svg" alt="GatherContent" /></span>' . _x( 'Status', 'Content Workflow Item Status', 'content-workflow-by-bynder' ) . '</div>';
 
 		return $columns;
 	}
@@ -136,12 +136,12 @@ class Bulk extends Post_Base {
 	/**
 	 * The GC field column display output.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $column_name Column name.
-	 * @param  int    $post_id     Post ID.
+	 * @param string $column_name Column name.
+	 * @param int $post_id Post ID.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	public function column_display( $column_name, $post_id ) {
 
@@ -170,13 +170,13 @@ class Bulk extends Post_Base {
 	/**
 	 * Handles the column view if it's being ajax-loaded.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $post_id    Post ID.
-	 * @param  int $item_id    Item id.
-	 * @param  int $mapping_id Mapping id.
+	 * @param int $post_id Post ID.
+	 * @param int $item_id Item id.
+	 * @param int $mapping_id Mapping id.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	protected function ajax_view( $post_id, $item_id, $mapping_id ) {
 		$status_name = $status_color = $status_id = '';
@@ -208,12 +208,12 @@ class Bulk extends Post_Base {
 	/**
 	 * The GC field quick-edit display output.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $column_name Column name.
-	 * @param  string $post_type   Post type.
+	 * @param string $column_name Column name.
+	 * @param string $post_type Post type.
 	 *
 	 * @return void
+	 * @since 3.0.0
+	 *
 	 */
 	public function quick_edit_box( $column_name, $post_type ) {
 		if ( 'gathercontent' !== $column_name ) {
@@ -226,12 +226,12 @@ class Bulk extends Post_Base {
 	/**
 	 * The GC field bulk-edit display output.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $column_name Column name.
-	 * @param  string $post_type   Post type.
+	 * @param string $column_name Column name.
+	 * @param string $post_type Post type.
 	 *
 	 * @return void
+	 * @since 3.0.0
+	 *
 	 */
 	public function bulk_edit_box( $column_name, $post_type ) {
 		if ( 'gathercontent' !== $column_name ) {
@@ -249,10 +249,11 @@ class Bulk extends Post_Base {
 	/**
 	 * Sets the GatherContent status if being requested via quick-edit box.
 	 *
+	 * @param int $post_id Post ID.
+	 * @param object $post Post object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param int    $post_id Post ID.
-	 * @param object $post    Post object.
 	 */
 	public function set_cwby_status( $post_id, $post ) {
 		if (
@@ -275,9 +276,9 @@ class Bulk extends Post_Base {
 	/**
 	 * Gets the underscore templates array.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	protected function get_underscore_templates() {
 		if ( empty( $this->posts ) ) {
@@ -292,23 +293,23 @@ class Bulk extends Post_Base {
 			'tmpl-gc-select2-item'    => array(),
 			'tmpl-gc-modal-window'    => array(
 				'nav'     => array(
-					$this->wizard->parent_url            => __( 'Settings', 'content-workflow' ),
+					$this->wizard->parent_url            => __( 'Settings', 'content-workflow-by-bynder' ),
 					$this->wizard->mappings->listing_url => $this->wizard->mappings->args->label,
 					$this->wizard->url                   => $this->wizard->mappings->args->labels->new_item,
 				),
 				'headers' => array(
-					'status'      => __( 'Status', 'content-workflow' ),
-					'itemName'    => __( 'Item', 'content-workflow' ),
-					'updated_at'  => __( 'Updated', 'content-workflow' ),
-					'mappingName' => __( 'Template Mapping', 'content-workflow' ),
-					'post_title'  => __( 'WordPress Title', 'content-workflow' ),
+					'status'      => __( 'Status', 'content-workflow-by-bynder' ),
+					'itemName'    => __( 'Item', 'content-workflow-by-bynder' ),
+					'updated_at'  => __( 'Updated', 'content-workflow-by-bynder' ),
+					'mappingName' => __( 'Template Mapping', 'content-workflow-by-bynder' ),
+					'post_title'  => __( 'WordPress Title', 'content-workflow-by-bynder' ),
 				),
 			),
 			'tmpl-gc-item'            => array(
 				'url' => General::get_instance()->admin->platform_url(),
 			),
 			'tmpl-gc-mapping-metabox' => array(
-				'message' => esc_html__( 'Fetching Content Workflow Accounts', 'gathercontent-importer' ),
+				'message' => esc_html__( 'Fetching Content Workflow Accounts', 'content-workflow-by-bynder' ),
 			),
 		);
 	}
@@ -316,9 +317,9 @@ class Bulk extends Post_Base {
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	protected function get_localize_data() {
 		if ( empty( $this->posts ) ) {
@@ -332,29 +333,29 @@ class Bulk extends Post_Base {
 		$data['_posts']      = $this->posts;
 		$data['_modal_btns'] = array(
 			array(
-				'label'   => __( 'Assign Template Mapping', 'gathercontent-importer' ),
+				'label'   => __( 'Assign Template Mapping', 'content-workflow-by-bynder' ),
 				'id'      => 'assign-mapping',
 				'primary' => false,
 			),
 			array(
-				'label'   => __( 'Push Items', 'gathercontent-importer' ),
+				'label'   => __( 'Push Items', 'content-workflow-by-bynder' ),
 				'id'      => 'push',
 				'primary' => false,
 			),
 			array(
-				'label'   => __( 'Pull Items', 'gathercontent-importer' ),
+				'label'   => __( 'Pull Items', 'content-workflow-by-bynder' ),
 				'id'      => 'pull',
 				'primary' => true,
 			),
 		);
 
 		$data['_sure'] = array(
-			'push' => sprintf( __( 'Are you sure you want to push these %s to GatherContent? Any unsaved changes in Content Workflow will be overwritten.', 'gathercontent-importer' ), $plural_label ),
-			'pull' => sprintf( __( 'Are you sure you want to pull these %s from Content Workflow? Any local changes will be overwritten.', 'gathercontent-importer' ), $plural_label ),
+			'push' => sprintf( __( 'Are you sure you want to push these %s to GatherContent? Any unsaved changes in Content Workflow will be overwritten.', 'content-workflow-by-bynder' ), $plural_label ),
+			'pull' => sprintf( __( 'Are you sure you want to pull these %s from Content Workflow? Any local changes will be overwritten.', 'content-workflow-by-bynder' ), $plural_label ),
 		);
 
 		$data['_text'] = array(
-			'no_items' => esc_html__( 'No items found.', 'content-workflow' ),
+			'no_items' => esc_html__( 'No items found.', 'content-workflow-by-bynder' ),
 		);
 
 		return $data;

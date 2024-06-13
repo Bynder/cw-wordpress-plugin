@@ -6,6 +6,7 @@
  */
 
 namespace GatherContent\Importer\Admin;
+
 use GatherContent\Importer\Base as Plugin_Base;
 use GatherContent\Importer\Utils;
 
@@ -19,13 +20,13 @@ abstract class Enqueue extends Plugin_Base {
 	/**
 	 * Enqueues the GC stylesheets.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function admin_enqueue_style() {
-		\GatherContent\Importer\enqueue_style( 'gc-select2', 'vendor/select2-4.0.13/select2', array(), '4.0.13' );
-		\GatherContent\Importer\enqueue_style( 'gathercontent', 'gathercontent-importer' );
+		\GatherContent\Importer\enqueue_style( 'cwby-select2', 'vendor/select2-4.0.13/select2', array(), '4.0.13' );
+		\GatherContent\Importer\enqueue_style( 'content-workflow-by-bynder', 'gathercontent-importer' );
 
 		do_action( 'cwby_admin_enqueue_style' );
 	}
@@ -33,9 +34,9 @@ abstract class Enqueue extends Plugin_Base {
 	/**
 	 * Enqueues the GC scripts, and hooks the localization to the footer.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function admin_enqueue_script() {
 
@@ -49,6 +50,7 @@ abstract class Enqueue extends Plugin_Base {
 		}
 
 		\GatherContent\Importer\enqueue_script( 'gc-select2', 'vendor/select2-4.0.13/select2', array( 'jquery' ), '4.0.13' );
+		\GatherContent\Importer\enqueue_script( 'gathercontent-database', 'gathercontent-database', '1.0.0' );
 
 		// If < WP 4.5, we need the newer version of underscore.js
 		if ( ! Utils::enqueued_at_least( 'underscore', '1.8.3' ) ) {
@@ -62,7 +64,10 @@ abstract class Enqueue extends Plugin_Base {
 			wp_scripts()->print_scripts( 'underscore' );
 		}
 
-		\GatherContent\Importer\enqueue_script( 'gathercontent', 'gathercontent', array( 'gc-select2', 'wp-backbone' ) );
+		\GatherContent\Importer\enqueue_script( 'gathercontent', 'gathercontent', array(
+			'gc-select2',
+			'wp-backbone'
+		) );
 
 		do_action( 'cwby_admin_enqueue_script' );
 
@@ -74,15 +79,22 @@ abstract class Enqueue extends Plugin_Base {
 	 * Localizes the data for the GC scripts. Hooked to admin_footer in order to be run late,
 	 * and for the gathercontent_localized_data filter to be easily hooked to.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function script_localize() {
+		/**
+		 * Previously we were pulling the entire $_GET array to localise
+		 * the queryargs used on the front-end. These are the only queryargs
+		 * referenced on the front-end.
+		 */
+		$queryArgs = $this->_get_vals( [ 'flush_cache', 'mapping' ] );
+
 		wp_localize_script( 'gathercontent', 'GatherContent', apply_filters( 'gathercontent_localized_data', array(
 			'debug'       => Utils::script_debug(),
 			// @codingStandardsIgnoreStart
-			'queryargs'   => $_GET,
+			'queryargs'   => $queryArgs,
 			// @codingStandardsIgnoreEnd
 			'_type_names' => Utils::gc_field_type_name( 'all' ),
 		) ) );

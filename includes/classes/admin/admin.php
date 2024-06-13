@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin;
 
 use GatherContent\Importer\API;
@@ -8,7 +9,7 @@ use GatherContent\Importer\Settings\Form_Section;
 
 class Admin extends Base {
 
-	public $option_name  = General::OPTION_NAME;
+	public $option_name = General::OPTION_NAME;
 	public $option_group = 'gathercontent_importer_settings';
 	public $mapping_wizard;
 
@@ -27,9 +28,10 @@ class Admin extends Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param $api API object
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param $api API object
 	 */
 	public function __construct( API $api ) {
 		global $pagenow;
@@ -58,10 +60,10 @@ class Admin extends Base {
 
 					$response = $this->api()->get_last_response();
 
-					$message = __( 'We had trouble connecting to the Content Workflow API. Please check your settings.', 'content-workflow' );
+					$message = __( 'We had trouble connecting to the Content Workflow API. Please check your settings.', 'content-workflow-by-bynder' );
 
 					if ( is_wp_error( $response ) ) {
-						$message .= '</p><p>' . sprintf( esc_html__( 'The error received: %s', 'content-workflow' ), $response->get_error_message() );
+						$message .= '</p><p>' . sprintf( esc_html__( 'The error received: %s', 'content-workflow-by-bynder' ), $response->get_error_message() );
 					}
 
 					$this->add_settings_error( $this->option_name, 'gc-api-connect-fail', $message, 'error' );
@@ -78,7 +80,7 @@ class Admin extends Base {
 			&& ! $this->get_setting( 'auth_verified' )
 		) {
 
-			$message = __( 'The provided authentication username and/or password is incorrect. If you\'re not sure what this is, please contact your site adminstrator.', 'content-workflow' );
+			$message = __( 'The provided authentication username and/or password is incorrect. If you\'re not sure what this is, please contact your site adminstrator.', 'content-workflow-by-bynder' );
 
 			$this->add_settings_error( $this->option_name, 'gc-http-auth-fail', $message, 'error' );
 		}
@@ -92,9 +94,9 @@ class Admin extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		parent::init_hooks();
@@ -155,9 +157,9 @@ class Admin extends Base {
 	/**
 	 * Registers our menu item and admin page.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function admin_menu() {
 		$page = add_menu_page(
@@ -170,22 +172,25 @@ class Admin extends Base {
 		);
 
 		add_action( 'admin_print_styles-' . $page, array( $this, 'admin_enqueue_style' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( GATHERCONTENT_PATH . 'gathercontent-importer.php' ), array( $this, 'settings_link' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( GATHERCONTENT_PATH . 'gathercontent-importer.php' ), array(
+			$this,
+			'settings_link'
+		) );
 
 	}
 
 	/**
 	 * Add Settings page to plugin action links in the Plugins table.
 	 *
-	 * @since  3.0.3
-	 *
-	 * @param  array $links Default plugin action links.
+	 * @param array $links Default plugin action links.
 	 *
 	 * @return array $links Amended plugin action links.
+	 * @since  3.0.3
+	 *
 	 */
 	public function settings_link( $links ) {
 
-		$links[] = sprintf( '<a href="%s">%s</a>', $this->url, __( 'Settings', 'content-workflow' ) );
+		$links[] = sprintf( '<a href="%s">%s</a>', $this->url, __( 'Settings', 'content-workflow-by-bynder' ) );
 
 		return $links;
 	}
@@ -212,9 +217,9 @@ class Admin extends Base {
 	/**
 	 * Initializes the plugin's setting, and settings sections/Fields.
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function initialize_settings_sections() {
 		if ( $this->step > 0 ) {
@@ -230,46 +235,46 @@ class Admin extends Base {
 
 		$section = new Form_Section(
 			'step_1',
-			esc_html__( 'API Credentials', 'content-workflow' ),
+			esc_html__( 'API Credentials', 'content-workflow-by-bynder' ),
 			array( $this, 'api_setup_settings_cb' ),
 			self::SLUG
 		);
 
 		$section->add_field(
 			'account_email',
-			esc_html__( 'Content Workflow Email Address', 'content-workflow' ),
+			esc_html__( 'Content Workflow Email Address', 'content-workflow-by-bynder' ),
 			array( $this, 'account_email_field_cb' )
 		);
 
 		$section->add_field(
 			'platform_url_slug',
-			esc_html__( 'Platform URL', 'content-workflow' ),
+			esc_html__( 'Platform URL', 'content-workflow-by-bynder' ),
 			array( $this, 'platform_url_slug_field_cb' )
 		);
 
 		$section->add_field(
 			'api_key',
-			esc_html__( 'API Key', 'content-workflow' ),
+			esc_html__( 'API Key', 'content-workflow-by-bynder' ),
 			array( $this, 'api_key_field_cb' )
 		);
 
 		if ( \GatherContent\Importer\auth_enabled() ) {
 			$section = new Form_Section(
 				'auth',
-				esc_html__( 'HTTP Authentication Credentials', 'content-workflow' ),
+				esc_html__( 'HTTP Authentication Credentials', 'content-workflow-by-bynder' ),
 				$this->view( 'auth-enabled-desc', array(), false ),
 				self::SLUG
 			);
 
 			$section->add_field(
 				'auth_username',
-				esc_html__( 'Username', 'content-workflow' ),
+				esc_html__( 'Username', 'content-workflow-by-bynder' ),
 				array( $this, 'auth_username_field_cb' )
 			);
 
 			$section->add_field(
 				'auth_pw',
-				esc_html__( 'Password', 'content-workflow' ),
+				esc_html__( 'Password', 'content-workflow-by-bynder' ),
 				array( $this, 'auth_pw_field_cb' )
 			);
 		}
@@ -277,13 +282,18 @@ class Admin extends Base {
 
 	public function api_setup_settings_cb() {
 		if ( $key = $this->should_migrate() ) {
-			echo '<p><strong>' . esc_html__( 'NOTE:', 'content-workflow' ) . '</strong> ' . sprintf( __( 'It looks like you are migrating from a previous version of the GatherContent plugin.<br>You will need to set up new GatherContent API credentials to continue. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'content-workflow' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'NOTE:', 'content-workflow-by-bynder' ) . '</strong> ' .
+			     esc_html__( 'It looks like you are migrating from a previous version of the GatherContent plugin.', 'content-workflow-by-bynder' ) .
+			     '<br>' .
+			     esc_html__( 'You will need to set up new GatherContent API credentials to continue. Instructions for getting your API key can be found ', 'content-workflow-by-bynder' ) .
+			     '<a href="https://gathercontent.com/developers/authentication/" target="_blank">here</a></p>';
 
 			if ( $slug = get_option( $key . '_api_url' ) ) {
 				$this->settings()->options['platform_url_slug'] = $slug;
 			}
 		} else {
-			echo '<p>' . sprintf( __( 'Enter your Content Workflow API credentials. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'content-workflow' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
+			$message = __( 'Enter your Content Workflow API credentials. Instructions for getting your API key can be found', 'content-workflow-by-bynder' );
+			echo '<p>' . esc_html( $message ) . ' <a href="https://gathercontent.com/developers/authentication/" target="_blank">here</a></p>';
 		}
 	}
 
@@ -332,7 +342,7 @@ class Admin extends Base {
 				'name'        => $this->option_name . '[' . $id . ']',
 				'value'       => esc_attr( $this->get_setting( $id ) ),
 				'placeholder' => 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
-				'desc'        => '<a href="https://gathercontent.com/developers/authentication/" target="_blank">' . __( 'How to get your API key', 'content-workflow' ) . '</a>',
+				'desc'        => '<a href="https://gathercontent.com/developers/authentication/" target="_blank">' . __( 'How to get your API key', 'content-workflow-by-bynder' ) . '</a>',
 			)
 		);
 
@@ -401,15 +411,15 @@ class Admin extends Base {
 
 				$data = (array) $user;
 
-				$data['message'] = esc_html__( "You've successfully connected to the Content Workflow API", 'content-workflow' );
+				$data['message'] = esc_html__( "You've successfully connected to the Content Workflow API", 'content-workflow-by-bynder' );
 
 				$data['avatar'] = ! empty( $data['avatar'] )
 					? 'https://gathercontent-production-avatars.s3-us-west-2.amazonaws.com/' . $data['avatar']
-					: 'https://app.gathercontent.com/assets/img/avatar.png';
+					: GATHERCONTENT_URL . 'images/avatar.png';
 
 				if ( $this->set_my_account() ) {
 
-					$data['message'] .= ' ' . sprintf( esc_html__( 'and the %s account.', 'content-workflow' ), '<a href="' . esc_url( $this->platform_url() ) . '" target="_blank">' . esc_html( $this->account->name ) . '</a>' );
+					$data['message'] .= ' ' . sprintf( esc_html__( 'and the %s account.', 'content-workflow-by-bynder' ), '<a href="' . esc_url( $this->platform_url() ) . '" target="_blank">' . esc_html( $this->account->name ) . '</a>' );
 				}
 
 				$this->view( 'user-profile', $data );
@@ -420,9 +430,9 @@ class Admin extends Base {
 	/**
 	 * Determine if settings need to be migrated from previous version.
 	 *
+	 * @return mixed Settings key prefix, if old settings are found.
 	 * @since  3.0.0
 	 *
-	 * @return mixed Settings key prefix, if old settings are found.
 	 */
 	public function should_migrate() {
 		if ( $this->get_setting( 'migrated' ) ) {
@@ -438,9 +448,9 @@ class Admin extends Base {
 	 * Since previous version used `plugin_basename( __FILE__ )` to determine
 	 * the option prefix, we have to check a couple possible variations.
 	 *
+	 * @return mixed Settings key prefix, if old settings are found.
 	 * @since  3.0.0.9
 	 *
-	 * @return mixed Settings key prefix, if old settings are found.
 	 */
 	public function prev_option_key() {
 		$prefixes = array(

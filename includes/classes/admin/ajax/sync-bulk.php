@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Ajax;
 
 use GatherContent\Importer\General;
@@ -6,7 +7,7 @@ use GatherContent\Importer\Mapping_Post;
 
 class Sync_Bulk extends Sync_Items {
 
-	protected $mappings  = array();
+	protected $mappings = array();
 	protected $direction = 'pull';
 
 	public function cwby_pull_items_cb() {
@@ -37,7 +38,7 @@ class Sync_Bulk extends Sync_Items {
 		if ( ! isset( $_REQUEST['data'], $_REQUEST['nonce'] ) ) {
 			wp_send_json_error(
 				sprintf(
-					__( 'Error %d: Missing required data.', 'content-workflow' ),
+					__( 'Error %d: Missing required data.', 'content-workflow-by-bynder' ),
 					__LINE__
 				)
 			);
@@ -86,13 +87,14 @@ class Sync_Bulk extends Sync_Items {
 			} catch ( \Exception $e ) {
 				wp_send_json_error(
 					sprintf(
-						__( 'Error %1$d: Cannot find a mapping by that id: %2$d', 'content-workflow' ),
+						__( 'Error %1$d: Cannot find a mapping by that id: %2$d', 'content-workflow-by-bynder' ),
 						__LINE__,
 						$mapping_id
 					)
 				);
 			}
 		}
+
 		return $posts;
 	}
 

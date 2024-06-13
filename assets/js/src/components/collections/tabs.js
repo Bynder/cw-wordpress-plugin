@@ -1,5 +1,5 @@
-module.exports = function( app ) {
+module.exports = function (app) {
 	return app.collections.base.extend({
-		model : app.models.tab,
+		model: app.models.tab,
 	});
 };

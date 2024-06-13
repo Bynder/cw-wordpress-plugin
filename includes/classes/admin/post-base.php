@@ -17,7 +17,8 @@ use GatherContent\Importer\Utils;
  *
  * @since 3.0.0
  */
-class Post_Enqueue extends Enqueue {}
+class Post_Enqueue extends Enqueue {
+}
 
 /**
  * Class for managing syncing template items.
@@ -60,10 +61,11 @@ abstract class Post_Base extends UI_Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param API $api API object.
+	 * @param Mapping_Wizard $wizard Mapping_Wizard object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param API            $api      API object.
-	 * @param Mapping_Wizard $wizard Mapping_Wizard object.
 	 */
 	public function __construct( API $api, Mapping_Wizard $wizard ) {
 		$this->api        = $api;
@@ -75,21 +77,21 @@ abstract class Post_Base extends UI_Base {
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	protected function get_localize_data() {
 		return array(
 			'_edit_nonce'  => wp_create_nonce( General::get_instance()->admin->mapping_wizard->option_group . '-options' ),
 			'_statuses'    => array(
-				'starting' => __( 'Starting Sync', 'gathercontent-importer' ),
-				'syncing'  => __( 'Syncing', 'gathercontent-importer' ),
-				'complete' => __( 'Sync Complete', 'gathercontent-importer' ),
-				'failed'   => __( 'Sync Failed (review?)', 'gathercontent-importer' ),
+				'starting' => __( 'Starting Sync', 'content-workflow-by-bynder' ),
+				'syncing'  => __( 'Syncing', 'content-workflow-by-bynder' ),
+				'complete' => __( 'Sync Complete', 'content-workflow-by-bynder' ),
+				'failed'   => __( 'Sync Failed (review?)', 'content-workflow-by-bynder' ),
 			),
 			'_errors'      => array(
-				'unknown' => __( 'There was an unknown error', 'gathercontent-importer' ),
+				'unknown' => __( 'There was an unknown error', 'content-workflow-by-bynder' ),
 			),
 			'_step_labels' => Utils::get_step_label( 'all' ),
 		);

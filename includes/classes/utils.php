@@ -71,13 +71,13 @@ class Utils extends Base {
 	/**
 	 * Determines if $date_check is within allowance of $date_compare.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  mixed   $date_check   Date to check.
-	 * @param  mixed   $date_compare Date to compare with.
-	 * @param  integer $allowance    Allowed tolerance.
+	 * @param mixed $date_check Date to check.
+	 * @param mixed $date_compare Date to compare with.
+	 * @param integer $allowance Allowed tolerance.
 	 *
 	 * @return bool                  Whether $date_check is current with $date_compare.
+	 * @since  3.0.0
+	 *
 	 */
 	public static function date_current_with( $date_check, $date_compare, $allowance = 0 ) {
 		$date_compare = strtotime( $date_compare );
@@ -90,12 +90,12 @@ class Utils extends Base {
 	/**
 	 * Utility function for doing array_map recursively.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  callable $callback Callable function.
-	 * @param  array    $array    Array to recurse.
+	 * @param callable $callback Callable function.
+	 * @param array $array Array to recurse.
 	 *
 	 * @return array              Updated array.
+	 * @since  3.0.0
+	 *
 	 */
 	static function array_map_recursive( $callback, $array ) {
 		foreach ( $array as $key => $value ) {
@@ -105,17 +105,18 @@ class Utils extends Base {
 				$array[ $key ] = call_user_func( $callback, $array[ $key ] );
 			}
 		}
+
 		return $array;
 	}
 
 	/**
 	 * Convert a UTC date to human readable date using the WP timezone.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $utc_date UTC date.
+	 * @param string $utc_date UTC date.
 	 *
 	 * @return string           Human readable relative date.
+	 * @since  3.0.0
+	 *
 	 */
 	public static function relative_date( $utc_date ) {
 		static $tzstring = null;
@@ -163,11 +164,11 @@ class Utils extends Base {
 	/**
 	 * Get the GatherContent item field type nice-name.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $type The type to get the name for. 'all' to get the entire array.
+	 * @param string $type The type to get the name for. 'all' to get the entire array.
 	 *
 	 * @return mixed        The type nice-name, or the entire types array.
+	 * @since  3.0.0
+	 *
 	 */
 	public static function gc_field_type_name( $type ) {
 		static $types = null;
@@ -176,12 +177,12 @@ class Utils extends Base {
 			$types = apply_filters(
 				'gc_field_type_names',
 				array(
-					'text'            => __( 'Text', 'content-workflow' ),
-					'text_rich'       => __( 'Rich Text', 'content-workflow' ),
-					'text_plain'      => __( 'Plain Text', 'content-workflow' ),
-					'choice_radio'    => __( 'Radio', 'content-workflow' ),
-					'choice_checkbox' => __( 'Checkboxes', 'content-workflow' ),
-					'files'           => __( 'Attachment', 'content-workflow' ),
+					'text'            => __( 'Text', 'content-workflow-by-bynder' ),
+					'text_rich'       => __( 'Rich Text', 'content-workflow-by-bynder' ),
+					'text_plain'      => __( 'Plain Text', 'content-workflow-by-bynder' ),
+					'choice_radio'    => __( 'Radio', 'content-workflow-by-bynder' ),
+					'choice_checkbox' => __( 'Checkboxes', 'content-workflow-by-bynder' ),
+					'files'           => __( 'Attachment', 'content-workflow-by-bynder' ),
 				)
 			);
 		}
@@ -196,22 +197,22 @@ class Utils extends Base {
 	/**
 	 * Get the GatherContent wizard step label.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $step The step to get the name for. 'all' to get the entire array.
+	 * @param string $step The step to get the name for. 'all' to get the entire array.
 	 *
 	 * @return mixed        The step nice-name, or the entire types array.
+	 * @since  3.0.0
+	 *
 	 */
 	public static function get_step_label( $step ) {
 		static $labels = null;
 
 		if ( null === $labels ) {
 			$labels = array(
-				'accounts'  => esc_html__( 'Select an account:', 'gathercontent-importer' ),
-				'projects'  => esc_html__( 'Select a project:', 'gathercontent-importer' ),
-				'templates' => esc_html__( 'Select a template:', 'gathercontent-importer' ),
-				'mappings'  => sprintf( esc_html_x( 'Select a %s:', 'Select a template mapping', 'gathercontent-importer' ), General::get_instance()->admin->mapping_wizard->mappings->args->labels->singular_name ),
-				'import'    => esc_html__( 'Import Items:', 'gathercontent-importer' ),
+				'accounts'  => esc_html__( 'Select an account:', 'content-workflow-by-bynder' ),
+				'projects'  => esc_html__( 'Select a project:', 'content-workflow-by-bynder' ),
+				'templates' => esc_html__( 'Select a template:', 'content-workflow-by-bynder' ),
+				'mappings'  => sprintf( esc_html_x( 'Select a %s:', 'Select a template mapping', 'content-workflow-by-bynder' ), General::get_instance()->admin->mapping_wizard->mappings->args->labels->singular_name ),
+				'import'    => esc_html__( 'Import Items:', 'content-workflow-by-bynder' ),
 			);
 		}
 
@@ -225,16 +226,17 @@ class Utils extends Base {
 	/**
 	 * Check if enqueued version of script is at least $version.
 	 *
-	 * @since  3.0.0.8
-	 *
-	 * @param  string $handle   The script's registered handle.
-	 * @param  string $version Version string to compare.
+	 * @param string $handle The script's registered handle.
+	 * @param string $version Version string to compare.
 	 *
 	 * @return bool             Result of comparison check.
+	 * @since  3.0.0.8
+	 *
 	 */
 	public static function enqueued_at_least( $handle, $version ) {
 		$wpjs = wp_scripts();
+
 		return isset( $wpjs->registered[ $handle ] )
-			&& version_compare( $wpjs->registered[ $handle ]->ver, $version, '>=' );
+		       && version_compare( $wpjs->registered[ $handle ]->ver, $version, '>=' );
 	}
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Mapping\Field_Types;
 
 use GatherContent\Importer\Views\View;
@@ -27,18 +28,21 @@ class Meta extends Base implements Type {
 	 * @since 3.0.0
 	 */
 	public function __construct() {
-		$this->option_label = __( 'Custom Fields', 'content-workflow' );
+		$this->option_label = __( 'Custom Fields', 'content-workflow-by-bynder' );
 	}
 
 	public function underscore_template( View $view ) {
 		?>
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type ) { #>
-			<select class="gc-select2 gc-select2-add-new wp-type-value-select <?php $this->e_type_id(); ?>" name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
-				<# _.each( data.metaKeys, function( key ) { #>
-					<option <# if ( key.value === data.field_value ) { #>selected="selected"<# } #> value="{{ key.value }}">{{ key.value }}</option>
-				<# }); #>
-				<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow' ) ); ?>
-			</select>
+		<select class="gc-select2 gc-select2-add-new wp-type-value-select <?php $this->e_type_id(); ?>"
+				name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
+			<# _.each( data.metaKeys, function( key ) { #>
+			<option
+			<# if ( key.value === data.field_value ) { #>selected="selected"<# } #> value="{{ key.value }}">{{ key.value
+			}}</option>
+			<# }); #>
+			<?php $this->underscore_empty_option( __( 'Do Not Import', 'content-workflow-by-bynder' ) ); ?>
+		</select>
 		<# } #>
 		<?php
 	}

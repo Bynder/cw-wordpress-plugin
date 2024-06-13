@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer;
 
 class General extends Base {
@@ -87,8 +88,8 @@ class General extends Base {
 	/**
 	 * Creates or returns an instance of this class.
 	 *
-	 * @since  3.0.0
 	 * @return General A single instance of this class.
+	 * @since  3.0.0
 	 */
 	public static function get_instance() {
 		if ( null === self::$single_instance ) {
@@ -98,8 +99,50 @@ class General extends Base {
 		return self::$single_instance;
 	}
 
-	protected function __construct() {
-		parent::__construct( $_GET, $_POST );
+	protected function __construct()
+	{
+		// Below are all the pieces of data we expect to retrieve from the frontend.
+		$expectedGetData = array_intersect_key(
+			$_GET,
+			[
+				'column',
+				'delete-trans',
+				'flush_cache',
+				'id',
+				'mapping',
+				'page',
+				'post',
+				'project',
+				'q',
+				'sync-items',
+				'template',
+				'updated',
+			]
+		);
+		$expectedPostData = array_intersect_key(
+			$_POST,
+			[
+				'data',
+				'flush_cache',
+				'gc-download-sysinfo-nonce',
+				'gc-edit-nonce',
+				'gc-sysinfo',
+				'gc_status',
+				'id',
+				'lastError',
+				'mapping',
+				'nonce',
+				'percent',
+				'post',
+				'postId',
+				'posts',
+				'property',
+				'status',
+				'subfields_data',
+			]
+		);
+
+		parent::__construct( $expectedGetData, $expectedPostData );
 		new Utils();
 
 		$this->api          = new API( _wp_http_get_object() );
@@ -132,9 +175,9 @@ class General extends Base {
 	/**
 	 * Initiate plugins_loaded hooks.
 	 *
+	 * @return void
 	 * @since  3.0.2
 	 *
-	 * @return void
 	 */
 	public static function init_plugins_loaded_hooks() {
 		Sync\Pull::init_plugins_loaded_hooks();
@@ -143,9 +186,9 @@ class General extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		$this->admin->init_hooks();
@@ -173,6 +216,7 @@ class General extends Base {
 	 * Magic getter for our object, to make protected properties accessible.
 	 *
 	 * @param string $field
+	 *
 	 * @return mixed
 	 */
 	public function __get( $field ) {

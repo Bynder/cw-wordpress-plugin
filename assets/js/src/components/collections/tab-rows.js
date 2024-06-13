@@ -1,8 +1,8 @@
-module.exports = function( app ) {
+module.exports = function (app) {
 	return app.collections.base.extend({
-		model : app.models.tabRow,
+		model: app.models.tabRow,
 
-		initialize: function( models, options ) {
+		initialize: function (models, options) {
 			this.tab = options.tab;
 		}
 	});

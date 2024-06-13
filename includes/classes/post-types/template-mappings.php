@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Post_Types;
 
 use GatherContent\Importer\Mapping_Post;
@@ -7,8 +8,8 @@ use WP_Query;
 use WP_Error;
 
 class Template_Mappings extends Base {
-	const SLUG          = 'gc_templates';
-	public $slug        = self::SLUG;
+	const SLUG = 'gc_templates';
+	public $slug = self::SLUG;
 	public $listing_url = '';
 
 	/**
@@ -21,10 +22,11 @@ class Template_Mappings extends Base {
 	/**
 	 * Creates an instance of this class.
 	 *
-	 * @since 3.0.0
-	 *
 	 * @param $parent_menu_slug
 	 * @param $api API object
+	 *
+	 * @since 3.0.0
+	 *
 	 */
 	public function __construct( $parent_menu_slug, API $api ) {
 
@@ -34,25 +36,25 @@ class Template_Mappings extends Base {
 
 		parent::__construct(
 			array(
-				'name'                  => _x( 'Template Mappings', 'post type general name', 'content-workflow' ),
-				'singular_name'         => _x( 'Template Mapping', 'post type singular name', 'content-workflow' ),
-				'add_new'               => _x( 'Add New', 'post', 'content-workflow' ),
-				'add_new_item'          => __( 'Add New Template Mapping', 'content-workflow' ),
-				'edit_item'             => __( 'Edit Template Mapping', 'content-workflow' ),
-				'new_item'              => __( 'New Template Mapping', 'content-workflow' ),
-				'view_item'             => __( 'View Template Mapping', 'content-workflow' ),
-				'item_updated'          => __( 'Template Mapping updated', 'content-workflow' ),
-				'item_saved'            => __( 'Template Mapping saved', 'content-workflow' ),
-				'search_items'          => __( 'Search Template Mappings', 'content-workflow' ),
-				'not_found'             => __( 'No template mappings found.', 'content-workflow' ),
-				'not_found_in_trash'    => __( 'No template mappings found in Trash.', 'content-workflow' ),
-				'all_items'             => __( 'Template Mappings', 'content-workflow' ),
-				'archives'              => __( 'Template Mapping Archives', 'content-workflow' ),
-				'insert_into_item'      => __( 'Insert into template mapping', 'content-workflow' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this template mapping', 'content-workflow' ),
-				'filter_items_list'     => __( 'Filter template mappings list', 'content-workflow' ),
-				'items_list_navigation' => __( 'Template Mappings list navigation', 'content-workflow' ),
-				'items_list'            => __( 'Template Mappings list', 'content-workflow' ),
+				'name'                  => _x( 'Template Mappings', 'post type general name', 'content-workflow-by-bynder' ),
+				'singular_name'         => _x( 'Template Mapping', 'post type singular name', 'content-workflow-by-bynder' ),
+				'add_new'               => _x( 'Add New', 'post', 'content-workflow-by-bynder' ),
+				'add_new_item'          => __( 'Add New Template Mapping', 'content-workflow-by-bynder' ),
+				'edit_item'             => __( 'Edit Template Mapping', 'content-workflow-by-bynder' ),
+				'new_item'              => __( 'New Template Mapping', 'content-workflow-by-bynder' ),
+				'view_item'             => __( 'View Template Mapping', 'content-workflow-by-bynder' ),
+				'item_updated'          => __( 'Template Mapping updated', 'content-workflow-by-bynder' ),
+				'item_saved'            => __( 'Template Mapping saved', 'content-workflow-by-bynder' ),
+				'search_items'          => __( 'Search Template Mappings', 'content-workflow-by-bynder' ),
+				'not_found'             => __( 'No template mappings found.', 'content-workflow-by-bynder' ),
+				'not_found_in_trash'    => __( 'No template mappings found in Trash.', 'content-workflow-by-bynder' ),
+				'all_items'             => __( 'Template Mappings', 'content-workflow-by-bynder' ),
+				'archives'              => __( 'Template Mapping Archives', 'content-workflow-by-bynder' ),
+				'insert_into_item'      => __( 'Insert into template mapping', 'content-workflow-by-bynder' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this template mapping', 'content-workflow-by-bynder' ),
+				'filter_items_list'     => __( 'Filter template mappings list', 'content-workflow-by-bynder' ),
+				'items_list_navigation' => __( 'Template Mappings list navigation', 'content-workflow-by-bynder' ),
+				'items_list'            => __( 'Template Mappings list', 'content-workflow-by-bynder' ),
 			),
 			array(
 				'show_ui'      => true,
@@ -137,14 +139,15 @@ class Template_Mappings extends Base {
 	/**
 	 * Register the Template Mappings column headers.
 	 *
+	 * @param array $columns Array of registered columns for the mapping post-type.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $columns Array of registered columns for the mapping post-type.
 	 */
 	public function register_column_headers( $columns ) {
-		$columns['account']  = __( 'Account slug', 'content-workflow' );
-		$columns['project']  = __( 'Project id', 'content-workflow' );
-		$columns['template'] = __( 'Template id', 'content-workflow' );
+		$columns['account']  = __( 'Account slug', 'content-workflow-by-bynder' );
+		$columns['project']  = __( 'Project id', 'content-workflow-by-bynder' );
+		$columns['template'] = __( 'Template id', 'content-workflow-by-bynder' );
 
 		return $columns;
 	}
@@ -152,9 +155,10 @@ class Template_Mappings extends Base {
 	/**
 	 * Register the Template Mappings sortable columns.
 	 *
+	 * @param array $columns Array of registered columns for the mapping post-type.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $columns Array of registered columns for the mapping post-type.
 	 */
 	public function register_sortable_columns( $columns ) {
 		$columns['account']  = '_gc_account';
@@ -168,9 +172,10 @@ class Template_Mappings extends Base {
 	/**
 	 * Make the Template Mapping sortable columns work.
 	 *
+	 * @param WP_Query $query
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param WP_Query $query
 	 */
 	public function orderby_meta( $query ) {
 		if ( ! is_admin() ) {
@@ -190,10 +195,11 @@ class Template_Mappings extends Base {
 	/**
 	 * The Template Mappings column display output.
 	 *
+	 * @param string $column Column ID
+	 * @param int $post_id Mapping post id
+	 *
 	 * @since  3.0.0
 	 *
-	 * @param string $column  Column ID
-	 * @param int    $post_id Mapping post id
 	 */
 	public function column_display( $column, $post_id ) {
 		if ( ! in_array( $column, array( 'account', 'project', 'template', 'alt_text' ), 1 ) ) {
@@ -205,19 +211,19 @@ class Template_Mappings extends Base {
 
 		switch ( $column ) {
 			case 'account':
-				$value = $data[ $column ] ?: __( '&mdash;' );
+				$value = $data[ $column ] ?: __( '&mdash;', 'content-workflow-by-bynder' );
 				if ( $data['base_url'] && $data['account'] ) {
 					$url = $data['base_url'];
 				}
 				break;
 			case 'project':
-				$value = $data[ $column ] ?: __( '&mdash;' );
+				$value = $data[ $column ] ?: __( '&mdash;', 'content-workflow-by-bynder' );
 				if ( $data['base_url'] && $value ) {
 					$url = esc_url( $data['base_url'] . 'projects/view/' . $value );
 				}
 				break;
 			case 'template':
-				$value = $data[ $column ] ?: __( '&mdash;' );
+				$value = $data[ $column ] ?: __( '&mdash;', 'content-workflow-by-bynder' );
 				if ( $data['base_url'] && $data['project'] && $value ) {
 					$url = esc_url( $data['base_url'] . 'templates/' . $data['project'] );
 				}
@@ -227,7 +233,7 @@ class Template_Mappings extends Base {
 		if ( $value ) {
 			if ( $url ) {
 				echo '<a href="' . esc_url( $url ) . '" target="_blank">';
-					print_r( $value );
+				print_r( $value );
 				echo '</a>';
 			} else {
 				print_r( $value );
@@ -238,11 +244,11 @@ class Template_Mappings extends Base {
 	/**
 	 * Collect meta data for mapping.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $post_id Mapping post id
+	 * @param int $post_id Mapping post id
 	 *
 	 * @return array         Array of meta dat.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function column_post_data( $post_id ) {
 		static $posts_data = array();
@@ -268,14 +274,14 @@ class Template_Mappings extends Base {
 	public function output_mapping_data( $post ) {
 		if ( self::SLUG === $post->post_type ) {
 			echo '<p class="postbox" style="padding: 1em;background: #f5f5f5;margin: -4px 0 0">';
-			echo '<strong>' . __( 'Project ID:', 'content-workflow' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_project', 1 );
+			echo '<strong>' . esc_html__( 'Project ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html( get_post_meta( get_the_id(), '_gc_project', 1 ) );
 			echo ',&nbsp;';
-			echo '<strong>' . __( 'Template ID:', 'content-workflow' ) . '</strong> ' . get_post_meta( get_the_id(), '_gc_template', 1 );
+			echo '<strong>' . esc_html__( 'Template ID:', 'content-workflow-by-bynder' ) . '</strong> ' . esc_html( get_post_meta( get_the_id(), '_gc_template', 1 ) );
 
 			if ( $account = get_post_meta( get_the_id(), '_gc_account', 1 ) ) {
 				$account = 'https://' . $account . '.gathercontent.com/';
 				echo ',&nbsp;';
-				echo '<strong>' . __( 'Account:', 'content-workflow' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
+				echo '<strong>' . esc_html__( 'Account:', 'content-workflow-by-bynder' ) . '</strong> <a href="' . esc_url( $account ) . '" target="_blank">' . esc_url( $account ) . '</a>';
 			}
 
 			echo '</p>';
@@ -288,7 +294,7 @@ class Template_Mappings extends Base {
 				}
 			}
 
-			echo '<pre><textarea name="content" id="content" rows="20" style="width:100%;">' . print_r( $content, true ) . '</textarea></pre>';
+			echo '<pre><textarea name="content" id="content" rows="20" style="width:100%;">' . esc_textarea( print_r( $content, true ) ) . '</textarea></pre>';
 		}
 	}
 
@@ -326,14 +332,14 @@ class Template_Mappings extends Base {
 	/**
 	 * removes quick edit from custom post type list
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param array   $actions An array of row action links. Defaults are
+	 * @param array $actions An array of row action links. Defaults are
 	 *                           'Edit', 'Quick Edit', 'Restore, 'Trash',
 	 *                           'Delete Permanently', 'Preview', and 'View'.
-	 * @param WP_Post $post  The post object.
+	 * @param WP_Post $post The post object.
 	 *
 	 * @return array         Modified $actions.
+	 * @since  3.0.0
+	 *
 	 */
 	function remove_quick_edit( $actions, $post ) {
 		if ( self::SLUG === $post->post_type ) {
@@ -342,8 +348,8 @@ class Template_Mappings extends Base {
 			$actions['sync-items'] = sprintf(
 				'<a href="%s" aria-label="%s">%s</a>',
 				add_query_arg( 'sync-items', 1, get_edit_post_link( $post->ID, 'raw' ) ),
-				esc_attr( __( 'Review Items for Import', 'content-workflow' ) ),
-				__( 'Review Items for Import', 'content-workflow' )
+				esc_attr( __( 'Review Items for Import', 'content-workflow-by-bynder' ) ),
+				__( 'Review Items for Import', 'content-workflow-by-bynder' )
 			);
 		}
 
@@ -399,7 +405,7 @@ class Template_Mappings extends Base {
 		if ( ! empty( $mapping_args['content']['mapping'] ) ) {
 			$mapping_args['content']['mapping'] = array_filter(
 				$mapping_args['content']['mapping'],
-				function( $opt ) {
+				function ( $opt ) {
 					return ! empty( $opt['value'] ) ? $opt : false;
 				}
 			);
@@ -581,7 +587,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $projects ) ) {
-			new WP_Error( 'gc_no_projects', esc_html__( 'No projects were found for this account.', 'gathercontent-importer' ) );
+			new WP_Error( 'gc_no_projects', esc_html__( 'No projects were found for this account.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_projects = array();
@@ -620,7 +626,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $accounts ) ) {
-			new WP_Error( 'gc_no_accounts', esc_html__( 'No accounts were found.', 'gathercontent-importer' ) );
+			new WP_Error( 'gc_no_accounts', esc_html__( 'No accounts were found.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_accounts = array();
@@ -661,11 +667,13 @@ class Template_Mappings extends Base {
 				$objects[ $object_id ]['mappings'][] = $post_id;
 			}
 		}
+
 		return $objects;
 	}
 
 	public static function get_mapping_post_types() {
 		$all_types = get_option( 'gc_post_types', array() );
+
 		return is_array( $all_types ) ? $all_types : array();
 	}
 
@@ -679,11 +687,13 @@ class Template_Mappings extends Base {
 
 	public function get_mapping_template( $post_id ) {
 		$mapping = Mapping_Post::get( $post_id );
+
 		return $mapping ? $mapping->get_template() : false;
 	}
 
 	public function get_mapping_project( $post_id ) {
 		$mapping = Mapping_Post::get( $post_id );
+
 		return $mapping ? $mapping->get_project() : false;
 	}
 
@@ -719,21 +729,25 @@ class Template_Mappings extends Base {
 
 	public function get_mapping_account_slug( $post_id ) {
 		$mapping = Mapping_Post::get( $post_id );
+
 		return $mapping ? $mapping->get_account_slug() : false;
 	}
 
 	public function get_items_to_pull( $post_id ) {
 		$mapping = Mapping_Post::get( $post_id );
+
 		return $mapping ? $mapping->get_items_to_pull() : false;
 	}
 
 	public function update_items_to_pull( $post_id, $items = array() ) {
 		$mapping = Mapping_Post::get( $post_id );
+
 		return $mapping ? $mapping->update_items_to_pull( $items ) : false;
 	}
 
 	public function get_pull_percent( $post_id ) {
 		$mapping = Mapping_Post::get( $post_id );
+
 		return $mapping ? $mapping->get_pull_percent() : 0;
 	}
 

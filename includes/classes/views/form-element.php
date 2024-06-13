@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Views;
 
 abstract class Form_Element extends View {
@@ -17,11 +18,11 @@ abstract class Form_Element extends View {
 	/**
 	 * Loads the view and outputs it
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  boolean $echo Whether to output or return the template
+	 * @param boolean $echo Whether to output or return the template
 	 *
 	 * @return string        Rendered template
+	 * @since  3.0.0
+	 *
 	 */
 	public function load( $echo = true ) {
 
@@ -31,8 +32,15 @@ abstract class Form_Element extends View {
 			$content .= '<p class="description">' . $desc . '</p>';
 		}
 
+		/*
+		 * It's not reasonable escape the content here, as it contains various different types.
+		 * However, it is data from our plugin and our own API, so we can trust it.
+		 */
 		if ( $echo ) {
-			echo $content;
+			// Affixing _safe as instructed by https://developer.wordpress.org/apis/security/escaping/#toc_4
+			$content_safe = $content;
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $content_safe;
 		}
 
 		return $content;
