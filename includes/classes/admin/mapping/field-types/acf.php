@@ -57,7 +57,7 @@ class ACF extends Base implements Type {
 			$fields_results = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT * FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE %s AND post_parent IN ($groupIdPlaceholders)",
-					array_merge( $wild, $groupIds )
+					array_merge( [ $wild ], $groupIds )
 				)
 			);
 
