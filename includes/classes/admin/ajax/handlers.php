@@ -65,7 +65,7 @@ class Handlers extends Plugin_Base {
 	 */
 	public function init_hooks() {
 		add_action( 'wp_ajax_cwby_get_option_data', array( $this, 'cwby_get_option_data_cb' ) );
-		add_action( 'wp_ajax_gc_sync_items', array( $this->sync_items, 'gc_sync_items_cb' ) );
+		add_action( 'wp_ajax_cwby_sync_items', array( $this->sync_items, 'cwby_sync_items_cb' ) );
 		add_action( 'wp_ajax_cwby_pull_items', array( $this->sync_bulk, 'cwby_pull_items_cb' ) );
 		add_action( 'wp_ajax_cwby_push_items', array( $this->sync_bulk, 'cwby_push_items_cb' ) );
 		add_action( 'wp_ajax_gc_get_posts', array( $this, 'gc_get_posts_cb' ) );

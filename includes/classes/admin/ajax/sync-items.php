@@ -9,7 +9,7 @@ class Sync_Items extends Plugin_Base {
 
 	protected $mapping = null;
 
-	public function gc_sync_items_cb() {
+	public function cwby_sync_items_cb() {
 
 		$this->verify_request();
 

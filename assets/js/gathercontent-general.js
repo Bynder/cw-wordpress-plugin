@@ -446,7 +446,7 @@ module.exports = function (app) {
 
 module.exports = function (app, defaults) {
 	defaults = jQuery.extend({}, {
-		action: 'gc_sync_items',
+		action: 'cwby_sync_items',
 		data: '',
 		percent: 0,
 		nonce: '',

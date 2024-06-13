@@ -1,6 +1,6 @@
 /**
  * Content Workflow (by Bynder) - v1.0.0 - 2024-05-29
- * 
+ *
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
  * Licensed under the GPLv2 license.
@@ -270,7 +270,7 @@ module.exports = function (app) {
 
 module.exports = function (app, defaults) {
 	defaults = jQuery.extend({}, {
-		action: 'gc_sync_items',
+		action: 'cwby_sync_items',
 		data: '',
 		percent: 0,
 		nonce: '',
