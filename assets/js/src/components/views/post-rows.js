@@ -61,7 +61,7 @@ module.exports = function( app, gc, $ ) {
 			}
 
 			$.post( window.ajaxurl, {
-				action      : 'gc_get_post_statuses',
+				action      : 'cwby_get_post_statuses',
 				postId      : postId,
 				flush_cache : gc.queryargs.flush_cache ? 1 : 0
 			}, this.ajaxResponse ).done( function() {
