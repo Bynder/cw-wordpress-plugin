@@ -115,7 +115,7 @@ class Support extends Base {
 
 				'php_version'     => PHP_VERSION,
 				'mysql_version'   => @$wpdb->db_version(),
-				'web_server_info' => sanitize_text_field($_SERVER['SERVER_SOFTWARE']),
+				'web_server_info' => sanitize_text_field( $_SERVER['SERVER_SOFTWARE'] ),
 
 				'wordpress_memory_limit'  => WP_MEMORY_LIMIT,
 				'php_safe_mode'           => ini_get( 'safe_mode' ) ? 'Yes' : 'No',
@@ -166,6 +166,10 @@ class Support extends Base {
 
 	public function theme() {
 		if ( get_bloginfo( 'version' ) < '3.4' ) {
+			/**
+			 * Using deprecated function for older versions
+			 */
+			// phpcs:ignore WordPress.WP.DeprecatedFunctions.get_theme_dataFound
 			$theme_data = get_theme_data( get_stylesheet_directory() . '/style.css' );
 			$theme      = $theme_data['Name'] . ' ' . $theme_data['Version'];
 		} else {

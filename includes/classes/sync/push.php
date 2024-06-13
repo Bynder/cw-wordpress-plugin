@@ -604,7 +604,7 @@ class Push extends Base {
 
 		global $wpdb;
 
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT %i as value from %i where post_id=%d;", $column, $table, $this->post->ID ) );
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT %s as value from %s where post_id=%d;", $column, $table, $this->post->ID ) );
 
 		$value = $results[0]->value;
 		// @codingStandardsIgnoreStart
@@ -644,7 +644,7 @@ class Push extends Base {
 		foreach ( $matches[0] as $match ) {
 			$value = str_replace(
 				$match,
-				base64_decode( strip_tags( $match ) ),
+				base64_decode( wp_strip_all_tags( $match ) ),
 				$value
 			);
 		}
@@ -904,10 +904,8 @@ class Push extends Base {
 		} else {
 			$outputArray = array();
 			foreach ( $field_group as $item ) {
-				// Get the values of the sub-array dynamically
 				$values = array_values( $item );
-				// Use json_encode to encode the value
-				$outputArray[] = json_encode( $values[0] );
+				$outputArray[] = wp_json_encode( $values[0] );
 			}
 
 			$jsonValue = '[' . implode( ',', $outputArray ) . ']';
@@ -989,7 +987,7 @@ class Push extends Base {
 			}
 
 			// Return the file IDs as a JSON array
-			return json_encode( $fileIds );
+			return wp_json_encode( $fileIds );
 		}
 	}
 
