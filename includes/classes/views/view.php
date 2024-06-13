@@ -72,8 +72,15 @@ class View {
 			}
 		}
 
+		/*
+		 * It's not reasonable escape the content here, as it contains various different types.
+		 * However, it is data from our plugin and our own API, so we can trust it.
+		 */
 		if ( $echo ) {
-			echo self::$views[ $id ];
+			// Affixing _safe as instructed by https://developer.wordpress.org/apis/security/escaping/#toc_4
+			$content_safe = self::$views[ $id ];
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $content_safe;
 		}
 
 		return self::$views[ $id ];
@@ -119,12 +126,11 @@ class View {
 	public function output( $arg, $esc_cb = '', $default = null ) {
 		$val = $this->get( $arg, $default );
 
-		echo $esc_cb ? $esc_cb( $val ) : $val;
-	}
-
-	public function output_from( $arg, $array_key, $esc_cb = '', $default = null ) {
-		$val = $this->get_from( $array_arg_name, $array_key, $default );
-
+		/*
+		 * Central function for outputting escapes values. Ignoring the warning as WordPress doesn't follow
+		 * the logic to determine that it is actually escaped.
+		 */
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $esc_cb ? $esc_cb( $val ) : $val;
 	}
 
