@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Views;
 
 class Radio extends Form_Element {
@@ -20,7 +21,7 @@ class Radio extends Form_Element {
 		$content = '<ul>';
 		$index   = 0;
 		foreach ( $options as $option_val => $option_label ) {
-			$index++;
+			$index ++;
 			$input_args = array(
 				'type'  => 'radio',
 				'class' => 'radio-select',

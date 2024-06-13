@@ -1,3 +1,5 @@
 module.exports = Backbone.Model.extend({
-	sync: function () { return false; }
+	sync: function () {
+		return false;
+	}
 });

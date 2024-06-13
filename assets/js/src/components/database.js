@@ -5,12 +5,12 @@ window.GatherContent = window.GatherContent || {};
  * defined in \GatherContent\Importer\Admin\Mapping\Field_Types\Database
  */
 
-(function(window, document, $){
+(function (window, document, $) {
 	/**
 	 * @param {HTMLElement} someElement
 	 * @returns {HTMLInputElement}
 	 */
-	function getSiblingHiddenInput(someElement){
+	function getSiblingHiddenInput(someElement) {
 		return someElement.parentElement.querySelector('.hidden-database-table-name');
 	}
 
@@ -21,12 +21,12 @@ window.GatherContent = window.GatherContent || {};
 	 * @param {HTMLSelectElement} columnSelectElement
 	 * @param {string} tableName
 	 */
-	function resetColumnSelector(columnSelectElement, tableName){
+	function resetColumnSelector(columnSelectElement, tableName) {
 		columnSelectElement.value = '';
-		columnSelectElement.querySelectorAll('option').forEach(function(o){
-			if(o.getAttribute('data-tablename') === tableName){
+		columnSelectElement.querySelectorAll('option').forEach(function (o) {
+			if (o.getAttribute('data-tablename') === tableName) {
 				o.style.display = 'block';
-			}else{
+			} else {
 				o.style.display = 'none';
 			}
 		});
@@ -40,17 +40,17 @@ window.GatherContent = window.GatherContent || {};
 	 * @param {string|undefined} table
 	 * @param {string|undefined} column
 	 */
-	function setHiddenValue(inputElement, table, column){
-		if(!inputElement.value.includes('.')){
+	function setHiddenValue(inputElement, table, column) {
+		if (!inputElement.value.includes('.')) {
 			inputElement.value = '.';
 		}
 
 		var parts = inputElement.value.split('.');
 
-		if(typeof table === 'string') {
+		if (typeof table === 'string') {
 			parts[0] = table;
 		}
-		if(typeof column === 'string') {
+		if (typeof column === 'string') {
 			parts[1] = column;
 		}
 
@@ -60,7 +60,7 @@ window.GatherContent = window.GatherContent || {};
 	/**
 	 * @param {Event} event
 	 */
-	function columnSelectorChanged(event){
+	function columnSelectorChanged(event) {
 		/** @var {HTMLSelectElement} columnSelect */
 		var columnSelect = event.target;
 
@@ -74,7 +74,7 @@ window.GatherContent = window.GatherContent || {};
 	/**
 	 * @param {Event} event
 	 */
-	function tableSelectorChanged(event){
+	function tableSelectorChanged(event) {
 		/** @var {HTMLSelectElement} tableSelect */
 		var tableSelect = event.target;
 
