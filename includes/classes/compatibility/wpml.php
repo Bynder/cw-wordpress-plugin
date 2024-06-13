@@ -26,7 +26,7 @@ class WPML extends Base {
 	 * @return void
 	 */
 	public function init_hooks() {
-		add_filter( 'gc_new_wp_post_data', array( $this, 'maybe_transform_meta_for_wpml' ), 10, 2 );
+		add_filter( 'cwby_new_wp_post_data', array( $this, 'maybe_transform_meta_for_wpml' ), 10, 2 );
 		add_filter( 'gc_update_wp_post_data', array( $this, 'maybe_transform_meta_for_wpml' ), 10, 2 );
 		add_filter( 'gc_config_taxonomy_field_value_updated', array( $this, 'maybe_update_taxonomy_item_value_from_wpml' ), 10, 4 );
 	}

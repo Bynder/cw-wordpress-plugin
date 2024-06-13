@@ -287,7 +287,7 @@ class Pull extends Base {
 		if ( ! empty( $post_data['ID'] ) ) {
 			$post_data = apply_filters( 'gc_update_wp_post_data', $post_data, $this );
 		} else {
-			$post_data = apply_filters( 'gc_new_wp_post_data', $post_data, $this );
+			$post_data = apply_filters( 'cwby_new_wp_post_data', $post_data, $this );
 		}
 
 		return $post_data;

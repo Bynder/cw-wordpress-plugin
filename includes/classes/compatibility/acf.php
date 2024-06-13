@@ -32,7 +32,7 @@ class ACF extends Base {
 	 * @return void
 	 */
 	public function init_hooks() {
-		add_filter( 'gc_new_wp_post_data', array( $this, 'maybe_transform_meta_for_acf' ), 10, 2 );
+		add_filter( 'cwby_new_wp_post_data', array( $this, 'maybe_transform_meta_for_acf' ), 10, 2 );
 		add_filter( 'gc_update_wp_post_data', array( $this, 'maybe_transform_meta_for_acf' ), 10, 2 );
 		add_filter( 'gc_config_pre_meta_field_value_updated', array( $this, 'maybe_transform_config_meta_from_acf' ), 10, 4 );
 	}
