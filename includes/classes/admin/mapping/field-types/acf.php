@@ -53,11 +53,11 @@ class ACF extends Base implements Type {
 			}, $groupIds ) );
 
 			// Prepare and execute query to get all fields for all groups
+			$wild           = '%' . $wpdb->esc_like( 'repeater' ) . '%';
 			$fields_results = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT * FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE %s AND post_parent IN ($groupIdPlaceholders)",
-					'%' . $wpdb->esc_like('repeater') . '%',
-					$groupIds
+					array_merge( [ $wild ], $groupIds )
 				)
 			);
 
