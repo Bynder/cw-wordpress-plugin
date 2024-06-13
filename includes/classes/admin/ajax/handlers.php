@@ -76,7 +76,7 @@ class Handlers extends Plugin_Base {
 		add_action( 'wp_ajax_cwby_wp_filter_mappings', array( $this, 'cwby_wp_filter_mappings_cb' ) );
 		add_action( 'wp_ajax_cwby_save_mapping_id', array( $this, 'cwby_save_mapping_id_cb' ) );
 		add_action( 'wp_ajax_cwby_dismiss_notice', array( $this, 'cwby_dismiss_notice_cb' ) );
-		add_action( 'wp_ajax_gc_component_subfields', array( $this, 'gc_component_subfields_cb' ) );
+		add_action( 'wp_ajax_cwby_component_subfields', array( $this, 'cwby_component_subfields_cb' ) );
 	}
 
 	/**
@@ -412,7 +412,7 @@ class Handlers extends Plugin_Base {
 	 *
 	 * @return void
 	 */
-	public function gc_component_subfields_cb() {
+	public function cwby_component_subfields_cb() {
 		// If data not provided from FE, stop and return error
 		if ( ! $this->_post_val( 'subfields_data' ) ) {
 			wp_send_json_error();

@@ -1,6 +1,6 @@
 /**
  * Content Workflow (by Bynder) - v1.0.0 - 2024-06-13
- * 
+ *
  *
  * Copyright (c) 2024 Content Workflow (by Bynder)
  * Licensed under the GPLv2 license.
@@ -536,7 +536,7 @@ module.exports = function (app, _meta_keys) {
 			jQuery('#' + component + ' .wp-type-field-select ~ span.select2').addClass('ajax-disabled');
 			// Get Updated Data
 			jQuery.post(window.ajaxurl, {
-				action: 'gc_component_subfields',
+				action: 'cwby_component_subfields',
 				subfields_data: {
 					name: field_name
 				}
@@ -583,7 +583,7 @@ module.exports = function (app, _meta_keys) {
 			jQuery('#' + component + ' .component-table-inner').find('select').addClass('ajax-disabled');
 			// Get Updated Data
 			jQuery.post(window.ajaxurl, {
-				action: 'gc_component_subfields',
+				action: 'cwby_component_subfields',
 				subfields_data: {
 					name: field_name
 				}
