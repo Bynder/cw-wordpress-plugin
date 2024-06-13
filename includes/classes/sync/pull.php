@@ -31,9 +31,10 @@ class Pull extends Base {
 	/**
 	 * Creates an instance of this class.
 	 *
+	 * @param API $api API object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param API $api API object.
 	 */
 	public function __construct( API $api ) {
 		parent::__construct( $api, new Async_Pull_Action() );
@@ -42,9 +43,9 @@ class Pull extends Base {
 	/**
 	 * Initiate plugins_loaded hooks.
 	 *
+	 * @return void
 	 * @since  3.0.2
 	 *
-	 * @return void
 	 */
 	public static function init_plugins_loaded_hooks() {
 		add_action( 'gc_associate_hierarchy', array( __CLASS__, 'associate_hierarchy' ) );
@@ -53,9 +54,9 @@ class Pull extends Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		parent::init_hooks();
@@ -67,12 +68,12 @@ class Pull extends Base {
 	/**
 	 * A method for trying to pull directly (without async hooks).
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $mapping_post Mapping post ID or object.
-	 * @param  int $item_id      GC item id.
+	 * @param int $mapping_post Mapping post ID or object.
+	 * @param int $item_id GC item id.
 	 *
 	 * @return mixed Result of pull. WP_Error on failure.
+	 * @since  3.0.0
+	 *
 	 */
 	public function maybe_pull_item( $mapping_post, $item_id ) {
 
@@ -82,6 +83,7 @@ class Pull extends Base {
 		} catch ( \Exception $e ) {
 			$result = new WP_Error( 'gc_pull_item_fail_' . $e->getCode(), $e->getMessage(), $e->get_data() );
 		}
+
 		return $result;
 	}
 
@@ -91,6 +93,7 @@ class Pull extends Base {
 	 * @param string $postIdColumn 'post_id'
 	 * @param int $post_id 123
 	 * @param string $content 'Some great and cool content'
+	 *
 	 * @return bool true on success
 	 */
 	public function saveContentToTable(
@@ -99,13 +102,12 @@ class Pull extends Base {
 		string $postIdColumn,
 		int $post_id,
 		string $content
-	)
-	{
+	) {
 		global $wpdb;
 
-		$data = [$column => $content];
-		$where = [$postIdColumn => $post_id];
-		$wpdb->update($table,$data,$where); // false | int
+		$data  = [ $column => $content ];
+		$where = [ $postIdColumn => $post_id ];
+		$wpdb->update( $table, $data, $where ); // false | int
 
 		return true;
 	}
@@ -114,52 +116,53 @@ class Pull extends Base {
 	 * @TODO restrict what tables / columns can be used.
 	 *
 	 * @param string $tableColumnString "tableName.columnName"
+	 *
 	 * @return false|string[]
 	 */
-	private function isTableColumnStringValid(string $tableColumnString)
-	{
+	private function isTableColumnStringValid( string $tableColumnString ) {
 		global $wpdb;
 
-		$parts = explode('.', $tableColumnString);
-		if(count($parts) !== 2){
+		$parts = explode( '.', $tableColumnString );
+		if ( count( $parts ) !== 2 ) {
 			return false;
 		}
 
-		$table = $parts[0];
+		$table  = $parts[0];
 		$column = $parts[1];
 
-		$results = $wpdb->get_results($wpdb->prepare("SHOW COLUMNS FROM %1s;", $table));
+		$results = $wpdb->get_results( $wpdb->prepare( "SHOW COLUMNS FROM %1s;", $table ) );
 
-		foreach ($results as $row){
-			if($row->Field === $column){
-				return [$table, $column];
+		foreach ( $results as $row ) {
+			if ( $row->Field === $column ) {
+				return [ $table, $column ];
 			}
 		}
 
 		return false;
 	}
 
-	private function handleDatabaseMappings(array $databaseMappings, int $post_id)
-	{
-		foreach ($databaseMappings as $tableAndColumn => $content){
+	private function handleDatabaseMappings( array $databaseMappings, int $post_id ) {
+		foreach ( $databaseMappings as $tableAndColumn => $content ) {
 
-			$parts = $this->isTableColumnStringValid($tableAndColumn);
-			if(!$parts) continue;
+			$parts = $this->isTableColumnStringValid( $tableAndColumn );
+			if ( ! $parts ) {
+				continue;
+			}
 
-			$table = $parts[0];
+			$table  = $parts[0];
 			$column = $parts[1];
 
 			$success = $this->saveContentToTable(
 				$table, $column, 'post_id', $post_id, $content
 			);
 
-			if(!$success){
-				throw new Exception('Failed to save content to table',500, [
-					'table' => $table,
-					'column' => $column,
+			if ( ! $success ) {
+				throw new Exception( 'Failed to save content to table', 500, [
+					'table'   => $table,
+					'column'  => $column,
 					'post_id' => $post_id,
 					'content' => $content
-				]);
+				] );
 			}
 		}
 	}
@@ -167,13 +170,13 @@ class Pull extends Base {
 	/**
 	 * Pulls GC item to update a post after some sanitiy checks.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $id GC Item ID.
-	 *
-	 * @throws Exception On failure.
+	 * @param int $id GC Item ID.
 	 *
 	 * @return mixed Result of pull.
+	 * @throws Exception On failure.
+	 *
+	 * @since  3.0.0
+	 *
 	 */
 	protected function do_item( $id ) {
 		$roundTwo = false;
@@ -212,7 +215,7 @@ class Pull extends Base {
 			$post_data = (array) $existing;
 		} else {
 			$post_data['ID'] = 0;
-			$roundTwo = true;
+			$roundTwo        = true;
 		}
 
 		$post_data = $this->map_gc_data_to_wp_data( $post_data );
@@ -232,7 +235,7 @@ class Pull extends Base {
 		 * these are saved into the main wp_posts table
 		 */
 		$databaseMappings = $post_data['database'] ?? [];
-		unset($post_data['database']);
+		unset( $post_data['database'] );
 
 		$post_id = wp_insert_post( $post_data, 1 );
 
@@ -253,8 +256,8 @@ class Pull extends Base {
 			)
 		);
 
-		if(!empty($databaseMappings)){
-			$this->handleDatabaseMappings($databaseMappings, $post_id);
+		if ( ! empty( $databaseMappings ) ) {
+			$this->handleDatabaseMappings( $databaseMappings, $post_id );
 		}
 
 		if ( ! empty( $tax_terms ) ) {
@@ -296,7 +299,7 @@ class Pull extends Base {
 					$updated_post_data['meta_input'] = array_map(
 						function ( $meta ) {
 							return is_array( $meta ) && count( $meta ) > 1
-								? wp_json_encode($meta)
+								? wp_json_encode( $meta )
 								: array_shift( $meta );
 						},
 						$replacements['meta_input']
@@ -322,7 +325,7 @@ class Pull extends Base {
 		// Hence the need to run it the second time when we have the correct ID.
 		// If we do not do it this way, it is going to look for the post with ID = 0 always to attach the component to and that will be wrong.
 		// We can later look for a beter approach to handle this but this works just fine.
-		if ($roundTwo == true){
+		if ( $roundTwo == true ) {
 			$post_data = $this->set_acf_field_value( $post_data );
 		}
 
@@ -332,11 +335,11 @@ class Pull extends Base {
 	/**
 	 * Maps the GC item config data to WP data.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $post_data The WP Post data array.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array Item config array on success.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function map_gc_data_to_wp_data( $post_data = array() ) {
 
@@ -388,9 +391,9 @@ class Pull extends Base {
 	 *
 	 * Only if the post title is empty, or there is no post_title field mapped.
 	 *
+	 * @return boolean
 	 * @since  3.1.8
 	 *
-	 * @return boolean
 	 */
 	public function should_update_title_with_item_name( $post_data ) {
 		$should      = ! empty( $this->item->name );
@@ -405,9 +408,9 @@ class Pull extends Base {
 	/**
 	 * Check if mapping has a mapping for the post_title. (To fallback to item title)
 	 *
+	 * @return boolean
 	 * @since  3.1.8
 	 *
-	 * @return boolean
 	 */
 	public function has_post_title_mapping() {
 		try {
@@ -426,6 +429,7 @@ class Pull extends Base {
 		} catch ( \Exception $e ) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -433,11 +437,11 @@ class Pull extends Base {
 	/**
 	 * Loops the GC item content elements and maps the WP post data.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $post_data The WP Post data array.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array Modified post data array on success.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function loop_item_elements_and_map( $post_data ) {
 
@@ -463,24 +467,24 @@ class Pull extends Base {
 				$component_uuid = 'component' === $field->field_type ? $field->uuid : '';
 
 				$is_component_repeatable = false;
-				if($component_uuid) {
-					$metadata      = $field->metadata;
+				if ( $component_uuid ) {
+					$metadata                = $field->metadata;
 					$is_component_repeatable = ( is_object( $metadata ) && isset( $metadata->repeatable ) ) ? $metadata->repeatable->isRepeatable : false;
 				}
 
 				$componentProcessed = false; // Initialize flag outside the loop
 
-				foreach ($fields_data as $field_data) {
-					$this->element = (object) $this->format_element_data($field_data, $component_uuid, true, $is_component_repeatable);
-					$uuid = $this->element->name;
+				foreach ( $fields_data as $field_data ) {
+					$this->element = (object) $this->format_element_data( $field_data, $component_uuid, true, $is_component_repeatable );
+					$uuid          = $this->element->name;
 
 					// Check if "_component_" exists in the string and if it has not been processed yet
-					if (strpos($uuid, "_component_") !== false && !$componentProcessed) {
+					if ( strpos( $uuid, "_component_" ) !== false && ! $componentProcessed ) {
 						// Split the string by "_component_"
-						$parts = explode("_component_", $uuid);
+						$parts = explode( "_component_", $uuid );
 
 						// Get the last part
-						$uuid = end($parts);
+						$uuid = end( $parts );
 
 						// Concatenate the last part with the prefix "_component_"
 						$uuid = $uuid . "_component_" . $uuid;
@@ -490,10 +494,10 @@ class Pull extends Base {
 					}
 
 					// Further processing with the UUID
-					$destination = $this->mapping->data($uuid);
-					if ($destination && isset($destination['type'], $destination['value'])) {
-						$columns[$destination['value']] = true;
-						$post_data = $this->set_post_values($destination, $post_data);
+					$destination = $this->mapping->data( $uuid );
+					if ( $destination && isset( $destination['type'], $destination['value'] ) ) {
+						$columns[ $destination['value'] ] = true;
+						$post_data                        = $this->set_post_values( $destination, $post_data );
 					}
 				}
 
@@ -514,12 +518,12 @@ class Pull extends Base {
 	/**
 	 * Sets the post data value, for each data type.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  array $destination Destination array, includes type and value.
-	 * @param  array $post_data   The WP Post data array.
+	 * @param array $destination Destination array, includes type and value.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array $post_data   The modified WP Post data array.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_post_values( $destination, $post_data ) {
 
@@ -552,9 +556,10 @@ class Pull extends Base {
 					break;
 			}
 			// @codingStandardsIgnoreStart
-		} catch (\Exception $e) {
+		} catch ( \Exception $e ) {
 			// @todo logging?
 		}
+
 		// @codingStandardsIgnoreEnd
 
 		return $post_data;
@@ -563,12 +568,12 @@ class Pull extends Base {
 	/**
 	 * Sets the WP post fields based on the item config.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $post_column The post data column.
-	 * @param  array  $post_data   The WP Post data array.
+	 * @param string $post_column The post data column.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array $post_data   The modified WP Post data array.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_post_field_value( $post_column, $post_data ) {
 
@@ -584,12 +589,12 @@ class Pull extends Base {
 	/**
 	 * Sets the WP taxonomy terms based on the item config.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $taxonomy  The taxonomy name.
-	 * @param  array  $post_data The WP Post data array.
+	 * @param string $taxonomy The taxonomy name.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array $post_data  The modified WP Post data array.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_taxonomy_field_value( $taxonomy, $post_data ) {
 		$terms = $this->get_element_terms( $taxonomy );
@@ -601,18 +606,19 @@ class Pull extends Base {
 				$post_data['tax_input'][ $taxonomy ] = $terms;
 			}
 		}
+
 		return $post_data;
 	}
 
 	/**
 	 * Sets the WP meta data based on the item config.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $meta_key  The meta key.
-	 * @param  array  $post_data The WP Post data array.
+	 * @param string $meta_key The meta key.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array  $post_data The modified WP Post data array.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_meta_field_value( $meta_key, $post_data ) {
 		$value = $this->sanitize_element_meta();
@@ -629,8 +635,7 @@ class Pull extends Base {
 		return $post_data;
 	}
 
-	protected function set_database_field_value($destination, $post_data)
-	{
+	protected function set_database_field_value( $destination, $post_data ) {
 		/**
 		 * Update the post_data array to contain a 'database' array where each
 		 * key is the `table.column` and the value is the content
@@ -639,7 +644,7 @@ class Pull extends Base {
 		 * ...]
 		 */
 
-		$post_data[ 'database' ][$destination] = $this->element->value;
+		$post_data['database'][ $destination ] = $this->element->value;
 
 		return $post_data;
 	}
@@ -647,26 +652,26 @@ class Pull extends Base {
 	/**
 	 * Sets the WP media destination.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $destination The media destination.
-	 * @param  array  $post_data   The WP Post data array.
+	 * @param string $destination The media destination.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array  $post_data   The modified WP Post data array.
+	 * @since 3.0.0
+	 *
 	 */
 	protected function set_media_field_value( $destination, $post_data ) {
 
 		static $field_number = 0;
-		$media_items         = $this->sanitize_element_media();
+		$media_items = $this->sanitize_element_media();
 
 		if (
 			in_array( $destination, array( 'gallery', 'content_image', 'excerpt_image' ), true )
 			&& is_array( $media_items )
 		) {
-			$field_number++;
+			$field_number ++;
 			$position = 0;
 			foreach ( $media_items as $index => $media ) {
-				$media_items[ $index ]->position     = ++$position;
+				$media_items[ $index ]->position     = ++ $position;
 				$media_items[ $index ]->field_number = $field_number;
 
 				$token = '#_gc_media_id_' . $media->id . '#';
@@ -680,21 +685,22 @@ class Pull extends Base {
 			'destination' => $destination,
 			'media'       => $media_items,
 		);
+
 		return $post_data;
 	}
 
 
 	/**
-	* Sets the ACF field value in the post data.
-	*
-	* @since 3.0.0
-	*
-	* @param  string $group_key  The ACF group key.
-	* @param  string $field_key  The ACF field key.
-	* @param  array  $post_data  The WP Post data array.
-	*
-	* @return array $post_data   The modified WP Post data array.
-	*/
+	 * Sets the ACF field value in the post data.
+	 *
+	 * @param string $group_key The ACF group key.
+	 * @param string $field_key The ACF field key.
+	 * @param array $post_data The WP Post data array.
+	 *
+	 * @return array $post_data   The modified WP Post data array.
+	 * @since 3.0.0
+	 *
+	 */
 
 	protected function set_acf_field_value( $post_data ) {
 		// We are not sure of the incoming post_ID so let's get the current post ID
@@ -704,36 +710,36 @@ class Pull extends Base {
 		$updated_post_data = $post_data;
 
 		// Loop through the mapping data array
-		foreach ($this->mapping->data as $key => $value) {
+		foreach ( $this->mapping->data as $key => $value ) {
 			// When it is a component, the key sandwiches '_component_' so let's get the key itself
-			$content_key = explode('_component_', $key)[0];
+			$content_key = explode( '_component_', $key )[0];
 
 			// Check if the item has type wp-type-acf. We are assuming some items managed to skip the case check in the set_post_values function so we double check here.
-			if (isset($value['type']) && $value['type'] === 'wp-type-acf') {
+			if ( isset( $value['type'] ) && $value['type'] === 'wp-type-acf' ) {
 
 				// Fetch the corresponding value from $this->item->content
-				$field_value = isset($this->item->content->{$content_key}) ? $this->item->content->{$content_key} : '';
+				$field_value = isset( $this->item->content->{$content_key} ) ? $this->item->content->{$content_key} : '';
 
 				// Check if item has subfields. If it has then it is a component from GC
-				if (isset($value['sub_fields'])) {
+				if ( isset( $value['sub_fields'] ) ) {
 
 					// Prepare the subfield data
 					$subfield_keys = array();
-					foreach ($value['sub_fields'] as $sub_field_key) {
-						array_push($subfield_keys, $sub_field_key);
+					foreach ( $value['sub_fields'] as $sub_field_key ) {
+						array_push( $subfield_keys, $sub_field_key );
 					}
 					// Let's ensure the repeater field is empty before adding rows
-					delete_field($value['field'], $post_id);
+					delete_field( $value['field'], $post_id );
 
 					// Let ACF add fields before rows. This order does some wonders and we need to revisit it.
 					// update_field($value['field'], $component_row_data, $post_id);
 
 					$row_index = 0;
 
-					foreach ($field_value as $subfield){
+					foreach ( $field_value as $subfield ) {
 
 						$row_index ++;
-						if (!is_object($subfield)) {
+						if ( ! is_object( $subfield ) ) {
 							// When components are not set to be repeatable in GC we may end up getting non objects subfields.
 							// Non objects like strings will fail for get_object_vars which expects objects
 							// In such a situation the page breaks since the upload import can't be completed
@@ -742,52 +748,52 @@ class Pull extends Base {
 							continue;
 						}
 						// Check if the number of elements in $keys and $values match
-						if (count($subfield_keys) === count(get_object_vars($subfield))) {
+						if ( count( $subfield_keys ) === count( get_object_vars( $subfield ) ) ) {
 							// Combine the arrays if the counts match
-							$component_row_data = array_combine($subfield_keys, get_object_vars($subfield));
+							$component_row_data = array_combine( $subfield_keys, get_object_vars( $subfield ) );
 						} else {
 							// error_log("Number of keys and values don't match for array_combine()");
 							// Skip the current iteration if component_row_data is not available
 							continue;
 						}
 						// Convert object to associative array
-						$component_row_data = json_decode(json_encode($component_row_data), true);
-						add_row($value['field'], $component_row_data, $post_id);
+						$component_row_data = json_decode( json_encode( $component_row_data ), true );
+						add_row( $value['field'], $component_row_data, $post_id );
 
-						$subfield_key_id = -1;
+						$subfield_key_id = - 1;
 
-						foreach ($subfield as $key => $subsubfield){
+						foreach ( $subfield as $key => $subsubfield ) {
 							$subfield_key_id ++;
-							$item_key = $subfield_keys[$subfield_key_id];
-							$item = get_field_object($item_key);
+							$item_key = $subfield_keys[ $subfield_key_id ];
+							$item     = get_field_object( $item_key );
 
-							if (is_array($subsubfield)){
+							if ( is_array( $subsubfield ) ) {
 
-								if ($item['parent']){
+								if ( $item['parent'] ) {
 									$parent_key = $item['parent'];
 								}
-								if($item['sub_fields']){
+								if ( $item['sub_fields'] ) {
 									$children = array();
-									foreach ($item['sub_fields'] as $child){
-										array_push($children, $child['key']);
+									foreach ( $item['sub_fields'] as $child ) {
+										array_push( $children, $child['key'] );
 									}
 								}
 
-								if ($item['type'] && ($item['type'] === 'checkbox')){
+								if ( $item['type'] && ( $item['type'] === 'checkbox' ) ) {
 									$checkbox_labels = [];
 									// Extract labels from each stdClass object and add them to the $labels array for checkboxes
-									foreach ($subsubfield as $checkbox) {
+									foreach ( $subsubfield as $checkbox ) {
 										$checkbox_labels[] = $checkbox->label;
 									}
 								}
 
-								foreach ($subsubfield as $subsubfield_field){
+								foreach ( $subsubfield as $subsubfield_field ) {
 
-									if ($item['type'] == 'image'){
+									if ( $item['type'] == 'image' ) {
 										$upload_dir = wp_upload_dir();
-										$image_url = $subsubfield_field->url;
+										$image_url  = $subsubfield_field->url;
 										$image_data = file_get_contents( $image_url );
-										$filename = $subsubfield_field->filename;
+										$filename   = $subsubfield_field->filename;
 
 										// Check if the attachment already exists
 										global $wpdb;
@@ -812,46 +818,50 @@ class Pull extends Base {
 
 											$attachment = array(
 												'post_mime_type' => $wp_filetype['type'],
-												'post_title' => sanitize_file_name( $filename ),
-												'post_content' => '',
-												'post_status' => 'inherit'
+												'post_title'     => sanitize_file_name( $filename ),
+												'post_content'   => '',
+												'post_status'    => 'inherit'
 											);
 
 											$attach_id = wp_insert_attachment( $attachment, $file );
 											require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 											// Check if the attachment insertion was successful
-											if (!is_wp_error($attach_id)) {
+											if ( ! is_wp_error( $attach_id ) ) {
 												// Generate attachment metadata
-												$attach_data = wp_generate_attachment_metadata($attach_id, $file);
+												$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
 
 												// Update attachment metadata
-												wp_update_attachment_metadata($attach_id, $attach_data);
+												wp_update_attachment_metadata( $attach_id, $attach_data );
 
 											} else {
 												// Log an error or handle the case where attachment insertion fails
 											}
 										}
 
-										update_row($parent_key, $row_index, [$item_key => $attach_id],$post_id);
+										update_row( $parent_key, $row_index, [ $item_key => $attach_id ], $post_id );
 										// Break out of the loop after processing the first image
-        								break;
+										break;
 									}
 
 
-									if ($item['type'] === 'repeater'){
-										foreach ($children as $child_key){
+									if ( $item['type'] === 'repeater' ) {
+										foreach ( $children as $child_key ) {
 											// add_sub_row(['parent repeater', index, 'child repeater'], ['field_name' => $data], $post_id);
-											add_sub_row([$parent_key, $row_index, $item_key], [$child_key => $subsubfield_field], $post_id);
+											add_sub_row( [
+												$parent_key,
+												$row_index,
+												$item_key
+											], [ $child_key => $subsubfield_field ], $post_id );
 										}
 									}
 
-									if ($item['type'] === 'checkbox'){
-										update_row($parent_key, $row_index, [$item_key => $checkbox_labels],$post_id);
+									if ( $item['type'] === 'checkbox' ) {
+										update_row( $parent_key, $row_index, [ $item_key => $checkbox_labels ], $post_id );
 									}
 
-									if ($item['type'] === 'radio'){
-										update_row($parent_key, $row_index, [$item_key => $subsubfield_field->label],$post_id);
+									if ( $item['type'] === 'radio' ) {
+										update_row( $parent_key, $row_index, [ $item_key => $subsubfield_field->label ], $post_id );
 
 									}
 
@@ -861,32 +871,32 @@ class Pull extends Base {
 
 					}
 
-					$updated_post_data = $this->maybe_append($value['field'], $field_value, $updated_post_data);
+					$updated_post_data = $this->maybe_append( $value['field'], $field_value, $updated_post_data );
 
-				}else {
+				} else {
 					// If it's not a component, update the single ACF field normally
-					$field_data = array();
+					$field_data  = array();
 					$fields_data = array();
-					if (is_array($field_value)) {
-						foreach ($field_value as $row_data) {
-							if (! is_object($row_data)){
-								array_push($field_data, $row_data);
+					if ( is_array( $field_value ) ) {
+						foreach ( $field_value as $row_data ) {
+							if ( ! is_object( $row_data ) ) {
+								array_push( $field_data, $row_data );
 							}
 						}
-						array_push($fields_data, $field_data);
+						array_push( $fields_data, $field_data );
 					}
 
 					$field_key = $value['field'];
 
 					// Get information about the field
-					$field = get_field_object($field_key);
+					$field = get_field_object( $field_key );
 
 					// Let's hope the field exists and is really not a component
-					if ($field) {
-						if (!empty($field['sub_fields'])) {
+					if ( $field ) {
+						if ( ! empty( $field['sub_fields'] ) ) {
 							$subsubfield_keys = array();
-							foreach ($field['sub_fields'] as $sub_field) {
-								array_push($subsubfield_keys, $sub_field['key']);
+							foreach ( $field['sub_fields'] as $sub_field ) {
+								array_push( $subsubfield_keys, $sub_field['key'] );
 							}
 						} else {
 							// Field does not have subfields. We can possibly add some error handling
@@ -899,18 +909,18 @@ class Pull extends Base {
 					// This might be a secondary case to look at, so we are keeping things in arrays so we can later just improve on it to handle those wild cases.
 
 					$key_value_mapping = [];
-					foreach ($fields_data[0] as $value) {
+					foreach ( $fields_data[0] as $value ) {
 						// Assign each value to a sub-array with the key from subsubfield_keys
-						$key_value_mapping[] = [$subsubfield_keys[0] => $value];
+						$key_value_mapping[] = [ $subsubfield_keys[0] => $value ];
 					}
 
-					foreach ($key_value_mapping as $key_value){
-						add_row($field_key, $key_value, $post_id);
+					foreach ( $key_value_mapping as $key_value ) {
+						add_row( $field_key, $key_value, $post_id );
 					}
-					update_field($field_key, $key_value_mapping, $post_id);
+					update_field( $field_key, $key_value_mapping, $post_id );
 
 					// lets do updated_post_data in a way that will work
-					$updated_post_data = $this->maybe_append($field_key, $key_value_mapping, $updated_post_data);
+					$updated_post_data = $this->maybe_append( $field_key, $key_value_mapping, $updated_post_data );
 
 				}
 
@@ -926,13 +936,13 @@ class Pull extends Base {
 	/**
 	 * If field can append, then append the data, else set the data directly.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $field The field to set.
-	 * @param  mixed  $value The value for the field.
-	 * @param  array  $array The array to check against.
+	 * @param string $field The field to set.
+	 * @param mixed $value The value for the field.
+	 * @param array $array The array to check against.
 	 *
 	 * @return array         The modified array.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function maybe_append( $field, $value, $array ) {
 		if ( $this->type_can_append( $field ) ) {
@@ -951,16 +961,16 @@ class Pull extends Base {
 	/**
 	 * Specific sanitization for WP post column fields.
 	 *
-	 * @since  3.0.0
+	 * @param string $field The post field to sanitize.
+	 * @param mixed $value The post field value to sanitize.
+	 * @param array $post_data The WP Post data array.
 	 *
-	 * @param  string $field     The post field to sanitize.
-	 * @param  mixed  $value     The post field value to sanitize.
-	 * @param  array  $post_data The WP Post data array.
-	 *
+	 * @return mixed             The sanitized post field value.
 	 * @throws Exception Will fail if the wrong kind of GC field is
 	 *                      attempting to be sanitized.
 	 *
-	 * @return mixed             The sanitized post field value.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function sanitize_post_field( $field, $value, $post_data ) {
 		if ( ! $value ) {
@@ -998,24 +1008,24 @@ class Pull extends Base {
 	/**
 	 * Gets the terms from the current item element object.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $taxonomy The taxonomy to determine data storage method.
+	 * @param string $taxonomy The taxonomy to determine data storage method.
 	 *
 	 * @return mixed            The terms.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function get_element_terms( $taxonomy ) {
 		if ( 'text' === $this->element->type ) {
 			$terms = array_map( 'trim', explode( ',', sanitize_text_field( $this->element->value ) ) );
 		} elseif ( 'choice_checkbox' === $this->element->type ) {
-			$terms = (array) (is_string($this->element->value) ? json_decode($this->element->value) : $this->element->value);
+			$terms = (array) ( is_string( $this->element->value ) ? json_decode( $this->element->value ) : $this->element->value );
 		} else {
 			$terms = (array) $this->element->value;
 		}
 		if ( ! empty( $terms ) && is_taxonomy_hierarchical( $taxonomy ) ) {
 			foreach ( $terms as $key => $term ) {
 				// @codingStandardsIgnoreStart
-				if (!$term_info = term_exists($term, $taxonomy)) {
+				if ( ! $term_info = term_exists( $term, $taxonomy ) ) {
 					// @codingStandardsIgnoreEnd
 					// Skip if a non-existent term ID is passed.
 					if ( is_int( $term ) ) {
@@ -1038,9 +1048,9 @@ class Pull extends Base {
 	 * Specific sanitization for the element value when stored as post-meta.
 	 * Currently only filtered.
 	 *
+	 * @return mixed Value for meta.
 	 * @since  3.0.0
 	 *
-	 * @return mixed Value for meta.
 	 */
 	protected function sanitize_element_meta() {
 		return apply_filters( 'gc_sanitize_meta_field', $this->element->value, $this->element, $this->item );
@@ -1054,9 +1064,9 @@ class Pull extends Base {
 	 * Specific sanitization for the element media.
 	 * Currently only filtered.
 	 *
+	 * @return mixed Value for media.
 	 * @since  3.0.0
 	 *
-	 * @return mixed Value for media.
 	 */
 	protected function sanitize_element_media() {
 		return apply_filters( 'gc_sanitize_media_field', $this->element->value, $this->element, $this->item );
@@ -1067,12 +1077,12 @@ class Pull extends Base {
 	 * then we send the attachments to the requested location.
 	 * (post content, excerpt post-meta, gallery, etc)
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  array $attachments Array of attachments to sideload/attach/relocate.
-	 * @param  array $post_data   The WP Post data array.
+	 * @param array $attachments Array of attachments to sideload/attach/relocate.
+	 * @param array $post_data The WP Post data array.
 	 *
 	 * @return array              Array of replacement key/values for strtr.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function sideload_attachments( $attachments, $post_data ) {
 
@@ -1100,7 +1110,10 @@ class Pull extends Base {
 					if ( 'featured_image' === $attachment['destination'] ) {
 						$featured_img_id = $attach_id;
 						break;
-					} elseif ( in_array( $attachment['destination'], array( 'content_image', 'excerpt_image' ), true ) ) {
+					} elseif ( in_array( $attachment['destination'], array(
+						'content_image',
+						'excerpt_image'
+					), true ) ) {
 						$field = 'excerpt_image' === $attachment['destination'] ? 'post_excerpt' : 'post_content';
 
 						$atts  = array(
@@ -1220,12 +1233,12 @@ class Pull extends Base {
 	 *
 	 * Logic is based on whether media already exists and if it has been updated.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  object $media   The GC media object.
-	 * @param  int    $post_id The post ID.
+	 * @param object $media The GC media object.
+	 * @param int $post_id The post ID.
 	 *
 	 * @return int             The sideloaded attachment ID.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function maybe_sideload_file( $media, $post_id ) {
 		$attachment = \GatherContent\Importer\get_post_by_item_id( $media->id, array( 'post_status' => 'inherit' ) );
@@ -1258,19 +1271,20 @@ class Pull extends Base {
 	/**
 	 * Downloads an image from the specified URL and attaches it to a post.
 	 *
-	 * @param string      $file_name The Name of the image file.
-	 * @param string      $download_url The download URL of the image.
-	 * @param int         $post_id   The post ID the media is to be associated with.
+	 * @param string $file_name The Name of the image file.
+	 * @param string $download_url The download URL of the image.
+	 * @param int $post_id The post ID the media is to be associated with.
 	 * @param string|null $alt_text Optional alt text to add to the image.
+	 *
 	 * @return string|WP_Error  Populated HTML img tag on success, WP_Error object otherwise.
 	 */
 	protected function sideload_file( $file_name, $download_url, $post_id, $alt_text = '' ) {
 		if ( ! empty( $download_url ) ) {
-			$file_array = $this->tmp_file( $file_name, $download_url );
-			$file_array['type'] = mime_content_type($file_array['tmp_name']);
-			$extension = '.' . (new MimeTypes())->getExtension($file_array['type']);
-			$hasExtension = substr($file_array['name'], 0 - strlen($extension)) === $extension;
-			if (!$hasExtension) {
+			$file_array         = $this->tmp_file( $file_name, $download_url );
+			$file_array['type'] = mime_content_type( $file_array['tmp_name'] );
+			$extension          = '.' . ( new MimeTypes() )->getExtension( $file_array['type'] );
+			$hasExtension       = substr( $file_array['name'], 0 - strlen( $extension ) ) === $extension;
+			if ( ! $hasExtension ) {
 				$file_array['name'] = $file_array['name'] . $extension;
 			}
 
@@ -1284,7 +1298,8 @@ class Pull extends Base {
 			// If error storing permanently, unlink.
 			if ( is_wp_error( $id ) ) {
 				// @codingStandardsIgnoreStart
-				@unlink($file_array['tmp_name']);
+				@unlink( $file_array['tmp_name'] );
+
 				// @codingStandardsIgnoreEnd
 				return $id;
 			}
@@ -1300,16 +1315,16 @@ class Pull extends Base {
 	/**
 	 * Handles re-sideloading attachment and replacing existing.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string      $file_name    The file name.
-	 * @param  string      $download_url    The download url.
-	 * @param  object      $attachment   The attachment post object.
-	 * @param  bool        $replace_data Whether to replace attachement title/content.
+	 * @param string $file_name The file name.
+	 * @param string $download_url The download url.
+	 * @param object $attachment The attachment post object.
+	 * @param bool $replace_data Whether to replace attachement title/content.
 	 *                                   Default false.
 	 * @param string|null $alt_text Optional alt text to add to the image.
 	 *
 	 * @return int                  The sideloaded attachment ID.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function sideload_and_update_attachment( $file_name, $download_url, $attachment, $replace_data = false, $alt_text = '' ) {
 		if ( ! isset( $attachment->ID ) || empty( $download_url ) ) {
@@ -1318,7 +1333,7 @@ class Pull extends Base {
 
 		// @codingStandardsIgnoreStart
 		// 5 minutes per image should be PLENTY.
-		@set_time_limit(900);
+		@set_time_limit( 900 );
 		// @codingStandardsIgnoreEnd
 
 		$time = substr( $attachment->post_date, 0, 4 ) > 0
@@ -1344,7 +1359,7 @@ class Pull extends Base {
 
 			// Use image exif/iptc data for title and caption defaults if possible.
 			// @codingStandardsIgnoreStart
-			if ($image_meta = @wp_read_image_metadata($_file)) {
+			if ( $image_meta = @wp_read_image_metadata( $_file ) ) {
 				// @codingStandardsIgnoreEnd
 				if ( trim( $image_meta['title'] ) && ! is_numeric( sanitize_title( $image_meta['title'] ) ) ) {
 					$title = $image_meta['title'];
@@ -1364,7 +1379,7 @@ class Pull extends Base {
 		if ( is_wp_error( $id ) ) {
 			// If error storing permanently, unlink.
 			// @codingStandardsIgnoreStart
-			@unlink($file_array['tmp_name']);
+			@unlink( $file_array['tmp_name'] );
 			// @codingStandardsIgnoreEnd
 		} else {
 			update_post_meta( $id, '_wp_attachment_image_alt', $alt_text );
@@ -1377,12 +1392,12 @@ class Pull extends Base {
 	/**
 	 * Download and create a temporary file.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $file_name The name of the file being downloaded.
-	 * @param  string $download_url The download URL of the file.
+	 * @param string $file_name The name of the file being downloaded.
+	 * @param string $download_url The download URL of the file.
 	 *
 	 * @return array              The temporary file array.
+	 * @since  3.0.0
+	 *
 	 */
 	protected function tmp_file( $file_name, $download_url ) {
 
@@ -1410,11 +1425,11 @@ class Pull extends Base {
 	/**
 	 * Checks an attachment's mime type to determine if it is an image.
 	 *
-	 * @since  3.1.2
-	 *
-	 * @param  int $attach_id The attachement ID.
+	 * @param int $attach_id The attachement ID.
 	 *
 	 * @return bool
+	 * @since  3.1.2
+	 *
 	 */
 	public static function attachment_is_image( $attach_id ) {
 		return preg_match( '~(jpe?g|jpe|gif|png|svg)\b~', get_post_mime_type( $attach_id ) );
@@ -1423,11 +1438,11 @@ class Pull extends Base {
 	/**
 	 * wp_update_post wrapper that prevents a post revision.
 	 *
-	 * @since  3.0.2
-	 *
-	 * @param  array $post_data Array of post data.
+	 * @param array $post_data Array of post data.
 	 *
 	 * @return int|WP_Error The value 0 or WP_Error on failure. The post ID on success.
+	 * @since  3.0.2
+	 *
 	 */
 	protected static function post_update_no_revision( $post_data ) {
 		// Update post (but don't create a revision for it).
@@ -1443,11 +1458,11 @@ class Pull extends Base {
 	 * Defaults to `is_post_type_hierarchical` check.
 	 * Can be overridden with 'gc_map_hierarchy' filter.
 	 *
-	 * @since  3.0.2
-	 *
-	 * @param  string $post_type Post type to check if `is_post_type_hierarchical`
+	 * @param string $post_type Post type to check if `is_post_type_hierarchical`
 	 *
 	 * @return bool              Whether post type supports hierarchy.
+	 * @since  3.0.2
+	 *
 	 */
 	public function should_map_hierarchy( $post_type ) {
 		return apply_filters( 'gc_map_hierarchy', is_post_type_hierarchical( $post_type ), $post_type, $this );
@@ -1456,11 +1471,11 @@ class Pull extends Base {
 	/**
 	 * Add/create list of post/parent item ids to set WP hierarchy later.
 	 *
-	 * @since  3.0.2
-	 *
-	 * @param  int $post_id WordPress post id to eventually update.
+	 * @param int $post_id WordPress post id to eventually update.
 	 *
 	 * @return void
+	 * @since  3.0.2
+	 *
 	 */
 	public function schedule_hierarchy_update( $post_id ) {
 
@@ -1495,11 +1510,11 @@ class Pull extends Base {
 	 * Hooked into cron event, loops through list of pending hierarchies for given mapping,
 	 * and attempts to set the parent post id based on the parent GC item.
 	 *
-	 * @since  3.0.2
-	 *
-	 * @param  int $mapping Mapping object or ID.
+	 * @param int $mapping Mapping object or ID.
 	 *
 	 * @return void
+	 * @since  3.0.2
+	 *
 	 */
 	public static function associate_hierarchy( $mapping ) {
 		$mapping = Mapping_Post::get( $mapping, true );

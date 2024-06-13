@@ -52,9 +52,9 @@ abstract class Base extends Plugin_Base implements Type {
 	/**
 	 * Returns type_id property
 	 *
+	 * @return [type]  [description]
 	 * @since  [since]
 	 *
-	 * @return [type]  [description]
 	 */
 	public function type_id() {
 		return $this->type_id;

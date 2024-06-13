@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Settings;
 
 use GatherContent\Importer\Base as Base;
@@ -8,8 +9,8 @@ class Form_Section extends Base {
 	protected $page;
 	protected $id;
 	public $field;
-	public $title     = '';
-	public $callback  = null;
+	public $title = '';
+	public $callback = null;
 	protected $fields = array();
 	protected static $sections;
 
@@ -38,9 +39,9 @@ class Form_Section extends Base {
 			$html .= $this->do_desc_callback();
 		}
 
-			$html .= '<table class="form-table">';
-			$html .= $this->do_fields();
-			$html .= '</table>';
+		$html .= '<table class="form-table">';
+		$html .= $this->do_fields();
+		$html .= '</table>';
 
 		$html .= '</div>';
 
@@ -51,6 +52,7 @@ class Form_Section extends Base {
 		if ( is_callable( $this->callback ) ) {
 			ob_start();
 			call_user_func( $this->callback, $this );
+
 			return ob_get_clean();
 		}
 

@@ -29,9 +29,9 @@ class Bulk extends Post_Base {
 	/**
 	 * The page-specific script ID to enqueue.
 	 *
+	 * @return string
 	 * @since  3.0.0
 	 *
-	 * @return string
 	 */
 	protected function script_id() {
 		return 'gathercontent-general';
@@ -40,9 +40,9 @@ class Bulk extends Post_Base {
 	/**
 	 * Initiate admin hooks
 	 *
+	 * @return void
 	 * @since  3.0.0
 	 *
-	 * @return void
 	 */
 	public function init_hooks() {
 		if ( ! is_admin() ) {
@@ -56,7 +56,7 @@ class Bulk extends Post_Base {
 			$pagenow
 			&& ! empty( $this->post_types )
 			&& 'edit.php' === $pagenow
-			) {
+		) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'ui' ) );
 		}
 
@@ -74,9 +74,9 @@ class Bulk extends Post_Base {
 	/**
 	 * The Bulk Edit page UI callback.
 	 *
+	 * @return void|bool
 	 * @since  3.0.0
 	 *
-	 * @return void|bool
 	 */
 	public function ui_page() {
 		$screen = get_current_screen();
@@ -103,11 +103,11 @@ class Bulk extends Post_Base {
 	/**
 	 * Hooks the column callbacks for the current screen's post-type.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $post_type Current screen's post-type.
+	 * @param string $post_type Current screen's post-type.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	public function hook_columns( $post_type ) {
 		add_filter( "manage_{$post_type}_posts_columns", array( $this, 'register_column_headers' ), 8 );
@@ -121,11 +121,11 @@ class Bulk extends Post_Base {
 	/**
 	 * Register the GC column header.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  array $columns Array of column header names.
+	 * @param array $columns Array of column header names.
 	 *
 	 * @return array
+	 * @since 3.0.0
+	 *
 	 */
 	public function register_column_headers( $columns ) {
 		$columns['gathercontent'] = '<div title="' . __( 'GatherContent Item Status', 'content-workflow-by-bynder' ) . '" class="gc-column-header"><span class="gc-logo-column"><img src="' . GATHERCONTENT_URL . 'images/logo.svg" alt="GatherContent" /></span>' . _x( 'Status', 'Content Workflow Item Status', 'content-workflow-by-bynder' ) . '</div>';
@@ -136,12 +136,12 @@ class Bulk extends Post_Base {
 	/**
 	 * The GC field column display output.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  string $column_name Column name.
-	 * @param  int    $post_id     Post ID.
+	 * @param string $column_name Column name.
+	 * @param int $post_id Post ID.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	public function column_display( $column_name, $post_id ) {
 
@@ -170,13 +170,13 @@ class Bulk extends Post_Base {
 	/**
 	 * Handles the column view if it's being ajax-loaded.
 	 *
-	 * @since  3.0.0
-	 *
-	 * @param  int $post_id    Post ID.
-	 * @param  int $item_id    Item id.
-	 * @param  int $mapping_id Mapping id.
+	 * @param int $post_id Post ID.
+	 * @param int $item_id Item id.
+	 * @param int $mapping_id Mapping id.
 	 *
 	 * @return void
+	 * @since  3.0.0
+	 *
 	 */
 	protected function ajax_view( $post_id, $item_id, $mapping_id ) {
 		$status_name = $status_color = $status_id = '';
@@ -208,12 +208,12 @@ class Bulk extends Post_Base {
 	/**
 	 * The GC field quick-edit display output.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $column_name Column name.
-	 * @param  string $post_type   Post type.
+	 * @param string $column_name Column name.
+	 * @param string $post_type Post type.
 	 *
 	 * @return void
+	 * @since 3.0.0
+	 *
 	 */
 	public function quick_edit_box( $column_name, $post_type ) {
 		if ( 'gathercontent' !== $column_name ) {
@@ -226,12 +226,12 @@ class Bulk extends Post_Base {
 	/**
 	 * The GC field bulk-edit display output.
 	 *
-	 * @since 3.0.0
-	 *
-	 * @param  string $column_name Column name.
-	 * @param  string $post_type   Post type.
+	 * @param string $column_name Column name.
+	 * @param string $post_type Post type.
 	 *
 	 * @return void
+	 * @since 3.0.0
+	 *
 	 */
 	public function bulk_edit_box( $column_name, $post_type ) {
 		if ( 'gathercontent' !== $column_name ) {
@@ -249,10 +249,11 @@ class Bulk extends Post_Base {
 	/**
 	 * Sets the GatherContent status if being requested via quick-edit box.
 	 *
+	 * @param int $post_id Post ID.
+	 * @param object $post Post object.
+	 *
 	 * @since 3.0.0
 	 *
-	 * @param int    $post_id Post ID.
-	 * @param object $post    Post object.
 	 */
 	public function set_gc_status( $post_id, $post ) {
 		if (
@@ -275,9 +276,9 @@ class Bulk extends Post_Base {
 	/**
 	 * Gets the underscore templates array.
 	 *
+	 * @return array
 	 * @since  3.0.0
 	 *
-	 * @return array
 	 */
 	protected function get_underscore_templates() {
 		if ( empty( $this->posts ) ) {
@@ -316,9 +317,9 @@ class Bulk extends Post_Base {
 	/**
 	 * Get the localizable data array.
 	 *
+	 * @return array Array of localizable data
 	 * @since  3.0.0
 	 *
-	 * @return array Array of localizable data
 	 */
 	protected function get_localize_data() {
 		if ( empty( $this->posts ) ) {

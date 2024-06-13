@@ -2,10 +2,11 @@
 
 namespace GatherContent\Importer;
 
+use PHPUnit\Util\Test;
 use Text_Template;
 use WP_Mock;
-use PHPUnit\Util\Test;
 use WP_Mock\Tools\TestCase as BaseTestCase;
+
 class TestCase extends BaseTestCase {
 
 	protected $testFiles = array();
@@ -13,8 +14,8 @@ class TestCase extends BaseTestCase {
 	public function setUp(): void {
 		if ( ! empty( $this->testFiles ) ) {
 			foreach ( $this->testFiles as $file ) {
-				if ( file_exists(  dirname( __FILE__ ) . '/../../../includes/' . $file ) ) {
-					require_once(  dirname( __FILE__ ) . '/../../../includes/' . $file );
+				if ( file_exists( dirname( __FILE__ ) . '/../../../includes/' . $file ) ) {
+					require_once( dirname( __FILE__ ) . '/../../../includes/' . $file );
 				}
 			}
 		}
@@ -23,19 +24,18 @@ class TestCase extends BaseTestCase {
 	}
 
 	/**
-     * Backported from PHPUnit 9.4 TestCase class.
-     *
-     * WP_Mock's TestCase expects that method to be present on {@see setUpContentFiltering()}.
-     *
-     * @return array
-     */
-    public function getAnnotations() : array
-    {
-        return Test::parseTestMethodAnnotations(
-            static::class,
-            $this->getName(false)
-        );
-    }
+	 * Backported from PHPUnit 9.4 TestCase class.
+	 *
+	 * WP_Mock's TestCase expects that method to be present on {@see setUpContentFiltering()}.
+	 *
+	 * @return array
+	 */
+	public function getAnnotations(): array {
+		return Test::parseTestMethodAnnotations(
+			static::class,
+			$this->getName( false )
+		);
+	}
 
 	public function assertActionsCalled() {
 		$actions_not_added = $expected_actions = 0;

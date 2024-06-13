@@ -1,6 +1,8 @@
 <th scope="row" class="gc-check-column">
-	<label class="screen-reader-text" for="cb-select-{{ data.id }}"><?php _e( 'Select Another Item', 'content-workflow-by-bynder' ); ?></label>
-	<input id="cb-select-{{ data.id }}" type="checkbox" <# if ( data.checked ) { #>checked="checked"<# } #> name="import[]" value="{{ data.id }}">
+	<label class="screen-reader-text"
+		   for="cb-select-{{ data.id }}"><?php _e( 'Select Another Item', 'content-workflow-by-bynder' ); ?></label>
+	<input id="cb-select-{{ data.id }}" type="checkbox" <# if ( data.checked ) { #>checked="checked"<# } #>
+	name="import[]" value="{{ data.id }}">
 </th>
 <td class="gc-status-column">
 	<?php echo new self( 'underscore-data-status' ); ?>
@@ -16,12 +18,12 @@
 </td>
 <td class="gc-item-wp-post-title">
 	<# if ( data.editLink ) { #><a href="{{{ data.editLink }}}"><# } #>
-	<# if ( '&mdash;' === data.post_title ) { #>
+		<# if ( '&mdash;' === data.post_title ) { #>
 		&mdash;
-	<# } else { #>
+		<# } else { #>
 		{{{ data.post_title }}}
-	<# } #>
-	<# if ( data.editLink ) { #></a><# } #>
+		<# } #>
+		<# if ( data.editLink ) { #></a><# } #>
 </td>
 <?php
-	// echo "<# console.log( 'data', data ); #>";
+// echo "<# console.log( 'data', data ); #>";

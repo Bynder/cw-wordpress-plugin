@@ -1,4 +1,5 @@
 <?php
+
 namespace GatherContent\Importer\Admin\Mapping\Field_Types;
 
 use GatherContent\Importer\Views\View;
@@ -17,7 +18,7 @@ class Database extends Base implements Type {
 		'choice_radio',
 	);
 
-	protected $type_id      = 'wp-type-database';
+	protected $type_id = 'wp-type-database';
 	protected $post_options = [];
 
 	protected $tableColumnData = [];
@@ -30,27 +31,25 @@ class Database extends Base implements Type {
 	public function __construct() {
 		$this->tableColumnData = $this->getTableColumns();
 
-		$tableNames = array_keys($this->tableColumnData);
-		$this->post_options = array_combine($tableNames, $tableNames);
+		$tableNames         = array_keys( $this->tableColumnData );
+		$this->post_options = array_combine( $tableNames, $tableNames );
 		$this->option_label = __( 'Database', 'gathercontent-import' );
 	}
 
-	private function getAllTableColOptions()
-	{
+	private function getAllTableColOptions() {
 		$allOpts = [];
 
-		foreach ($this->tableColumnData as $tableName => $columns) {
-			$allOpts = array_merge($allOpts, $this->getTableColOptions($tableName));
+		foreach ( $this->tableColumnData as $tableName => $columns ) {
+			$allOpts = array_merge( $allOpts, $this->getTableColOptions( $tableName ) );
 		}
 
 		return $allOpts;
 	}
 
-	private function getTableColOptions(string $tableName)
-	{
+	private function getTableColOptions( string $tableName ) {
 		$optionStrings = [];
 
-		foreach ($this->tableColumnData[$tableName] as $column) {
+		foreach ( $this->tableColumnData[ $tableName ] as $column ) {
 			/**
 			 * Returns the required underscore template string to be true when
 			 * this column and table are selected. We need to check for both as
@@ -91,7 +90,7 @@ class Database extends Base implements Type {
 			<# if ( '" . $value . "' === (data.field_value ? data.field_value : '').split('.')[0] ) { #>selected='selected'<# } #>
 		";
 
-		echo '<option '.$fieldValueJs.' value="' . $value . '">' . $label . '</option>';
+		echo '<option ' . $fieldValueJs . ' value="' . $value . '">' . $label . '</option>';
 	}
 
 	/**
@@ -100,30 +99,30 @@ class Database extends Base implements Type {
 	 *
 	 * @return Array<string, string[]> - [tableName => colNames, ...]
 	 */
-	private function getTableColumns(){
+	private function getTableColumns() {
 		global $wpdb;
 
-		$wpTables = $wpdb->get_col("SHOW TABLES LIKE '{$wpdb->prefix}%'");
+		$wpTables = $wpdb->get_col( "SHOW TABLES LIKE '{$wpdb->prefix}%'" );
 
 		$allColumns = [];
-		foreach($wpTables as $tableName){
-			$tableCols = $wpdb->get_results("SHOW COLUMNS FROM $tableName");
+		foreach ( $wpTables as $tableName ) {
+			$tableCols = $wpdb->get_results( "SHOW COLUMNS FROM $tableName" );
 
 			$columnNames = [];
-			foreach ($tableCols as $col) {
+			foreach ( $tableCols as $col ) {
 				$columnNames[] = $col->Field;
 			}
 
 			/**
 			 * We are only interested in tables that contain a 'post_id' column
 			 */
-			if(!in_array('post_id', $columnNames)){
+			if ( ! in_array( 'post_id', $columnNames ) ) {
 				continue;
 			}
 
-			unset($columnNames[array_search('post_id', $columnNames)]);
+			unset( $columnNames[ array_search( 'post_id', $columnNames ) ] );
 
-			$allColumns[$tableName] = $columnNames;
+			$allColumns[ $tableName ] = $columnNames;
 		}
 
 		return $allColumns;
@@ -133,33 +132,34 @@ class Database extends Base implements Type {
 
 		?>
 		<# if ( '<?php $this->e_type_id(); ?>' === data.field_type ) { #>
-			<div class="wp-type-database-dropdown-container">
-				<select
-					class="cw-table-selector gc-select2 wp-type-value-select <?php $this->e_type_id(); ?>"
-					name=""
-				>
-					<?php $this->underscore_options( $this->post_options ); ?>
-					<?php $this->underscore_empty_option( __( 'Do Not Import', 'gathercontent-import' ) ); ?>
-				</select>
+		<div class="wp-type-database-dropdown-container">
+			<select
+				class="cw-table-selector gc-select2 wp-type-value-select <?php $this->e_type_id(); ?>"
+				name=""
+			>
+				<?php $this->underscore_options( $this->post_options ); ?>
+				<?php $this->underscore_empty_option( __( 'Do Not Import', 'gathercontent-import' ) ); ?>
+			</select>
 
-				<select
-					class="cw-column-selector"
-					name=""
-				>
-					<option value="">Select a column</option>
-					<?= implode('\r\n', $this->getAllTableColOptions()) ?>
-				</select>
+			<select
+				class="cw-column-selector"
+				name=""
+			>
+				<option value="">Select a column</option>
+				<?= implode( '\r\n', $this->getAllTableColOptions() ) ?>
+			</select>
 
-				<input
-					class="hidden-database-table-name"
-					type="hidden"
-					name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]"
-				<# if ( data.field_value ) { #>value="{{ data.field_value }}"<# } #>
-				/>
-			</div>
-			<p class="description" style="font-size: 10px">
-				You can only select tables that contain a <code style="font-size: 8px">post_id</code> column, as this is necessary to locate the corresponding row within the chosen table.
-			</p>
+			<input
+				class="hidden-database-table-name"
+				type="hidden"
+				name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]"
+			<# if ( data.field_value ) { #>value="{{ data.field_value }}"<# } #>
+			/>
+		</div>
+		<p class="description" style="font-size: 10px">
+			You can only select tables that contain a <code style="font-size: 8px">post_id</code> column, as this is
+			necessary to locate the corresponding row within the chosen table.
+		</p>
 		<# } #>
 		<?php
 	}
