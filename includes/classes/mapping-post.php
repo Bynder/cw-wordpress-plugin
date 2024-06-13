@@ -105,7 +105,7 @@ class Mapping_Post extends Base {
 			/**
 			 * We want the entire $post object to be available for debugging, so no need to escape
 			 */
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			throw new Mapping_Post_Exception( __CLASS__ . ' expects a ' . esc_html( Template_Mappings::SLUG ) . ' object.', __LINE__, $post );
 		}
 
