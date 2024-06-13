@@ -148,7 +148,11 @@ class Database extends Base implements Type {
 				<option value="">Select a column</option>
 
 				<?php
-				echo wp_kses_post( implode( '\r\n', $this->getAllTableColOptions() ) );
+				/**
+				 * This is not escaped as it can contain various tags that we know are safe.
+				 */
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo implode( '\r\n', $this->getAllTableColOptions() );
 				?>
 			</select>
 
