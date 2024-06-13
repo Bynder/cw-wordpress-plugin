@@ -1,3 +1,5 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
+
 <hr>
 <div class="gc-profile">
 	<img src="<?php $this->output( 'avatar' ); ?>" class="gc-avatar">

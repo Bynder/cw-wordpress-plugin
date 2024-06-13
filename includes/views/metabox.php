@@ -1,4 +1,7 @@
-<?php wp_nonce_field( GATHERCONTENT_SLUG, 'gc-edit-nonce' ); ?>
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+wp_nonce_field( GATHERCONTENT_SLUG, 'gc-edit-nonce' );
+?>
 
 <div id="gc-related-data" data-id="<?php $this->output( 'post_id' ); ?>"
 	 data-item="<?php $this->output( 'item_id' ); ?>" data-mapping="<?php $this->output( 'mapping_id' ); ?>"

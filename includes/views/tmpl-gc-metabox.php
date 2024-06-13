@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="misc-pub-section gc-item-name">
 	<span
 		class="dashicons dashicons-edit"></span> <?php echo esc_html_x( 'Item:', 'Content Workflow item name', 'content-workflow-by-bynder' ); ?>

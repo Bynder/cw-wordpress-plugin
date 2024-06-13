@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <span class="gc-status-column" data-id="<?php $this->output( 'post_id' ); ?>"
 	  data-item="<?php $this->output( 'item_id' ); ?>" data-mapping="<?php $this->output( 'mapping_id' ); ?>">
 <?php if ( $this->get( 'status_name' ) ) : ?>

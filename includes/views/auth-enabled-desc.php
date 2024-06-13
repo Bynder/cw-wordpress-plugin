@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="gc-auth-enabled">
 	<p>
 		<?php _e( 'It appears you have enabled <a href="http://www.htaccesstools.com/htaccess-authentication/">HTTP authentication</a> for this site.', 'content-workflow-by-bynder' ); ?>
