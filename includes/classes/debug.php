@@ -301,8 +301,7 @@ class Debug extends Base {
 		 * The table name is a WordPress core table and is not user input.
 		 */
 		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$sql     = "SELECT `option_name` FROM `$wpdb->options` WHERE `option_name` LIKE ('gc_pull_item_%') OR `option_name` LIKE ('gc_push_item_%');";
-		$options = $wpdb->get_results( $sql );
+		$options = $wpdb->get_results( "SELECT `option_name` FROM `$wpdb->options` WHERE `option_name` LIKE ('gc_pull_item_%') OR `option_name` LIKE ('gc_push_item_%');" );
 
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $key => $option ) {

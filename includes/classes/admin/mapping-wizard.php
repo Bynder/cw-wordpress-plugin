@@ -378,7 +378,7 @@ class Mapping_Wizard extends Base {
 
 			$tabs[] = array(
 				'id'        => $account->id,
-				'label'     => sprintf( __( '%s', 'content-workflow-by-bynder' ), isset( $account->name ) ? $account->name : '' ),
+				'label'     => $account->name,
 				'nav_class' => $first ? 'nav-tab-active' : '',
 				'tab_class' => $first ? '' : 'hidden',
 				'content'   => $this->view(
