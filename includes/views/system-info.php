@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="wrap gc-admin-wrap">
 	<h2><?php esc_html_e( 'System Information', 'content-workflow-by-bynder' ); ?></h2>
 	<br/>

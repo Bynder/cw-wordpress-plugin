@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php foreach ( $this->get( 'headers' ) as $sort_key => $label ) : ?>
 	<?php
 	/**

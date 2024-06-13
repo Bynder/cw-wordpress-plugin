@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <a href="#"
    class="gc-reveal-items dashicons-before dashicons-arrow-right description <?php $this->output( 'class', 'esc_attr' ); ?>"><?php esc_html_e( 'Sample of Items', 'content-workflow-by-bynder' ); ?> </a>
 <ul class="<?php $this->output( 'class', 'esc_attr' ); ?> gc-reveal-items-list hidden">

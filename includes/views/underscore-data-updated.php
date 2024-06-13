@@ -1,3 +1,5 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
+
 <# if ( false === data.current || data.current ) { #>
 <div class="gc-status-warning <# if ( false === data.current ) { #>not-<# } #>current">Your mapping was changed, please
 	reimport.

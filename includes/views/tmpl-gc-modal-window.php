@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * The Modal Window, including sidebar and content area.
  * Add menu items to ".navigation-bar nav ul"

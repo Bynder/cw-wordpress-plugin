@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="wrap gc-admin-wrap">
 	<h2><?php $this->output( 'logo' ); ?></h2>
 	<?php settings_errors(); ?>

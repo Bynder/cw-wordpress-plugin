@@ -435,7 +435,7 @@ function available_mapping_post_types() {
  */
 function auth_enabled() {
 	if ( ! empty( $_SERVER['REMOTE_USER'] ) ) {
-		return $_SERVER['REMOTE_USER'];
+		return sanitize_text_field($_SERVER['REMOTE_USER']);
 	}
 
 	foreach (

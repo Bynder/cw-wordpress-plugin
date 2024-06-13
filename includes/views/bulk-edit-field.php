@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div style="display:none;">
 	<?php $this->output( 'refresh_link' ); ?>
 </div>

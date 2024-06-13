@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php foreach ( $this->get( 'gc_status_options' ) as $status ) : ?>
 	<tr id="gc-status-<?php echo esc_attr( $status->id ); ?>">
 		<td>
