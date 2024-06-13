@@ -2,6 +2,8 @@
 
 namespace GatherContent\Importer\Post_Types;
 
+use Exception;
+
 class Async_Save_Hook extends \WP_Async_Task {
 	protected $action = 'save_post';
 	protected $post_type = 'save_post';
@@ -24,7 +26,7 @@ class Async_Save_Hook extends \WP_Async_Task {
 		$post_id = $data[0];
 		$post    = $data[1];
 		if ( $this->post_type !== $post->post_type ) {
-			throw new \Exception( 'We only want async tasks for: ' . $this->post_type );
+			throw new \Exception( 'We only want async tasks for: ' . esc_html( $this->post_type ) );
 		}
 
 		return array( 'post_id' => $post_id );

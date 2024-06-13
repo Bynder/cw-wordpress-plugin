@@ -158,10 +158,10 @@ class Pull extends Base {
 
 			if ( ! $success ) {
 				throw new Exception( 'Failed to save content to table', 500, [
-					'table'   => $table,
-					'column'  => $column,
-					'post_id' => $post_id,
-					'content' => $content
+					'table'   => wp_kses_post( $table ),
+					'column'  => wp_kses_post( $column ),
+					'post_id' => esc_html( $post_id ),
+					'content' => wp_kses_post( $content ),
 				] );
 			}
 		}
@@ -203,11 +203,11 @@ class Pull extends Base {
 				&& $is_up_to_date && apply_filters( 'gc_only_update_if_newer', true )
 			) {
 				throw new Exception(
-					sprintf( __( 'WordPress has most recent changes for %1$s (Item ID: %2$d):', 'content-workflow-by-bynder' ), $this->item->name, $this->item->id ),
+					sprintf( esc_html__( 'WordPress has most recent changes for %1$s (Item ID: %2$d):', 'content-workflow-by-bynder' ), esc_html( $this->item->name ), esc_html( $this->item->id ) ),
 					__LINE__,
 					array(
-						'post' => $existing->ID,
-						'item' => $this->item->id,
+						'post' => esc_html( $existing->ID ),
+						'item' => esc_html( $this->item->id ),
 					)
 				);
 			}
@@ -240,7 +240,7 @@ class Pull extends Base {
 		$post_id = wp_insert_post( $post_data, 1 );
 
 		if ( is_wp_error( $post_id ) ) {
-			throw new Exception( $post_id->get_error_message(), __LINE__, $post_id->get_error_data() );
+			throw new Exception( esc_html( $post_id->get_error_message() ), __LINE__, wp_kses_post( print_r( $post_id->get_error_data(), true ) ) );
 		}
 
 		$post_data['ID'] = $post_id;
@@ -265,7 +265,7 @@ class Pull extends Base {
 				$taxonomy_obj = get_taxonomy( $taxonomy );
 				if ( ! $taxonomy_obj ) {
 					/* translators: %s: taxonomy name */
-					_doing_it_wrong( __FUNCTION__, sprintf( __( 'Invalid taxonomy: %s.' ), $taxonomy ), '4.4.0' );
+					_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'Invalid taxonomy: %s.' ), esc_html($taxonomy) ), '4.4.0' );
 					continue;
 				}
 
@@ -979,14 +979,14 @@ class Pull extends Base {
 
 		switch ( $field ) {
 			case 'ID':
-				throw new Exception( __( 'Cannot override post IDs', 'content-workflow-by-bynder' ), __LINE__ );
+				throw new Exception( esc_html__( 'Cannot override post IDs', 'content-workflow-by-bynder' ), __LINE__ );
 
 			case 'post_date':
 			case 'post_date_gmt':
 			case 'post_modified':
 			case 'post_modified_gmt':
 				if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
-					throw new Exception( sprintf( __( '%s field requires a numeric timestamp, or date string.', 'content-workflow-by-bynder' ), $field ), __LINE__ );
+					throw new Exception( sprintf( esc_html__( '%s field requires a numeric timestamp, or date string.', 'content-workflow-by-bynder' ), esc_html($field) ), __LINE__ );
 				}
 
 				$value = is_numeric( $value ) ? $value : strtotime( $value );
@@ -996,7 +996,7 @@ class Pull extends Base {
 					: date( 'Y-m-d H:i:s', $value );
 			case 'post_format':
 				if ( isset( $post_data['post_type'] ) && ! post_type_supports( $post_data['post_type'], 'post-formats' ) ) {
-					throw new Exception( sprintf( __( 'The %s post-type does not support post-formats.', 'content-workflow-by-bynder' ), $post_data['post_type'] ), __LINE__ );
+					throw new Exception( sprintf( esc_html__( 'The %s post-type does not support post-formats.', 'content-workflow-by-bynder' ), esc_html($post_data['post_type']) ), __LINE__ );
 				}
 			case 'post_title':
 				$value = strip_tags( $value, '<strong><em><del><ins><code>' );
