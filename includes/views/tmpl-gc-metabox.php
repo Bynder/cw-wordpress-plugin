@@ -10,13 +10,29 @@
 <div class="misc-pub-section misc-gc-updated">
 	<span
 		class="dashicons dashicons-calendar"></span> <?php echo esc_html_x( 'Last Updated:', 'Content Workflow updated date', 'content-workflow-by-bynder' ); ?>
-	<b><?php echo new self( 'underscore-data-updated', $this->args ); ?></b>
+	<b>
+		<?php
+		/**
+		 * Everything that needs escaping is escaped in @see includes/views/underscore-data-updated.php
+		 */
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo new self( 'underscore-data-updated', $this->args );
+		?>
+	</b>
 </div>
 
 <div class="misc-pub-section misc-pub-gc-mapping">
 	<span class="dashicons dashicons-media-document"></span>
 	<?php esc_html_e( 'Mapping Template:', 'content-workflow-by-bynder' ); ?>
-	<strong><?php echo new self( 'underscore-data-mapping-name' ); ?></strong>
+	<strong>
+		<?php
+		/**
+		 * Everything that needs escaping is escaped in @see includes/views/underscore-data-mapping-name.php
+		 */
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo new self( 'underscore-data-mapping-name' );
+		?>
+	</strong>
 </div>
 
 <div class="gc-major-publishing-actions">

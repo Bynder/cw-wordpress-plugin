@@ -13,6 +13,7 @@ use GatherContent\Importer\Mapping_Post;
 use GatherContent\Importer\API;
 use GatherContent\Importer\Dom;
 use WP_Error;
+use WP_Post;
 
 /**
  * Sync-specific exception class w/ data property.
@@ -234,7 +235,7 @@ abstract class Base extends Plugin_Base {
 	protected function get_post( $post_id ) {
 		$post = $post_id instanceof WP_Post ? $post_id : get_post( $post_id );
 		if ( ! $post ) {
-			throw new Exception( sprintf( __( 'No post object by that id: %d', 'content-workflow-by-bynder' ), $post_id ), __LINE__ );
+			throw new Exception( sprintf( esc_html__( 'No post object by that id: %d', 'content-workflow-by-bynder' ), esc_html( $post_id ) ), __LINE__ );
 		}
 
 		return $post;
@@ -257,7 +258,7 @@ abstract class Base extends Plugin_Base {
 
 		if ( ! isset( $this->item->id ) ) {
 			// @todo maybe check if error was temporary.
-			throw new Exception( sprintf( __( 'Content Workflow could not get an item for that item id: %d', 'content-workflow-by-bynder' ), $item_id ), __LINE__, $this->item );
+			throw new Exception( sprintf( esc_html__( 'Content Workflow could not get an item for that item id: %d', 'content-workflow-by-bynder' ), esc_html( $item_id ) ), __LINE__, esc_html( print_r( $this->item, true ) ) );
 		}
 
 		return $this->item;
@@ -276,7 +277,7 @@ abstract class Base extends Plugin_Base {
 		$items = $this->mapping->get_items_to_sync( $this->direction );
 
 		if ( empty( $items['pending'] ) ) {
-			throw new Exception( sprintf( __( 'No items to %1$s for: %2$s', 'content-workflow-by-bynder' ), $this->direction, $this->mapping->ID ), __LINE__ );
+			throw new Exception( sprintf( esc_html__( 'No items to %1$s for: %2$s', 'content-workflow-by-bynder' ), esc_html( $this->direction ), esc_html( $this->mapping->ID ) ), __LINE__ );
 		}
 
 		return $items;
@@ -295,7 +296,7 @@ abstract class Base extends Plugin_Base {
 		$mapping_data = $this->mapping->data();
 		if ( empty( $mapping_data ) ) {
 			// @todo maybe check if error was temporary.
-			throw new Exception( sprintf( __( 'No mapping data found for: %s', 'content-workflow-by-bynder' ), $this->mapping->ID ), __LINE__ );
+			throw new Exception( sprintf( esc_html__( 'No mapping data found for: %s', 'content-workflow-by-bynder' ), esc_html( $this->mapping->ID ) ), __LINE__ );
 		}
 	}
 

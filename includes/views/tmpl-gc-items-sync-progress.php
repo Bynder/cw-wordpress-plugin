@@ -1,5 +1,5 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
-<legend class="screen-reader-text"><?php _e( 'Items Import Progress', 'content-workflow-by-bynder' ); ?></legend>
+<legend class="screen-reader-text"><?php esc_html_e( 'Items Import Progress', 'content-workflow-by-bynder' ); ?></legend>
 <table class="gc-sync-table">
 	<tbody>
 	<tr>
@@ -8,8 +8,8 @@
 				<div class="gc-progress-bar-partial" style="width: {{ data.percent }}%"><span>{{ data.percent }}%</span>
 				</div>
 				<button type="button" class="notice-dismiss gc-cancel-sync"
-						title="<?php _e( 'Cancel Import', 'content-workflow-by-bynder' ); ?>"><span
-						class="screen-reader-text"><?php _e( 'Cancel Import', 'content-workflow-by-bynder' ); ?></span>
+						title="<?php esc_html_e( 'Cancel Import', 'content-workflow-by-bynder' ); ?>"><span
+						class="screen-reader-text"><?php esc_html_e( 'Cancel Import', 'content-workflow-by-bynder' ); ?></span>
 				</button>
 			</div>
 		</th>

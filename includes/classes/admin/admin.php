@@ -282,13 +282,18 @@ class Admin extends Base {
 
 	public function api_setup_settings_cb() {
 		if ( $key = $this->should_migrate() ) {
-			echo '<p><strong>' . esc_html__( 'NOTE:', 'content-workflow-by-bynder' ) . '</strong> ' . sprintf( __( 'It looks like you are migrating from a previous version of the GatherContent plugin.<br>You will need to set up new GatherContent API credentials to continue. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'content-workflow-by-bynder' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'NOTE:', 'content-workflow-by-bynder' ) . '</strong> ' .
+			     esc_html__( 'It looks like you are migrating from a previous version of the GatherContent plugin.', 'content-workflow-by-bynder' ) .
+			     '<br>' .
+			     esc_html__( 'You will need to set up new GatherContent API credentials to continue. Instructions for getting your API key can be found ', 'content-workflow-by-bynder' ) .
+			     '<a href="https://gathercontent.com/developers/authentication/" target="_blank">here</a></p>';
 
 			if ( $slug = get_option( $key . '_api_url' ) ) {
 				$this->settings()->options['platform_url_slug'] = $slug;
 			}
 		} else {
-			echo '<p>' . sprintf( __( 'Enter your Content Workflow API credentials. Instructions for getting your API key can be found <a href="%s" target="_blank">here</a>.', 'content-workflow-by-bynder' ), 'https://gathercontent.com/developers/authentication/' ) . '</p>';
+			$message = __( 'Enter your Content Workflow API credentials. Instructions for getting your API key can be found', 'content-workflow-by-bynder' );
+			echo '<p>' . esc_html( $message ) . ' <a href="https://gathercontent.com/developers/authentication/" target="_blank">here</a></p>';
 		}
 	}
 

@@ -73,12 +73,12 @@ class Form_Section extends Base {
 				$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
 			}
 
-			echo "<tr{$class}>";
+			echo '<tr ' . esc_attr( $class ) . '>';
 
 			if ( ! empty( $field['args']['label_for'] ) ) {
-				echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . $field['title'] . '</label></th>';
+				echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . esc_html($field['title']) . '</label></th>';
 			} elseif ( ! empty( $field['title'] ) ) {
-				echo '<th scope="row">' . $field['title'] . '</th>';
+				echo '<th scope="row">' . esc_html($field['title']) . '</th>';
 			}
 
 			echo '<td>';
@@ -104,10 +104,6 @@ class Form_Section extends Base {
 		$field                        = apply_filters( "gathercontent_importer_field_{$this->id}_{$id}", $field, $this );
 		$this->fields[ $field['id'] ] = $field;
 
-	}
-
-	public function do_param( $key ) {
-		echo $this->param( $key );
 	}
 
 	public function param( $key ) {

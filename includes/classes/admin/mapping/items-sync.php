@@ -147,7 +147,8 @@ class Items_Sync extends Base {
 		] );
 
 		?>
-		<input type="hidden" name="mapping_id" id="gc-input-mapping_id" value="<?php echo $this->mapping_id; ?>"/>
+		<input type="hidden" name="mapping_id" id="gc-input-mapping_id"
+			   value="<?php echo esc_attr( $this->mapping_id ); ?>"/>
 		<?php foreach ( $hiddenInputs as $key => $value ) : ?>
 			<input type="hidden" name="<?php echo esc_attr( $key ); ?>" id="gc-input-<?php echo esc_attr( $key ); ?>"
 				   value="<?php echo esc_attr( $value ); ?>"/>
@@ -159,7 +160,7 @@ class Items_Sync extends Base {
 		<div id="gc-items-search"></div>
 		<div id="sync-tabs"><span class="gc-loader spinner is-active"></span></div>
 		<p class="description">
-			<a href="<?php echo $this->mapping->get_edit_post_link(); ?>"><?php echo $this->mappings->args->labels->edit_item; ?></a>
+			<a href="<?php echo esc_url( $this->mapping->get_edit_post_link() ); ?>"><?php echo esc_html( $this->mappings->args->labels->edit_item ); ?></a>
 		</p>
 		<?php
 	}
