@@ -39,7 +39,7 @@ class ACF extends Base implements Type {
 
 		// ============= BUILD FIELD GROUP OPTIONS =============
 		$group_results = $wpdb->get_results(
-			"SELECT * FROM wp_posts WHERE post_type = 'acf-field-group' AND post_status = 'publish' AND post_parent = 0"
+			"SELECT * FROM {$wpdb->posts} WHERE post_type = 'acf-field-group' AND post_status = 'publish' AND post_parent = 0"
 		);
 
 		// FIELD GROUPS
