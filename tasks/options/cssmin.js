@@ -10,7 +10,7 @@ module.exports = {
 		expand: true,
 
 		cwd: 'assets/css/',
-		src: ['gathercontent-importer.css'],
+		src: ['gathercontent-importer.css', 'cwby-component-disabled.css'],
 
 		dest: 'assets/css/',
 		ext: '.min.css'

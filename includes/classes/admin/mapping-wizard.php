@@ -540,6 +540,8 @@ class Mapping_Wizard extends Base {
 		}
 
 		if ( $template_has_repeatable_fields && ! $is_acf_pro_installed ) {
+		    \GatherContent\Importer\enqueue_style('cwby-component-disabled', 'cwby-component-disabled');
+
 			$notes .= $this->view(
 				'graceful-degradation',
 				array( 'additionalClass' => 'gc-component-disabled' ),
