@@ -7,7 +7,7 @@
 		<select class="gc-default-mapping-select" data-column="post_type"
 				name="<?php $this->output( 'option_base' ); ?>[post_type]">
 			<# if ( data.initial ) { #>
-			<option selected="selected" value=""><?php esc_html_e( 'Select' ); ?></option>
+			<option selected="selected" value=""><?php esc_html_e( 'Select', 'content-workflow-by-bynder' ); ?></option>
 			<# } #>
 			<?php foreach ( $this->get( 'post_type_options' ) as $option_val => $option_label ) : ?>
 				<option <# if ( '<?php echo esc_attr( $option_val ); ?>' === data.post_type && ! data.initial ) { #>selected="selected"<# } #> value="<?php echo esc_attr( $option_val ); ?>"><?php echo esc_html( $option_label ); ?></option>
