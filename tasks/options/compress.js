@@ -26,7 +26,6 @@ module.exports = {
 			'!**/**.orig',
 			'!**/**.map',
 			'!**/**Gruntfile.js',
-			'!**/**composer.json',
 			'!**/**composer.lock',
 			'!**/**bower.json',
 			'!**/**bower.json',
