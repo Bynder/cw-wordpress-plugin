@@ -65,17 +65,17 @@ abstract class Base extends Plugin_Base implements Type {
 	}
 
 	public function option_underscore_template( View $view ) {
-		$option = '<option <# if ( "' . $this->type_id() . '" === data.field_type ) { #>selected="selected"<# } #> value="' . $this->type_id() . '">' . $this->option_label . '</option>';
+		$option = '<option <# if ( "' . esc_html($this->type_id()) . '" === data.field_type ) { #>selected="selected"<# } #> value="' . esc_html($this->type_id()) . '">' . esc_html($this->option_label) . '</option>';
 
 		if ( $types = $this->get_supported_types() ) {
 			$option = '<# if ( data.type in ' . $types . ' ) { #>' . $option . '<# } #>';
 		}
 
 		/**
-		 * This is not escaped as it can contain various tags that we know are safe.
+		 * We force strip the script tags to avoid as XSS attacks.
+		 * We are unable to use wp_kses as it doesn't handle the <# #> tags correctly and strips the end tag.
 		 */
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo "\n\t" . $option;
+		echo "\n\t" . preg_replace("/<script.*?\/script>/s", "", $option)
 	}
 
 	public function underscore_options( $array ) {
