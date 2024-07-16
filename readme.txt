@@ -3,7 +3,7 @@ Contributors: bynder
 Donate link: https://www.bynder.com/products/content-workflow/
 Tags: structured content, gather content, gathercontent, import, migrate, export, mapping, production, writing, collaboration, platform, connect, link, gather, client, word, production, bynder, content, workflow
 Requires at least: 5.6.0
-Tested up to: 6.5.4
+Tested up to: 6.6.0
 Stable tag: 1.0.0
 License: GPL-2.0+
 Requires PHP: 7.0
