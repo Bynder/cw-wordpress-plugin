@@ -71,7 +71,7 @@ abstract class Enqueue extends Plugin_Base {
 
 		do_action( 'cwby_admin_enqueue_script' );
 
-		// Localize in footer so that 'gathercontent_localized_data' filter is more useful.
+		// Localize in footer so that 'cwby_localized_data' filter is more useful.
 		add_action( 'admin_footer', array( $this, 'script_localize' ), 1 );
 	}
 
@@ -91,12 +91,12 @@ abstract class Enqueue extends Plugin_Base {
 		 */
 		$queryArgs = $this->_get_vals( [ 'flush_cache', 'mapping' ] );
 
-		wp_localize_script( 'gathercontent', 'GatherContent', apply_filters( 'gathercontent_localized_data', array(
+		wp_localize_script( 'gathercontent', 'GatherContent', apply_filters( 'cwby_localized_data', array(
 			'debug'       => Utils::script_debug(),
 			// @codingStandardsIgnoreStart
 			'queryargs'   => $queryArgs,
 			// @codingStandardsIgnoreEnd
-			'_type_names' => Utils::gc_field_type_name( 'all' ),
+			'_type_names' => Utils::cwby_field_type_name( 'all' ),
 		) ) );
 	}
 }

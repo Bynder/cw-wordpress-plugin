@@ -41,12 +41,12 @@ define( 'GATHERCONTENT_INC', GATHERCONTENT_PATH . 'includes/' );
 if ( version_compare( phpversion(), '7.0', '<' ) ) {
 
 	// Womp womp.. PHP needs to be updated!
-	add_action( 'all_admin_notices', 'gathercontent_importer_php_version_too_low_notice' );
+	add_action( 'all_admin_notices', 'cwby_importer_php_version_too_low_notice' );
 
 } elseif ( version_compare( $GLOBALS['wp_version'], '5.8.2', '<' ) ) {
 
 	// Sad Trombone.. WordPress needs to be updated!
-	add_action( 'all_admin_notices', 'gathercontent_importer_wp_version_too_low_notice' );
+	add_action( 'all_admin_notices', 'cwby_importer_wp_version_too_low_notice' );
 } else {
 
 	// Include files
@@ -62,7 +62,7 @@ if ( version_compare( phpversion(), '7.0', '<' ) ) {
  * @since  3.0.0
  *
  */
-function gathercontent_importer_php_version_too_low_notice() {
+function cwby_importer_php_version_too_low_notice() {
 	$message = esc_html__( 'Sorry, the Content Workflow plugin requires a minimum PHP version of 5.3. Please contact your host and ask them to upgrade. For convenience, you can use the note provided on the WordPress recommended host supports page: ', 'content-workflow-by-bynder' );
 
 	echo '<div id="message" class="error">
@@ -81,7 +81,7 @@ function gathercontent_importer_php_version_too_low_notice() {
  * @since  3.0.0
  *
  */
-function gathercontent_importer_wp_version_too_low_notice() {
+function cwby_importer_wp_version_too_low_notice() {
 	printf(
 		'<div id="message" class="error"><p>%s</p></div>',
 		esc_html__( 'Sorry, for security and performance reasons, the Content Workflow plugin requires a minimum WordPress version of 4.4. Please update WordPress to the most recent version.', 'content-workflow-by-bynder' )
@@ -101,11 +101,11 @@ function gathercontent_importer_wp_version_too_low_notice() {
  * @since  3.0.0
  *
  */
-function gathercontent_importer_i18n() {
+function cwby_importer_i18n() {
 	$text_domain = GATHERCONTENT_SLUG;
 	$locale      = apply_filters( 'plugin_locale', get_locale(), $text_domain );
 	load_textdomain( $text_domain, WP_LANG_DIR . "/{$text_domain}/{$text_domain}-{$locale}.mo" );
 	load_plugin_textdomain( $text_domain, false, plugin_basename( GATHERCONTENT_PATH ) . '/languages/' );
 }
 
-add_action( 'init', 'gathercontent_importer_i18n' );
+add_action( 'init', 'cwby_importer_i18n' );

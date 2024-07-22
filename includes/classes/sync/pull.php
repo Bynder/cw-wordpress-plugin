@@ -47,7 +47,7 @@ class Pull extends Base {
 	 *
 	 */
 	public static function init_plugins_loaded_hooks() {
-		add_action( 'gc_associate_hierarchy', array( __CLASS__, 'associate_hierarchy' ) );
+		add_action( 'cwby_associate_hierarchy', array( __CLASS__, 'associate_hierarchy' ) );
 	}
 
 	/**
@@ -80,7 +80,7 @@ class Pull extends Base {
 			$this->mapping = Mapping_Post::get( $mapping_post, true );
 			$result        = $this->do_item( $item_id );
 		} catch ( \Exception $e ) {
-			$result = new WP_Error( 'gc_pull_item_fail_' . $e->getCode(), $e->getMessage(), $e->get_data() );
+			$result = new WP_Error( 'cwby_pull_item_fail_' . $e->getCode(), $e->getMessage(), $e->get_data() );
 		}
 
 		return $result;
@@ -199,7 +199,7 @@ class Pull extends Base {
 				// And if we do, compare them to see if GC item is newer.
 				&& ( $is_up_to_date = strtotime( $this->item->updated_at ) <= strtotime( $updated_at ) )
 				// If it's not newer, then don't update (unless asked to via filter).
-				&& $is_up_to_date && apply_filters( 'gc_only_update_if_newer', true )
+				&& $is_up_to_date && apply_filters( 'cwby_only_update_if_newer', true )
 			) {
 				throw new Exception(
 					sprintf( esc_html__( 'WordPress has most recent changes for %1$s (Item ID: %2$d):', 'content-workflow-by-bynder' ), esc_html( $this->item->name ), esc_html( $this->item->id ) ),
@@ -217,7 +217,7 @@ class Pull extends Base {
 			$roundTwo        = true;
 		}
 
-		$post_data = $this->map_gc_data_to_wp_data( $post_data );
+		$post_data = $this->map_cwby_data_to_wp_data( $post_data );
 
 		if ( ! empty( $post_data['attachments'] ) ) {
 			$attachments = $post_data['attachments'];
@@ -281,7 +281,7 @@ class Pull extends Base {
 		$updated_post_data = array();
 
 		if ( $attachments ) {
-			$attachments  = apply_filters( 'gc_media_objects', $attachments, $post_data );
+			$attachments  = apply_filters( 'cwby_media_objects', $attachments, $post_data );
 			$replacements = $this->sideload_attachments( $attachments, $post_data );
 
 			if ( ! empty( $replacements ) ) {
@@ -340,7 +340,7 @@ class Pull extends Base {
 	 * @since  3.0.0
 	 *
 	 */
-	protected function map_gc_data_to_wp_data( $post_data = array() ) {
+	protected function map_cwby_data_to_wp_data( $post_data = array() ) {
 
 		$this->check_mapping_data( $this->mapping );
 
@@ -1046,7 +1046,7 @@ class Pull extends Base {
 			}
 		}
 
-		return apply_filters( 'gc_get_element_terms', $terms, $this->element, $this->item );
+		return apply_filters( 'cwby_get_element_terms', $terms, $this->element, $this->item );
 	}
 
 	/**
@@ -1058,7 +1058,7 @@ class Pull extends Base {
 	 *
 	 */
 	protected function sanitize_element_meta() {
-		return apply_filters( 'gc_sanitize_meta_field', $this->element->value, $this->element, $this->item );
+		return apply_filters( 'cwby_sanitize_meta_field', $this->element->value, $this->element, $this->item );
 	}
 
 	/*
@@ -1074,7 +1074,7 @@ class Pull extends Base {
 	 *
 	 */
 	protected function sanitize_element_media() {
-		return apply_filters( 'gc_sanitize_media_field', $this->element->value, $this->element, $this->item );
+		return apply_filters( 'cwby_sanitize_media_field', $this->element->value, $this->element, $this->item );
 	}
 
 	/**
@@ -1140,7 +1140,7 @@ class Pull extends Base {
 								$img = $maybe_image ? $maybe_image : $image;
 
 								// Replace the GC "shortcode" with the image/link.
-								$img                                    = apply_filters( 'gc_content_image', $img, $media, $attach_id, $post_data, $atts );
+								$img                                    = apply_filters( 'cwby_content_image', $img, $media, $attach_id, $post_data, $atts );
 								$replacements[ $field ][ $replace_val ] = $img;
 							}
 
@@ -1149,7 +1149,7 @@ class Pull extends Base {
 						} else {
 
 							// Replace the token with the image.
-							$image                            = apply_filters( 'gc_content_image', $image, $media, $attach_id, $post_data, $atts );
+							$image                            = apply_filters( 'cwby_content_image', $image, $media, $attach_id, $post_data, $atts );
 							$replacements[ $field ][ $token ] = $image;
 						}
 					} elseif ( 'gallery' === $attachment['destination'] ) {
@@ -1178,7 +1178,7 @@ class Pull extends Base {
 
 							foreach ( $media_replace as $replace_val => $atts ) {
 								// Replace the GC "shortcode" with the file/link.
-								$link                                   = apply_filters( 'gc_content_file', $link, $media, $attach_id, $post_data, $atts );
+								$link                                   = apply_filters( 'cwby_content_file', $link, $media, $attach_id, $post_data, $atts );
 								$replacements[ $field ][ $replace_val ] = $link;
 							}
 
@@ -1187,7 +1187,7 @@ class Pull extends Base {
 						} else {
 
 							// Replace the token with the image.
-							$link                             = apply_filters( 'gc_content_file', $link, $media, $attach_id, $post_data, $atts );
+							$link                             = apply_filters( 'cwby_content_file', $link, $media, $attach_id, $post_data, $atts );
 							$replacements[ $field ][ $token ] = $link;
 						}
 					} else {
@@ -1225,12 +1225,12 @@ class Pull extends Base {
 		if ( ! empty( $gallery_ids ) ) {
 
 			$shortcode = '[gallery link="file" size="full" ids="' . implode( ',', $gallery_ids ) . '"]';
-			$shortcode = apply_filters( 'gc_content_gallery_shortcode', $shortcode, $gallery_ids, $post_data );
+			$shortcode = apply_filters( 'cwby_content_gallery_shortcode', $shortcode, $gallery_ids, $post_data );
 
 			$replacements['post_content'][ $gallery_token ] = $shortcode;
 		}
 
-		return apply_filters( 'gc_media_replacements', $replacements, $attachments, $post_data );
+		return apply_filters( 'cwby_media_replacements', $replacements, $attachments, $post_data );
 	}
 
 	/**
@@ -1263,7 +1263,7 @@ class Pull extends Base {
 			// Check if updated time-stamp is newer than previous updated timestamp.
 			if ( $new_updated > $old_updated ) {
 
-				$replace_data = apply_filters( 'gc_replace_attachment_data_on_update', false, $attachment );
+				$replace_data = apply_filters( 'cwby_replace_attachment_data_on_update', false, $attachment );
 
 				// @todo How to handle failures?
 				$attach_id = $this->sideload_and_update_attachment( $media->id, $media->filename, $media->download_url, $attachment, $replace_data, $media->alt_text );
@@ -1470,7 +1470,7 @@ class Pull extends Base {
 	 *
 	 */
 	public function should_map_hierarchy( $post_type ) {
-		return apply_filters( 'gc_map_hierarchy', is_post_type_hierarchical( $post_type ), $post_type, $this );
+		return apply_filters( 'cwby_map_hierarchy', is_post_type_hierarchical( $post_type ), $post_type, $this );
 	}
 
 	/**
@@ -1484,7 +1484,7 @@ class Pull extends Base {
 	 */
 	public function schedule_hierarchy_update( $post_id ) {
 
-		$option = "gc_associate_hierarchy_{$this->mapping->ID}";
+		$option = "cwby_associate_hierarchy_{$this->mapping->ID}";
 
 		// Check we have existing pending hierchies to set.
 		$pending = get_option( "gc_associate_hierarchy_{$this->mapping->ID}", array() );
@@ -1500,15 +1500,15 @@ class Pull extends Base {
 		$args = array( $this->mapping->ID );
 
 		// We'll want to restart our 'timer'.
-		if ( wp_next_scheduled( 'gc_associate_hierarchy', $args ) ) {
-			wp_clear_scheduled_hook( 'gc_associate_hierarchy', $args );
+		if ( wp_next_scheduled( 'cwby_associate_hierarchy', $args ) ) {
+			wp_clear_scheduled_hook( 'cwby_associate_hierarchy', $args );
 		}
 
 		/*
 		 * Schedule an event to associate hierarchy for these posts.
 		 * Will likely never be hit, as the cwby_pull_complete event will take precedence.
 		 */
-		wp_schedule_single_event( time() + 60, 'gc_associate_hierarchy', $args );
+		wp_schedule_single_event( time() + 60, 'cwby_associate_hierarchy', $args );
 	}
 
 	/**
@@ -1562,8 +1562,8 @@ class Pull extends Base {
 		}
 
 		// We'll want to clear any scheduled events, since we completed them.
-		if ( wp_next_scheduled( 'gc_associate_hierarchy', array( $mapping_id ) ) ) {
-			wp_clear_scheduled_hook( 'gc_associate_hierarchy', array( $mapping_id ) );
+		if ( wp_next_scheduled( 'cwby_associate_hierarchy', array( $mapping_id ) ) ) {
+			wp_clear_scheduled_hook( 'cwby_associate_hierarchy', array( $mapping_id ) );
 		}
 
 		return delete_option( $opt_name );

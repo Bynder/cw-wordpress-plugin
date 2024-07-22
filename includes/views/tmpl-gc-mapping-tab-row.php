@@ -54,9 +54,9 @@
 		<option
 		<# if ( '' === data.field_type ) { #>selected="selected"<# } #>
 		value=""><?php esc_html_e( 'Unused', 'content-workflow-by-bynder' ); ?></option>
-		<?php do_action( 'gathercontent_field_type_option_underscore_template', $this ); ?>
+		<?php do_action( 'cwby_field_type_option_underscore_template', $this ); ?>
 	</select>
-	<?php do_action( 'gathercontent_field_type_underscore_template', $this ); ?>
+	<?php do_action( 'cwby_field_type_underscore_template', $this ); ?>
 </td>
 
 
@@ -115,7 +115,7 @@ var subfield_type_translate = {
 							class="component-child wp-subfield-select" data-index="{{index}}"
 							name="<?php $this->output( 'option_base' ); ?>[mapping][{{ data.name }}][sub_fields][{{index}}]">
 						<option value=""><?php esc_html_e( 'Unused', 'content-workflow-by-bynder' ); ?></option>
-						<?php // do_action( 'gathercontent_field_type_option_underscore_template', $this ); ?>
+						<?php // do_action( 'cwby_field_type_option_underscore_template', $this ); ?>
 					</select>
 				</td>
 			</tr>

@@ -18,7 +18,7 @@ class Form_Section extends Base {
 		$this->page = $page;
 
 		$section = compact( 'id', 'title', 'callback', 'is_current' );
-		$section = apply_filters( "gathercontent_importer_section_{$id}", $section, $this );
+		$section = apply_filters( "cwby_importer_section_{$id}", $section, $this );
 
 		$this->id       = $section['id'];
 		$this->title    = $section['title'];
@@ -101,7 +101,7 @@ class Form_Section extends Base {
 		);
 
 		$field                        = compact( 'id', 'title', 'callback', 'args' );
-		$field                        = apply_filters( "gathercontent_importer_field_{$this->id}_{$id}", $field, $this );
+		$field                        = apply_filters( "cwby_importer_field_{$this->id}_{$id}", $field, $this );
 		$this->fields[ $field['id'] ] = $field;
 
 	}
@@ -121,5 +121,3 @@ class Form_Section extends Base {
 	}
 
 }
-
-

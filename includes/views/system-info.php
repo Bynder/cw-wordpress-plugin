@@ -9,7 +9,7 @@
 ### Begin System Info ###
 
 ## Please include this information when getting in touch with the Content Workflow (by Bynder) support team ##
-<?php do_action( 'gc_system_info_before' ); ?>
+<?php do_action( 'cwby_system_info_before' ); ?>
 
 Multisite:                <?php echo esc_html( $this->get( 'multisite' ) ), "\n"; ?>
 
@@ -74,7 +74,7 @@ ACTIVE PLUGINS:
 			<?php endif; ?>
 
 Plugin Options:           <?php echo esc_html( $this->get( 'gc_options' ) ), "\n"; ?>
-			<?php do_action( 'gc_system_info_after' ); ?>
+			<?php do_action( 'cwby_system_info_after' ); ?>
 
 ### End System Info ###</textarea>
 		<p><strong><?php esc_html_e( 'For more information:', 'content-workflow-by-bynder' ); ?></strong></p>

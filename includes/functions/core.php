@@ -72,7 +72,7 @@ function setup() {
 		add_action( 'init', $n( 'init' ) );
 	}
 
-	do_action( 'gathercontent_loaded' );
+	do_action( 'cwby_loaded' );
 
 	add_action( 'plugins_loaded', $n( 'General::init_plugins_loaded_hooks' ) );
 }
@@ -91,7 +91,7 @@ function init() {
 	$general = General::get_instance();
 	$general->init_hooks();
 
-	do_action( 'gathercontent_init', $general );
+	do_action( 'cwby_init', $general );
 }
 
 /**

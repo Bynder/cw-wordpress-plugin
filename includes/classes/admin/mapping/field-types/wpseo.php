@@ -55,7 +55,7 @@ class WPSEO extends Base implements Type {
 		$this->seo_options  = $this->get_seo_options();
 		$this->option_label = __( 'SEO', 'content-workflow-by-bynder' );
 
-		add_filter( 'gathercontent_importer_custom_field_keys_blacklist', array( $this, 'remove_wpseo_keys' ) );
+		add_filter( 'cwby_importer_custom_field_keys_blacklist', array( $this, 'remove_wpseo_keys' ) );
 	}
 
 	protected function get_seo_options() {

@@ -317,7 +317,7 @@ class Template_Mappings extends Base {
 			if ( $project_id && $template_id ) {
 				$link = admin_url(
 					sprintf(
-						'admin.php?page=gathercontent-import-add-new-template&project=%s&template=%s&mapping=%s',
+						'admin.php?page=cwby-import-add-new-template&project=%s&template=%s&mapping=%s',
 						$project_id,
 						$template_id,
 						$post_id
@@ -433,9 +433,9 @@ class Template_Mappings extends Base {
 	public function trigger_pre_actions( $ignore, $post_data ) {
 		if ( self::SLUG === $post_data['post_type'] ) {
 			if ( ! empty( $post_data['ID'] ) ) {
-				do_action( 'gc_mapping_pre_post_update', $post_data );
+				do_action( 'cwby_mapping_pre_post_update', $post_data );
 			} else {
-				do_action( 'gc_mapping_pre_post_create', $post_data );
+				do_action( 'cwby_mapping_pre_post_create', $post_data );
 			}
 
 			add_action( 'save_post_' . self::SLUG, array( __CLASS__, 'store_post_type_references' ), 10, 3 );
@@ -587,7 +587,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $projects ) ) {
-			new WP_Error( 'gc_no_projects', esc_html__( 'No projects were found for this account.', 'content-workflow-by-bynder' ) );
+			new WP_Error( 'cwby_no_projects', esc_html__( 'No projects were found for this account.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_projects = array();
@@ -626,7 +626,7 @@ class Template_Mappings extends Base {
 		}
 
 		if ( empty( $accounts ) ) {
-			new WP_Error( 'gc_no_accounts', esc_html__( 'No accounts were found.', 'content-workflow-by-bynder' ) );
+			new WP_Error( 'cwby_no_accounts', esc_html__( 'No accounts were found.', 'content-workflow-by-bynder' ) );
 		}
 
 		$all_accounts = array();

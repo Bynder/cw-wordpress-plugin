@@ -642,7 +642,7 @@ class API extends Base {
 	 */
 	public function cache_get( $endpoint, $expiration = HOUR_IN_SECONDS, $args = array(), $method = 'get', $query_params = array() ) {
 
-		$trans_key = 'gctr-' . md5( serialize( compact( 'endpoint', 'args', 'method', 'query_params' ) ) );
+		$trans_key = 'cwbytr-' . md5( serialize( compact( 'endpoint', 'args', 'method', 'query_params' ) ) );
 		$response  = get_transient( $trans_key );
 
 		if ( $this->only_cached ) {
@@ -698,7 +698,7 @@ class API extends Base {
 		try {
 			$args = $this->request_args( $args );
 		} catch ( \Exception $e ) {
-			return new WP_Error( 'gc_api_setup_fail', $e->getMessage() );
+			return new WP_Error( 'cwby_api_setup_fail', $e->getMessage() );
 		}
 
 		if ( Debug::debug_mode() ) {

@@ -96,7 +96,7 @@ class Push extends Base {
 			$result = $this->do_item( $post->ID );
 
 		} catch ( \Exception $e ) {
-			$result = new WP_Error( 'gc_push_item_fail_' . $e->getCode(), $e->getMessage(), $e->get_data() );
+			$result = new WP_Error( 'cwby_push_item_fail_' . $e->getCode(), $e->getMessage(), $e->get_data() );
 		}
 
 		return $result;
@@ -121,7 +121,7 @@ class Push extends Base {
 
 		$this->set_item( \GatherContent\Importer\get_post_item_id( $this->post->ID ), true );
 
-		$config_update = $this->map_wp_data_to_gc_data();
+		$config_update = $this->map_wp_data_to_cwby_data();
 
 		// No updated data, so bail.
 		if ( empty( $config_update ) ) {
@@ -297,10 +297,10 @@ class Push extends Base {
 	 * @since  3.0.0
 	 *
 	 */
-	protected function map_wp_data_to_gc_data() {
+	protected function map_wp_data_to_cwby_data() {
 		$config = $this->loop_item_elements_and_map();
 
-		return apply_filters( 'gc_update_gc_config_data', $config, $this );
+		return apply_filters( 'cwby_update_cwby_config_data', $config, $this );
 	}
 
 	/**
@@ -553,7 +553,7 @@ class Push extends Base {
 		$el_value = $this->element->value;
 
 		$value = ! empty( $this->post->{$post_column} ) ? self::remove_zero_width( $this->post->{$post_column} ) : false;
-		$value = apply_filters( "gc_get_{$post_column}", $value, $this );
+		$value = apply_filters( "cwby_get_{$post_column}", $value, $this );
 
 		// Make element value match the WP versions formatting, to see if they are equal.
 		switch ( $post_column ) {
@@ -778,7 +778,7 @@ class Push extends Base {
 
 		}
 
-		return apply_filters( 'gc_config_meta_field_value_updated', $updated, $meta_value, $meta_key, $this );
+		return apply_filters( 'cwby_config_meta_field_value_updated', $updated, $meta_value, $meta_key, $this );
 	}
 
 
