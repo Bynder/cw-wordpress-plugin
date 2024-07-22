@@ -718,7 +718,7 @@ class API extends Base {
 			}
 		}
 
-		$args['headers']['Referer'] = $_SERVER['HTTP_HOST'];
+		$args['headers']['Referer'] = sanitize_url($_SERVER['HTTP_HOST']);
 
 		if ( 'PUT' === $method ) {
 			$response = $this->http->request( $uri, $args );
