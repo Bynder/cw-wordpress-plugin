@@ -16,45 +16,45 @@ namespace GatherContent\Importer;
 abstract class Base {
 
 	/**
-	 * The $_GET superglobal.
+	 * The parameters from $_GET that have been sanitised.
 	 *
 	 * @var array|null
 	 */
-	protected static $_get = null;
+	protected static $getParameters = null;
 
 	/**
-	 * The $_POST superglobal.
+	 * The parameters from $_POST that have been sanitised.
 	 *
 	 * @var array|null
 	 */
-	protected static $_post = null;
+	protected static $postParameters = null;
 
 	/**
 	 * Creates an instance of this class.
 	 * Superglobals are passed as class arguments to keep the object clean of globals.
 	 *
-	 * @param array $_get Array of $_GET variables.
-	 * @param array $_post Array of $_POST variables.
+	 * @param array $getParameters Array of $_GET variables that have been sanitised.
+	 * @param array $postParameters Array of $_POST variables that have been sanitised.
 	 *
 	 * @throws Exception If the $_GET and $_Post variables are not set on the first initation.
 	 * @since 3.0.0
 	 *
 	 */
-	protected function __construct( array $_get = null, array $_post = null ) {
+	protected function __construct( array $getParameters = null, array $postParameters = null ) {
 		/**
 		 * These checks and sets are required as the first time something initialises this type of class
 		 * it will set them, then after that any other class extending this one doesn't need to bother
 		 * and therefore can pass null.
 		 */
-		if ( is_array( $_get ) ) {
-			self::$_get = $_get;
+		if ( is_array( $getParameters ) ) {
+			self::$getParameters = $getParameters;
 		}
 
-		if ( is_array( $_post ) ) {
-			self::$_post = $_post;
+		if ( is_array( $postParameters ) ) {
+			self::$postParameters = $postParameters;
 		}
 
-		if ( null === self::$_get || null === self::$_post ) {
+		if ( null === self::$getParameters || null === self::$postParameters ) {
 			throw new Exception( __CLASS__ . ' expects the $_GET and $_POST variables as arguments', 500 );
 		}
 	}
@@ -69,7 +69,7 @@ abstract class Base {
 	 *
 	 */
 	public function _get_val( $key ) {
-		return isset( self::$_get[ $key ] ) ? self::$_get[ $key ] : null;
+		return isset( self::$getParameters[ $key ] ) ? self::$getParameters[ $key ] : null;
 	}
 
 	/**
@@ -98,7 +98,7 @@ abstract class Base {
 	 *
 	 */
 	public function get_val_equals( $key, $value ) {
-		return isset( self::$_get[ $key ] ) && $value === self::$_get[ $key ];
+		return isset( self::$getParameters[ $key ] ) && $value === self::$getParameters[ $key ];
 	}
 
 	/**
@@ -111,7 +111,7 @@ abstract class Base {
 	 *
 	 */
 	public function _post_val( $key ) {
-		return isset( self::$_post[ $key ] ) ? self::$_post[ $key ] : null;
+		return isset( self::$postParameters[ $key ] ) ? self::$postParameters[ $key ] : null;
 	}
 
 	/**
@@ -125,7 +125,7 @@ abstract class Base {
 	 *
 	 */
 	public function post_val_equals( $key, $value ) {
-		return isset( self::$_post[ $key ] ) && $value === self::$_post[ $key ];
+		return isset( self::$postParameters[ $key ] ) && $value === self::$postParameters[ $key ];
 	}
 
 	/**

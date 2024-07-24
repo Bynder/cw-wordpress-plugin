@@ -121,9 +121,10 @@ class General extends Base {
 				'post_type',
 			] )
 		);
+
 		$expectedPostData = array_intersect_key(
 			$_POST,
-			array_flip( [
+			array_flip([
 				'data',
 				'flush_cache',
 				'gc-download-sysinfo-nonce',
@@ -143,10 +144,22 @@ class General extends Base {
 				'subfields_data',
 				'gc_templates',
 				'post_type',
-			] )
+			])
 		);
 
-		parent::__construct( $expectedGetData, $expectedPostData );
+		$sanitisedGetData = $this->sanitise($expectedGetData, 'expected_get_data');
+		$sanitisedPostData = $this->sanitise($expectedPostData, 'expected_post_data');
+
+		// $postDiffBetween = $this->array_diff_assoc_recursive($expectedPostData, $sanitisedPostData);
+		// $getDiffBetween = $this->array_diff_assoc_recursive($expectedGetData, $sanitisedGetData);
+
+		// if (count($postDiffBetween) > 0 || count($getDiffBetween) > 0) {
+		//   error_log('=================================');
+		//   error_log(json_encode(['postDiff' => $postDiffBetween, 'getDiff' => $getDiffBetween]));
+		//   error_log('=================================');
+		// }
+
+		parent::__construct( $sanitisedGetData, $sanitisedPostData );
 		new Utils();
 
 		$this->api          = new API( _wp_http_get_object() );
@@ -175,6 +188,46 @@ class General extends Base {
 			$this->compatibility_wml = new Compatibility\WPML();
 		}
 	}
+
+	public function sanitise(array $data, string $key) {
+	    $keys = array_keys($data);
+        $values = array_map(function ($value, $key) {
+            if (is_array($value)) {
+                return $this->sanitise($value, $key);
+            }
+
+            // If data isn't an array then it will be a query string so we can sanitize it.
+            if ($key === 'data') {
+                return str_replace('http://', '', sanitize_url($value));
+            }
+
+            if (filter_var($value, FILTER_VALIDATE_URL)) {
+                return sanitize_url($value);
+            }
+
+            return wp_kses_post($value);
+        }, array_values($data), $keys);
+
+        return array_combine($keys, $values);
+    }
+
+    public function array_diff_assoc_recursive($array1, $array2) {
+        $difference = [];
+        foreach($array1 as $key => $value) {
+            if( is_array($value) ) {
+                if( !isset($array2[$key]) || !is_array($array2[$key]) ) {
+                    $difference[$key] = ['old' => $value, 'new' => $array2[$key] ?? 'not set'];
+                } else {
+                    $new_diff = $this->array_diff_assoc_recursive($value, $array2[$key]);
+                    if( !empty($new_diff) )
+                        $difference[$key] = $new_diff;
+                }
+            } else if( !array_key_exists($key,$array2) || $array2[$key] !== $value ) {
+                $difference[$key] = ['old' => $value, 'new' => $array2[$key] ?? 'not set'];
+            }
+        }
+        return $difference;
+    }
 
 	/**
 	 * Initiate plugins_loaded hooks.
@@ -228,4 +281,3 @@ class General extends Base {
 	}
 
 }
-
