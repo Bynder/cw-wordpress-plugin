@@ -29,7 +29,7 @@ class Core_Tests extends Base\TestCase {
 		// Setup
 		\WP_Mock::expectActionAdded( 'init', 'GatherContent\Importer\Core\i18n' );
 		\WP_Mock::expectActionAdded( 'init', 'GatherContent\Importer\Core\init' );
-		\WP_Mock::expectAction( 'gathercontent_loaded' );
+		\WP_Mock::expectAction( 'cwby_loaded' );
 
 		// Act
 		setup();
@@ -75,7 +75,7 @@ class Core_Tests extends Base\TestCase {
 	 */
 	public function test_init() {
 		// Setup
-		\WP_Mock::expectAction( 'gathercontent_init' );
+		\WP_Mock::expectAction( 'cwby_init' );
 
 		// Act
 		init();

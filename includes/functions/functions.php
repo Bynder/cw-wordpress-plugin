@@ -291,7 +291,7 @@ function prepare_js_data( $args, $item = null, $type = 'post' ) {
 			: (object) array();
 
 		$args['typeName'] = isset( $item->type )
-			? Utils::gc_field_type_name( $item->type )
+			? Utils::cwby_field_type_name( $item->type )
 			: '';
 
 		if ( isset( $item->updated_at ) ) {
@@ -307,7 +307,7 @@ function prepare_js_data( $args, $item = null, $type = 'post' ) {
 		$args['current'] = \GatherContent\Importer\post_is_current( $args['post_id'], $item );
 	}
 
-	return apply_filters( "gc_prepare_js_data_for_$type", $args, $type, $item );
+	return apply_filters( "cwby_prepare_js_data_for_$type", $args, $type, $item );
 }
 
 /**
@@ -409,7 +409,7 @@ function user_allowed() {
  *
  */
 function view_capability() {
-	return apply_filters( 'gathercontent_settings_view_capability', 'publish_pages' );
+	return apply_filters( 'cwby_settings_view_capability', 'publish_pages' );
 }
 
 /**
@@ -423,7 +423,7 @@ function view_capability() {
 function available_mapping_post_types() {
 	$post_types = get_post_types( array( 'public' => true ) );
 
-	return apply_filters( 'gathercontent_mapping_post_types', $post_types );
+	return apply_filters( 'cwby_mapping_post_types', $post_types );
 }
 
 /**

@@ -450,7 +450,7 @@ class Template_Mapper extends Base {
 			$field->type = $field_type === 'attachment' ? 'files' : $field_type;
 		}
 
-		$field->typeName = Utils::gc_field_type_name( $field_type );
+		$field->typeName = Utils::cwby_field_type_name( $field_type );
 
 		if ( $val = $this->get_value( $field->uuid ) ) {
 			$field->field_type      = isset( $val['type'] ) ? $val['type'] : '';

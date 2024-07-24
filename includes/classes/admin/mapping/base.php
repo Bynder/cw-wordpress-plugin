@@ -126,7 +126,7 @@ abstract class Base extends Plugin_Base {
 		// Hook in the underscores templates.
 		add_action( 'admin_footer', array( $this, 'footer_mapping_js_templates' ) );
 
-		add_filter( 'gathercontent_localized_data', array( $this, 'localize_data' ) );
+		add_filter( 'cwby_localized_data', array( $this, 'localize_data' ) );
 
 		$script_id = $this->script_id();
 
@@ -240,7 +240,7 @@ abstract class Base extends Plugin_Base {
 	protected function custom_field_keys() {
 		global $wpdb;
 
-		$meta_keys = get_transient( 'gathercontent_importer_custom_field_keys' );
+		$meta_keys = get_transient( 'cwby_importer_custom_field_keys' );
 
 		if ( ! $meta_keys || $this->_get_val( 'delete-trans' ) ) {
 			// Retrieve custom field keys to include in the Custom Fields weight table select.
@@ -253,11 +253,11 @@ abstract class Base extends Plugin_Base {
 			"
 			);
 
-			set_transient( 'gathercontent_importer_custom_field_keys', $meta_keys, DAY_IN_SECONDS );
+			set_transient( 'cwby_importer_custom_field_keys', $meta_keys, DAY_IN_SECONDS );
 		}
 
 		// Allow devs to filter this list.
-		$meta_keys = array_unique( apply_filters( 'gathercontent_importer_custom_field_keys', $meta_keys ) );
+		$meta_keys = array_unique( apply_filters( 'cwby_importer_custom_field_keys', $meta_keys ) );
 
 		// Sort the keys alphabetically.
 		if ( $meta_keys ) {
@@ -272,7 +272,7 @@ abstract class Base extends Plugin_Base {
 		 * @var array
 		 */
 		$meta_keys_blacklist = apply_filters(
-			'gathercontent_importer_custom_field_keys_blacklist',
+			'cwby_importer_custom_field_keys_blacklist',
 			array(
 				'_wp_attachment_image_alt' => 1,
 				'_wp_attachment_metadata'  => 1,

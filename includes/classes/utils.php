@@ -170,12 +170,12 @@ class Utils extends Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public static function gc_field_type_name( $type ) {
+	public static function cwby_field_type_name( $type ) {
 		static $types = null;
 
 		if ( null === $types ) {
 			$types = apply_filters(
-				'gc_field_type_names',
+				'cwby_field_type_names',
 				array(
 					'text'            => __( 'Text', 'content-workflow-by-bynder' ),
 					'text_rich'       => __( 'Rich Text', 'content-workflow-by-bynder' ),

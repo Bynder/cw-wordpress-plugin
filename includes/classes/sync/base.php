@@ -309,7 +309,7 @@ abstract class Base extends Plugin_Base {
 	protected function get_element_value() {
 		$val = $this->get_value_for_element( $this->element );
 
-		return apply_filters( 'gc_get_element_value', $val, $this->element, $this->item );
+		return apply_filters( 'cwby_get_element_value', $val, $this->element, $this->item );
 	}
 
 	/**
@@ -604,7 +604,7 @@ abstract class Base extends Plugin_Base {
 	protected function type_can_append( $field ) {
 		$can_append = in_array( $field, $this->append_types, true );
 
-		return apply_filters( "gc_can_append_{$field}", $can_append, $this->element, $this->item );
+		return apply_filters( "cwby_can_append_{$field}", $can_append, $this->element, $this->item );
 	}
 
 	/**

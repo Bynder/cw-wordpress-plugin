@@ -57,7 +57,7 @@ class View {
 	public function load( $echo = true ) {
 
 		// Filter args before outputting template.
-		$this->args = apply_filters( "gc_template_args_for_{$this->template}", $this->args, $this );
+		$this->args = apply_filters( "cwby_template_args_for_{$this->template}", $this->args, $this );
 		$id         = md5( $this->template . serialize( $this->args ) );
 
 		if ( ! isset( self::$views[ $id ] ) ) {

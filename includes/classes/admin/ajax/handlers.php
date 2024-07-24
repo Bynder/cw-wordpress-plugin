@@ -161,7 +161,7 @@ class Handlers extends Plugin_Base {
 			);
 		}
 
-		wp_send_json_success( apply_filters( 'gc_prepare_js_update_data_for_posts', $post_updates ) );
+		wp_send_json_success( apply_filters( 'cwby_prepare_js_update_data_for_posts', $post_updates ) );
 	}
 
 	/**

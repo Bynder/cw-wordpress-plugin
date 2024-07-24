@@ -36,7 +36,7 @@ class Types extends Plugin_Base {
 	 * @since 3.0.0
 	 */
 	public function register() {
-		$field_types = apply_filters( 'gathercontent_register_field_types_handlers', $this->core_types );
+		$field_types = apply_filters( 'cwby_register_field_types_handlers', $this->core_types );
 
 		foreach ( $field_types as $type ) {
 			if ( ! ( $type instanceof Type ) ) {
@@ -44,11 +44,11 @@ class Types extends Plugin_Base {
 			}
 
 			$this->field_types[ $type->type_id() ] = $type;
-			add_action( 'gathercontent_field_type_option_underscore_template', array(
+			add_action( 'cwby_field_type_option_underscore_template', array(
 				$type,
 				'option_underscore_template'
 			) );
-			add_action( 'gathercontent_field_type_underscore_template', array( $type, 'underscore_template' ) );
+			add_action( 'cwby_field_type_underscore_template', array( $type, 'underscore_template' ) );
 		}
 
 		return $this;

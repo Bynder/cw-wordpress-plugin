@@ -14,7 +14,7 @@ use GatherContent\Importer\Post_Types\Template_Mappings;
  */
 class Mapping_Wizard extends Base {
 
-	const SLUG = 'gathercontent-import-add-new-template';
+	const SLUG = 'cwby-import-add-new-template';
 	const ACCOUNT = 0;
 	const PROJECT = 1;
 	const TEMPLATE = 2;

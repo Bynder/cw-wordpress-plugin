@@ -262,11 +262,11 @@ class Debug extends Base {
 
 		} elseif ( $settings['delete_gc_log_file'] ) {
 
-			return $this->delete_gc_log_file( $back_button );
+			return $this->delete_cwby_log_file( $back_button );
 
 		} elseif ( $settings['view_gc_log_file'] ) {
 
-			return $this->view_gc_log_file( $back_button );
+			return $this->view_cwby_log_file( $back_button );
 
 		} elseif ( $settings['disable_debug_mode'] ) {
 
@@ -332,7 +332,7 @@ class Debug extends Base {
 	 * @since  3.0.1
 	 *
 	 */
-	public function delete_gc_log_file( $back_button ) {
+	public function delete_cwby_log_file( $back_button ) {
 		if ( wp_delete_file( self::$log_path ) ) {
 			wp_die( esc_html__( 'Content Workflow log file deleted.', 'content-workflow-by-bynder' ) . wp_kses_post( $back_button ), esc_html__( 'Debug Mode', 'content-workflow-by-bynder' ) );
 		}
@@ -349,7 +349,7 @@ class Debug extends Base {
 	 * @since  3.0.1
 	 *
 	 */
-	public function view_gc_log_file( $back_button ) {
+	public function view_cwby_log_file( $back_button ) {
 		$log_contents = file_exists( self::$log_path ) ? wp_remote_get( self::$log_path ) : '';
 
 		if ( ! $log_contents ) {
