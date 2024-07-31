@@ -81,6 +81,10 @@ This plugin relies on the following third-party services:
 
 ## Changelog
 
+### 1.0.1 ###
+* Updating the plugin listing page to have new assets and an improved description.
+* Fixing small typo within the plugin API stopping the plugin from loading.
+
 ### 1.0.0 ###
 
 * Officially supporting components by using the Advanced Custom Fields plugins
