@@ -67,6 +67,10 @@ Below the text box is a button that will allow you to simply save all of that in
 4. Bulk import your content at scale
 
 == Changelog ==
+= 1.0.1 =
+* Updating the plugin listing page to have new assets and an improved description.
+* Fixing small typo within the plugin API stopping the plugin from loading.
+
 = 1.0.0 =
 * Officially supporting component by using the Advanced Custom Fields plugins
 * Full rebrand to Content Workflow by Bynder
