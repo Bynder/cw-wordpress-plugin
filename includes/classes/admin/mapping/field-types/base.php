@@ -75,7 +75,7 @@ abstract class Base extends Plugin_Base implements Type {
 		 * We force strip the script tags to avoid as XSS attacks.
 		 * We are unable to use wp_kses as it doesn't handle the <# #> tags correctly and strips the end tag.
 		 */
-		echo "\n\t" . preg_replace("/<script.*?\/script>/s", "", $option)
+		echo "\n\t" . preg_replace("/<script.*?\/script>/s", "", $option);
 	}
 
 	public function underscore_options( $array ) {
