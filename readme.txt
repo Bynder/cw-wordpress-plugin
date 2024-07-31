@@ -13,22 +13,23 @@ Quickly transfer structured content to and from your Content Workflow projects a
 
 == Description ==
 
-Installing our WordPress plugin on your site allows you to quickly perform updates of your content from your Content Workflow account to WordPress as well as push your WordPress content updates back to Content Workflow. Content can be imported as new pages/posts or custom post types, and you can also import your WordPress content back to new Content Workflow items.
+The Content Workflow by Bynder (formerly GatherContent) plugin allows you quickly import content from your Content Workflow account into your WordPress site. The plugin supports pages, posts, custom post types and the ACF plugin for advanced mapping of components.
+Set up Template Mappings between existing templates in Content Workflow and posts and pages within WordPress, to create  seamless export and import of your content.
 
-The plugin allows you to map each field in your Content Workflow Templates with WordPress fields. This is accomplished by creating a Template Mapping, which allows you to map each field in Content Workflow to various fields in WordPress; title, body content, custom fields, tags, categories, Yoast fields, advanced custom fields, featured images … and many more.
-
-The module currently supports the following features:
-
-* Import content from Content Workflow
-* Export content to Content Workflow
-* Update content in Wordpress from Content Workflow
-* Update content from Wordpress to Content Workflow
+The Content Workflow by Bynder plugin also supports the automation of your content workflow statuses to save time and reduce errors when migrating your content:
+- filter existing content in your account by workflow status
+- map your Content Workflow status to WordPress status
+- automatically update status of a content item within Content Workflow on import
 
 ### What is Content Workflow?
 
-Content Workflow is an online platform for pulling together, editing, and reviewing website content with your clients and colleagues. It's a reliable alternative to emailing around Word documents and pasting content into your CMS. This plugin replaces that process of copying and pasting content and allows you to bulk import structured content, and then continue to update it in WordPress with a few clicks.
+Content Workflow is the new standard for structured content creation. Create content templates and workflows to manage the entire process without juggling documents, chasing feedback, or copying and pasting into your publishing tools.
 
-Connecting a powerful content production platform, to a powerful content publishing platform.
+Get everyone on the same page with a transparent content production process that promotes accountability and efficiency without jeopardizing quality. Work together in real-time to get work done—fast.
+
+Kiss goodbye to un-approved content finding its way in front of customers. A transparent workflow ensures that content stays up to date and accurate—avoiding regulatory risk or off-brand content.
+
+Accelerate content creation and unlock the potential of AI Assist to generate, edit, translate, and polish drafts effortlessly. With robust safeguards for additional peace of mind, you can recognize AI-generated content, manage user access, and always be in control.
 
 == Installation ==
 
@@ -60,12 +61,10 @@ Below the text box is a button that will allow you to simply save all of that in
 * Please [visit our support documentation](https://support.bynder.com/hc/en-us/articles/14786938909458-Content-Workflow-Integrations#wordpress-integration).
 
 == Screenshots ==
-1. Create Template Mappings to map your Content Workflow Templates to your WordPress content.
-2. Mappings allow you to import Content Workflow items as Pages, Posts, Media and various Custom Post Types.
-3. Map individual fields to a huge range of places in WordPress.
-4. Quickly find your items by entering the bulk-edit view, and using filters and live search.
-5. Using the post metabox, you can push and pull your Content Workflow items, and change their status on Content Workflow.
-6. Or change the item's Content Workflow status in quick-edit mode.
+1. Create Template mappings between Content Workflow and your WordPress posts and pages
+2. Automate workflow status updates during import
+3. Filter and refine to content you wish to import
+4. Bulk import your content at scale
 
 == Changelog ==
 = 1.0.0 =
