@@ -800,7 +800,7 @@ class API extends Base {
 		$headers = array(
 			'Authorization' => 'Basic ' . base64_encode( $this->user . ':' . $this->api_key ),
 			'Accept'        => 'application/vnd.gathercontent.v0.5+json',
-			'user-agent'    => "Integration-WordPress-{$wp_version}/{$plugin_version}",
+			'user-agent'    => "Content-Workflow-Integration-WordPress-{$wp_version}/{$plugin_version}",
 		);
 
 		$args['headers'] = isset( $args['headers'] )
