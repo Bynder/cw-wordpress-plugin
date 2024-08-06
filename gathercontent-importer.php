@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  Content Workflow (by Bynder)
  * Description:  Imports items from Content Workflow to your Wordpress site
- * Version:      1.0.0
+ * Version:      1.0.2 
  * Author:       Content Workflow (by Bynder)
  * Requires PHP: 7.0
  * Author URI:   https://www.bynder.com/products/content-workflow/
@@ -28,8 +28,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
- 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly 
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Useful global constants
 define( 'GATHERCONTENT_VERSION', '1.0.0' );
