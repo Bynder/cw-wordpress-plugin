@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  Content Workflow (by Bynder)
  * Description:  Imports items from Content Workflow to your Wordpress site
- * Version:      1.0.2 
+ * Version:      1.0.3
  * Author:       Content Workflow (by Bynder)
  * Requires PHP: 7.0
  * Author URI:   https://www.bynder.com/products/content-workflow/
