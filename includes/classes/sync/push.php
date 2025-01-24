@@ -10,6 +10,7 @@ namespace GatherContent\Importer\Sync;
 use GatherContent\Importer\Post_Types\Template_Mappings;
 use GatherContent\Importer\Mapping_Post;
 use GatherContent\Importer\API;
+use Ramsey\Uuid\Uuid;
 use WP_Error;
 
 /**
@@ -87,6 +88,7 @@ class Push extends Base {
 	 */
 	public function maybe_push_item( $mapping_post_id ) {
 		try {
+			echo 'maybe_push_item';
 
 			$post       = $this->get_post( $mapping_post_id );
 			$mapping_id = \GatherContent\Importer\get_post_mapping_id( $post->ID );
@@ -114,7 +116,6 @@ class Push extends Base {
 	 *
 	 */
 	protected function do_item( $id ) {
-
 		$this->post = $this->get_post( $id );
 
 		$this->check_mapping_data( $this->mapping );
@@ -127,12 +128,12 @@ class Push extends Base {
 		if ( empty( $config_update ) ) {
 
 			throw new Exception(
-				sprintf( esc_html__( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), esc_html($this->post->ID) ),
+				sprintf( esc_html__( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), esc_html( $this->post->ID ) ),
 				__LINE__,
 				array(
-					'post_id'    => esc_html($this->post->ID),
-					'mapping_id' => esc_html($this->mapping->ID),
-					'item_id'    => esc_html($this->item->id) ?? 0,
+					'post_id'    => esc_html( $this->post->ID ),
+					'mapping_id' => esc_html( $this->mapping->ID ),
+					'item_id'    => esc_html( $this->item->id ) ?? 0,
 				)
 			);
 		}
@@ -144,7 +145,7 @@ class Push extends Base {
 	/**
 	 * Pushes WP post to GC.
 	 *
-	 * @param array $update The item config update delta array.
+	 * @param array $fieldsContainingUpdates The fields that contain updates, when compared against the config.
 	 *
 	 * @return mixed Result of push.
 	 * @throws Exception On failure.
@@ -152,73 +153,63 @@ class Push extends Base {
 	 * @since  3.0.0
 	 *
 	 */
-	public function maybe_do_item_update( $update ) {
-		// Get our initial croonfig reference.
-		$config = json_decode( $this->config );
+	public function maybe_do_item_update($fieldsContainingUpdates) {
+		// The config is everything that has been persisted to the item on Content Workflow.
+		$config = json_decode($this->config);
 
 		// And update the content with the new values.
-		foreach ( $update as $updated_element ) {
-			$element_id = $updated_element->name;
+		foreach ($fieldsContainingUpdates as $updatedField) {
+			$fieldId = $updatedField->name;
 
-			// handle repeatable elements because we stored them in JSON format earlier and GC requires it in array format
-			if ( $updated_element->repeatable ) {
+			// Repeatable fields
+			if ($updatedField->repeatable) {
+				// Extract the repeatable value from JSON if it's a string, or use the value directly
+				$repeatableValue = is_string($updatedField->value)
+					? (!empty($updatedField->value) ? json_decode($updatedField->value, true) : $updatedField->value)
+					: $updatedField->value;
 
-				// $repeatable_value = ! empty( $updated_element->value ) ? @json_decode( $updated_element->value, true ) : $updated_element->value;
-				if ( is_string( $updated_element->value ) ) {
-					$repeatable_value = ! empty( $updated_element->value ) ? json_decode( $updated_element->value, true ) : $updated_element->value;
-				} else {
-					// Handle the case where $updated_element->value is already an array
-					$repeatable_value = $updated_element->value;
-				}
-				if ( is_array( $repeatable_value ) ) {
-					$updated_element->value = $repeatable_value;
-				} else {
-					$updated_element->value = array();
-				}
+				// Assign the repeatable value to the field, only if it's an array
+				$updatedField->value = is_array($repeatableValue) ? $repeatableValue : array();
 			}
 
-			// handle new item because we don't have content object for it
-			if ( ! isset( $config->content ) ) {
+			// If the config content isn't set, it's a new item, so we need to set it.
+			if (isset($config->content) === false) {
 				$config->content = (object) array();
 			}
 
-			// finally push it to the content array if the data was changed
-			if ( $component_uuid = $updated_element->component_uuid ) {
+			// Components
+			if ($componentUuid = $updatedField->component_uuid) {
 
-				if ( ! isset( $config->content->$component_uuid ) ) {
-					$config->content->$component_uuid = (object) array();
+				// If the component doesn't exist in Content Workflow, create it (can WordPress create a brand-new component?)
+				if (isset($config->content->$componentUuid) === false) {
+					$config->content->$componentUuid = (object) array();
 				}
 
-				if ( is_array( $config->content->$component_uuid ) ) {
-					if ( is_array( $updated_element->value ) ) {
-						// Directly use the array
-						$decoded_value = $updated_element->value;
-					} else {
-						// Decode JSON string
-						$decoded_value = json_decode( $updated_element->value );
-						if ( $decoded_value === null && json_last_error() !== JSON_ERROR_NONE ) {
-							// JSON decoding failed, handle the error
-							// For example, you can log the error or take appropriate action
-							// Here, we are setting an empty array
-							$decoded_value = [];
-						}
+				// If the component exists in Content Workflow and is an array
+				if (is_array($config->content->$componentUuid)) {
+					$fieldValues = is_array($updatedField->value) ? $updatedField->value : json_decode($updatedField->value);
+					// Failed to decode, forcing the value to an empty array
+					if ($fieldValues === null && json_last_error() !== JSON_ERROR_NONE) {
+						$fieldValues = [];
 					}
 
-					// Handle repeatable components
+					// Loop through the field values, and set them to their respective fields in the component
 					$i = 0;
-					foreach ( $decoded_value as $value ) {
-						if ( isset( $config->content->$component_uuid[ $i ] ) ) {
-							$config->content->$component_uuid[ $i ]->$element_id = $value;
+					foreach ($fieldValues as $value) {
+						if (isset($config->content->$componentUuid[$i]))  {
+							$config->content->$componentUuid[$i]->$fieldId = $value;
+						} else {
+							// If the field doesn't exist in the component, create it
+							$newFieldId = Uuid::uuid4()->toString();
+							$config->content->$componentUuid[$i]->$newFieldId = $value;
 						}
 						$i ++;
 					}
 				} else {
-					$config->content->$component_uuid->$element_id = $updated_element->value;
+					$config->content->$componentUuid->$fieldId = $updatedField->value;
 				}
-
-
 			} else {
-				$config->content->$element_id = $updated_element->value;
+				$config->content->$fieldId = $updatedField->value;
 			}
 		}
 
@@ -904,7 +895,7 @@ class Push extends Base {
 		} else {
 			$outputArray = array();
 			foreach ( $field_group as $item ) {
-				$values = array_values( $item );
+				$values        = array_values( $item );
 				$outputArray[] = wp_json_encode( $values[0] );
 			}
 
