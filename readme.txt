@@ -67,6 +67,9 @@ Below the text box is a button that will allow you to simply save all of that in
 4. Bulk import your content at scale
 
 == Changelog ==
+= 1.0.2 =
+* Fixed an issue where creating a new row in an ACF PRO repeatable field doesn't create the field on Content Workflow.
+
 = 1.0.1 =
 * Updating the plugin listing page to have new assets and an improved description.
 * Fixing small typo within the plugin API stopping the plugin from loading.
