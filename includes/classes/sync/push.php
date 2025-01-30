@@ -10,7 +10,6 @@ namespace GatherContent\Importer\Sync;
 use GatherContent\Importer\Post_Types\Template_Mappings;
 use GatherContent\Importer\Mapping_Post;
 use GatherContent\Importer\API;
-use Ramsey\Uuid\Uuid;
 use WP_Error;
 
 /**
@@ -126,12 +125,12 @@ class Push extends Base {
 		if ( empty( $config_update ) ) {
 
 			throw new Exception(
-				sprintf( esc_html__( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), esc_html( $this->post->ID ) ),
+				sprintf( esc_html__( 'No update data found for that post ID: %d', 'content-workflow-by-bynder' ), esc_html($this->post->ID) ),
 				__LINE__,
 				array(
-					'post_id'    => esc_html( $this->post->ID ),
-					'mapping_id' => esc_html( $this->mapping->ID ),
-					'item_id'    => esc_html( $this->item->id ) ?? 0,
+					'post_id'    => esc_html($this->post->ID),
+					'mapping_id' => esc_html($this->mapping->ID),
+					'item_id'    => esc_html($this->item->id) ?? 0,
 				)
 			);
 		}
