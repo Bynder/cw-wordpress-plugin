@@ -81,7 +81,7 @@ This plugin relies on the following third-party services:
 
 ## Changelog
 
-### 1.0.2 ###
+### 1.0.3 ###
 * Fixed an issue where creating a new row in an ACF PRO repeatable field doesn't create the field on Content Workflow.
 
 ### 1.0.1 ###

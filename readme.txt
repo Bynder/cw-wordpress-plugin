@@ -4,7 +4,7 @@ Donate link: https://www.bynder.com/products/content-workflow/
 Tags: structured content, gather content, gathercontent, import, migrate, export, mapping, production, writing, collaboration, platform, connect, link, gather, client, word, production, bynder, content, workflow
 Requires at least: 5.6.0
 Tested up to: 6.6.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPL-2.0+
 Requires PHP: 7.0
 License URI: https://opensource.org/licenses/GPL-2.0
@@ -67,7 +67,7 @@ Below the text box is a button that will allow you to simply save all of that in
 4. Bulk import your content at scale
 
 == Changelog ==
-= 1.0.2 =
+= 1.0.3 =
 * Fixed an issue where creating a new row in an ACF PRO repeatable field doesn't create the field on Content Workflow.
 
 = 1.0.1 =

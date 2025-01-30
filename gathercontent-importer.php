@@ -32,8 +32,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Useful global constants
-define( 'GATHERCONTENT_VERSION', '1.0.2' );
-define( 'GATHERCONTENT_ENQUEUE_VERSION', '1.0.2' );
+define( 'GATHERCONTENT_VERSION', '1.0.3' );
+define( 'GATHERCONTENT_ENQUEUE_VERSION', '1.0.3' );
 define( 'GATHERCONTENT_SLUG', 'content-workflow' );
 define( 'GATHERCONTENT_PLUGIN', __FILE__ );
 define( 'GATHERCONTENT_URL', plugin_dir_url( __FILE__ ) );
