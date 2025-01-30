@@ -88,8 +88,6 @@ class Push extends Base {
 	 */
 	public function maybe_push_item( $mapping_post_id ) {
 		try {
-			echo 'maybe_push_item';
-
 			$post       = $this->get_post( $mapping_post_id );
 			$mapping_id = \GatherContent\Importer\get_post_mapping_id( $post->ID );
 
@@ -157,13 +155,11 @@ class Push extends Base {
 		// The config is everything that has been persisted to the item on Content Workflow.
 		$config = json_decode($this->config);
 
-		// And update the content with the new values.
 		foreach ($fieldsContainingUpdates as $updatedField) {
 			$fieldId = $updatedField->name;
 
-			// Repeatable fields
+			// If the field we're updating is repeatable, ensure the values are an array
 			if ($updatedField->repeatable) {
-				// Extract the repeatable value from JSON if it's a string, or use the value directly
 				$repeatableValue = is_string($updatedField->value)
 					? (!empty($updatedField->value) ? json_decode($updatedField->value, true) : $updatedField->value)
 					: $updatedField->value;
@@ -177,15 +173,15 @@ class Push extends Base {
 				$config->content = (object) array();
 			}
 
-			// Components
+			// If the field we're updating is a component
 			if ($componentUuid = $updatedField->component_uuid) {
 
-				// If the component doesn't exist in Content Workflow, create it (can WordPress create a brand-new component?)
+				// If the component doesn't exist in Content Workflow, create it
 				if (isset($config->content->$componentUuid) === false) {
 					$config->content->$componentUuid = (object) array();
 				}
 
-				// If the component exists in Content Workflow and is an array
+				// If the component exists, ensure the fields values are an array
 				if (is_array($config->content->$componentUuid)) {
 					$fieldValues = is_array($updatedField->value) ? $updatedField->value : json_decode($updatedField->value);
 					// Failed to decode, forcing the value to an empty array
@@ -196,14 +192,12 @@ class Push extends Base {
 					// Loop through the field values, and set them to their respective fields in the component
 					$i = 0;
 					foreach ($fieldValues as $value) {
-						if (isset($config->content->$componentUuid[$i]))  {
-							$config->content->$componentUuid[$i]->$fieldId = $value;
-						} else {
-							// If the field doesn't exist in the component, create it
-							$newFieldId = Uuid::uuid4()->toString();
-							$config->content->$componentUuid[$i]->$newFieldId = $value;
+						if (!isset($config->content->$componentUuid[$i])) {
+							// If the component instance doesn't exist, create a new object to hold the data
+							$config->content->$componentUuid[$i] = new \stdClass();
 						}
-						$i ++;
+						$config->content->$componentUuid[$i]->$fieldId = $value;
+						$i++;
 					}
 				} else {
 					$config->content->$componentUuid->$fieldId = $updatedField->value;
