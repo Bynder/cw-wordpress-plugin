@@ -1,4 +1,4 @@
-# Content Workflow (by Bynder) - Version 1.0.3 #
+# Content Workflow (by Bynder) - Version 1.0.4 #
 
 This plugin allows you to transfer content from your Content Workflow projects into your WordPress site and vice-versa.
 
@@ -81,8 +81,11 @@ This plugin relies on the following third-party services:
 
 ## Changelog
 
-### 1.0.3 ###
+### 1.0.4 ###
 * Adds support for PHP versions 8 to 8.4.*
+
+### 1.0.3 ###
+* Fixed an issue where creating a new row in an ACF PRO repeatable field doesn't create the field on Content Workflow.
 
 ### 1.0.1 ###
 * Updating the plugin listing page to have new assets and an improved description.
