@@ -22,7 +22,7 @@ class Debug extends Base {
 	 *
 	 * @var boolean
 	 */
-	protected static $debug_mode = false;
+	protected static $debug_mode = true;
 
 	/**
 	 * GatherContent\Importer\Admin\Admin instance.
@@ -426,9 +426,7 @@ class Debug extends Base {
 	 *
 	 */
 	public static function debug_log( $message = '', $title = '' ) {
-		if ( self::$debug_mode ) {
 			self::_debug_log( $message, $title );
-		}
 	}
 
 	/**

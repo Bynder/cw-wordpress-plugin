@@ -8,6 +8,7 @@
 
 namespace GatherContent\Importer\Sync;
 
+use GatherContent\Importer\Debug;
 use GatherContent\Importer\Mapping_Post;
 use GatherContent\Importer\API;
 use Mimey\MimeTypes;
@@ -199,7 +200,11 @@ class Pull extends Base {
 				// And if we do, compare them to see if GC item is newer.
 				&& ( $is_up_to_date = strtotime( $this->item->updated_at ) <= strtotime( $updated_at ) )
 				// If it's not newer, then don't update (unless asked to via filter).
-				&& $is_up_to_date && apply_filters( 'cwby_only_update_if_newer', true )
+
+
+				// Setting cwby_only_update_if_newer to false always triggers an update
+				// This is required for now as the checks above don't check component changes
+				&& $is_up_to_date && apply_filters( 'cwby_only_update_if_newer', false )
 			) {
 				throw new Exception(
 					sprintf( esc_html__( 'WordPress has most recent changes for %1$s (Item ID: %2$d):', 'content-workflow-by-bynder' ), esc_html( $this->item->name ), esc_html( $this->item->id ) ),
@@ -708,6 +713,9 @@ class Pull extends Base {
 		// Initialize an array to store updated post data
 		$updated_post_data = $post_data;
 
+		Debug::debug_log('Mapping data');
+		Debug::debug_log($this->mapping->data);
+
 		// Loop through the mapping data array
 		foreach ( $this->mapping->data as $key => $value ) {
 			// When it is a component, the key sandwiches '_component_' so let's get the key itself
@@ -727,6 +735,7 @@ class Pull extends Base {
 					foreach ( $value['sub_fields'] as $sub_field_key ) {
 						array_push( $subfield_keys, $sub_field_key );
 					}
+
 					// Let's ensure the repeater field is empty before adding rows
 					delete_field( $value['field'], $post_id );
 
@@ -764,25 +773,38 @@ class Pull extends Base {
 						foreach ( $subfield as $key => $subsubfield ) {
 							$subfield_key_id ++;
 							$item_key = $subfield_keys[ $subfield_key_id ];
+							Debug::debug_log('Subfield keys');
+							Debug::debug_log($subfield_keys);
+
 							$item     = get_field_object( $item_key );
+							// $item_key isn't mapping correctly (it's null), so grabbing item by post_id instead
+							// Item is also the ACF field, not a CW item
+							$item = get_field_objects($post_id)['repeatable_component_'];
+							Debug::debug_log($item);
+
+							// Forcing subsubfield to an array to make sure the logic below runs
+							if ( is_array($subsubfield) === false){
+								$subsubfield = [$subsubfield];
+							}
 
 							if ( is_array( $subsubfield ) ) {
-
 								if ( $item['parent'] ) {
 									$parent_key = $item['parent'];
 								}
-								if ( $item['sub_fields'] ) {
-									$children = array();
-									foreach ( $item['sub_fields'] as $child ) {
-										array_push( $children, $child['key'] );
-									}
-								}
 
+								// Moved this up just so subfield handling is closed together
 								if ( $item['type'] && ( $item['type'] === 'checkbox' ) ) {
 									$checkbox_labels = [];
 									// Extract labels from each stdClass object and add them to the $labels array for checkboxes
 									foreach ( $subsubfield as $checkbox ) {
 										$checkbox_labels[] = $checkbox->label;
+									}
+								}
+
+								if ( $item['sub_fields'] ) {
+									$children = array();
+									foreach ( $item['sub_fields'] as $child ) {
+										array_push( $children, $child['key'] );
 									}
 								}
 
@@ -847,14 +869,28 @@ class Pull extends Base {
 									}
 
 
-									if ( $item['type'] === 'repeater' ) {
+									// if ( $item['type'] === 'repeater' ) {
+									if ( true ) { // Switched away from checking if it's a repeater field and just forcing it through
+										Debug::debug_log('Hit repeater');
+										Debug::debug_log($children);
+										Debug::debug_log($subsubfield_field);
+										Debug::debug_log($parent_key);
+										Debug::debug_log($row_index);
+										Debug::debug_log($item_key);
+
+
+										// Looping through the fields, in a row, i.e. a repeatable component with 2 text fields
+										// would result in $children being an array with 2 keys, each key representing a text field
 										foreach ( $children as $child_key ) {
+											$selector = [
+												$parent_key, // The entire repeatable component
+												$row_index, // A row within a component
+												$child_key // The field within the component
+											];
+											$value = [ $child_key => $subsubfield_field ];
+											add_sub_row( $selector, $value, $post_id );
+
 											// add_sub_row(['parent repeater', index, 'child repeater'], ['field_name' => $data], $post_id);
-											add_sub_row( [
-												$parent_key,
-												$row_index,
-												$item_key
-											], [ $child_key => $subsubfield_field ], $post_id );
 										}
 									}
 
