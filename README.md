@@ -96,3 +96,29 @@ This plugin relies on the following third-party services:
 * Officially supporting components by using the Advanced Custom Fields plugins
 * Full rebrand to Content Workflow by Bynder
 * Migration from the [GatherContent Wordpress plugin](https://wordpress.org/plugins/gathercontent-import/)
+
+# Local Development
+If you're running a WordPress instance locally via [Docker Base](https://github.com/Bynder/gathercontent-docker-base),
+this repo will be mounted into the plugins directory, meaning any changes you make can be seen instantly.
+
+Along with that, the entire WordPress installation will be mapped to a `wp-data` directory in this repo, from here you
+can easily make changes.
+
+## Logging
+To enable logging, simply go to `/wp-data/wp-config.php` and add the following:
+```php
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+@ini_set('display_errors', 0);
+```
+
+This will allow critical errors to be logged, and will be viewable at `/wp-data/wp-content/debug.log`.
+
+If you're using this plugins [logging](includes/classes/debug.php), you will find the logs at
+`/wp-data/wp-content/gathercontent-debug.log`.
+
+## Adding new plugins
+If you need to add a new plugin locally, you'll often run into PHP upload limits which are a pain to adjust. Instead,
+you can simply download the plugin, unzip it, and move it into the plugins directory at `/wp-data/wp-content/plugins`.
+From there, you can activate the plugin with WordPress.
