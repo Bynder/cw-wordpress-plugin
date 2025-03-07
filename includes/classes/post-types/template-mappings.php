@@ -87,7 +87,13 @@ class Template_Mappings extends Base {
 		add_action( "wp_async_save_post_{$post_type}", array( $this, 'clear_out_updated_at' ) );
 
 		add_filter( 'wp_insert_post_empty_content', array( $this, 'trigger_pre_actions' ), 5, 2 );
+
+		// Used for deleting pending import records (they cause the issue where imports get stuck on 25%)
+		add_action('admin_notices', array($this, 'add_clear_pending_imports_button'));
+		add_action('admin_init', array($this, 'handle_clear_pending_imports'));
 	}
+
+
 
 	public function clear_out_updated_at( $post_id ) {
 		$types     = array();
@@ -765,6 +771,66 @@ class Template_Mappings extends Base {
 		} catch ( \Exception $e ) {
 			return false;
 		}
+	}
+
+	public function add_clear_pending_imports_button() {
+		// We only want this to show when in debug mode
+		if (!defined('WP_DEBUG') || !WP_DEBUG) {
+			return;
+		}
+
+		$screen = get_current_screen();
+
+		// Only show on template mappings list page
+		if (!$screen || self::SLUG !== $screen->post_type) {
+			return;
+		}
+
+		?>
+		<form method="post" action="">
+			<?php wp_nonce_field('clear_pending_imports_action', 'clear_pending_imports_nonce'); ?>
+			<p>
+				<button type="submit" name="clear_pending_imports" class="button button-primary">
+					<?php esc_html_e('Clear Pending Imports', 'content-workflow-by-bynder'); ?>
+				</button>
+			</p>
+		</form>
+		<?php
+	}
+
+	/*
+	 * Deletes any pending import records (they cause the issue where imports get stuck on 25%)
+	 */
+	public function handle_clear_pending_imports() {
+		// We only want this to run when in debug mode
+		if (!defined('WP_DEBUG') || !WP_DEBUG) {
+			return;
+		}
+
+		if (!isset($_POST['clear_pending_imports'])) {
+			return;
+		}
+
+		if (!wp_verify_nonce($_POST['clear_pending_imports_nonce'], 'clear_pending_imports_action')) {
+			wp_die('Invalid security token');
+		}
+
+		global $wpdb;
+
+		// Delete any lingering pull records
+		$deleted = $wpdb->query(
+			$wpdb->prepare(
+				"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+				'gc_pull_item_%'
+			)
+		);
+
+		wp_redirect(add_query_arg(
+			'settings-updated',
+			'true',
+			wp_get_referer()
+		));
+		exit;
 	}
 
 }
