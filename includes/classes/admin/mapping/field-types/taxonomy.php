@@ -41,7 +41,7 @@ class Taxonomy extends Base implements Type {
 			<# if ( '<?php $this->e_type_id(); ?>' === data.field_type && '<?php echo esc_attr( $type->name ); ?>' === data.post_type ) { #>
 			<select
 				class="wp-type-value-select <?php $this->e_type_id(); ?> wp-taxonomy-<?php echo esc_html( $type->name ); ?>-type"
-				name="<?php $view->get( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
+				name="<?php $view->output( 'option_base' ); ?>[mapping][{{ data.name }}][value]">
 				<?php if ( empty( $type->taxonomies ) ) : ?>
 					<option selected="selected"
 							value=""><?php esc_html_e( 'N/A', 'content-workflow-by-bynder' ); ?></option>
