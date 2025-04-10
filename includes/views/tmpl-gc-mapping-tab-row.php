@@ -97,8 +97,12 @@ var subfield_type_translate = {
 					</a>
 					<ul class="gc-reveal-items-list gc-reveal-items-hidden hidden">
 						<# if(( field.field_type )){ #>
-						<li><strong><?php esc_html_e( 'Type:', 'content-workflow-by-bynder' ); ?></strong> {{
-							subfield_type_translate[field.field_type] }}
+						<li><strong><?php esc_html_e( 'Type:', 'content-workflow-by-bynder' ); ?></strong>
+							<# if(field.field_type === 'text' && field.metadata && field.metadata.is_plain) { #>
+								{{ subfield_type_translate['text_plain'] }}
+							<# } else { #>
+							{{ subfield_type_translate[field.field_type] }}
+							<# } #>
 						</li>
 						<# } #>
 						<# if(( field.instructions )){ #>
