@@ -1,4 +1,4 @@
-# Content Workflow (by Bynder) - Version 1.0.4 #
+# Content Workflow (by Bynder) - Version 1.0.5 #
 
 This plugin allows you to transfer content from your Content Workflow projects into your WordPress site and vice-versa.
 
@@ -80,6 +80,10 @@ This plugin relies on the following third-party services:
    and [Privacy Policy](https://www.bynder.com/en/legal/privacy-policy/) are available for review.
 
 ## Changelog
+
+### 1.0.5 ###
+* Fixes an issue where plain text fields in a component were being imported as rich text fields
+* Fixes an issue where the plugin couldn't map Content Workflow fields to Taxonomy/Terms
 
 ### 1.0.4 ###
 * Adds support for PHP versions 8 to 8.4.*
