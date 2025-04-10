@@ -1,4 +1,6 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly
 /*******************************************
  * Component: Wrapper table - Open
  ***********************************************/ ?>
@@ -26,7 +28,8 @@
 					data.label }} <small>{{ data.subtitle }}</small></strong></a>
 			<ul class="gc-reveal-items-list <# if ( !data.expanded ) { #>hidden<# } #>">
 				<# if ( data.typeName ) { #>
-				<li><strong><?php esc_html_e( 'Type:', 'content-workflow-by-bynder' ); ?></strong> {{ data.typeName }}</li>
+				<li><strong><?php esc_html_e( 'Type:', 'content-workflow-by-bynder' ); ?></strong> {{ data.typeName }}
+				</li>
 				<# } #>
 
 				<# if ( data.limit && data.limit_type ) { #>
@@ -36,7 +39,8 @@
 				<# } #>
 
 				<# if ( data.instructions ) { #>
-				<li><strong><?php esc_html_e( 'Description:', 'content-workflow-by-bynder' ); ?></strong> {{ data.instructions
+				<li><strong><?php esc_html_e( 'Description:', 'content-workflow-by-bynder' ); ?></strong> {{
+					data.instructions
 					}}
 				</li>
 				<# } #>
@@ -99,7 +103,7 @@ var subfield_type_translate = {
 						<# if(( field.field_type )){ #>
 						<li><strong><?php esc_html_e( 'Type:', 'content-workflow-by-bynder' ); ?></strong>
 							<# if(field.field_type === 'text' && field.metadata && field.metadata.is_plain) { #>
-								{{ subfield_type_translate['text_plain'] }}
+							{{ subfield_type_translate['text_plain'] }}
 							<# } else { #>
 							{{ subfield_type_translate[field.field_type] }}
 							<# } #>
