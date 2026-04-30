@@ -725,7 +725,9 @@ class Pull extends Base {
 					// Prepare the subfield data
 					$subfield_keys = array();
 					foreach ( $value['sub_fields'] as $sub_field_key ) {
-						array_push( $subfield_keys, $sub_field_key );
+						if ( $sub_field_key ) {
+							array_push( $subfield_keys, $sub_field_key );
+						}
 					}
 					// Let's ensure the repeater field is empty before adding rows
 					delete_field( $value['field'], $post_id );
@@ -771,7 +773,7 @@ class Pull extends Base {
 								if ( $item['parent'] ) {
 									$parent_key = $item['parent'];
 								}
-								if ( $item['sub_fields'] ) {
+								if ( isset($item['sub_fields']) && $item['sub_fields'] ) {
 									$children = array();
 									foreach ( $item['sub_fields'] as $child ) {
 										array_push( $children, $child['key'] );
@@ -803,8 +805,17 @@ class Pull extends Base {
 
 										if ( $existing_attachment_id ) {
 											// If the attachment already exists, use its ID
-											$attach_id = $existing_attachment_id;
-										} else {
+											$existing_file = get_attached_file( $existing_attachment_id );
+
+											if ( $existing_file && file_exists( $existing_file ) ) {
+												$attach_id = $existing_attachment_id;
+											} else {
+												wp_delete_attachment( $existing_attachment_id, true );
+												$existing_attachment_id = false;
+											}
+										}
+
+										if ( ! $existing_attachment_id ) {
 											if ( wp_mkdir_p( $upload_dir['path'] ) ) {
 												$file = $upload_dir['path'] . '/' . $filename;
 											} else {
@@ -814,7 +825,7 @@ class Pull extends Base {
 											require_once( ABSPATH . 'wp-admin/includes/file.php' );
 											WP_Filesystem();
 											global $wp_filesystem;
-											$wp_filesystem->put_contents( $file, $image_data );
+											$wp_filesystem->put_contents( $file, $image_data['body'] );
 
 											$wp_filetype = wp_check_filetype( $filename, null );
 
@@ -1287,10 +1298,13 @@ class Pull extends Base {
 		if ( ! empty( $download_url ) ) {
 			$file_array         = $this->tmp_file( $file_name, $download_url );
 			$file_array['type'] = mime_content_type( $file_array['tmp_name'] );
-			$extension          = '.' . ( new MimeTypes() )->getExtension( $file_array['type'] );
-			$hasExtension       = substr( $file_array['name'], 0 - strlen( $extension ) ) === $extension;
-			if ( ! $hasExtension ) {
-				$file_array['name'] = $file_array['name'] . $extension;
+			$extension          = ( new MimeTypes() )->getExtension( $file_array['type'] );
+			$path_info          = pathinfo( $file_array['name'] );
+			$has_extension      = ! empty( $path_info['extension'] );
+
+			// Only add extension if filename doesn't already have one
+			if ( ! $has_extension && ! empty( $extension ) ) {
+				$file_array['name'] = $file_array['name'] . '.' . $extension;
 			}
 
 			if ( is_wp_error( $file_array ) ) {
