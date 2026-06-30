@@ -47,5 +47,8 @@
   "dependencies": {
     "grunt-dev-update": "^2.3.0",
     "grunt-update": "^0.2.3"
+  },
+  "overrides": {
+    "tar": "^7.5.11"
   }
 }
