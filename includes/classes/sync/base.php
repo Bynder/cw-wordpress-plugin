@@ -578,13 +578,13 @@ abstract class Base extends Plugin_Base {
 			);
 		}
 
-		if ( isset( $metadata->choice_fields->otherOption ) ) {
+		if ( isset( $metadata->choice_fields->otherOption ) && ! empty( $field_value ) ) {
 			$option         = $metadata->choice_fields->otherOption;
 			$matched_option = wp_list_filter( $field_value, array( 'id' => $option->optionId ) );
 
 			$options[] = (object) [
 				'name'     => $option->optionId,
-				'label'    => $field_value[0]->label,
+				'label'    => isset( $field_value[0]->label ) ? $field_value[0]->label : $option->optionId,
 				'selected' => ! empty( $matched_option ),
 			];
 		}
