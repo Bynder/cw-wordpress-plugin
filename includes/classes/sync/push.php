@@ -94,8 +94,10 @@ class Push extends Base {
 
 			$result = $this->do_item( $post->ID );
 
-		} catch ( \Exception $e ) {
-			$result = new WP_Error( 'cwby_push_item_fail_' . $e->getCode(), $e->getMessage(), $e->get_data() );
+		} catch ( \Throwable $e ) {
+			error_log( '[cwby] Push error for post ' . $mapping_post_id . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
+			$data   = method_exists( $e, 'get_data' ) ? $e->get_data() : null;
+			$result = new WP_Error( 'cwby_push_item_fail_' . $e->getCode(), $e->getMessage(), $data );
 		}
 
 		return $result;
