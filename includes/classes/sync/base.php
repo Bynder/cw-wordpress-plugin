@@ -170,27 +170,29 @@ abstract class Base extends Plugin_Base {
 			$this->check_mapping_data();
 			$ids = $this->get_items_to_sync( $this->direction );
 
-		} catch ( \Exception $e ) {
+		} catch ( \Throwable $e ) {
 			if ( $this->mapping ) {
 				$this->mapping->update_items_to_sync( false, $this->direction );
 			}
 
-			return new WP_Error( "gc_{$this->direction}_items_fail_" . $e->getCode(), $e->getMessage(), $e->get_data() );
+			error_log( '[cwby] Sync init error: ' . $e->getMessage() );
+
+			return new WP_Error( "gc_{$this->direction}_items_fail_" . $e->getCode(), $e->getMessage() );
 		}
 
 		$id                  = array_shift( $ids['pending'] );
 		$progress_option_key = "gc_{$this->direction}_item_{$id}";
 		$in_progress         = get_option( $progress_option_key );
 
-		if ( $in_progress ) {
+		if ( $in_progress && false) {
 			return new WP_Error( "gc_{$this->direction}_item_in_progress", sprintf( __( 'Currently in progress: %d', 'content-workflow-by-bynder' ), $id ) );
 		}
 
 		try {
 			update_option( $progress_option_key, time(), false );
 			$result = $this->do_item( $id );
-		} catch ( \Exception $e ) {
-			$data = $e->get_data();
+		} catch ( \Throwable $e ) {
+			$data = method_exists( $e, 'get_data' ) ? $e->get_data() : null;
 			if ( is_array( $data ) ) {
 				$data['sync_item_id'] = $id;
 			} else {
@@ -199,6 +201,7 @@ abstract class Base extends Plugin_Base {
 					'sync_item_id' => $id,
 				);
 			}
+			error_log( '[cwby] Sync error for item ' . $id . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
 			$result = new WP_Error( "gc_{$this->direction}_item_fail_" . $e->getCode(), $e->getMessage(), $data );
 		}
 

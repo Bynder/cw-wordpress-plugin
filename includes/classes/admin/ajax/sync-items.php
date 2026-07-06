@@ -112,6 +112,7 @@ class Sync_Items extends Plugin_Base {
 		if ( $percent < 100 && absint( $percent ) === $prev_percent ) {
 			$this->maybe_trigger_new_pull( $percent );
 		} elseif ( $prev_percent > $percent ) {
+			$this->maybe_trigger_new_pull( $percent );
 			$percent = $prev_percent;
 		}
 
@@ -128,6 +129,12 @@ class Sync_Items extends Plugin_Base {
 
 		$progress_option_key = "gc_pull_item_{$id}";
 		$in_progress         = get_option( $progress_option_key );
+
+		// If lock is older than 10 minutes, consider it stale (crashed process) and clear it.
+		if ( $in_progress && ( time() - (int) $in_progress ) > 600 ) {
+			delete_option( $progress_option_key );
+			$in_progress = false;
+		}
 
 		if ( ! $in_progress ) {
 			do_action( 'cwby_pull_items', $this->mapping );
