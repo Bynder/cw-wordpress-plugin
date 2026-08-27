@@ -79,8 +79,10 @@ class Pull extends Base {
 		try {
 			$this->mapping = Mapping_Post::get( $mapping_post, true );
 			$result        = $this->do_item( $item_id );
-		} catch ( \Exception $e ) {
-			$result = new WP_Error( 'cwby_pull_item_fail_' . $e->getCode(), $e->getMessage(), $e->get_data() );
+		} catch ( \Throwable $e ) {
+			error_log( '[cwby] Pull error for item ' . $item_id . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
+			$data   = method_exists( $e, 'get_data' ) ? $e->get_data() : null;
+			$result = new WP_Error( 'cwby_pull_item_fail_' . $e->getCode(), $e->getMessage(), $data );
 		}
 
 		return $result;
@@ -555,8 +557,8 @@ class Pull extends Base {
 					break;
 			}
 			// @codingStandardsIgnoreStart
-		} catch ( \Exception $e ) {
-			// @todo logging?
+		} catch ( \Throwable $e ) {
+			error_log( '[cwby] set_post_values error on field "' . ( $destination['value'] ?? '?' ) . '" (' . $destination['type'] . '): ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
 		}
 
 		// @codingStandardsIgnoreEnd
