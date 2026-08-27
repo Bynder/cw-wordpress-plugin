@@ -812,10 +812,18 @@ class Push extends Base {
 				}
 			}
 			$groupData = [];
-			foreach ( $field_group as $group ) {
-				// Combine keys from componentFieldsKeys with values from the current group
-				$new_group   = array_combine( $componentFieldsKeys, $group );
-				$groupData[] = $new_group;
+			if ( is_array( $field_group ) ) {
+				foreach ( $field_group as $group ) {
+					if ( ! is_array( $group ) ) {
+						continue;
+					}
+					if ( count( $componentFieldsKeys ) !== count( $group ) ) {
+						error_log( 'Content Workflow ACF mapping mismatch for group key ' . $group_key . ': componentFieldsKeys=' . count( $componentFieldsKeys ) . ' group=' . count( $group ) );
+						continue;
+					}
+					$new_group   = array_combine( $componentFieldsKeys, $group );
+					$groupData[] = $new_group;
+				}
 			}
 
 
